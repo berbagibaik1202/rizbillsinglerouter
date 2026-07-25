@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LJN Lintas Jaringan Nusantara - Internet Cepat & Stabil</title>
+
+    <!-- 1. Tailwind CSS (Play CDN untuk development) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 2. Font Awesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- 3. Leaflet CSS (WAJIB sebelum JS) -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <!-- 4. Leaflet JS -->
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+
+    <style>
+      body {
+        background-color: #f97316;
+      }
+      .orange-gradient {
+        background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+      }
+      .price-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+          0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      }
+      .testimonial-card:hover {
+        transform: scale(1.03);
+      }
+      .modal {
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+      }
+      .modal.visible {
+        opacity: 1;
+        visibility: visible;
+      }
+      .modal.visible > div {
+        transform: scale(1);
+      }
+      .carousel-item {
+        transition: transform 0.5s ease;
+      }
+      section:not(.orange-gradient) {
+        background-color: white;
+        border-radius: 0.5rem;
+        margin: 1rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      }
+      header {
+        background-color: white;
+      }
+      footer {
+        background-color: #ea580c;
+      }
+      .hero-image {
+        animation: float 6s ease-in-out infinite;
+      }
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+      }
+      .section-animate {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.6s ease-out;
+      }
+      .section-animate.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+  </head>
+  <body class="font-sans">
+    <!-- Konten HTML Anda (Header, Sections, Footer) tetap di sini... -->
+    <!-- Header/Navbar -->
+    <header class="shadow-md sticky top-0 z-50">
+      <div
+        class="container mx-auto px-4 py-3 flex justify-between items-center"
+      >
+        <div class="flex items-center">
+          <div
+            class="w-12 h-12 rounded-full orange-gradient flex items-center justify-center text-white font-bold text-xl mr-3"
+          >
+            RIZ
+          </div>
+          <h1 class="text-2xl font-bold text-orange-600">
+            Rizkitech | LJN - Kantor Pelayanan Tanjungmedar
+          </h1>
+        </div>
+        <nav class="hidden md:flex space-x-8">
+          <a
+            href="#home"
+            class="text-orange-600 font-medium hover:text-orange-700"
+            >Beranda</a
+          >
+          <a href="#paket" class="text-gray-700 hover:text-orange-600">Paket</a>
+          <a href="#testimoni" class="text-gray-700 hover:text-orange-600"
+            >Testimoni</a
+          >
+          <a href="#tentang" class="text-gray-700 hover:text-orange-600"
+            >Tentang Kami</a
+          >
+          <a href="#kontak" class="text-gray-700 hover:text-orange-600"
+            >Kontak</a
+          >
+        </nav>
+        <button class="md:hidden text-orange-600" id="mobile-menu-button">
+          <i class="fas fa-bars text-2xl"></i>
+        </button>
+      </div>
+      <!-- Mobile Menu -->
+      <div
+        class="md:hidden hidden bg-white w-full py-2 px-4 shadow-md"
+        id="mobile-menu"
+      >
+        <a href="#home" class="block py-2 text-orange-600 font-medium"
+          >Beranda</a
+        >
+        <a href="#paket" class="block py-2 text-gray-700">Paket</a>
+        <a href="#testimoni" class="block py-2 text-gray-700">Testimoni</a>
+        <a href="#tentang" class="block py-2 text-gray-700">Tentang Kami</a>
+        <a href="#kontak" class="block py-2 text-gray-700">Kontak</a>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section
+      id="home"
+      class="orange-gradient text-white py-16 md:py-24 section-animate show"
+    >
+      <div
+        class="container mx-auto px-4 flex flex-col md:flex-row items-center"
+      >
+        <div class="md:w-1/2 mb-10 md:mb-0">
+          <h2 class="text-4xl md:text-5xl font-bold mb-4">
+            Penuhi kebutuhan Internet Kamu Bersama Kami
+          </h2>
+          <p class="text-xl mb-8 opacity-90">
+            Nikmati pengalaman koneksi jaringan full fiber optic terbaik.
+          </p>
+          <div
+            class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4"
+          >
+            <a
+              href="#paket"
+              class="bg-white text-orange-600 font-bold py-3 px-6 rounded-lg text-center hover:bg-gray-100 transition duration-300"
+            >
+              Lihat Paket
+            </a>
+
+            <a
+              href="http://my.rizki-tech.com"
+              class="border-2 border-white text-white font-bold py-3 px-6 rounded-lg text-center hover:bg-white hover:bg-opacity-20 transition duration-300"
+            >
+              WebPortal
+            </a>
+            <a
+              href="http://aksester.us"
+              class="border-2 border-white text-white font-bold py-3 px-6 rounded-lg text-center hover:bg-white hover:bg-opacity-20 transition duration-300"
+            >
+              VPN
+            </a>
+            <a
+              href="http://aksester.us"
+              class="border-2 border-white text-white font-bold py-3 px-6 rounded-lg text-center hover:bg-white hover:bg-opacity-20 transition duration-300"
+            >
+              Mikhmon
+            </a>
+          </div>
+        </div>
+        <div class="md:w-1/2 flex justify-center hero-image-container">
+          <img
+            src="img/logo rizkitech.png"
+            alt="logo rizkitech"
+            class="w-full max-w-md hero-image relative z-10"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- ... Sisa konten HTML Anda (Features, Pricing, Testimonials, dll.) ... -->
+    <!-- Features Section -->
+    <section class="py-16 section-animate">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">
+          Mengapa Memilih LJN?
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div
+            class="text-center p-6 rounded-lg bg-gray-50 hover:shadow-lg transition duration-300"
+          >
+            <div
+              class="w-16 h-16 orange-gradient rounded-full flex items-center justify-center mx-auto mb-4"
+            >
+              <i class="fas fa-bolt text-white text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-2 text-orange-600">
+              Kecepatan Optimal
+            </h3>
+            <p class="text-gray-600">
+              Dapatkan kecepatan internet hingga 1Gbps dengan jaringan fiber
+              optic terbaru.
+            </p>
+          </div>
+          <div
+            class="text-center p-6 rounded-lg bg-gray-50 hover:shadow-lg transition duration-300"
+          >
+            <div
+              class="w-16 h-16 orange-gradient rounded-full flex items-center justify-center mx-auto mb-4"
+            >
+              <i class="fas fa-shield-alt text-white text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-2 text-orange-600">
+              Jaringan Stabil
+            </h3>
+            <p class="text-gray-600">
+              Uptime 99.9% dengan teknologi jaringan redundansi untuk koneksi
+              tanpa gangguan.
+            </p>
+          </div>
+          <div
+            class="text-center p-6 rounded-lg bg-gray-50 hover:shadow-lg transition duration-300"
+          >
+            <div
+              class="w-16 h-16 orange-gradient rounded-full flex items-center justify-center mx-auto mb-4"
+            >
+              <i class="fas fa-headset text-white text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-2 text-orange-600">
+              Dukungan 24/7
+            </h3>
+            <p class="text-gray-600">
+              Tim teknisi siap membantu Anda kapan saja, 24 jam sehari, 7 hari
+              seminggu.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing Carousel Section -->
+    <section id="paket" class="py-16 section-animate">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">
+          Paket Internet Kami
+        </h2>
+        <p class="text-center text-gray-600 mb-12">
+          Pilih paket yang sesuai dengan kebutuhan Anda
+        </p>
+
+        <div class="relative max-w-4xl mx-auto">
+          <div class="carousel-container overflow-hidden">
+            <div
+              class="carousel-inner flex transition-transform duration-500"
+              id="carousel-inner"
+            >
+              <!-- Price Card 1 -->
+              <div class="carousel-item w-full md:w-1/3 px-4 flex-shrink-0">
+                <div
+                  class="price-card bg-white rounded-xl shadow-md overflow-hidden transition duration-300 h-full"
+                >
+                  <div class="orange-gradient py-4 px-6 text-white">
+                    <h3 class="text-xl font-bold">Paket Family</h3>
+                    <p class="opacity-90">Cocok untuk penggunaan pribadi</p>
+                  </div>
+                  <div class="p-6">
+                    <div class="text-4xl font-bold text-orange-600 mb-2">
+                      Rp 150.000<span class="text-lg font-normal">/bulan</span>
+                    </div>
+                    <div class="text-gray-500 mb-4">Kecepatan 10 Mbps</div>
+                    <ul class="space-y-2 mb-6">
+                      <li class="flex items-center">
+                        <i class="fas fa-check text-green-500 mr-2"></i>
+                        <span>Unlimited Quota</span>
+                      </li>
+                      <li class="flex items-center">
+                        <i class="fas fa-check text-green-500 mr-2"></i>
+                        <span
+                          >Biaya Pemasangan cukup bayar senilai paket
+                          pilihan</span
+                        >
+                      </li>
+                      <li class="flex items-center">
+                        <i class="fas fa-check text-green-500 mr-2"></i>
+                        <span>Free Biaya sewa perangkat</span>
+                      </li>
+                      <li class="flex items-center">
+                        <i class="fas fa-check text-green-500 mr-2"></i>
+                        <span>Manage Wifi Via wa dan web</span>
+                      </li>
+                      <li class="flex items-center">
+                        <i class="fas fa-check text-green-500 mr-2"></i>
+                        <span>Harga Tertera Belum PPn 11%</span>
+                      </li>
+                    </ul>
+                    <button
+                      class="w-full orange-gradient text-white font-bold py-3 px-4 rounded-lg hover:opacity-90 transition duration-300 register-btn"
+                    >
+                      Daftar Sekarang
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Price Card 2 (Featured) -->
+              <div class="carousel-item w-full md:w-1/3 px-4 flex-shrink-0">
+                <div
+                  class="price-card bg-white rounded-xl shadow-lg overflow-hidden transition duration-300 h-full border-2 border-orange-500"
+                >
+                  <div class="bg-orange-600 py-4 px-6 text-white relative">
+                    <div
+                      class="absolute -top-3 -right-3 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full"
+                    >
+                      POPULER
+                    </div>
+                    <h3 class="text-xl font-bold">Paket Silver</h3>
+                    <p class="opacity-90">
+                      Cocok Untuk Kamu yang aktif di media sosial
+                    </p>
+                  </div>
+                  <div class="p-6">
+                    <div class="text-4xl font-bold text-orange-600 mb-2">
+                      Rp 167.000<span class="text-lg font-normal">/bulan</span>
+                    </div>
+                    <div class="text-gray-500 mb-4">Kecepatan 20 Mbps</div>
+                    <ul class="space-y-2 mb-6">
+                      <li class="flex items-center">
+                        <i class="fas fa-check text-green-500 mr-2"></i>
+                        <span>Unlimited Quota</span>
+                      </li>
+                      <li class="flex items-center">
+                        <i class="fas fa-check text-green-500 mr-2"></i>
+                        <span
+                          >Biaya Pemasangan cukup bayar senilai paket
+                          pilihan</span
+                        >
+                      </li>
+                      <li class="flex items-center">
+                        <i class="fas fa-check text-green-500 mr-2"></i>
+                        <span>Free Biaya sewa perangkat</span>
+                      </li>
+                      <li class="flex items-center">
+                        <i class="fas fa-check text-green-500 mr-2"></i>
+                        <span>Prioritas Service</span>
+                      </li>
+                      <li class="flex items-center">
+                        <i class="fas fa-check text-green-500 mr-2"></i>
+                        <span>Manage Wifi Via wa dan web</span>
+                      </li>
+                      <li class="flex items-center">
+                        <i class="fas fa-check text-green-500 mr-2"></i>
+                        <span>Harga Tertera Belum PPn 11%</span>
+                      </li>
+                    </ul>
+                    <button
+                      class="w-full orange-gradient text-white font-bold py-3 px-4 rounded-lg hover:opacity-90 transition duration-300 register-btn"
+                    >
+                      Daftar Sekarang
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Price Card 3 -->
+              <div class="carousel-item w-full md:w-1/3 px-4 flex-shrink-0">
+                <div
+                  class="price-card bg-white rounded-xl shadow-md overflow-hidden transition duration-300 h-full"
+                >
+                  <div class="orange-gradient py-4 px-6 text-white">
+                    <h3 class="text-xl font-bold">Paket Gold</h3>
+                    <p class="opacity-90">Cocok untuk kebutuhan bisnis</p>
+                  </div>
+                  <div class="p-6">
+                    <div class="text-4xl font-bold text-orange-600 mb-2">
+                      Rp 249.000<span class="text-lg font-normal">/bulan</span>
+                    </div>
+                    <div class="text-gray-500 mb-4">Kecepatan 30 Mbps</div>
+                    <ul class="space-y-2 mb-6">
+                      <li class="flex items-center">
+                        <i class="fas fa-check text-green-500 mr-2"></i>
+                        <span>Unlimited Quota</span>
+                      </li>
+                      <li class="flex items-center">
+                        <i class="fas fa-check text-green-500 mr-2"></i>
+                        <span
+                          >Biaya Pemasangan cukup bayar senilai paket
+                          pilihan</span
+                        >
+                      </li>
+                      <li class="flex items-center">
+                        <i class="fas fa-check text-green-500 mr-2"></i>
+                        <span>Free Biaya Sewa Alat</span>
+                      </li>
+                      <li class="flex items-center">
+                        <i class="fas fa-check text-green-500 mr-2"></i>
+                        <span>Prioritas Service</span>
+                      </li>
+                      <li class="flex items-center">
+                        <i class="fas fa-check text-green-500 mr-2"></i>
+                        <span>Manage Wifi Via wa dan web</span>
+                      </li>
+                      <li class="flex items-center">
+                        <i class="fas fa-check text-green-500 mr-2"></i>
+                        <span>Harga Tertera Belum PPn 11%</span>
+                      </li>
+                    </ul>
+                    <button
+                      class="w-full orange-gradient text-white font-bold py-3 px-4 rounded-lg hover:opacity-90 transition duration-300 register-btn"
+                    >
+                      Daftar Sekarang
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button
+            class="carousel-prev absolute left-0 top-1/2 -translate-y-1/2 bg-white rounded-full shadow-md p-3 text-orange-600 hover:bg-orange-100 transition duration-300 z-10"
+          >
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <button
+            class="carousel-next absolute right-0 top-1/2 -translate-y-1/2 bg-white rounded-full shadow-md p-3 text-orange-600 hover:bg-orange-100 transition duration-300 z-10"
+          >
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+
+        <div class="flex justify-center mt-8 space-x-2">
+          <button
+            class="carousel-dot w-3 h-3 rounded-full bg-orange-300"
+            data-index="0"
+          ></button>
+          <button
+            class="carousel-dot w-3 h-3 rounded-full bg-orange-300"
+            data-index="1"
+          ></button>
+          <button
+            class="carousel-dot w-3 h-3 rounded-full bg-orange-300"
+            data-index="2"
+          ></button>
+        </div>
+      </div>
+    </section>
+    <!-- Testimonials Section -->
+    <section id="testimoni" class="py-16 section-animate">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">
+          Apa Kata Pelanggan Kami
+        </h2>
+        <p class="text-center text-gray-600 mb-12">
+          Testimoni dari pelanggan setia LJN Lintas Jaringan Nusantara
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Testimonial 1 -->
+          <div
+            class="testimonial-card bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300"
+          >
+            <div class="flex items-center mb-4">
+              <div
+                class="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 font-bold mr-4"
+              >
+                AS
+              </div>
+              <div>
+                <h4 class="font-bold">Andi Susanto</h4>
+                <div class="flex text-orange-400">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+              </div>
+            </div>
+            <p class="text-gray-600 italic">
+              "Sejak berlangganan LJN, kerja dari rumah jadi lebih nyaman.
+              Internet stabil dan jarang down. Tim teknisi juga responsif ketika
+              ada masalah."
+            </p>
+          </div>
+
+          <!-- Testimonial 2 -->
+          <div
+            class="testimonial-card bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300"
+          >
+            <div class="flex items-center mb-4">
+              <div
+                class="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 font-bold mr-4"
+              >
+                BD
+              </div>
+              <div>
+                <h4 class="font-bold">Budi Darmawan</h4>
+                <div class="flex text-orange-400">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+                </div>
+              </div>
+            </div>
+            <p class="text-gray-600 italic">
+              "Paket bisnisnya sangat worth it untuk usaha saya. Kecepatan
+              sesuai yang dijanjikan dan uptime hampir 100%. Sangat
+              direkomendasikan!"
+            </p>
+          </div>
+
+          <!-- Testimonial 3 -->
+          <div
+            class="testimonial-card bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300"
+          >
+            <div class="flex items-center mb-4">
+              <div
+                class="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 font-bold mr-4"
+              >
+                CW
+              </div>
+              <div>
+                <h4 class="font-bold">Citra Wijaya</h4>
+                <div class="flex text-orange-400">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+              </div>
+            </div>
+            <p class="text-gray-600 italic">
+              "Anak-anak bisa belajar online tanpa gangguan, suami bisa meeting,
+              dan saya bisa streaming favorit. Semua lancar dengan satu koneksi
+              LJN!"
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Coverage Section -->
+    <section class="py-16 section-animate">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row items-center">
+          <div class="md:w-1/2 mb-8 md:mb-0">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">
+              Jangkauan Kami
+            </h2>
+            <p class="text-gray-600 mb-6">
+              LJN Lintas Jaringan Nusantara sudah hadir di Tanjungmedar dengan
+              cakupan are full fiber Optic di beberapa dusun dibawah ini.
+            </p>
+            <ul class="grid grid-cols-2 gap-4">
+              <li class="flex items-center">
+                <i class="fas fa-check-circle text-orange-500 mr-2"></i>
+                <span>Ciomas Kamal</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-check-circle text-orange-500 mr-2"></i>
+                <span>Ciomas Jingkang</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-check-circle text-orange-500 mr-2"></i>
+                <span>Ciamis</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-check-circle text-orange-500 mr-2"></i>
+                <span>Cinagrog</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-check-circle text-orange-500 mr-2"></i>
+                <span>Sukatamu</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-check-circle text-orange-500 mr-2"></i>
+                <span>Jingkang</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-check-circle text-orange-500 mr-2"></i>
+                <span>Kamal</span>
+              </li>
+            </ul>
+            <p class="mt-4 text-gray-600">
+              Dan masih banyak wilayah lainnya. Hubungi kami untuk mengecek
+              ketersediaan di area Anda.
+            </p>
+          </div>
+          <div class="md:w-1/2 flex justify-center">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/854/854878.png"
+              alt="Indonesia Map"
+              class="w-full max-w-md"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="tentang" class="py-16 section-animate">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row items-center">
+          <div class="md:w-1/2 mb-8 md:mb-0 order-2 md:order-1">
+            <img
+              src="img/logoljn.png"
+              alt="logo ljn"
+              class="w-full max-w-md mx-auto"
+            />
+          </div>
+          <div class="md:w-1/2 order-1 md:order-2">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">
+              Tentang LJN Lintas Jaringan Nusantara
+            </h2>
+            <p class="text-gray-600 mb-4">
+              LJN adalah penyedia layanan internet berbasis fiber optic
+              terkemuka di Indonesia yang berkomitmen memberikan pengalaman
+              internet terbaik bagi pelanggan.
+            </p>
+            <p class="text-gray-600 mb-6">
+              Dengan jaringan yang terus berkembang dan teknologi terkini, kami
+              hadir untuk memenuhi kebutuhan internet baik untuk rumah tangga
+              maupun bisnis.
+            </p>
+            <div class="flex space-x-4">
+              <div
+                class="w-16 h-16 orange-gradient rounded-full flex items-center justify-center text-white text-2xl"
+              >
+                <i class="fas fa-rocket"></i>
+              </div>
+              <div>
+                <h4 class="font-bold text-gray-800">Visi Kami</h4>
+                <p class="text-gray-600">
+                  Menyambungkan Dunia Menghubungkan Nusantara.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 orange-gradient text-white section-animate">
+      <div class="container mx-auto px-4 text-center">
+        <h2 class="text-3xl font-bold mb-4">Siap Berlangganan?</h2>
+        <p class="text-xl mb-8 max-w-2xl mx-auto opacity-90">
+          Bergabunglah dengan ribuan pelanggan yang telah merasakan pengalaman
+          internet terbaik bersama LJN.
+        </p>
+        <button
+          class="bg-white text-orange-600 font-bold py-3 px-8 rounded-lg hover:bg-gray-100 transition duration-300 register-btn"
+        >
+          Daftar Sekarang
+        </button>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="kontak" class="py-16 section-animate">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">
+          Hubungi Kami
+        </h2>
+        <p class="text-center text-gray-600 mb-12">
+          Kami siap membantu Anda 24 jam sehari, 7 hari seminggu.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div class="bg-white p-6 rounded-lg shadow-md">
+            <h3 class="text-xl font-semibold mb-4 text-orange-600">
+              Informasi Kontak
+            </h3>
+            <div class="space-y-4">
+              <div class="flex items-start">
+                <div
+                  class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 mr-4"
+                >
+                  <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div>
+                  <h4 class="font-medium">Office Center</h4>
+                  <p class="text-gray-600">
+                    JI. KH. Agus Salim No.96, Bekasi Jaya, Bekasi Timur Kota
+                    Bekasi, Jawa Barat 17112
+                  </p>
+                  <br />
+
+                  <h4 class="font-medium">Kantor Pelayanan Tanjungmedar</h4>
+                  <p class="text-gray-600">
+                    Dusun ciomas RT02 RW07 Desa Jingkang Kec. Tanjungmedar, Kab
+                    Sumedang
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <div
+                  class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 mr-4"
+                >
+                  <i class="fas fa-phone-alt"></i>
+                </div>
+                <div>
+                  <h4 class="font-medium">Telepon</h4>
+                  <p class="text-gray-600">0822-4936-3946</p>
+                  <p class="text-gray-600">0822-4936-3946 (WhatsApp)</p>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <div
+                  class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 mr-4"
+                >
+                  <i class="fas fa-envelope"></i>
+                </div>
+                <div>
+                  <h4 class="font-medium">Email</h4>
+                  <p class="text-gray-600">marketing@lintas.net.id</p>
+                  <p class="text-gray-600">hallo@rizki-tech.com</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white p-6 rounded-lg shadow-md">
+            <h3 class="text-xl font-semibold mb-4 text-orange-600">
+              Kirim Pesan
+            </h3>
+            <form>
+              <div class="mb-4">
+                <label for="name" class="block text-gray-700 mb-2"
+                  >Nama Lengkap</label
+                >
+                <input
+                  type="text"
+                  id="name"
+                  class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                />
+              </div>
+              <div class="mb-4">
+                <label for="email" class="block text-gray-700 mb-2"
+                  >Email</label
+                >
+                <input
+                  type="email"
+                  id="email"
+                  class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                />
+              </div>
+              <div class="mb-4">
+                <label for="message" class="block text-gray-700 mb-2"
+                  >Pesan</label
+                >
+                <textarea
+                  id="message"
+                  rows="4"
+                  class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                ></textarea>
+              </div>
+              <button
+                type="submit"
+                class="w-full orange-gradient text-white font-bold py-3 px-4 rounded-lg hover:opacity-90 transition duration-300"
+              >
+                Kirim Pesan
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8">
+      <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div>
+            <div class="flex items-center mb-4">
+              <div
+                class="w-10 h-10 rounded-full bg-white flex items-center justify-center text-orange-600 font-bold text-lg mr-3"
+              >
+                LJN
+              </div>
+              <h3 class="text-xl font-bold text-white">
+                Lintas Jaringan Nusantara
+              </h3>
+            </div>
+            <p class="text-orange-100">
+              Penyedia layanan internet fiber optic terbaik di Indonesia dengan
+              jaringan luas dan teknologi terkini.
+            </p>
+          </div>
+          <div>
+            <h4 class="text-lg font-semibold mb-4 text-white">Tautan Cepat</h4>
+            <ul class="space-y-2">
+              <li>
+                <a
+                  href="#home"
+                  class="text-orange-100 hover:text-white transition duration-300"
+                  >Beranda</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#paket"
+                  class="text-orange-100 hover:text-white transition duration-300"
+                  >Paket Internet</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#testimoni"
+                  class="text-orange-100 hover:text-white transition duration-300"
+                  >Testimoni</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#tentang"
+                  class="text-orange-100 hover:text-white transition duration-300"
+                  >Tentang Kami</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#kontak"
+                  class="text-orange-100 hover:text-white transition duration-300"
+                  >Kontak</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-lg font-semibold mb-4 text-white">Layanan</h4>
+            <ul class="space-y-2">
+              <li>
+                <a
+                  href="#"
+                  class="text-orange-100 hover:text-white transition duration-300"
+                  >Internet Rumah</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-orange-100 hover:text-white transition duration-300"
+                  >Internet Bisnis</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-orange-100 hover:text-white transition duration-300"
+                  >Dedicated Server</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-orange-100 hover:text-white transition duration-300"
+                  >Colocation</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-lg font-semibold mb-4 text-white">Ikuti Kami</h4>
+            <div class="flex space-x-4">
+              <a
+                href="#"
+                class="w-10 h-10 rounded-full bg-orange-700 flex items-center justify-center text-white hover:bg-white hover:text-orange-600 transition duration-300"
+              >
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a
+                href="#"
+                class="w-10 h-10 rounded-full bg-orange-700 flex items-center justify-center text-white hover:bg-white hover:text-orange-600 transition duration-300"
+              >
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a
+                href="#"
+                class="w-10 h-10 rounded-full bg-orange-700 flex items-center justify-center text-white hover:bg-white hover:text-orange-600 transition duration-300"
+              >
+                <i class="fab fa-instagram"></i>
+              </a>
+              <a
+                href="#"
+                class="w-10 h-10 rounded-full bg-orange-700 flex items-center justify-center text-white hover:bg-white hover:text-orange-600 transition duration-300"
+              >
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+            </div>
+            <div class="mt-4">
+              <h5 class="font-medium mb-2 text-white">Download Aplikasi</h5>
+              <div class="flex space-x-2">
+                <a
+                  href="#"
+                  class="w-24 h-8 bg-orange-700 rounded flex items-center justify-center text-white text-xs hover:bg-white hover:text-orange-600 transition duration-300"
+                >
+                  <i class="fab fa-google-play mr-1"></i>
+                  Play Store
+                </a>
+                <a
+                  href="#"
+                  class="w-24 h-8 bg-orange-700 rounded flex items-center justify-center text-white text-xs hover:bg-white hover:text-orange-600 transition duration-300"
+                >
+                  <i class="fab fa-apple mr-1"></i>
+                  App Store
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="border-t border-orange-500 mt-8 pt-6 text-center text-orange-100"
+        >
+          <p>
+            &copy; 2023 RIZKITECH |LJN Lintas Jaringan Nusantara. Kantor
+            Pelayanan Tanjungmedar.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- === MODAL PENDAFTARAN === -->
+    <div
+      class="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 opacity-0 invisible"
+      id="registration-modal"
+    >
+      <div
+        class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4 transform transition-all duration-300 scale-95"
+      >
+        <div class="flex justify-between items-center border-b px-6 py-4">
+          <h3 class="text-xl font-bold text-orange-600">
+            Formulir Pendaftaran
+          </h3>
+          <button class="text-gray-500 hover:text-gray-700" id="close-modal">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="p-6 max-h-[80vh] overflow-y-auto">
+          <form id="registration-form">
+            <div class="mb-4">
+              <label for="reg-name" class="block text-gray-700 mb-2"
+                >Nama Lengkap</label
+              >
+              <input
+                type="text"
+                id="reg-name"
+                class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                required
+              />
+            </div>
+            <div class="mb-4">
+              <label for="nik" class="block text-gray-700 mb-2">NIK</label>
+              <input
+                type="text"
+                id="nik"
+                class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                required
+              />
+            </div>
+            <div class="mb-4">
+              <label for="reg-email" class="block text-gray-700 mb-2"
+                >Email</label
+              >
+              <input
+                type="email"
+                id="reg-email"
+                class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                required
+              />
+            </div>
+            <div class="mb-4">
+              <label for="reg-phone" class="block text-gray-700 mb-2"
+                >Nomor Telepon (WhatsApp)</label
+              >
+              <input
+                type="tel"
+                id="reg-phone"
+                class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                required
+              />
+            </div>
+            <div class="mb-4">
+              <label for="reg-package" class="block text-gray-700 mb-2"
+                >Pilih Paket</label
+              >
+              <select
+                id="reg-package"
+                class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                required
+              >
+                <option value="">-- Pilih Paket --</option>
+                <option value="Family">Paket Family - Rp 150.000/bulan</option>
+                <option value="Silver">Paket Silver - Rp 167.000/bulan</option>
+                <option value="Gold">Paket Gold - Rp 249.000/bulan</option>
+              </select>
+            </div>
+            <div class="mb-4">
+              <label for="namawifi" class="block text-gray-700 mb-2"
+                >Nama Wifi yang Diinginkan</label
+              >
+              <input
+                type="text"
+                id="namawifi"
+                class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                required
+              />
+            </div>
+            <div class="mb-4">
+              <label for="passwordwifi" class="block text-gray-700 mb-2"
+                >Password Wifi (min. 8 karakter)</label
+              >
+              <input
+                type="password"
+                id="passwordwifi"
+                class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                required
+                minlength="8"
+              />
+            </div>
+            <div class="mb-4">
+              <label for="reg-address" class="block text-gray-700 mb-2"
+                >Alamat Lengkap Pemasangan</label
+              >
+              <textarea
+                id="reg-address"
+                rows="3"
+                class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                required
+              ></textarea>
+            </div>
+            <div class="mb-4">
+              <label for="map-container" class="block text-gray-700 mb-2"
+                >Tandai Lokasi Pemasangan</label
+              >
+              <div id="map-container" class="h-64 rounded-lg z-0 relative">
+                <button
+                  type="button"
+                  id="my-location-btn"
+                  class="absolute top-2 right-2 z-[1000] bg-white p-2 rounded-md shadow-md text-gray-700 hover:bg-gray-100"
+                  title="Gunakan lokasi saya"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                    <path
+                      fill-rule="evenodd"
+                      d="M.458 10C.458 4.737 4.737.458 10 .458c5.263 0 9.542 4.279 9.542 9.542s-4.279 9.542-9.542 9.542C4.737 19.542.458 15.263.458 10zM10 2a8 8 0 100 16A8 8 0 0010 2z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <input type="hidden" id="latitude" />
+              <input type="hidden" id="longitude" />
+              <p class="text-xs text-gray-500 mt-1">
+                Klik pada peta atau geser penanda untuk menentukan lokasi.
+              </p>
+            </div>
+            <div class="flex justify-end space-x-3 mt-6">
+              <button
+                type="button"
+                class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition duration-300"
+                id="cancel-registration"
+              >
+                Batal
+              </button>
+              <button
+                type="submit"
+                class="orange-gradient text-white font-bold px-6 py-2 rounded-lg hover:opacity-90 transition duration-300"
+              >
+                Daftar
+              </button>
+            </div>
+            <div id="form-feedback" class="mt-4 text-center"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- === SEMUA JAVASCRIPT DIGABUNGKAN DI SINI === -->
+    <script>
+      // PASTIKAN SEMUA KODE BERADA DI DALAM EVENT LISTENER INI
+      document.addEventListener("DOMContentLoaded", function () {
+        // --- Logika UI Dasar (Menu, Scroll, Animasi) ---
+        const mobileMenuButton = document.getElementById("mobile-menu-button");
+        const mobileMenu = document.getElementById("mobile-menu");
+        mobileMenuButton.addEventListener("click", () =>
+          mobileMenu.classList.toggle("hidden")
+        );
+
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+          anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            document
+              .querySelector(this.getAttribute("href"))
+              .scrollIntoView({ behavior: "smooth" });
+          });
+        });
+
+        const sections = document.querySelectorAll(".section-animate");
+        const checkScroll = () => {
+          sections.forEach((section) => {
+            if (
+              section.getBoundingClientRect().top <
+              window.innerHeight * 0.8
+            ) {
+              section.classList.add("show");
+            }
+          });
+        };
+        window.addEventListener("load", checkScroll);
+        window.addEventListener("scroll", checkScroll);
+
+        // --- Logika Carousel ---
+        const carouselInner = document.getElementById("carousel-inner");
+        const carouselItems = document.querySelectorAll(".carousel-item");
+        const prevButton = document.querySelector(".carousel-prev");
+        const nextButton = document.querySelector(".carousel-next");
+        const dots = document.querySelectorAll(".carousel-dot");
+        let currentIndex = 0;
+
+        // Cek apakah elemen carousel ada sebelum melanjutkan
+        if (carouselInner && carouselItems.length > 0) {
+          const getItemsPerView = () => {
+            // Tailwind's 'md' breakpoint is 768px
+            return window.innerWidth < 768 ? 1 : 3;
+          };
+
+          const getTotalSlides = () => {
+            const itemsPerView = getItemsPerView();
+            // On mobile, each item is a slide. On desktop, all items are visible in one slide.
+            return itemsPerView === 1 ? carouselItems.length : 1;
+          };
+
+          const updateCarousel = () => {
+            const itemsPerView = getItemsPerView();
+            const itemWidth = 100 / itemsPerView;
+            const totalSlides = getTotalSlides();
+
+            // Pastikan currentIndex tidak melebihi jumlah slide yang ada
+            if (currentIndex >= totalSlides) {
+              currentIndex = totalSlides - 1;
+            }
+            if (currentIndex < 0) {
+              currentIndex = 0;
+            }
+
+            // Terapkan transformasi
+            carouselInner.style.transform = `translateX(-${
+              currentIndex * itemWidth
+            }%)`;
+
+            // Update dots (hanya relevan untuk mobile view)
+            dots.forEach((dot, index) => {
+              dot.classList.toggle("bg-orange-600", index === currentIndex);
+              dot.classList.toggle("bg-orange-300", index !== currentIndex);
+            });
+
+            // Sembunyikan/tampilkan tombol navigasi & dots berdasarkan view
+            const isMobile = itemsPerView === 1;
+            const navAndDots = [prevButton, nextButton, ...dots];
+            navAndDots.forEach(
+              (el) => (el.style.display = isMobile ? "" : "none")
+            );
+          };
+
+          prevButton.addEventListener("click", () => {
+            const totalSlides = getTotalSlides();
+            currentIndex =
+              currentIndex > 0 ? currentIndex - 1 : totalSlides - 1;
+            updateCarousel();
+          });
+
+          nextButton.addEventListener("click", () => {
+            const totalSlides = getTotalSlides();
+            currentIndex =
+              currentIndex < totalSlides - 1 ? currentIndex + 1 : 0;
+            updateCarousel();
+          });
+
+          dots.forEach((dot) => {
+            dot.addEventListener("click", () => {
+              currentIndex = parseInt(dot.getAttribute("data-index"));
+              updateCarousel();
+            });
+          });
+
+          // Panggil saat load dan saat ukuran window berubah
+          window.addEventListener("resize", updateCarousel);
+          updateCarousel(); // Initialize
+        }
+
+        // --- Logika Modal ---
+        const registrationModal = document.getElementById("registration-modal");
+        const registerButtons = document.querySelectorAll(".register-btn");
+        const closeModalButton = document.getElementById("close-modal");
+        const cancelRegistrationButton = document.getElementById(
+          "cancel-registration"
+        );
+
+        const showModal = () => {
+          registrationModal.classList.add("visible");
+          document.body.style.overflow = "hidden";
+        };
+        const hideModal = () => {
+          registrationModal.classList.remove("visible");
+          document.body.style.overflow = "auto";
+        };
+
+        registerButtons.forEach((button) =>
+          button.addEventListener("click", showModal)
+        );
+        closeModalButton.addEventListener("click", hideModal);
+        cancelRegistrationButton.addEventListener("click", hideModal);
+        registrationModal.addEventListener("click", (e) => {
+          if (e.target === registrationModal) hideModal();
+        });
+
+        // --- Logika Peta ---
+        let map = null;
+        let marker = null;
+        const initialCoords = { lat: -6.2088, lng: 106.8456 }; // Default ke Jakarta
+
+        function initializeMap() {
+          if (map) return; // Jangan inisialisasi ulang
+
+          map = L.map("map-container").setView(
+            [initialCoords.lat, initialCoords.lng],
+            13
+          );
+          L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            attribution:
+              '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+          }).addTo(map);
+
+          marker = L.marker([initialCoords.lat, initialCoords.lng], {
+            draggable: true,
+          }).addTo(map);
+
+          function updateCoordinates(latlng) {
+            document.getElementById("latitude").value = latlng.lat;
+            document.getElementById("longitude").value = latlng.lng;
+            marker.setLatLng(latlng);
+          }
+
+          map.on("click", (e) => updateCoordinates(e.latlng));
+          marker.on("dragend", () => updateCoordinates(marker.getLatLng()));
+
+          document
+            .getElementById("my-location-btn")
+            .addEventListener("click", () => {
+              if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                  (position) => {
+                    const userLocation = {
+                      lat: position.coords.latitude,
+                      lng: position.coords.longitude,
+                    };
+                    map.setView(userLocation, 16);
+                    updateCoordinates(userLocation);
+                  },
+                  () =>
+                    alert(
+                      "Tidak bisa mendapatkan lokasi. Pastikan izin lokasi diberikan."
+                    )
+                );
+              } else {
+                alert("Geolocation tidak didukung oleh browser ini.");
+              }
+            });
+        }
+
+        const observer = new MutationObserver((mutations) => {
+          mutations.forEach((mutation) => {
+            if (
+              mutation.attributeName === "class" &&
+              registrationModal.classList.contains("visible")
+            ) {
+              initializeMap();
+              setTimeout(() => map && map.invalidateSize(), 10);
+            }
+          });
+        });
+        observer.observe(registrationModal, { attributes: true });
+
+        // --- Logika Pengiriman Formulir ---
+        document
+          .getElementById("registration-form")
+          .addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            const feedbackEl = document.getElementById("form-feedback");
+            const submitButton = this.querySelector('button[type="submit"]');
+
+            feedbackEl.innerHTML = "";
+            submitButton.disabled = true;
+            submitButton.innerHTML = "Mengirim...";
+
+            try {
+              const API_ENDPOINT =
+                "https://billing.rizki-tech.com/api/public/register";
+              const packageMapping = { Family: 1, Silver: 2, Gold: 3 };
+
+              const name = document.getElementById("reg-name").value;
+              const nik = document.getElementById("nik").value;
+              const email = document.getElementById("reg-email").value;
+              const phone = document.getElementById("reg-phone").value;
+              const packageValue = document.getElementById("reg-package").value;
+              const namawifi = document.getElementById("namawifi").value;
+              const passwordwifi =
+                document.getElementById("passwordwifi").value;
+              const address = document.getElementById("reg-address").value;
+              const lat = document.getElementById("latitude").value;
+              const lng = document.getElementById("longitude").value;
+
+              if (!packageValue)
+                throw new Error("Silakan pilih paket internet.");
+              if (passwordwifi.length < 8)
+                throw new Error("Password Wifi minimal 8 karakter.");
+              if (!lat || !lng)
+                throw new Error("Silakan tandai lokasi pemasangan di peta.");
+
+              const packageId = packageMapping[packageValue];
+              if (!packageId)
+                throw new Error("Paket yang dipilih tidak valid.");
+
+              const payload = {
+                name,
+                nik,
+                email,
+                phone,
+                packageId,
+                namawifi,
+                passwordwifi,
+                address,
+                location: { lat: parseFloat(lat), lng: parseFloat(lng) },
+              };
+
+              const response = await fetch(API_ENDPOINT, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+              });
+
+              const result = await response.json();
+
+              if (!response.ok) {
+                throw new Error(
+                  result.message || "Terjadi kesalahan pada server."
+                );
+              }
+
+              if (result.success) {
+                feedbackEl.innerHTML = `<p class="text-green-600 font-semibold">${result.message}</p>`;
+                document.getElementById("registration-form").reset();
+                if (marker) marker.setLatLng(initialCoords);
+                document.getElementById("latitude").value = "";
+                document.getElementById("longitude").value = "";
+                setTimeout(hideModal, 4000);
+              } else {
+                throw new Error(result.message || "Pendaftaran gagal.");
+              }
+            } catch (error) {
+              feedbackEl.innerHTML = `<p class="text-red-600 font-semibold">${error.message}</p>`;
+            } finally {
+              submitButton.disabled = false;
+              submitButton.innerHTML = "Daftar";
+            }
+          });
+      });
+    </script>
+  </body>
+</html>

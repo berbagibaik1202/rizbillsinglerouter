@@ -1,0 +1,12 @@
+FROM docker:27-cli
+
+RUN apk add --no-cache nodejs git openssh-client bash
+
+WORKDIR /workspace
+
+COPY updater /opt/updater
+
+ENV NODE_ENV=production
+ENV PORT=3140
+
+ENTRYPOINT ["node", "/opt/updater/update-server.mjs"]

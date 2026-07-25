@@ -1,0 +1,20 @@
+{
+  "appVersion": "build-2fae71069706",
+  "gitCommit": "2fae71069706",
+  "gitBranch": "clean-main",
+  "builtAt": "2026-07-25T18:04:06.223Z",
+  "sourceDir": "E:\\APLIKASI\\rizkitechbill\\isp-billing-management-system\\dist",
+  "releaseDir": "E:\\APLIKASI\\rizkitechbill\\isp-billing-management-system\\release",
+  "copiedRootFiles": [
+    "package.json",
+    "package-lock.json",
+    "install-vps.sh",
+    "docker-entrypoint.js",
+    "docker-compose.vps.yml",
+    "Dockerfile.updater",
+    "docker.env.example",
+    "scripts/docker-healthwatch.sh"
+  ],
+  "dockerfile": "Dockerfile",
+  "note": "Release folder contains flattened dist output plus deployment files outside dist."
+}
