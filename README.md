@@ -17,6 +17,17 @@ Kalau `docker.env` lama belum punya key update, jalankan ulang `bash install-vps
 Kalau pakai Nginx Proxy Manager, arahkan upstream ke `APP_INSTANCE_NAME:3002`.
 Kalau akses langsung ke `IP-VPS:3002`, itu tidak akan jalan kecuali kamu menambahkan port mapping host di compose.
 
+## Reset Total dan Build Ulang
+
+Kalau kamu mau mematikan semua container stack ini lalu membangun ulang termasuk database MariaDB, pakai urutan berikut:
+
+```bash
+docker compose --env-file docker.env -f docker-compose.vps.yml down -v --remove-orphans
+docker compose --env-file docker.env -f docker-compose.vps.yml up -d --build
+```
+
+Catatan: opsi `down -v` akan menghapus volume database, jadi semua data lama ikut terhapus.
+
 Untuk restart/update deployment manual, pakai urutan aman ini:
 
 ```bash
