@@ -126,9 +126,10 @@ const setJobProgress = (job, progress, currentStep, message) => {
     job.updated_at = nowIso();
 };
 
-const runCommand = (job, label, command, args, extraEnv = {}) => {
+const runCommand = (job, label, command, args, extraEnv = {}, options = {}) => {
     return new Promise((resolve, reject) => {
-        addLog(job, 'system', `$ ${command} ${args.join(' ')}`);
+        const commandLabel = options.commandLabel || label || command;
+        addLog(job, 'system', `Running ${commandLabel}...`);
 
         const child = spawn(command, args, {
             cwd: WORKSPACE_DIR,
@@ -183,14 +184,20 @@ const performUpdate = async (job) => {
     try {
         if (REPO_URL) {
             setJobProgress(job, 12, 'Configuring remote', 'Applying configured repository URL.');
-            await runCommand(job, 'git remote set-url', 'git', ['remote', 'set-url', GIT_REMOTE, REPO_URL]);
+            await runCommand(job, 'git remote set-url', 'git', ['remote', 'set-url', GIT_REMOTE, REPO_URL], {}, {
+                commandLabel: 'configuring repository remote',
+            });
         }
 
         setJobProgress(job, 20, 'Fetching', 'Fetching latest changes from origin.');
-        await runCommand(job, 'git fetch', 'git', ['fetch', GIT_REMOTE]);
+        await runCommand(job, 'git fetch', 'git', ['fetch', GIT_REMOTE], {}, {
+            commandLabel: 'fetching latest changes',
+        });
 
         setJobProgress(job, 45, 'Resetting', 'Resetting workspace to the latest main branch.');
-        await runCommand(job, 'git reset', 'git', ['reset', '--hard', `${GIT_REMOTE}/${GIT_BRANCH}`]);
+        await runCommand(job, 'git reset', 'git', ['reset', '--hard', `${GIT_REMOTE}/${GIT_BRANCH}`], {}, {
+            commandLabel: 'resetting workspace',
+        });
 
         setJobProgress(job, 65, 'Cleaning', 'Cleaning untracked files while preserving database and uploads.');
         await runCommand(job, 'git clean', 'git', [
@@ -202,7 +209,9 @@ const performUpdate = async (job) => {
             'backend/uploads',
             '-e',
             'backend/whatsapp_session',
-        ]);
+        ], {}, {
+            commandLabel: 'cleaning workspace',
+        });
 
         setJobProgress(job, 90, 'Rebuilding', 'Rebuilding the application containers.');
         await runCommand(job, 'docker compose up', 'docker', [
@@ -217,7 +226,9 @@ const performUpdate = async (job) => {
             '--remove-orphans',
             'app',
             'app-watchdog',
-        ]);
+        ], {}, {
+            commandLabel: 'rebuilding application containers',
+        });
 
         setJobProgress(job, 100, 'Completed', 'Application update completed successfully.');
         job.status = 'completed';
