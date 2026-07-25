@@ -6,7 +6,7 @@ import { randomUUID } from 'crypto';
 
 const PORT = Number(process.env.PORT || 3140);
 const WORKSPACE_DIR = String(process.env.WORKSPACE_DIR || '/workspace');
-const RUNTIME_HOME = String(process.env.APP_UPDATE_HOME || '/tmp/app-updater-home').trim() || '/tmp/app-updater-home';
+const RUNTIME_HOME = String(process.env.APP_UPDATE_HOME || '/tmp').trim() || '/tmp';
 const DOCKER_CONFIG_DIR = String(process.env.APP_UPDATE_DOCKER_CONFIG || path.join(RUNTIME_HOME, '.docker')).trim() || path.join(RUNTIME_HOME, '.docker');
 const SSH_DIR = String(process.env.APP_UPDATE_SSH_DIR || path.join(RUNTIME_HOME, '.ssh')).trim() || path.join(RUNTIME_HOME, '.ssh');
 const UPDATE_TOKEN = String(process.env.APP_UPDATE_TOKEN || '').trim();
