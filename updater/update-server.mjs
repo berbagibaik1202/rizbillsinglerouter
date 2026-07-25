@@ -6,6 +6,9 @@ import { randomUUID } from 'crypto';
 
 const PORT = Number(process.env.PORT || 3140);
 const WORKSPACE_DIR = String(process.env.WORKSPACE_DIR || '/workspace');
+const RUNTIME_HOME = String(process.env.APP_UPDATE_HOME || '/tmp/app-updater-home').trim() || '/tmp/app-updater-home';
+const DOCKER_CONFIG_DIR = String(process.env.APP_UPDATE_DOCKER_CONFIG || path.join(RUNTIME_HOME, '.docker')).trim() || path.join(RUNTIME_HOME, '.docker');
+const SSH_DIR = String(process.env.APP_UPDATE_SSH_DIR || path.join(RUNTIME_HOME, '.ssh')).trim() || path.join(RUNTIME_HOME, '.ssh');
 const UPDATE_TOKEN = String(process.env.APP_UPDATE_TOKEN || '').trim();
 const REPO_URL = String(process.env.APP_UPDATE_REPO_URL || '').trim();
 const GIT_REMOTE = String(process.env.APP_UPDATE_GIT_REMOTE || 'origin').trim() || 'origin';
@@ -131,6 +134,11 @@ const runCommand = (job, label, command, args, extraEnv = {}) => {
             cwd: WORKSPACE_DIR,
             env: {
                 ...process.env,
+                HOME: RUNTIME_HOME,
+                DOCKER_CONFIG: DOCKER_CONFIG_DIR,
+                XDG_CONFIG_HOME: path.join(RUNTIME_HOME, '.config'),
+                APP_UPDATE_HOME: RUNTIME_HOME,
+                APP_UPDATE_DOCKER_CONFIG: DOCKER_CONFIG_DIR,
                 ...extraEnv,
             },
             shell: false,
@@ -226,6 +234,12 @@ const performUpdate = async (job) => {
     }
 };
 
+const prepareRuntimeDirs = async () => {
+    await fs.mkdir(RUNTIME_HOME, { recursive: true });
+    await fs.mkdir(DOCKER_CONFIG_DIR, { recursive: true });
+    await fs.mkdir(SSH_DIR, { recursive: true });
+};
+
 const requireToken = (req) => {
     if (!UPDATE_TOKEN) return false;
 
@@ -309,7 +323,11 @@ const server = http.createServer(async (req, res) => {
     });
 });
 
+await prepareRuntimeDirs();
+
 server.listen(PORT, '0.0.0.0', () => {
     console.log(`[app-updater] listening on port ${PORT}`);
     console.log(`[app-updater] workspace: ${WORKSPACE_DIR}`);
+    console.log(`[app-updater] runtime home: ${RUNTIME_HOME}`);
+    console.log(`[app-updater] docker config: ${DOCKER_CONFIG_DIR}`);
 });

@@ -84,19 +84,22 @@ services:
       NODE_ENV: production
       PORT: 3140
       WORKSPACE_DIR: /workspace
+      APP_UPDATE_HOME: /tmp/app-updater-home
+      APP_UPDATE_DOCKER_CONFIG: /tmp/app-updater-home/.docker
+      APP_UPDATE_SSH_DIR: /tmp/app-updater-home/.ssh
       APP_UPDATE_REPO_URL: ${APP_UPDATE_REPO_URL:-}
       APP_UPDATE_GIT_REMOTE: ${APP_UPDATE_GIT_REMOTE:-origin}
       APP_UPDATE_GIT_BRANCH: ${APP_UPDATE_GIT_BRANCH:-main}
       APP_UPDATE_COMPOSE_FILE: ${APP_UPDATE_COMPOSE_FILE:-docker-compose.vps.yml}
       APP_UPDATE_ENV_FILE: ${APP_UPDATE_ENV_FILE:-docker.env}
       GIT_SSH_COMMAND: ssh -o StrictHostKeyChecking=accept-new
-      HOME: /home/updater
+      HOME: /tmp/app-updater-home
     user: "${UPDATER_UID:-0}:${UPDATER_GID:-0}"
     group_add:
       - "${DOCKER_GID:-0}"
     volumes:
       - ./:/workspace
-      - ${UPDATER_SSH_DIR:-/root/.ssh}:/home/updater/.ssh:ro
+      - ${UPDATER_SSH_DIR:-/root/.ssh}:/tmp/app-updater-home/.ssh:ro
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - app-net
