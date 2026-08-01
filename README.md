@@ -2,33 +2,32 @@
 
 ## Skema Repo
 
-Repo ini dipakai dalam dua jalur:
+Repo ini dipakai sebagai satu URL dengan dua branch:
 
-- Source utama: `https://github.com/berbagibaik1202/rizbillsinglerouter.git`
-- Release/build: `https://github.com/berbagibaik1202/rizbillsinglepub.git`
+- `main` untuk source asli dan pengembangan
+- `release-push` untuk hasil build siap deploy
 
 Aturan pakai:
 
-- `main` di repo source dipakai untuk kode asli dan pengembangan.
-- `main` di repo release dipakai untuk hasil build yang siap deploy.
-- Jangan campur source React penuh ke repo release kalau tujuanmu hanya distribusi build.
+- Jangan campur source React penuh ke branch release kalau tujuanmu hanya distribusi build.
+- Update aplikasi berjalan cukup tarik branch `release-push` dari repo yang sama.
 
 ## Install Cepat
 
 Kalau ingin pasang package release siap pakai, jalankan 3 perintah ini:
 
 ```bash
-git clone https://github.com/berbagibaik1202/rizbillsinglepub.git
-cd rizbillsinglepub
+git clone https://github.com/berbagibaik1202/rizbillsinglerouter.git rizbillsingle
+cd rizbillsingle
 bash install-vps.sh
 ```
 
 Installer akan otomatis membuat `docker.env`, database, dan credential aplikasi.
 
-Kalau kamu memakai repo build public, isi `APP_UPDATE_REPO_URL` di `docker.env` agar tombol `Update App` bisa melakukan update dari halaman Settings.
+Kalau ingin update dari UI, biarkan `APP_UPDATE_REPO_URL` mengarah ke repo ini dan `APP_UPDATE_GIT_BRANCH` ke `release-push`.
 Kalau `docker.env` lama belum punya key update, jalankan ulang `bash install-vps.sh` supaya nilai dari `docker.env.example` tersinkron ke file env aktif.
 
-Kalau kamu ingin bekerja dari source utama, clone repo source lalu jalankan workflow development atau build dari sana, bukan dari repo release.
+Kalau kamu ingin bekerja dari source utama, clone repo ini lalu checkout branch `main`.
 
 Kalau pakai Nginx Proxy Manager, arahkan upstream ke `APP_INSTANCE_NAME:3002`.
 Kalau akses langsung ke `IP-VPS:3002`, itu tidak akan jalan kecuali kamu menambahkan port mapping host di compose.
@@ -46,12 +45,12 @@ git pull origin main
 Kalau yang ingin diperbarui adalah release/build:
 
 ```bash
-git fetch pub
-git checkout main
-git pull pub main
+git fetch origin
+git checkout release-push
+git pull origin release-push
 ```
 
-Untuk build release dari source, pakai workflow build yang sudah ada di `package.json`, lalu publish hasilnya ke repo release.
+Untuk build release dari source, pakai workflow build yang sudah ada di `package.json`, lalu publish hasilnya ke branch `release-push` di repo yang sama.
 
 ## Reset Total dan Build Ulang
 
