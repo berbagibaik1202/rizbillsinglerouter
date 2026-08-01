@@ -213,7 +213,6 @@ API_KEY=$(quote_env_value "$API_KEY")
 APP_UPDATE_SERVICE_URL=http://app-updater:3140
 APP_UPDATE_TOKEN=$(quote_env_value "$APP_UPDATE_TOKEN")
 APP_UPDATE_REPO_URL=$(quote_env_value "$APP_UPDATE_REPO_URL")
-APP_UPDATE_GIT_REMOTE=$(quote_env_value "$APP_UPDATE_GIT_REMOTE")
 APP_UPDATE_GIT_BRANCH=$(quote_env_value "$APP_UPDATE_GIT_BRANCH")
 APP_UPDATE_COMPOSE_FILE=$(quote_env_value "$APP_UPDATE_COMPOSE_FILE")
 APP_UPDATE_ENV_FILE=$(quote_env_value "$APP_UPDATE_ENV_FILE")
@@ -307,7 +306,6 @@ main() {
   API_KEY="$(load_value API_KEY "")"
   APP_UPDATE_TOKEN="$(load_secret_from_example APP_UPDATE_TOKEN)"
   APP_UPDATE_REPO_URL="$(load_value_from_example APP_UPDATE_REPO_URL "https://github.com/berbagibaik1202/rizbillsinglerouter.git")"
-  APP_UPDATE_GIT_REMOTE="$(load_value_from_example APP_UPDATE_GIT_REMOTE "origin")"
   APP_UPDATE_GIT_BRANCH="$(load_value_from_example APP_UPDATE_GIT_BRANCH "release-push")"
   APP_UPDATE_COMPOSE_FILE="$(load_value_from_example APP_UPDATE_COMPOSE_FILE "docker-compose.vps.yml")"
   APP_UPDATE_ENV_FILE="$(load_value_from_example APP_UPDATE_ENV_FILE "docker.env")"
