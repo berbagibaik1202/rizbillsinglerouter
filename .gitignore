@@ -1,0 +1,39 @@
+# Local environment and secrets
+.env.local
+backend/.env
+
+# Dependencies
+node_modules/
+
+# Generated app/runtime folders in this workspace
+frontendmobil/
+
+# Build and release outputs
+dist/
+release/
+.tmp-*/
+
+# Runtime data and logs
+backend/logs/
+backend/uploads/
+backend/whatsapp_session/
+backend/import-trace-*.log
+frontendmobil_tsc.log
+
+# Editor and tooling
+.vscode/
+
+# Workspace scratch files
+130
+Catatn revisi.txt
+PlnForm-numbered.txt
+_fix.py
+bahan referensi olt.js
+oidc300c320.txt
+out.txt
+package.json.produc.txt
+script.py
+script.txt
+show.js
+tmp.py
+walk.txt
