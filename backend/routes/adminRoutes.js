@@ -1690,6 +1690,7 @@ router.get('/database/backup', (req, res) => {
         '--events',
         '--triggers',
         '--hex-blob',
+        `--ignore-table=${DB_NAME}.database_restore_jobs`,
         `--result-file=${filePath}`,
         DB_NAME,
     ];
