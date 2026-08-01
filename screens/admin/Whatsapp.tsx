@@ -1,1 +1,529 @@
-﻿import React, { useState, useEffect, useCallback, useMemo } from 'react'; import Card from '../../components/common/Card'; import { Customer, CustomerStatus, WhatsappLog, formatDateTimeDisplay, Odp, ApiSettings } from '../../types'; import Tag from '../../components/common/Tag'; import { fetchWithAuth } from '~/components/api'; import WhatsAppChatTab from '../../components/admin/settings/WhatsAppChatTab';  const API_URL = '/api/admin/whatsapp';  const getWhatsappStatusMeta = (status: string) => {     switch (String(status || '').toLowerCase()) {         case 'queued':             return { label: 'queued', color: 'yellow' as const };         case 'sent':             return { label: 'sent', color: 'blue' as const };         case 'delivered':             return { label: 'delivered', color: 'green' as const };         case 'failed':         default:             return { label: 'failed', color: 'red' as const };     } };  // --- Log Detail Modal Component --- interface LogDetailModalProps {     isOpen: boolean;     onClose: () => void;     log: WhatsappLog | null;     customerName: string | null; }  const LogDetailModal: React.FC<LogDetailModalProps> = ({ isOpen, onClose, log, customerName }) => {     if (!isOpen || !log) return null;      return (         <div className="fixed z-30 inset-0 overflow-y-auto">             <div className="flex items-center justify-center min-h-screen p-4">                 <div className="fixed inset-0 bg-gray-500 bg-opacity-75 dark:bg-black/80" onClick={onClose}></div>                 <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 z-40 w-full max-w-2xl transform transition-all">                     <div className="flex justify-between items-start">                         <h2 className="text-lg font-bold text-gray-800 dark:text-gray-100">Message Details</h2>                         <button onClick={onClose} className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">                              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>                         </button>                     </div>                      <div className="mt-4 space-y-4 text-sm">                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">                             <div>                                 <p className="font-semibold text-gray-600 dark:text-gray-400">Recipient</p>                                 <p className="text-gray-800 dark:text-gray-200">{customerName || 'N/A'}</p>                                 <p className="font-mono text-xs text-gray-500">{log.recipient_number}</p>                             </div>                             <div>                                 <p className="font-semibold text-gray-600 dark:text-gray-400">Status</p>                                 <p><Tag color={getWhatsappStatusMeta(log.status).color}>{getWhatsappStatusMeta(log.status).label}</Tag></p>                             </div>                             <div>                                 <p className="font-semibold text-gray-600 dark:text-gray-400">Type</p>                                 <p className="text-gray-800 dark:text-gray-200">{log.type}</p>                             </div>                             <div>                                 <p className="font-semibold text-gray-600 dark:text-gray-400">Transport</p>                                 <p className="text-gray-800 dark:text-gray-200">{log.transport || 'N/A'}</p>                             </div>                             <div>                                 <p className="font-semibold text-gray-600 dark:text-gray-400">Provider ID</p>                                 <p className="font-mono text-xs text-gray-500 break-all">{log.provider_message_id || 'N/A'}</p>                             </div>                              <div>                                 <p className="font-semibold text-gray-600 dark:text-gray-400">Time</p>                                 <p className="text-gray-800 dark:text-gray-200">{formatDateTimeDisplay(log.created_at)}</p>                             </div>                             <div>                                 <p className="font-semibold text-gray-600 dark:text-gray-400">Sent At</p>                                 <p className="text-gray-800 dark:text-gray-200">{log.sent_at ? formatDateTimeDisplay(log.sent_at) : 'N/A'}</p>                             </div>                             <div>                                 <p className="font-semibold text-gray-600 dark:text-gray-400">Delivered At</p>                                 <p className="text-gray-800 dark:text-gray-200">{log.delivered_at ? formatDateTimeDisplay(log.delivered_at) : 'N/A'}</p>                             </div>                         </div>                          <div className="pt-4 border-t dark:border-gray-700">                              <p className="font-semibold text-gray-600 dark:text-gray-400">Message Body</p>                              <div className="mt-1 p-3 bg-gray-100 dark:bg-gray-900 rounded-md max-h-60 overflow-y-auto">                                 <pre className="whitespace-pre-wrap font-sans text-gray-800 dark:text-gray-200">{log.message_body}</pre>                              </div>                         </div>                          {log.error_message && (                             <div className="pt-4 border-t dark:border-gray-700">                                 <p className="font-semibold text-red-600 dark:text-red-400">Error Details</p>                                 <div className="mt-1 p-3 bg-red-50 dark:bg-red-900/40 rounded-md">                                     <pre className="whitespace-pre-wrap font-mono text-xs text-red-700 dark:text-red-300">{log.error_message}</pre>                                 </div>                             </div>                         )}                     </div>                                          <div className="mt-6 flex justify-end">                         <button onClick={onClose} type="button" className="px-4 py-2 bg-gray-200 dark:bg-gray-600 rounded-md text-sm font-medium">Close</button>                     </div>                 </div>             </div>         </div>     ); };   const Whatsapp: React.FC = () => {     const [activeTab, setActiveTab] = useState<'broadcast' | 'chat'>('broadcast');     const [customers, setCustomers] = useState<Customer[]>([]);     const [odps, setOdps] = useState<Odp[]>([]);     const [settings, setSettings] = useState<ApiSettings | null>(null);     const [logs, setLogs] = useState<WhatsappLog[]>([]);     const [isLoading, setIsLoading] = useState(true);     const [error, setError] = useState<string | null>(null);     const [viewingLog, setViewingLog] = useState<WhatsappLog | null>(null);      // Broadcast state     const [broadcastFilter, setBroadcastFilter] = useState<string>('all');     const [broadcastTemplate, setBroadcastTemplate] = useState<'general' | 'outage'>('general');     const [broadcastMessage, setBroadcastMessage] = useState('');     const [broadcastDelayMode, setBroadcastDelayMode] = useState<'flat' | 'linear' | 'step' | 'randomized'>('step');     const [broadcastDelayStartMs, setBroadcastDelayStartMs] = useState(1000);     const [broadcastDelayIncrementMs, setBroadcastDelayIncrementMs] = useState(750);     const [broadcastDelayMaxMs, setBroadcastDelayMaxMs] = useState(7000);     const [broadcastDelayStepEvery, setBroadcastDelayStepEvery] = useState(5);     const [broadcastDelayRandomJitterMs, setBroadcastDelayRandomJitterMs] = useState(1500);     const [isSending, setIsSending] = useState(false);     const [broadcastResponse, setBroadcastResponse] = useState<{ type: 'success' | 'error', message: string } | null>(null);      // Logs state     const [selectedLogs, setSelectedLogs] = useState<number[]>([]);     const [isResending, setIsResending] = useState(false);     const [isDeleting, setIsDeleting] = useState(false);     const [resendResponse, setResendResponse] = useState<{         type: 'success' | 'error',         message: string,         delayProfile?: {             mode: string;             startMs: number;             incrementMs: number;             maxMs: number;             stepEvery: number;             randomJitterMs: number;         }     } | null>(null);      const fetchData = useCallback(async () => {         setIsLoading(true);         try {             const [customersRes, logsRes, odpsRes, settingsRes] = await Promise.all([                 fetchWithAuth('/api/customers'),                 fetchWithAuth(`${API_URL}/logs`),                 fetchWithAuth('/api/network/odps'),                 fetchWithAuth('/api/admin/settings'),             ]);             setCustomers(await customersRes.json());             setLogs(await logsRes.json());             setOdps(await odpsRes.json());             setSettings(await settingsRes.json());         } catch (err: any) {             setError(err.message);         } finally {             setIsLoading(false);         }     }, []);      useEffect(() => {         fetchData();     }, [fetchData]);      useEffect(() => {         if (settings?.whatsapp) {             if (broadcastTemplate === 'general') {                 setBroadcastMessage(settings.whatsapp.broadcastGeneral || '');             } else {                 setBroadcastMessage(settings.whatsapp.broadcastOutage || '');             }             setBroadcastDelayMode(settings.whatsapp.broadcastDelayMode || 'step');             setBroadcastDelayStartMs(settings.whatsapp.broadcastDelayStartMs ?? 1000);             setBroadcastDelayIncrementMs(settings.whatsapp.broadcastDelayIncrementMs ?? 750);             setBroadcastDelayMaxMs(settings.whatsapp.broadcastDelayMaxMs ?? 7000);             setBroadcastDelayStepEvery(settings.whatsapp.broadcastDelayStepEvery ?? 5);             setBroadcastDelayRandomJitterMs(settings.whatsapp.broadcastDelayRandomJitterMs ?? 1500);         }     }, [broadcastTemplate, settings]);      const getFilteredCount = useMemo(() => {         if (broadcastFilter === 'all') return customers.filter(c => c.phone).length;         if (Object.values(CustomerStatus).some(s => s === broadcastFilter)) {             return customers.filter(c => c.status === broadcastFilter && c.phone).length;         }         // It's an ODP ID         return customers.filter(c => c.odpId === broadcastFilter && c.phone).length;     }, [customers, broadcastFilter]);          const customersMap = useMemo(() => {         return customers.reduce((acc, customer) => {             acc[customer.id] = customer;             return acc;         }, {} as Record<string, Customer>);     }, [customers]);      const todayLogStats = useMemo(() => {         const now = new Date();         const todaySent = logs.filter(log => {             const logDate = new Date(log.created_at);             if (isNaN(logDate.getTime())) return false;             return (                 (log.status === 'sent' || log.status === 'delivered') &&                 logDate.getDate() === now.getDate() &&                 logDate.getMonth() === now.getMonth() &&                 logDate.getFullYear() === now.getFullYear()             );         }).length;          const todayFailed = logs.filter(log => {             const logDate = new Date(log.created_at);             if (isNaN(logDate.getTime())) return false;             return (                 log.status === 'failed' &&                 logDate.getDate() === now.getDate() &&                 logDate.getMonth() === now.getMonth() &&                 logDate.getFullYear() === now.getFullYear()             );         }).length;          return { todaySent, todayFailed };     }, [logs]);      const handleBroadcast = useCallback(async () => {         if (!broadcastMessage.trim()) {             setBroadcastResponse({ type: 'error', message: 'Message cannot be empty.' });             return;         }         setIsSending(true);         setBroadcastResponse(null);         try {             const res = await fetchWithAuth(`${API_URL}/broadcast`, {                 method: 'POST',                 body: JSON.stringify({                     filter: broadcastFilter,                     message: broadcastMessage,                     delayMode: broadcastDelayMode,                     delayStartMs: broadcastDelayStartMs,                     delayIncrementMs: broadcastDelayIncrementMs,                     delayMaxMs: broadcastDelayMaxMs,                     delayStepEvery: broadcastDelayStepEvery,                     delayRandomJitterMs: broadcastDelayRandomJitterMs,                 }),             });             const data = await res.json();             if (!res.ok || !data.success) {                 throw new Error(data.message || 'Failed to send broadcast.');             }             setBroadcastResponse({ type: 'success', message: data.message });             fetchData(); // Refresh logs         } catch (error: any) {             setBroadcastResponse({ type: 'error', message: error.message });         } finally {             setIsSending(false);         }     }, [broadcastDelayIncrementMs, broadcastDelayMaxMs, broadcastDelayMode, broadcastDelayRandomJitterMs, broadcastDelayStartMs, broadcastDelayStepEvery, broadcastFilter, broadcastMessage, fetchData]);          const handleResend = useCallback(async (logIds: number[]) => {         if (logIds.length === 0) return;         setIsResending(true);         setResendResponse(null);         try {             const res = await fetchWithAuth(`${API_URL}/resend`, {                 method: 'POST',                 body: JSON.stringify({ logIds }),             });             const data = await res.json();             if (!res.ok) throw new Error(data.message);             setResendResponse({                 type: 'success',                 message: data.message,                 delayProfile: data.delayProfile,             });             setSelectedLogs([]);             fetchData(); // Refresh logs         } catch (error: any) {             setResendResponse({                 type: 'error',                 message: (error as Error).message,             });         } finally {             setIsResending(false);         }     }, [fetchData]);      const handleDelete = useCallback(async (logIds: number[]) => {         if (logIds.length === 0) return;         if (!window.confirm(`Are you sure you want to delete ${logIds.length} selected log(s)? This action cannot be undone.`)) {             return;         }         setIsDeleting(true);         setError(null);         try {             const res = await fetchWithAuth(`${API_URL}/logs/delete`, {                 method: 'POST',                 body: JSON.stringify({ logIds }),             });             const data = await res.json();             if (!res.ok) throw new Error(data.message);             alert(data.message);             setSelectedLogs([]);             fetchData();         } catch (error: any) {             setError((error as Error).message);         } finally {             setIsDeleting(false);         }     }, [fetchData]);          const handleSelectOne = (logId: number, isSelected: boolean) => {         setSelectedLogs(prev => isSelected ? [...prev, logId] : prev.filter(id => id !== logId));     };      const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {         setSelectedLogs(e.target.checked ? logs.map(l => l.id) : []);     };          const inputClasses = "w-full p-2 border rounded bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-blue-500 focus:border-blue-500";      return (         <div className="space-y-6">             <LogDetailModal                 isOpen={!!viewingLog}                 onClose={() => setViewingLog(null)}                 log={viewingLog}                 customerName={viewingLog?.customer_id ? (customersMap[viewingLog.customer_id]?.name || null) : null}             />              <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">                 <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">WhatsApp Center</h2>                 <div className="inline-flex rounded-lg border border-gray-200 bg-white p-1 shadow-sm dark:border-gray-700 dark:bg-gray-800">                     <button                         type="button"                         onClick={() => setActiveTab('broadcast')}                         className={`px-4 py-2 text-sm font-medium rounded-md ${activeTab === 'broadcast' ? 'bg-blue-600 text-white shadow' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'}`}                     >                         Broadcast                     </button>                     <button                         type="button"                         onClick={() => setActiveTab('chat')}                         className={`px-4 py-2 text-sm font-medium rounded-md ${activeTab === 'chat' ? 'bg-blue-600 text-white shadow' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'}`}                     >                         Chat                     </button>                 </div>             </div>             {error && <div className="p-4 bg-red-100 text-red-700 rounded-md">{error}</div>}              {activeTab === 'chat' ? (                 <WhatsAppChatTab whatsappSettings={settings?.whatsapp} />             ) : (             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">                 <div className="lg:col-span-1">                     <Card title="Send Broadcast">                         <div className="space-y-4">                              <div>                                 <label htmlFor="template" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Template</label>                                 <select id="template" name="template" value={broadcastTemplate} onChange={(e) => setBroadcastTemplate(e.target.value as any)} className={`mt-1 block w-full pl-3 pr-10 py-2 sm:text-sm rounded-md ${inputClasses}`}>                                     <option value="general">General Broadcast</option>                                     <option value="outage">Outage Notification</option>                                 </select>                             </div>                             <div>                                 <label htmlFor="filter" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Send To</label>                                 <select id="filter" name="filter" value={broadcastFilter} onChange={(e) => setBroadcastFilter(e.target.value as any)} className={`mt-1 block w-full pl-3 pr-10 py-2 sm:text-sm rounded-md ${inputClasses}`}>                                     <optgroup label="By Status">                                         <option value="all">All Customers</option>                                         <option value={CustomerStatus.Active}>Active Customers</option>                                         <option value={CustomerStatus.Suspended}>Suspended Customers</option>                                         <option value={CustomerStatus.Inactive}>Inactive Customers</option>                                         <option value={CustomerStatus.Unregister}>Unregister Customers</option>                                     </optgroup>                                     {odps.length > 0 && (                                         <optgroup label="By ODP">                                             {odps.map(odp => (                                                 <option key={odp.id} value={odp.id}>{odp.name}</option>                                             ))}                                         </optgroup>                                     )}                                 </select>                                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">This will send a message to {getFilteredCount} customer(s) with a phone number.</p>                             </div>                             <div>                                 <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Message</label>                                 <textarea id="message" name="message" rows={6} value={broadcastMessage} onChange={(e) => setBroadcastMessage(e.target.value)} className={`mt-1 ${inputClasses}`} placeholder="Type your message here..."></textarea>                                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Placeholders: `{"{{customerName}}"}`, `{"{{customerId}}"}`, `{"{{packageName}}"}`.</p>                             </div>                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">                                 <div>                                     <label htmlFor="broadcastDelayMode" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Mode Jeda</label>                                     <select id="broadcastDelayMode" value={broadcastDelayMode} onChange={(e) => setBroadcastDelayMode(e.target.value as 'flat' | 'linear' | 'step' | 'randomized')} className={`mt-1 ${inputClasses}`}>                                         <option value="flat">Flat</option>                                         <option value="linear">Linear</option>                                         <option value="step">Step / Batch</option>                                         <option value="randomized">Randomized</option>                                     </select>                                 </div>                                 <div>                                     <label htmlFor="broadcastDelayStartMs" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Delay Awal</label>                                     <input id="broadcastDelayStartMs" type="number" min={0} step={100} value={broadcastDelayStartMs} onChange={(e) => setBroadcastDelayStartMs(Number(e.target.value) || 0)} className={`mt-1 ${inputClasses}`} />                                 </div>                                 <div>                                     <label htmlFor="broadcastDelayIncrementMs" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Kenaikan / Pesan</label>                                     <input id="broadcastDelayIncrementMs" type="number" min={0} step={100} value={broadcastDelayIncrementMs} onChange={(e) => setBroadcastDelayIncrementMs(Number(e.target.value) || 0)} className={`mt-1 ${inputClasses}`} />                                 </div>                                 <div>                                     <label htmlFor="broadcastDelayMaxMs" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Delay Maks.</label>                                     <input id="broadcastDelayMaxMs" type="number" min={0} step={100} value={broadcastDelayMaxMs} onChange={(e) => setBroadcastDelayMaxMs(Number(e.target.value) || 0)} className={`mt-1 ${inputClasses}`} />                                 </div>                                 <div>                                     <label htmlFor="broadcastDelayStepEvery" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Naik Tiap N Pesan</label>                                     <input id="broadcastDelayStepEvery" type="number" min={1} step={1} value={broadcastDelayStepEvery} onChange={(e) => setBroadcastDelayStepEvery(Math.max(1, Number(e.target.value) || 1))} className={`mt-1 ${inputClasses}`} />                                 </div>                                 <div>                                     <label htmlFor="broadcastDelayRandomJitterMs" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Jitter Acak</label>                                     <input id="broadcastDelayRandomJitterMs" type="number" min={0} step={100} value={broadcastDelayRandomJitterMs} onChange={(e) => setBroadcastDelayRandomJitterMs(Number(e.target.value) || 0)} className={`mt-1 ${inputClasses}`} />                                 </div>                             </div>                             <p className="text-xs text-gray-500 dark:text-gray-400 -mt-2">                                 Flat: delay tetap. Linear: naik tiap pesan. Step: delay naik per beberapa pesan. Randomized: delay diacak natural sampai batas maksimum.                             </p>                             {broadcastResponse && <div className={`p-3 rounded-md text-sm ${broadcastResponse.type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>{broadcastResponse.message}</div>}                             <div className="flex justify-end">                                 <button type="button" onClick={handleBroadcast} disabled={isSending} className="px-4 py-2 bg-purple-600 text-white rounded flex items-center justify-center disabled:bg-purple-400 disabled:cursor-wait">                                     {isSending && <svg className="animate-spin -ml-1 mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>}                                     {isSending ? 'Sending...' : 'Send Broadcast'}                                 </button>                             </div>                         </div>                     </Card>                 </div>                 <div className="lg:col-span-2">                     <Card title="Message History">                         <div className="mb-4 grid grid-cols-1 sm:grid-cols-2 gap-3">                             <div className="rounded-lg border border-green-200 bg-green-50 dark:bg-green-900/20 dark:border-green-800 p-4">                                 <p className="text-xs font-medium uppercase tracking-wide text-green-700 dark:text-green-300">Pesan Terkirim Hari Ini</p>                                 <p className="mt-2 text-2xl font-bold text-green-800 dark:text-green-200">{todayLogStats.todaySent}</p>                             </div>                             <div className="rounded-lg border border-red-200 bg-red-50 dark:bg-red-900/20 dark:border-red-800 p-4">                                 <p className="text-xs font-medium uppercase tracking-wide text-red-700 dark:text-red-300">Pesan Gagal Hari Ini</p>                                 <p className="mt-2 text-2xl font-bold text-red-800 dark:text-red-200">{todayLogStats.todayFailed}</p>                             </div>                         </div>                          {selectedLogs.length > 0 && (                             <div className="p-3 mb-4 bg-gray-100 dark:bg-gray-700 rounded-md flex items-center gap-4 flex-wrap">                                 <span className="text-sm font-semibold">{selectedLogs.length} selected</span>                                 <button onClick={() => handleResend(selectedLogs)} disabled={isResending || isDeleting} className="px-3 py-1.5 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-gray-400 flex items-center justify-center">                                     {isResending && <svg className="animate-spin -ml-1 mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>}                                     {isResending ? 'Resending...' : 'Resend Selected'}                                 </button>                                 <button onClick={() => handleDelete(selectedLogs)} disabled={isDeleting || isResending} className="px-3 py-1.5 text-sm bg-red-600 text-white rounded-md hover:bg-red-700 disabled:bg-gray-400 flex items-center justify-center">                                     {isDeleting && <svg className="animate-spin -ml-1 mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>}                                     {isDeleting ? 'Deleting...' : 'Delete Selected'}                                 </button>                             </div>                         )}                         <div className="overflow-x-auto max-h-[70vh]">                             {resendResponse && (                                 <div className={`mb-4 rounded-md p-3 text-sm ${resendResponse.type === 'success' ? 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300' : 'bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300'}`}>                                     <div className="font-medium">{resendResponse.message}</div>                                     {resendResponse.delayProfile && (                                         <div className="mt-2 text-xs opacity-90">                                             Delay profile: mode `{resendResponse.delayProfile.mode}`, start `{resendResponse.delayProfile.startMs}ms`, increment `{resendResponse.delayProfile.incrementMs}ms`, max `{resendResponse.delayProfile.maxMs}ms`, stepEvery `{resendResponse.delayProfile.stepEvery}`, jitter `{resendResponse.delayProfile.randomJitterMs}ms`.                                         </div>                                     )}                                 </div>                             )}                             {isLoading ? (                                 <div className="text-center py-10 text-gray-500 dark:text-gray-400">Loading history...</div>                             ) : (                                 <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">                                     <thead className="bg-gray-50 dark:bg-gray-700/50 sticky top-0">                                         <tr>                                             <th className="p-4"><input type="checkbox" onChange={handleSelectAll} checked={logs.length > 0 && selectedLogs.length === logs.length} /></th>                                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Recipient</th>                                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Status</th>                                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Message</th>                                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Time</th>                                             <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Actions</th>                                         </tr>                                     </thead>                                     <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">                                         {logs.map(log => (                                             <tr key={log.id}>                                                 <td className="p-4"><input type="checkbox" checked={selectedLogs.includes(log.id)} onChange={(e) => handleSelectOne(log.id, e.target.checked)} /></td>                                                 <td className="px-6 py-4 whitespace-nowrap">                                                     <div className="text-sm font-medium">                                                         {log.customer_id ? (customersMap[log.customer_id]?.name || 'N/A') : 'N/A'}                                                     </div>                                                     <div className="text-xs text-gray-500">{log.recipient_number}</div>                                                 </td>                                                 <td className="px-6 py-4">                                                     <Tag color={getWhatsappStatusMeta(log.status).color}>{getWhatsappStatusMeta(log.status).label}</Tag>                                                 </td>                                                 <td className="px-6 py-4 text-sm text-gray-500 max-w-xs truncate">                                                     <button onClick={() => setViewingLog(log)} className="text-left hover:underline hover:text-blue-600 dark:hover:text-blue-400" title="Click to view full message">                                                         {log.message_body}                                                     </button>                                                 </td>                                                 <td className="px-6 py-4 whitespace-nowrap text-xs text-gray-500">{formatDateTimeDisplay(log.created_at)}</td>                                                 <td className="px-6 py-4 text-right">                                                     <button onClick={() => handleResend([log.id])} className="text-blue-600 hover:underline text-sm">Resend</button>                                                 </td>                                             </tr>                                         ))}                                     </tbody>                                 </table>                             )}                         </div>                     </Card>                 </div>             </div>             )}         </div>     ); };  export default Whatsapp;
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import Card from '../../components/common/Card';
+import { Customer, CustomerStatus, WhatsappLog, formatDateTimeDisplay, Odp, ApiSettings } from '../../types';
+import Tag from '../../components/common/Tag';
+import { fetchWithAuth } from '~/components/api';
+import WhatsAppChatTab from '../../components/admin/settings/WhatsAppChatTab';
+
+const API_URL = '/api/admin/whatsapp';
+
+const getWhatsappStatusMeta = (status: string) => {
+    switch (String(status || '').toLowerCase()) {
+        case 'queued':
+            return { label: 'queued', color: 'yellow' as const };
+        case 'sent':
+            return { label: 'sent', color: 'blue' as const };
+        case 'delivered':
+            return { label: 'delivered', color: 'green' as const };
+        case 'failed':
+        default:
+            return { label: 'failed', color: 'red' as const };
+    }
+};
+
+// --- Log Detail Modal Component ---
+interface LogDetailModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+    log: WhatsappLog | null;
+    customerName: string | null;
+}
+
+const LogDetailModal: React.FC<LogDetailModalProps> = ({ isOpen, onClose, log, customerName }) => {
+    if (!isOpen || !log) return null;
+
+    return (
+        <div className="fixed z-30 inset-0 overflow-y-auto">
+            <div className="flex items-center justify-center min-h-screen p-4">
+                <div className="fixed inset-0 bg-gray-500 bg-opacity-75 dark:bg-black/80" onClick={onClose}></div>
+                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 z-40 w-full max-w-2xl transform transition-all">
+                    <div className="flex justify-between items-start">
+                        <h2 className="text-lg font-bold text-gray-800 dark:text-gray-100">Message Details</h2>
+                        <button onClick={onClose} className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
+                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                        </button>
+                    </div>
+
+                    <div className="mt-4 space-y-4 text-sm">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <p className="font-semibold text-gray-600 dark:text-gray-400">Recipient</p>
+                                <p className="text-gray-800 dark:text-gray-200">{customerName || 'N/A'}</p>
+                                <p className="font-mono text-xs text-gray-500">{log.recipient_number}</p>
+                            </div>
+                            <div>
+                                <p className="font-semibold text-gray-600 dark:text-gray-400">Status</p>
+                                <p><Tag color={getWhatsappStatusMeta(log.status).color}>{getWhatsappStatusMeta(log.status).label}</Tag></p>
+                            </div>
+                            <div>
+                                <p className="font-semibold text-gray-600 dark:text-gray-400">Type</p>
+                                <p className="text-gray-800 dark:text-gray-200">{log.type}</p>
+                            </div>
+                            <div>
+                                <p className="font-semibold text-gray-600 dark:text-gray-400">Transport</p>
+                                <p className="text-gray-800 dark:text-gray-200">{log.transport || 'N/A'}</p>
+                            </div>
+                            <div>
+                                <p className="font-semibold text-gray-600 dark:text-gray-400">Provider ID</p>
+                                <p className="font-mono text-xs text-gray-500 break-all">{log.provider_message_id || 'N/A'}</p>
+                            </div>
+                             <div>
+                                <p className="font-semibold text-gray-600 dark:text-gray-400">Time</p>
+                                <p className="text-gray-800 dark:text-gray-200">{formatDateTimeDisplay(log.created_at)}</p>
+                            </div>
+                            <div>
+                                <p className="font-semibold text-gray-600 dark:text-gray-400">Sent At</p>
+                                <p className="text-gray-800 dark:text-gray-200">{log.sent_at ? formatDateTimeDisplay(log.sent_at) : 'N/A'}</p>
+                            </div>
+                            <div>
+                                <p className="font-semibold text-gray-600 dark:text-gray-400">Delivered At</p>
+                                <p className="text-gray-800 dark:text-gray-200">{log.delivered_at ? formatDateTimeDisplay(log.delivered_at) : 'N/A'}</p>
+                            </div>
+                        </div>
+
+                        <div className="pt-4 border-t dark:border-gray-700">
+                             <p className="font-semibold text-gray-600 dark:text-gray-400">Message Body</p>
+                             <div className="mt-1 p-3 bg-gray-100 dark:bg-gray-900 rounded-md max-h-60 overflow-y-auto">
+                                <pre className="whitespace-pre-wrap font-sans text-gray-800 dark:text-gray-200">{log.message_body}</pre>
+                             </div>
+                        </div>
+
+                        {log.error_message && (
+                            <div className="pt-4 border-t dark:border-gray-700">
+                                <p className="font-semibold text-red-600 dark:text-red-400">Error Details</p>
+                                <div className="mt-1 p-3 bg-red-50 dark:bg-red-900/40 rounded-md">
+                                    <pre className="whitespace-pre-wrap font-mono text-xs text-red-700 dark:text-red-300">{log.error_message}</pre>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                    
+                    <div className="mt-6 flex justify-end">
+                        <button onClick={onClose} type="button" className="px-4 py-2 bg-gray-200 dark:bg-gray-600 rounded-md text-sm font-medium">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+
+const Whatsapp: React.FC = () => {
+    const [activeTab, setActiveTab] = useState<'broadcast' | 'chat'>('broadcast');
+    const [customers, setCustomers] = useState<Customer[]>([]);
+    const [odps, setOdps] = useState<Odp[]>([]);
+    const [settings, setSettings] = useState<ApiSettings | null>(null);
+    const [logs, setLogs] = useState<WhatsappLog[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+    const [viewingLog, setViewingLog] = useState<WhatsappLog | null>(null);
+
+    // Broadcast state
+    const [broadcastFilter, setBroadcastFilter] = useState<string>('all');
+    const [broadcastTemplate, setBroadcastTemplate] = useState<'general' | 'outage'>('general');
+    const [broadcastMessage, setBroadcastMessage] = useState('');
+    const [broadcastDelayMode, setBroadcastDelayMode] = useState<'flat' | 'linear' | 'step' | 'randomized'>('step');
+    const [broadcastDelayStartMs, setBroadcastDelayStartMs] = useState(1000);
+    const [broadcastDelayIncrementMs, setBroadcastDelayIncrementMs] = useState(750);
+    const [broadcastDelayMaxMs, setBroadcastDelayMaxMs] = useState(7000);
+    const [broadcastDelayStepEvery, setBroadcastDelayStepEvery] = useState(5);
+    const [broadcastDelayRandomJitterMs, setBroadcastDelayRandomJitterMs] = useState(1500);
+    const [isSending, setIsSending] = useState(false);
+    const [broadcastResponse, setBroadcastResponse] = useState<{ type: 'success' | 'error', message: string } | null>(null);
+
+    // Logs state
+    const [selectedLogs, setSelectedLogs] = useState<number[]>([]);
+    const [isResending, setIsResending] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [resendResponse, setResendResponse] = useState<{
+        type: 'success' | 'error',
+        message: string,
+        delayProfile?: {
+            mode: string;
+            startMs: number;
+            incrementMs: number;
+            maxMs: number;
+            stepEvery: number;
+            randomJitterMs: number;
+        }
+    } | null>(null);
+
+    const fetchData = useCallback(async () => {
+        setIsLoading(true);
+        try {
+            const [customersRes, logsRes, odpsRes, settingsRes] = await Promise.all([
+                fetchWithAuth('/api/customers'),
+                fetchWithAuth(`${API_URL}/logs`),
+                fetchWithAuth('/api/network/odps'),
+                fetchWithAuth('/api/admin/settings'),
+            ]);
+            setCustomers(await customersRes.json());
+            setLogs(await logsRes.json());
+            setOdps(await odpsRes.json());
+            setSettings(await settingsRes.json());
+        } catch (err: any) {
+            setError(err.message);
+        } finally {
+            setIsLoading(false);
+        }
+    }, []);
+
+    useEffect(() => {
+        fetchData();
+    }, [fetchData]);
+
+    useEffect(() => {
+        if (settings?.whatsapp) {
+            if (broadcastTemplate === 'general') {
+                setBroadcastMessage(settings.whatsapp.broadcastGeneral || '');
+            } else {
+                setBroadcastMessage(settings.whatsapp.broadcastOutage || '');
+            }
+            setBroadcastDelayMode(settings.whatsapp.broadcastDelayMode || 'step');
+            setBroadcastDelayStartMs(settings.whatsapp.broadcastDelayStartMs ?? 1000);
+            setBroadcastDelayIncrementMs(settings.whatsapp.broadcastDelayIncrementMs ?? 750);
+            setBroadcastDelayMaxMs(settings.whatsapp.broadcastDelayMaxMs ?? 7000);
+            setBroadcastDelayStepEvery(settings.whatsapp.broadcastDelayStepEvery ?? 5);
+            setBroadcastDelayRandomJitterMs(settings.whatsapp.broadcastDelayRandomJitterMs ?? 1500);
+        }
+    }, [broadcastTemplate, settings]);
+
+    const getFilteredCount = useMemo(() => {
+        if (broadcastFilter === 'all') return customers.filter(c => c.phone).length;
+        if (Object.values(CustomerStatus).some(s => s === broadcastFilter)) {
+            return customers.filter(c => c.status === broadcastFilter && c.phone).length;
+        }
+        // It's an ODP ID
+        return customers.filter(c => c.odpId === broadcastFilter && c.phone).length;
+    }, [customers, broadcastFilter]);
+    
+    const customersMap = useMemo(() => {
+        return customers.reduce((acc, customer) => {
+            acc[customer.id] = customer;
+            return acc;
+        }, {} as Record<string, Customer>);
+    }, [customers]);
+
+    const todayLogStats = useMemo(() => {
+        const now = new Date();
+        const todaySent = logs.filter(log => {
+            const logDate = new Date(log.created_at);
+            if (isNaN(logDate.getTime())) return false;
+            return (
+                (log.status === 'sent' || log.status === 'delivered') &&
+                logDate.getDate() === now.getDate() &&
+                logDate.getMonth() === now.getMonth() &&
+                logDate.getFullYear() === now.getFullYear()
+            );
+        }).length;
+
+        const todayFailed = logs.filter(log => {
+            const logDate = new Date(log.created_at);
+            if (isNaN(logDate.getTime())) return false;
+            return (
+                log.status === 'failed' &&
+                logDate.getDate() === now.getDate() &&
+                logDate.getMonth() === now.getMonth() &&
+                logDate.getFullYear() === now.getFullYear()
+            );
+        }).length;
+
+        return { todaySent, todayFailed };
+    }, [logs]);
+
+    const handleBroadcast = useCallback(async () => {
+        if (!broadcastMessage.trim()) {
+            setBroadcastResponse({ type: 'error', message: 'Message cannot be empty.' });
+            return;
+        }
+        setIsSending(true);
+        setBroadcastResponse(null);
+        try {
+            const res = await fetchWithAuth(`${API_URL}/broadcast`, {
+                method: 'POST',
+                body: JSON.stringify({
+                    filter: broadcastFilter,
+                    message: broadcastMessage,
+                    delayMode: broadcastDelayMode,
+                    delayStartMs: broadcastDelayStartMs,
+                    delayIncrementMs: broadcastDelayIncrementMs,
+                    delayMaxMs: broadcastDelayMaxMs,
+                    delayStepEvery: broadcastDelayStepEvery,
+                    delayRandomJitterMs: broadcastDelayRandomJitterMs,
+                }),
+            });
+            const data = await res.json();
+            if (!res.ok || !data.success) {
+                throw new Error(data.message || 'Failed to send broadcast.');
+            }
+            setBroadcastResponse({ type: 'success', message: data.message });
+            fetchData(); // Refresh logs
+        } catch (error: any) {
+            setBroadcastResponse({ type: 'error', message: error.message });
+        } finally {
+            setIsSending(false);
+        }
+    }, [broadcastDelayIncrementMs, broadcastDelayMaxMs, broadcastDelayMode, broadcastDelayRandomJitterMs, broadcastDelayStartMs, broadcastDelayStepEvery, broadcastFilter, broadcastMessage, fetchData]);
+    
+    const handleResend = useCallback(async (logIds: number[]) => {
+        if (logIds.length === 0) return;
+        setIsResending(true);
+        setResendResponse(null);
+        try {
+            const res = await fetchWithAuth(`${API_URL}/resend`, {
+                method: 'POST',
+                body: JSON.stringify({ logIds }),
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.message);
+            setResendResponse({
+                type: 'success',
+                message: data.message,
+                delayProfile: data.delayProfile,
+            });
+            setSelectedLogs([]);
+            fetchData(); // Refresh logs
+        } catch (error: any) {
+            setResendResponse({
+                type: 'error',
+                message: (error as Error).message,
+            });
+        } finally {
+            setIsResending(false);
+        }
+    }, [fetchData]);
+
+    const handleDelete = useCallback(async (logIds: number[]) => {
+        if (logIds.length === 0) return;
+        if (!window.confirm(`Are you sure you want to delete ${logIds.length} selected log(s)? This action cannot be undone.`)) {
+            return;
+        }
+        setIsDeleting(true);
+        setError(null);
+        try {
+            const res = await fetchWithAuth(`${API_URL}/logs/delete`, {
+                method: 'POST',
+                body: JSON.stringify({ logIds }),
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.message);
+            alert(data.message);
+            setSelectedLogs([]);
+            fetchData();
+        } catch (error: any) {
+            setError((error as Error).message);
+        } finally {
+            setIsDeleting(false);
+        }
+    }, [fetchData]);
+    
+    const handleSelectOne = (logId: number, isSelected: boolean) => {
+        setSelectedLogs(prev => isSelected ? [...prev, logId] : prev.filter(id => id !== logId));
+    };
+
+    const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSelectedLogs(e.target.checked ? logs.map(l => l.id) : []);
+    };
+    
+    const inputClasses = "w-full p-2 border rounded bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-blue-500 focus:border-blue-500";
+
+    return (
+        <div className="space-y-6">
+            <LogDetailModal
+                isOpen={!!viewingLog}
+                onClose={() => setViewingLog(null)}
+                log={viewingLog}
+                customerName={viewingLog?.customer_id ? (customersMap[viewingLog.customer_id]?.name || null) : null}
+            />
+
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+                <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">WhatsApp Center</h2>
+                <div className="inline-flex rounded-lg border border-gray-200 bg-white p-1 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+                    <button
+                        type="button"
+                        onClick={() => setActiveTab('broadcast')}
+                        className={`px-4 py-2 text-sm font-medium rounded-md ${activeTab === 'broadcast' ? 'bg-blue-600 text-white shadow' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'}`}
+                    >
+                        Broadcast
+                    </button>
+                    <button
+                        type="button"
+                        onClick={() => setActiveTab('chat')}
+                        className={`px-4 py-2 text-sm font-medium rounded-md ${activeTab === 'chat' ? 'bg-blue-600 text-white shadow' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'}`}
+                    >
+                        Chat
+                    </button>
+                </div>
+            </div>
+            {error && <div className="p-4 bg-red-100 text-red-700 rounded-md">{error}</div>}
+
+            {activeTab === 'chat' ? (
+                <WhatsAppChatTab whatsappSettings={settings?.whatsapp} />
+            ) : (
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div className="lg:col-span-1">
+                    <Card title="Send Broadcast">
+                        <div className="space-y-4">
+                             <div>
+                                <label htmlFor="template" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Template</label>
+                                <select id="template" name="template" value={broadcastTemplate} onChange={(e) => setBroadcastTemplate(e.target.value as any)} className={`mt-1 block w-full pl-3 pr-10 py-2 sm:text-sm rounded-md ${inputClasses}`}>
+                                    <option value="general">General Broadcast</option>
+                                    <option value="outage">Outage Notification</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label htmlFor="filter" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Send To</label>
+                                <select id="filter" name="filter" value={broadcastFilter} onChange={(e) => setBroadcastFilter(e.target.value as any)} className={`mt-1 block w-full pl-3 pr-10 py-2 sm:text-sm rounded-md ${inputClasses}`}>
+                                    <optgroup label="By Status">
+                                        <option value="all">All Customers</option>
+                                        <option value={CustomerStatus.Active}>Active Customers</option>
+                                        <option value={CustomerStatus.Suspended}>Suspended Customers</option>
+                                        <option value={CustomerStatus.Inactive}>Inactive Customers</option>
+                                        <option value={CustomerStatus.Unregister}>Unregister Customers</option>
+                                    </optgroup>
+                                    {odps.length > 0 && (
+                                        <optgroup label="By ODP">
+                                            {odps.map(odp => (
+                                                <option key={odp.id} value={odp.id}>{odp.name}</option>
+                                            ))}
+                                        </optgroup>
+                                    )}
+                                </select>
+                                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">This will send a message to {getFilteredCount} customer(s) with a phone number.</p>
+                            </div>
+                            <div>
+                                <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Message</label>
+                                <textarea id="message" name="message" rows={6} value={broadcastMessage} onChange={(e) => setBroadcastMessage(e.target.value)} className={`mt-1 ${inputClasses}`} placeholder="Type your message here..."></textarea>
+                                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Placeholders: `{"{{customerName}}"}`, `{"{{customerId}}"}`, `{"{{packageName}}"}`.</p>
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                <div>
+                                    <label htmlFor="broadcastDelayMode" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Mode Jeda</label>
+                                    <select id="broadcastDelayMode" value={broadcastDelayMode} onChange={(e) => setBroadcastDelayMode(e.target.value as 'flat' | 'linear' | 'step' | 'randomized')} className={`mt-1 ${inputClasses}`}>
+                                        <option value="flat">Flat</option>
+                                        <option value="linear">Linear</option>
+                                        <option value="step">Step / Batch</option>
+                                        <option value="randomized">Randomized</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label htmlFor="broadcastDelayStartMs" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Delay Awal</label>
+                                    <input id="broadcastDelayStartMs" type="number" min={0} step={100} value={broadcastDelayStartMs} onChange={(e) => setBroadcastDelayStartMs(Number(e.target.value) || 0)} className={`mt-1 ${inputClasses}`} />
+                                </div>
+                                <div>
+                                    <label htmlFor="broadcastDelayIncrementMs" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Kenaikan / Pesan</label>
+                                    <input id="broadcastDelayIncrementMs" type="number" min={0} step={100} value={broadcastDelayIncrementMs} onChange={(e) => setBroadcastDelayIncrementMs(Number(e.target.value) || 0)} className={`mt-1 ${inputClasses}`} />
+                                </div>
+                                <div>
+                                    <label htmlFor="broadcastDelayMaxMs" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Delay Maks.</label>
+                                    <input id="broadcastDelayMaxMs" type="number" min={0} step={100} value={broadcastDelayMaxMs} onChange={(e) => setBroadcastDelayMaxMs(Number(e.target.value) || 0)} className={`mt-1 ${inputClasses}`} />
+                                </div>
+                                <div>
+                                    <label htmlFor="broadcastDelayStepEvery" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Naik Tiap N Pesan</label>
+                                    <input id="broadcastDelayStepEvery" type="number" min={1} step={1} value={broadcastDelayStepEvery} onChange={(e) => setBroadcastDelayStepEvery(Math.max(1, Number(e.target.value) || 1))} className={`mt-1 ${inputClasses}`} />
+                                </div>
+                                <div>
+                                    <label htmlFor="broadcastDelayRandomJitterMs" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Jitter Acak</label>
+                                    <input id="broadcastDelayRandomJitterMs" type="number" min={0} step={100} value={broadcastDelayRandomJitterMs} onChange={(e) => setBroadcastDelayRandomJitterMs(Number(e.target.value) || 0)} className={`mt-1 ${inputClasses}`} />
+                                </div>
+                            </div>
+                            <p className="text-xs text-gray-500 dark:text-gray-400 -mt-2">
+                                Flat: delay tetap. Linear: naik tiap pesan. Step: delay naik per beberapa pesan. Randomized: delay diacak natural sampai batas maksimum.
+                            </p>
+                            {broadcastResponse && <div className={`p-3 rounded-md text-sm ${broadcastResponse.type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>{broadcastResponse.message}</div>}
+                            <div className="flex justify-end">
+                                <button type="button" onClick={handleBroadcast} disabled={isSending} className="px-4 py-2 bg-purple-600 text-white rounded flex items-center justify-center disabled:bg-purple-400 disabled:cursor-wait">
+                                    {isSending && <svg className="animate-spin -ml-1 mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>}
+                                    {isSending ? 'Sending...' : 'Send Broadcast'}
+                                </button>
+                            </div>
+                        </div>
+                    </Card>
+                </div>
+                <div className="lg:col-span-2">
+                    <Card title="Message History">
+                        <div className="mb-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div className="rounded-lg border border-green-200 bg-green-50 dark:bg-green-900/20 dark:border-green-800 p-4">
+                                <p className="text-xs font-medium uppercase tracking-wide text-green-700 dark:text-green-300">Pesan Terkirim Hari Ini</p>
+                                <p className="mt-2 text-2xl font-bold text-green-800 dark:text-green-200">{todayLogStats.todaySent}</p>
+                            </div>
+                            <div className="rounded-lg border border-red-200 bg-red-50 dark:bg-red-900/20 dark:border-red-800 p-4">
+                                <p className="text-xs font-medium uppercase tracking-wide text-red-700 dark:text-red-300">Pesan Gagal Hari Ini</p>
+                                <p className="mt-2 text-2xl font-bold text-red-800 dark:text-red-200">{todayLogStats.todayFailed}</p>
+                            </div>
+                        </div>
+                         {selectedLogs.length > 0 && (
+                            <div className="p-3 mb-4 bg-gray-100 dark:bg-gray-700 rounded-md flex items-center gap-4 flex-wrap">
+                                <span className="text-sm font-semibold">{selectedLogs.length} selected</span>
+                                <button onClick={() => handleResend(selectedLogs)} disabled={isResending || isDeleting} className="px-3 py-1.5 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-gray-400 flex items-center justify-center">
+                                    {isResending && <svg className="animate-spin -ml-1 mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>}
+                                    {isResending ? 'Resending...' : 'Resend Selected'}
+                                </button>
+                                <button onClick={() => handleDelete(selectedLogs)} disabled={isDeleting || isResending} className="px-3 py-1.5 text-sm bg-red-600 text-white rounded-md hover:bg-red-700 disabled:bg-gray-400 flex items-center justify-center">
+                                    {isDeleting && <svg className="animate-spin -ml-1 mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>}
+                                    {isDeleting ? 'Deleting...' : 'Delete Selected'}
+                                </button>
+                            </div>
+                        )}
+                        <div className="overflow-x-auto max-h-[70vh]">
+                            {resendResponse && (
+                                <div className={`mb-4 rounded-md p-3 text-sm ${resendResponse.type === 'success' ? 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300' : 'bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300'}`}>
+                                    <div className="font-medium">{resendResponse.message}</div>
+                                    {resendResponse.delayProfile && (
+                                        <div className="mt-2 text-xs opacity-90">
+                                            Delay profile: mode `{resendResponse.delayProfile.mode}`, start `{resendResponse.delayProfile.startMs}ms`, increment `{resendResponse.delayProfile.incrementMs}ms`, max `{resendResponse.delayProfile.maxMs}ms`, stepEvery `{resendResponse.delayProfile.stepEvery}`, jitter `{resendResponse.delayProfile.randomJitterMs}ms`.
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+                            {isLoading ? (
+                                <div className="text-center py-10 text-gray-500 dark:text-gray-400">Loading history...</div>
+                            ) : (
+                                <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                    <thead className="bg-gray-50 dark:bg-gray-700/50 sticky top-0">
+                                        <tr>
+                                            <th className="p-4"><input type="checkbox" onChange={handleSelectAll} checked={logs.length > 0 && selectedLogs.length === logs.length} /></th>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Recipient</th>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Status</th>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Message</th>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Time</th>
+                                            <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                                        {logs.map(log => (
+                                            <tr key={log.id}>
+                                                <td className="p-4"><input type="checkbox" checked={selectedLogs.includes(log.id)} onChange={(e) => handleSelectOne(log.id, e.target.checked)} /></td>
+                                                <td className="px-6 py-4 whitespace-nowrap">
+                                                    <div className="text-sm font-medium">
+                                                        {log.customer_id ? (customersMap[log.customer_id]?.name || 'N/A') : 'N/A'}
+                                                    </div>
+                                                    <div className="text-xs text-gray-500">{log.recipient_number}</div>
+                                                </td>
+                                                <td className="px-6 py-4">
+                                                    <Tag color={getWhatsappStatusMeta(log.status).color}>{getWhatsappStatusMeta(log.status).label}</Tag>
+                                                </td>
+                                                <td className="px-6 py-4 text-sm text-gray-500 max-w-xs truncate">
+                                                    <button onClick={() => setViewingLog(log)} className="text-left hover:underline hover:text-blue-600 dark:hover:text-blue-400" title="Click to view full message">
+                                                        {log.message_body}
+                                                    </button>
+                                                </td>
+                                                <td className="px-6 py-4 whitespace-nowrap text-xs text-gray-500">{formatDateTimeDisplay(log.created_at)}</td>
+                                                <td className="px-6 py-4 text-right">
+                                                    <button onClick={() => handleResend([log.id])} className="text-blue-600 hover:underline text-sm">Resend</button>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            )}
+                        </div>
+                    </Card>
+                </div>
+            </div>
+            )}
+        </div>
+    );
+};
+
+export default Whatsapp;

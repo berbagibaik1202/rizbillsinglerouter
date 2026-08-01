@@ -1,1 +1,960 @@
-﻿ import React, { useCallback, useEffect, useRef, useState } from 'react'; import { Customer, CustomerStatus, Odp, PppoeActiveUser, ApiSettings, AcsDevice, HotspotActiveUser, Odc } from '../../types'; import { fetchWithAuth } from '~/components/api';  // Declare Leaflet type for global L variable from CDN declare var L: any; const API_URL = '/api';  // --- LocalStorage Cache Keys --- const MAP_CACHE_VERSION = 'v1'; const MAP_CACHE_KEYS = {     CUSTOMERS: `map_cache_customers_${MAP_CACHE_VERSION}`,     ODPS: `map_cache_odps_${MAP_CACHE_VERSION}`,     ODCS: `map_cache_odcs_${MAP_CACHE_VERSION}`, // New Cache Key     ACTIVE_PPPOE: `map_cache_active_pppoe_${MAP_CACHE_VERSION}`,     ACTIVE_HOTSPOT: `map_cache_active_hotspot_${MAP_CACHE_VERSION}`,     SETTINGS: `map_cache_settings_${MAP_CACHE_VERSION}`,     ACS_DEVICES: `map_cache_acs_devices_${MAP_CACHE_VERSION}`, };   const createCustomerIcon = (color: string) => {     const iconHtml = `<div style="background-color: ${color};" class="rounded-full w-8 h-8 flex items-center justify-center border-2 border-white shadow-md">         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">             <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />         </svg>     </div>`;      return L.divIcon({         html: iconHtml,         className: 'custom-leaflet-icon',         iconSize: [32, 32],         iconAnchor: [16, 32],         popupAnchor: [0, -32]     }); };  const createOdpIcon = (color: string) => {     // A wifi/circle icon representing a distribution point (ODP).     const iconHtml = `<div style="background-color: ${color};" class="w-8 h-8 rounded-full flex items-center justify-center border-2 border-white shadow-lg">         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">           <path stroke-linecap="round" stroke-linejoin="round" d="M8.111 16.555a5.5 5.5 0 017.778 0M12 20.25a.75.75 0 100-1.5.75.75 0 000 1.5zM4.444 12.889a10 10 0 0115.112 0" />         </svg>     </div>`;      return L.divIcon({         html: iconHtml,         className: 'custom-leaflet-icon',         iconSize: [32, 32],         iconAnchor: [16, 16], // Anchor to the center         popupAnchor: [0, -16]     }); }  const createOdcIcon = (color: string) => {     // A Cube/Server icon representing a distribution cabinet (ODC).     // Using a square-ish rounded shape to distinguish from ODPs.     const iconHtml = `<div style="background-color: ${color};" class="w-10 h-10 rounded-lg flex items-center justify-center border-2 border-white shadow-lg transform rotate-0">         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">             <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />         </svg>     </div>`;      return L.divIcon({         html: iconHtml,         className: 'custom-leaflet-icon',         iconSize: [40, 40],         iconAnchor: [20, 20], // Anchor to the center         popupAnchor: [0, -20]     }); }  const createOltIcon = (color: string) => {     const iconHtml = `<div style="background-color: ${color};" class="w-10 h-10 rounded-md flex items-center justify-center border-2 border-white shadow-lg">         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">             <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3h4.5m-7.5 4.5h10.5M6 12h12m-9.75 4.5h7.5M6 21h12" />         </svg>     </div>`;     return L.divIcon({         html: iconHtml,         className: 'custom-leaflet-icon',         iconSize: [40, 40],         iconAnchor: [20, 20],         popupAnchor: [0, -20]     }); }  const getCustomerIcon = (status: CustomerStatus, isConnected: boolean) => {     if (status === CustomerStatus.Active) {         return isConnected ? createCustomerIcon('#22c55e') : createCustomerIcon('#ef4444'); // green-500 : red-500     }     switch (status) {         case CustomerStatus.Suspended:             return createCustomerIcon('#eab308'); // yellow-500         case CustomerStatus.Unregister:             return createCustomerIcon('#3b82f6'); // blue-500         case CustomerStatus.Inactive:             return createCustomerIcon('#6b7280'); // gray-500         default:             return createCustomerIcon('#6b7280'); // gray-500     } };  const getRxPowerColor = (rxPower: string) => {     if (!rxPower || rxPower === 'N/A') return 'text-gray-400';     const powerValue = parseFloat(rxPower);     if (isNaN(powerValue)) return 'text-gray-400';     if (powerValue > -25) return 'text-green-600 dark:text-green-400';     if (powerValue >= -28) return 'text-yellow-600 dark:text-yellow-400';     return 'text-red-600 dark:text-red-400'; };  const ExpandIcon = () => (     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>         <path strokeLinecap="round" strokeLinejoin="round" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5v4m0 0h4" />     </svg> ); const CompressIcon = () => (     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>         <path strokeLinecap="round" strokeLinejoin="round" d="M10 14l-5 5m0 0v-4m0 4h4m1-11l5-5m0 0h-4m4 0v4m-1 11l5 5m0 0v-4m0 4h-4m1-11l-5 5" />     </svg> ); const MyLocationIcon = () => (     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">         <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />     </svg> ); const EditPathIcon = () => (     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">         <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />         <path fillRule="evenodd" d="M3 5a2 2 0 012-2h3a1 1 0 110 2H5v10h10v-3a1 1 0 112 0v3a2 2 0 01-2 2H5a2 2 0 01-2-2V5z" clipRule="evenodd" />     </svg> );  const normalizeNodeKey = (value: unknown) => String(value || '').trim().toLowerCase(); const normalizePathForEditing = (path: [number, number][], maxPoints = 10): [number, number][] => {     if (!Array.isArray(path) || path.length < 2) return path;     if (path.length <= maxPoints) return path;      const sampled: [number, number][] = [];     const step = (path.length - 1) / (maxPoints - 1);     for (let i = 0; i < maxPoints; i += 1) {         const idx = Math.round(i * step);         sampled.push(path[idx]);     }     sampled[0] = path[0];     sampled[sampled.length - 1] = path[path.length - 1];     return sampled; };   const NetworkMap: React.FC = () => {     const mapContainerRef = useRef<HTMLDivElement>(null);     const mapInstanceRef = useRef<any>(null);          // Data states     const [customers, setCustomers] = useState<Customer[]>([]);     const [odps, setOdps] = useState<Odp[]>([]);     const [odcs, setOdcs] = useState<Odc[]>([]); // Added ODC State     const [activePppoe, setActivePppoe] = useState<PppoeActiveUser[]>([]);     const [activeHotspot, setActiveHotspot] = useState<HotspotActiveUser[]>([]);     const [appSettings, setAppSettings] = useState<ApiSettings | null>(null);     const [acsDevices, setAcsDevices] = useState<AcsDevice[]>([]);     const [isLoading, setIsLoading] = useState(true);     const [isFullScreen, setIsFullScreen] = useState(false);     const [isLineEditMode, setIsLineEditMode] = useState(false);     const [selectedLineEdgeKey, setSelectedLineEdgeKey] = useState<string | null>(null);     const [isSavingLineOverride, setIsSavingLineOverride] = useState(false);     const [routeRefreshToken, setRouteRefreshToken] = useState(0);     const myLocationMarkerRef = useRef<any>(null);     const allMarkersForBoundsRef = useRef<any>(null);     const networkLinesByEdgeRef = useRef<Map<string, any>>(new Map());     const editableNodeMarkersRef = useRef<any[]>([]);     const editingLinePathRef = useRef<[number, number][]>([]);      const clearEditableNodeMarkers = useCallback(() => {         const map = mapInstanceRef.current;         if (!map) return;         editableNodeMarkersRef.current.forEach((marker) => {             try {                 map.removeLayer(marker);             } catch (_e) {                 // ignore             }         });         editableNodeMarkersRef.current = [];     }, []);      const updateSelectedLineLayerPath = useCallback((path: [number, number][]) => {         if (!selectedLineEdgeKey) return;         const layer = networkLinesByEdgeRef.current.get(selectedLineEdgeKey);         if (!layer) return;         layer.setLatLngs(path);     }, [selectedLineEdgeKey]);      const renderEditableNodes = useCallback((path: [number, number][]) => {         const map = mapInstanceRef.current;         if (!map || !selectedLineEdgeKey) return;         clearEditableNodeMarkers();          const nodeIcon = L.divIcon({             className: 'custom-leaflet-icon',             html: `<div style="width:12px;height:12px;border-radius:999px;background:#f59e0b;border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,0.2);"></div>`,             iconSize: [12, 12],             iconAnchor: [6, 6],         });          path.forEach((point, idx) => {             const marker = L.marker(point, { draggable: true, icon: nodeIcon, zIndexOffset: 1000 });             marker.on('drag', (e: any) => {                 const next = [...editingLinePathRef.current];                 next[idx] = [e.latlng.lat, e.latlng.lng];                 editingLinePathRef.current = next;                 updateSelectedLineLayerPath(next);             });             marker.addTo(map);             editableNodeMarkersRef.current.push(marker);         });     }, [clearEditableNodeMarkers, selectedLineEdgeKey, updateSelectedLineLayerPath]);      const activateLineEditor = useCallback((edgeKey: string, rawPath: [number, number][]) => {         const path = normalizePathForEditing(rawPath);         setSelectedLineEdgeKey(edgeKey);         editingLinePathRef.current = path;         renderEditableNodes(path);     }, [renderEditableNodes]);      const handleAddLineNode = useCallback(() => {         const path = [...editingLinePathRef.current];         if (path.length < 2) return;          let longestIndex = 0;         let longestDistance = 0;         for (let i = 0; i < path.length - 1; i += 1) {             const a = path[i];             const b = path[i + 1];             const dist = Math.hypot(a[0] - b[0], a[1] - b[1]);             if (dist > longestDistance) {                 longestDistance = dist;                 longestIndex = i;             }         }          const start = path[longestIndex];         const end = path[longestIndex + 1];         const mid: [number, number] = [(start[0] + end[0]) / 2, (start[1] + end[1]) / 2];         path.splice(longestIndex + 1, 0, mid);         editingLinePathRef.current = path;         updateSelectedLineLayerPath(path);         renderEditableNodes(path);     }, [renderEditableNodes, updateSelectedLineLayerPath]);      const handleRemoveLineNode = useCallback(() => {         const path = [...editingLinePathRef.current];         if (path.length <= 2) return;         path.splice(path.length - 2, 1);         editingLinePathRef.current = path;         updateSelectedLineLayerPath(path);         renderEditableNodes(path);     }, [renderEditableNodes, updateSelectedLineLayerPath]);      const handleSaveLineOverride = useCallback(async () => {         if (!selectedLineEdgeKey || editingLinePathRef.current.length < 2) return;         setIsSavingLineOverride(true);         try {             const payload = {                 path: editingLinePathRef.current.map((point) => ({ lat: point[0], lng: point[1] })),             };             await fetchWithAuth(`${API_URL}/network/route-overrides/${encodeURIComponent(selectedLineEdgeKey)}`, {                 method: 'PUT',                 body: JSON.stringify(payload),             });             alert('Line override saved.');         } catch (error: any) {             alert(error.message || 'Failed to save line override.');         } finally {             setIsSavingLineOverride(false);         }     }, [selectedLineEdgeKey]);      const handleResetLineOverride = useCallback(async () => {         if (!selectedLineEdgeKey) return;         setIsSavingLineOverride(true);         try {             await fetchWithAuth(`${API_URL}/network/route-overrides/${encodeURIComponent(selectedLineEdgeKey)}`, {                 method: 'DELETE',             });             clearEditableNodeMarkers();             setSelectedLineEdgeKey(null);             setRouteRefreshToken((prev) => prev + 1);         } catch (error: any) {             alert(error.message || 'Failed to reset line override.');         } finally {             setIsSavingLineOverride(false);         }     }, [clearEditableNodeMarkers, selectedLineEdgeKey]);      // Effect 1: Load data from cache first, then fetch from network     useEffect(() => {         const loadAndFetchData = async () => {             let hasCache = false;             const fetchAcsDevicesWithFallback = async () => {                 try {                     const fastRes = await fetchWithAuth(`${API_URL}/acs/devices/cached/fast`);                     if (fastRes.ok) {                         return fastRes.json();                     }                 } catch (error) {                     console.warn("[Map] Fast ACS cache failed, falling back to cached endpoint:", error);                 }                  try {                     const cachedRes = await fetchWithAuth(`${API_URL}/acs/devices/cached`);                     if (cachedRes.ok) {                         return cachedRes.json();                     }                 } catch (error) {                     console.warn("[Map] Cached ACS endpoint failed:", error);                 }                  return { devices: [] };             };              try {                 // Try to load from cache first for instant display                 const cachedCustomers = localStorage.getItem(MAP_CACHE_KEYS.CUSTOMERS);                 const cachedOdps = localStorage.getItem(MAP_CACHE_KEYS.ODPS);                 const cachedOdcs = localStorage.getItem(MAP_CACHE_KEYS.ODCS);                 const cachedActivePppoe = localStorage.getItem(MAP_CACHE_KEYS.ACTIVE_PPPOE);                 const cachedActiveHotspot = localStorage.getItem(MAP_CACHE_KEYS.ACTIVE_HOTSPOT);                 const cachedSettings = localStorage.getItem(MAP_CACHE_KEYS.SETTINGS);                 const cachedAcs = localStorage.getItem(MAP_CACHE_KEYS.ACS_DEVICES);                  if (cachedCustomers && cachedOdps && cachedSettings) {                     setCustomers(JSON.parse(cachedCustomers));                     setOdps(JSON.parse(cachedOdps));                     setOdcs(cachedOdcs ? JSON.parse(cachedOdcs) : []); // Load ODCs                     setActivePppoe(cachedActivePppoe ? JSON.parse(cachedActivePppoe) : []);                     setActiveHotspot(cachedActiveHotspot ? JSON.parse(cachedActiveHotspot) : []);                     setAppSettings(JSON.parse(cachedSettings));                                          if (cachedAcs) {                         const parsedAcs = JSON.parse(cachedAcs);                         const acsArray = Array.isArray(parsedAcs) ? parsedAcs : (parsedAcs.devices || []);                         setAcsDevices(acsArray);                     } else {                         setAcsDevices([]);                     }                                          setIsLoading(false);                      hasCache = true;                     console.log("[Map] Loaded data from cache.");                 }             } catch (error) {                 console.error("[Map] Failed to load data from cache:", error);                 Object.values(MAP_CACHE_KEYS).forEach(key => localStorage.removeItem(key));             }              if (!hasCache) {                 setIsLoading(true);             }              try {                 console.log("[Map] Fetching fresh data from server...");                 const [customersRes, odpsRes, odcsRes, pppoeActiveRes, hotspotActiveRes, settingsRes, acsDevicesRes] = await Promise.all([                     fetchWithAuth(`${API_URL}/customers`),                     fetchWithAuth(`${API_URL}/network/odps`),                     fetchWithAuth(`${API_URL}/network/odcs`), // Fetch ODCs                     fetchWithAuth(`${API_URL}/pppoe/active`),                     fetchWithAuth(`${API_URL}/hotspot/active`),                     fetchWithAuth(`${API_URL}/admin/settings`),                     fetchAcsDevicesWithFallback(),                 ]);                                  const freshCustomers = await customersRes.json();                 const freshOdps = await odpsRes.json();                 const freshOdcs = await odcsRes.json();                 const freshPppoe = await pppoeActiveRes.json();                 const freshHotspot = await hotspotActiveRes.json();                 const freshSettings = await settingsRes.json();                 const freshAcsData = acsDevicesRes;                                  const freshAcs = Array.isArray(freshAcsData.devices) ? freshAcsData.devices : [];                                  setCustomers(freshCustomers);                 setOdps(freshOdps);                 setOdcs(freshOdcs); // Set ODCs                 setActivePppoe(freshPppoe);                 setActiveHotspot(freshHotspot);                 setAppSettings(freshSettings);                 setAcsDevices(freshAcs);                                  // Save fresh data to cache                 localStorage.setItem(MAP_CACHE_KEYS.CUSTOMERS, JSON.stringify(freshCustomers));                 localStorage.setItem(MAP_CACHE_KEYS.ODPS, JSON.stringify(freshOdps));                 localStorage.setItem(MAP_CACHE_KEYS.ODCS, JSON.stringify(freshOdcs)); // Cache ODCs                 localStorage.setItem(MAP_CACHE_KEYS.ACTIVE_PPPOE, JSON.stringify(freshPppoe));                 localStorage.setItem(MAP_CACHE_KEYS.ACTIVE_HOTSPOT, JSON.stringify(freshHotspot));                 localStorage.setItem(MAP_CACHE_KEYS.SETTINGS, JSON.stringify(freshSettings));                 localStorage.setItem(MAP_CACHE_KEYS.ACS_DEVICES, JSON.stringify(freshAcs));                                  console.log("[Map] Fresh data fetched and cache updated.");              } catch (error) {                 console.error("[Map] Failed to fetch fresh map data:", error);             } finally {                 setIsLoading(false);             }         };          loadAndFetchData();     }, []);      // Effect 2: Initialize and update the map whenever data changes     useEffect(() => {         if (isLoading || !mapContainerRef.current || !appSettings) {             return;         }          const map = mapInstanceRef.current;         const needsInitialization = !map;          if (needsInitialization) {             // --- Initialize Map ---             mapInstanceRef.current = L.map(mapContainerRef.current, { zoomControl: false });                          mapInstanceRef.current.createPane('animatedLinesPane');             const animatedPane = mapInstanceRef.current.getPane('animatedLinesPane');             animatedPane.style.zIndex = 450;             animatedPane.style.pointerEvents = 'none';              mapInstanceRef.current.setView([-6.2088, 106.8456], 5);                          const streets = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap' });             allMarkersForBoundsRef.current = L.featureGroup();             const satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles &copy; Esri' });             const hybrid = L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{ maxZoom: 20, subdomains:['mt0','mt1','mt2','mt3'], attribution: 'Map data &copy; Google' }).addTo(mapInstanceRef.current);              // Create layer groups             const layers = {                 customerMarkers: L.featureGroup().addTo(mapInstanceRef.current),                 odpMarkers: L.featureGroup().addTo(mapInstanceRef.current),                 oltMarkers: L.featureGroup().addTo(mapInstanceRef.current),                 odpNameLabels: L.featureGroup(), // Layer for ODP names                 odcNameLabels: L.featureGroup(), // Layer for ODC names                 oltNameLabels: L.featureGroup(), // Layer for OLT names                 customerNameLabels: L.featureGroup(), // Layer for names, off by default                 odcMarkers: L.featureGroup().addTo(mapInstanceRef.current), // Layer for ODC markers                 customerConnectionLines: L.featureGroup().addTo(mapInstanceRef.current),                 animatedCustomerLines: L.featureGroup().addTo(mapInstanceRef.current),                 networkConnectionLines: L.featureGroup().addTo(mapInstanceRef.current), // General connection lines (ODC-ODP, ODC-ODC)                 animatedNetworkLines: L.featureGroup().addTo(mapInstanceRef.current),              };                          L.control.layers(                 { "Hybrid": hybrid, "Streets": streets, "Satellite": satellite },                  {                      "Customers": layers.customerMarkers,                      "ODPs": layers.odpMarkers,                     "OLTs": layers.oltMarkers,                     "ODCs": layers.odcMarkers,                     "Customer Names": layers.customerNameLabels,                     "ODP Names": layers.odpNameLabels,                     "OLT Names": layers.oltNameLabels,                     "ODC Names": layers.odcNameLabels,                     "Customer Lines": layers.customerConnectionLines,                      "Network Lines": layers.networkConnectionLines                  }             ).addTo(mapInstanceRef.current);                          mapInstanceRef.current.customLayers = layers;         }          // --- Update Map Data ---         const {              customerMarkers,              odpMarkers,              oltMarkers,             odpNameLabels,             oltNameLabels,             odcNameLabels,             customerNameLabels,             odcMarkers,             customerConnectionLines,              animatedCustomerLines,              networkConnectionLines,              animatedNetworkLines          } = mapInstanceRef.current.customLayers;                  // Clear old data         customerMarkers.clearLayers();         odpMarkers.clearLayers();         oltMarkers.clearLayers();         odpNameLabels.clearLayers();         oltNameLabels.clearLayers();         odcNameLabels.clearLayers();         customerNameLabels.clearLayers();         odcMarkers.clearLayers();         customerConnectionLines.clearLayers();         animatedCustomerLines.clearLayers();         networkConnectionLines.clearLayers();         animatedNetworkLines.clearLayers();         networkLinesByEdgeRef.current.clear();         if (!isLineEditMode) {             clearEditableNodeMarkers();             if (selectedLineEdgeKey) {                 setSelectedLineEdgeKey(null);             }         }          allMarkersForBoundsRef.current.clearLayers();                  // Maps for lookup         const odpsMap = odps.reduce((acc, odp) => ({ ...acc, [odp.id]: odp }), {} as Record<string, Odp>);         const odcsMap = odcs.reduce((acc, odc) => ({ ...acc, [odc.id]: odc }), {} as Record<string, Odc>);         const oltDevices = (appSettings.olt?.devices || [])             .map((device) => {                 const lat = Number(device?.location?.lat);                 const lng = Number(device?.location?.lng);                 if (!Number.isFinite(lat) || !Number.isFinite(lng)) {                     return null;                 }                 return {                     ...device,                     resolvedId: String(device.id || device.host || device.name || ''),                     location: { lat, lng },                 };             })             .filter(Boolean) as Array<{                 id?: string;                 name?: string;                 host?: string;                 port?: number;                 model?: string;                 connectionType?: 'ssh' | 'telnet' | 'snmp';                 description?: string;                 resolvedId: string;                 location: { lat: number; lng: number };             }>;          const oltParentNodesMap = oltDevices.reduce((acc, device) => {             const node = {                 id: device.resolvedId,                 location: device.location,             };             const keys = [device.id, device.host, device.name, device.resolvedId]                 .filter((value) => typeof value === 'string' && value.trim().length > 0) as string[];             keys.forEach((key) => {                 acc[key] = node;                 acc[normalizeNodeKey(key)] = node;             });             return acc;         }, {} as Record<string, { id: string; location: { lat: number; lng: number } }>);                  // Unified map for finding parents (ODP, ODC, or OLT)         const allNetworkNodesMap = { ...odpsMap, ...odcsMap, ...oltParentNodesMap };         const allNetworkNodesMapNormalized = Object.entries(allNetworkNodesMap).reduce((acc, [key, value]) => {             acc[normalizeNodeKey(key)] = value;             return acc;         }, {} as Record<string, any>);          const activePppoeUsernames = new Set(activePppoe.map(user => user.name));         const activeHotspotUsernames = new Set(activeHotspot.map(user => user.user));         const acsDevicesMap = new Map<string, AcsDevice>(acsDevices.map((d) => [d.serialNumber, d]));                  // --- Calculate Active Network Nodes ---         const activeNodeIds = new Set<string>();                  // 1. Customers make their ODPs active         customers.forEach(customer => {             const isConnected = activePppoeUsernames.has(customer.pppoeUsername || '') || activeHotspotUsernames.has(customer.pppoeUsername || '');             if (isConnected && customer.odpId) {                 activeNodeIds.add(customer.odpId);             }         });          // 2. Propagate "activeness" up the chain (ODP -> ODC, ODC -> ODC)         let changedInLoop = true;         while (changedInLoop) {             changedInLoop = false;             // Check ODPs             odps.forEach(odp => {                 if (activeNodeIds.has(odp.id) && odp.parentId && !activeNodeIds.has(odp.parentId)) {                     activeNodeIds.add(odp.parentId);                     changedInLoop = true;                 }             });             // Check ODCs             odcs.forEach(odc => {                 if (activeNodeIds.has(odc.id) && odc.parentId && !activeNodeIds.has(odc.parentId)) {                     activeNodeIds.add(odc.parentId);                     changedInLoop = true;                 }             });         }                  // --- Network Lines Logic (ODC->ODC, ODC->ODP, ODC->OLT) ---         const networkLinePromises: Promise<any>[] = [];                  const processNodeLine = (node: Odp | Odc) => {              if (node.parentId) {                 const parentNode = allNetworkNodesMap[node.parentId] || allNetworkNodesMapNormalized[normalizeNodeKey(node.parentId)];                 if (!parentNode) return;                 // Only draw if both have location                 // Note: Odc and Odp types both have 'location' but TS might complain if not cast or checked properly,                  // however since we fetched them and parsed JSON, they should be objects.                 if (parentNode.location && node.location) {                     const isAnimated = activeNodeIds.has(node.id); // If child is active, line flows                     const lineColor = node.lineColor || appSettings.app?.odpLineColor || '#6b7280';                                          const startLat = parentNode.location.lat;                     const startLng = parentNode.location.lng;                     const endLat = node.location.lat;                     const endLng = node.location.lng;                     const parentNodeId = String(parentNode.id || node.parentId || '').trim();                     const edgeKey = `${parentNodeId}->${node.id}`;                      const linePromise = fetchWithAuth(`${API_URL}/network/get-road-path?startLat=${startLat}&startLng=${startLng}&endLat=${endLat}&endLng=${endLng}&mode=auto&maxDetourRatio=2.8&edgeKey=${encodeURIComponent(edgeKey)}`)                         .then(res => res.json())                         .then(pathCoords => {                             const leafletPath = pathCoords.map((p: { lat: number, lng: number }) => [p.lat, p.lng]);                             if (leafletPath.length < 2) throw new Error('Invalid path');                             return { status: 'success', path: leafletPath, isAnimated, lineColor, edgeKey };                         })                         .catch(() => {                             return { status: 'failure', path: [[startLat, startLng], [endLat, endLng]], isAnimated, lineColor, edgeKey };                         });                     networkLinePromises.push(linePromise);                 }             }         };          odps.forEach(processNodeLine);         odcs.forEach(processNodeLine);          // Async draw lines         (async () => {             const lineResults = await Promise.all(networkLinePromises);                          lineResults.forEach(result => {                 const lineOptions: { color: string, weight: number, opacity: number, dashArray?: string } = {                     color: result.lineColor,                     weight: 4, // Thicker for backbone/distribution                     opacity: 0.8,                 };                 if (result.status === 'failure') {                     lineOptions.dashArray = '5, 5';                 }                 const lineLayer = L.polyline(result.path, lineOptions);                 networkConnectionLines.addLayer(lineLayer);                 networkLinesByEdgeRef.current.set(result.edgeKey, lineLayer);                  if (isLineEditMode) {                     lineLayer.on('click', () => activateLineEditor(result.edgeKey, result.path));                 }             });              lineResults.forEach(result => {                 if (result.isAnimated) {                     animatedNetworkLines.addLayer(L.polyline(result.path, { className: 'line-animated', pane: 'animatedLinesPane' }));                 }             });         })();                  // --- Draw ODC Markers ---         odcs.forEach(odc => {             if (!odc.location) return;                          // Calculate capacity usage (simplified: count children connected)             // This is a rough estimate. Real usage might track port numbers.             const childrenODPs = odps.filter(o => o.parentId === odc.id).length;             const childrenODCs = odcs.filter(o => o.parentId === odc.id).length;             const totalChildren = childrenODPs + childrenODCs;             const totalPorts = odc.totalPorts || 0;                          let color = '#8b5cf6'; // Violet for ODC             // Optional: Change color based on capacity if needed              if (totalPorts > 0) {                 const ratio = totalChildren / totalPorts; // Note: This assumes 1 child = 1 port, which might vary.                 if (ratio >= 1) color = '#ef4444';                  else if (ratio >= 0.75) color = '#f59e0b';             }              const popupContent = `<div class="space-y-1 text-sm font-sans" style="min-width: 200px;">                 <h3 class="font-bold text-base text-gray-800">ODC: ${odc.name}</h3>                 <p class="text-xs text-gray-500 -mt-1 mb-2">${odc.address || 'No Address'}</p>                 <div class="border-t border-gray-200 pt-2 grid grid-cols-2 gap-x-4">                     <strong class="text-gray-600">Children:</strong><span class="font-bold text-gray-800">${totalChildren} Nodes</span>                     <strong class="text-gray-600">Capacity:</strong><span class="text-gray-800">${totalPorts} Ports</span>                     <strong class="text-gray-600">Power In:</strong><span class="text-gray-800">${odc.powerInput ? `${odc.powerInput} dBm` : 'N/A'}</span>                     <strong class="text-gray-600">Power Out:</strong><span class="text-gray-800">${odc.powerOutput ? `${odc.powerOutput} dBm` : 'N/A'}</span>                 </div>             </div>`;                          const marker = L.marker([odc.location.lat, odc.location.lng], { icon: createOdcIcon(color) }).bindPopup(popupContent);             odcMarkers.addLayer(marker);              // Add permanent name label for ODC             const nameLabel = L.tooltip({                 permanent: true,                 direction: 'top',                 offset: [0, -25], // Adjusted for ODC icon size                 className: 'odc-name-label'             }).setContent(odc.name).setLatLng([odc.location.lat, odc.location.lng]);             odcNameLabels.addLayer(nameLabel);             allMarkersForBoundsRef.current.addLayer(L.marker([odc.location.lat, odc.location.lng]));         });          // --- Draw ODP Markers ---         odps.forEach(odp => {             if (!odp.location) return;              const usedPorts = customers.filter(c => c.odpId === odp.id).length;             const totalPorts = odp.totalPorts || 0;             let capacityText = `${usedPorts} Customers`, color = '#3b82f6';             if (totalPorts > 0) {                 capacityText = `${usedPorts} / ${totalPorts}`;                 const ratio = usedPorts / totalPorts;                 if (ratio >= 1) color = '#ef4444'; else if (ratio >= 0.75) color = '#f59e0b'; else if (ratio > 0) color = '#22c55e';             }             const popupContent = `<div class="space-y-1 text-sm font-sans" style="min-width: 200px;"><h3 class="font-bold text-base text-gray-800">${odp.name}</h3><p class="text-xs text-gray-500 -mt-1 mb-2">${odp.address}</p><div class="border-t border-gray-200 pt-2 grid grid-cols-2 gap-x-4"><strong class="text-gray-600">Capacity:</strong><span class="font-bold text-gray-800">${capacityText}</span><strong class="text-gray-600">Power In:</strong><span class="text-gray-800">${odp.powerInput ? `${odp.powerInput} dBm` : 'N/A'}</span><strong class="text-gray-600">Power Out:</strong><span class="text-gray-800">${odp.powerOutput ? `${odp.powerOutput} dBm` : 'N/A'}</span></div></div>`;             const marker = L.marker([odp.location.lat, odp.location.lng], { icon: createOdpIcon(color) }).bindPopup(popupContent);             odpMarkers.addLayer(marker);              // Add permanent name label for ODP             const nameLabel = L.tooltip({                 permanent: true,                 direction: 'top',                 offset: [0, -20], // Adjusted for ODP icon size                 className: 'odp-name-label'             }).setContent(odp.name).setLatLng([odp.location.lat, odp.location.lng]);             odpNameLabels.addLayer(nameLabel);             allMarkersForBoundsRef.current.addLayer(L.marker([odp.location.lat, odp.location.lng]));         });          // --- Draw OLT Markers ---         oltDevices.forEach((olt) => {             if (!olt.location) return;             const lat = Number(olt.location.lat);             const lng = Number(olt.location.lng);             if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;              const popupContent = `<div class="space-y-1 text-sm font-sans" style="min-width: 220px;">                 <h3 class="font-bold text-base text-gray-800">OLT: ${olt.name || '-'}</h3>                 <p class="text-xs text-gray-500 -mt-1 mb-2">${olt.description || 'No description'}</p>                 <div class="border-t border-gray-200 pt-2 grid grid-cols-2 gap-x-4">                     <strong class="text-gray-600">Host:</strong><span class="font-mono text-gray-800">${olt.host || '-'}</span>                     <strong class="text-gray-600">Port:</strong><span class="text-gray-800">${olt.port || 22}</span>                     <strong class="text-gray-600">Model:</strong><span class="text-gray-800">${olt.model || 'N/A'}</span>                     <strong class="text-gray-600">Koneksi:</strong><span class="text-gray-800">${(olt.connectionType || 'ssh').toUpperCase()}</span>                 </div>             </div>`;              const marker = L.marker([lat, lng], { icon: createOltIcon('#0f766e') }).bindPopup(popupContent);             oltMarkers.addLayer(marker);              const nameLabel = L.tooltip({                 permanent: true,                 direction: 'top',                 offset: [0, -25],                 className: 'odc-name-label'             }).setContent(olt.name || 'OLT').setLatLng([lat, lng]);             oltNameLabels.addLayer(nameLabel);              allMarkersForBoundsRef.current.addLayer(L.marker([lat, lng]));         });                  // --- Draw Customer Markers & Lines ---         customers.forEach(customer => {             if (customer.location) {                 const isConnected = (activePppoeUsernames.has(customer.pppoeUsername || '') || activeHotspotUsernames.has(customer.pppoeUsername || ''));                 const acsDevice = customer.acsSerialNumber ? acsDevicesMap.get(customer.acsSerialNumber) : null;                 const popupContent = `<div class="space-y-1 text-sm font-sans" style="min-width: 220px;"><h3 class="font-bold text-base text-gray-800">${customer.name}</h3><p class="text-xs text-gray-500 -mt-1 mb-2">ID: ${customer.id}</p><div class="border-t border-gray-200 pt-2 grid grid-cols-2 gap-x-4"><strong class="text-gray-600">Status:</strong><span class="font-semibold">${customer.status} (${isConnected ? '<span style="color: #22c55e;">Online</span>' : '<span style="color: #ef4444;">Offline</span>'})</span><strong class="text-gray-600">User ACS:</strong><span class="font-mono">${acsDevice?.pppoeUsername || 'N/A'}</span><strong class="text-gray-600">Redaman (RX):</strong><span class="font-semibold ${getRxPowerColor(acsDevice?.rxPower || 'N/A')}">${acsDevice?.rxPower || 'N/A'}</span><strong class="text-gray-600">Nama WiFi:</strong><span class="font-semibold">${acsDevice?.ssid1 || 'N/A'}</span></div></div>`;                 const marker = L.marker([customer.location.lat, customer.location.lng], {                      icon: getCustomerIcon(customer.status, isConnected)                  }).bindPopup(popupContent);                  customerMarkers.addLayer(marker);                  // Add permanent name label to its own layer                 const nameLabel = L.tooltip({                     permanent: true,                     direction: 'top',                     offset: [0, -32],                     className: 'customer-name-label'                 }).setContent(customer.name).setLatLng([customer.location.lat, customer.location.lng]);                 customerNameLabels.addLayer(nameLabel);                  allMarkersForBoundsRef.current.addLayer(L.marker([customer.location.lat, customer.location.lng]));                  if (customer.odpId && odpsMap[customer.odpId] && odpsMap[customer.odpId].location) {                     const lineCoords: [number, number][] = [[odpsMap[customer.odpId].location!.lat, odpsMap[customer.odpId].location!.lng], [customer.location.lat, customer.location.lng]];                     if (isConnected) {                         customerConnectionLines.addLayer(L.polyline(lineCoords, { weight: 2, color: '#3b82f6', opacity: 0.8 }));                         animatedCustomerLines.addLayer(L.polyline(lineCoords, { className: 'line-animated', pane: 'animatedLinesPane' }));                     } else {                         customerConnectionLines.addLayer(L.polyline(lineCoords, { weight: 1, color: '#9ca3af', opacity: 0.5 }));                     }                 }             }         });          if (needsInitialization && allMarkersForBoundsRef.current.getLayers().length > 0) {             setTimeout(() => {                 mapInstanceRef.current?.invalidateSize();                 mapInstanceRef.current?.fitBounds(allMarkersForBoundsRef.current.getBounds().pad(0.1));             }, 250);         }      }, [isLoading, customers, odps, odcs, activePppoe, activeHotspot, appSettings, acsDevices, isLineEditMode, routeRefreshToken, activateLineEditor, clearEditableNodeMarkers, selectedLineEdgeKey]);          // Effect 3: Handle map resize     useEffect(() => {         if (mapInstanceRef.current) {             setTimeout(() => {                 mapInstanceRef.current.invalidateSize();             }, 150);         }     }, [isFullScreen]);      useEffect(() => {         return () => {             if (mapInstanceRef.current) {                 mapInstanceRef.current.remove();                 mapInstanceRef.current = null;             }         };     }, []);      const handleGoToMyLocation = () => {         if (!mapInstanceRef.current) return;         const map = mapInstanceRef.current;          map.locate({ setView: true, maxZoom: 16 });          const onLocationFound = (e: any) => {             const radius = e.accuracy;             const latlng = e.latlng;              if (myLocationMarkerRef.current) {                 map.removeLayer(myLocationMarkerRef.current);             }              const pulsingIcon = L.divIcon({                 className: 'pulsing-dot-container',                 html: '<div class="pulsing-dot"></div>',                 iconSize: [24, 24],                 iconAnchor: [12, 12],             });              myLocationMarkerRef.current = L.marker(latlng, { icon: pulsingIcon }).addTo(map)                 .bindPopup(`You are within ${radius.toFixed(0)} meters from this point`).openPopup();                          allMarkersForBoundsRef.current.addLayer(L.marker(latlng));         };          const onLocationError = (e: any) => {             alert(e.message);         };          map.on('locationfound', onLocationFound);         map.on('locationerror', onLocationError);     };       const rootClasses = isFullScreen         ? "fixed inset-0 z-[100] bg-gray-50 dark:bg-gray-900 flex flex-col"         : "space-y-6 h-full flex flex-col";          const mapWrapperClasses = isFullScreen         ? "h-full w-full relative"         : "relative flex-grow rounded-lg shadow-md overflow-hidden";      return (         <div className={rootClasses}>             <h2 className={`text-2xl font-bold text-gray-800 dark:text-gray-100 flex-shrink-0 transition-opacity duration-300 ${isFullScreen ? 'hidden' : 'block'}`}>Customer & Network Map</h2>                          <div className={mapWrapperClasses}>                 {isLoading ? (                     <div className="h-full w-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center">                         <p className="text-gray-600 dark:text-gray-400 font-semibold">Memuat Peta...</p>                     </div>                 ) : (                     <>                         <div className="absolute top-2 left-2 z-[1000] flex flex-col space-y-2">                             <button                                 onClick={() => setIsFullScreen(!isFullScreen)}                                 className="bg-white dark:bg-gray-700 p-1.5 border border-gray-300 dark:border-gray-500 rounded-md shadow-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"                                 title={isFullScreen ? "Exit Full View" : "Full View"}                             >                                 {isFullScreen ? <CompressIcon /> : <ExpandIcon />}                             </button>                              <button                                 onClick={handleGoToMyLocation}                                 className="bg-white dark:bg-gray-700 p-1.5 border border-gray-300 dark:border-gray-500 rounded-md shadow-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"                                 title="My Location"                             >                                 <MyLocationIcon />                             </button>                             <button                                 onClick={() => {                                     const next = !isLineEditMode;                                     setIsLineEditMode(next);                                     if (!next) {                                         clearEditableNodeMarkers();                                         setSelectedLineEdgeKey(null);                                     }                                 }}                                 className={`p-1.5 border rounded-md shadow-md transition-colors ${                                     isLineEditMode                                         ? 'bg-amber-500 text-white border-amber-600 hover:bg-amber-600'                                         : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 border-gray-300 dark:border-gray-500 hover:bg-gray-100 dark:hover:bg-gray-600'                                 }`}                                 title={isLineEditMode ? 'Exit Line Edit Mode' : 'Edit Network Line'}                             >                                 <EditPathIcon />                             </button>                             {isLineEditMode && selectedLineEdgeKey && (                                 <div className="bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-500 rounded-md shadow-md p-2 w-56 space-y-2">                                     <p className="text-xs text-gray-700 dark:text-gray-200 break-all">                                         Editing: <span className="font-semibold">{selectedLineEdgeKey}</span>                                     </p>                                     <div className="grid grid-cols-2 gap-2">                                         <button                                             onClick={handleAddLineNode}                                             className="px-2 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700"                                         >                                             + Node                                         </button>                                         <button                                             onClick={handleRemoveLineNode}                                             className="px-2 py-1 text-xs bg-gray-600 text-white rounded hover:bg-gray-700"                                         >                                             - Node                                         </button>                                         <button                                             onClick={handleSaveLineOverride}                                             disabled={isSavingLineOverride}                                             className="px-2 py-1 text-xs bg-green-600 text-white rounded hover:bg-green-700 disabled:bg-green-400"                                         >                                             Save                                         </button>                                         <button                                             onClick={handleResetLineOverride}                                             disabled={isSavingLineOverride}                                             className="px-2 py-1 text-xs bg-red-600 text-white rounded hover:bg-red-700 disabled:bg-red-400"                                         >                                             Reset                                         </button>                                     </div>                                 </div>                             )}                         </div>                         <div ref={mapContainerRef} className="h-full w-full" />                     </>                 )}             </div>         </div>     ); }; export default NetworkMap;
+
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Customer, CustomerStatus, Odp, PppoeActiveUser, ApiSettings, AcsDevice, HotspotActiveUser, Odc } from '../../types';
+import { fetchWithAuth } from '~/components/api';
+
+// Declare Leaflet type for global L variable from CDN
+declare var L: any;
+const API_URL = '/api';
+
+// --- LocalStorage Cache Keys ---
+const MAP_CACHE_VERSION = 'v1';
+const MAP_CACHE_KEYS = {
+    CUSTOMERS: `map_cache_customers_${MAP_CACHE_VERSION}`,
+    ODPS: `map_cache_odps_${MAP_CACHE_VERSION}`,
+    ODCS: `map_cache_odcs_${MAP_CACHE_VERSION}`, // New Cache Key
+    ACTIVE_PPPOE: `map_cache_active_pppoe_${MAP_CACHE_VERSION}`,
+    ACTIVE_HOTSPOT: `map_cache_active_hotspot_${MAP_CACHE_VERSION}`,
+    SETTINGS: `map_cache_settings_${MAP_CACHE_VERSION}`,
+    ACS_DEVICES: `map_cache_acs_devices_${MAP_CACHE_VERSION}`,
+};
+
+
+const createCustomerIcon = (color: string) => {
+    const iconHtml = `<div style="background-color: ${color};" class="rounded-full w-8 h-8 flex items-center justify-center border-2 border-white shadow-md">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+        </svg>
+    </div>`;
+
+    return L.divIcon({
+        html: iconHtml,
+        className: 'custom-leaflet-icon',
+        iconSize: [32, 32],
+        iconAnchor: [16, 32],
+        popupAnchor: [0, -32]
+    });
+};
+
+const createOdpIcon = (color: string) => {
+    // A wifi/circle icon representing a distribution point (ODP).
+    const iconHtml = `<div style="background-color: ${color};" class="w-8 h-8 rounded-full flex items-center justify-center border-2 border-white shadow-lg">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8.111 16.555a5.5 5.5 0 017.778 0M12 20.25a.75.75 0 100-1.5.75.75 0 000 1.5zM4.444 12.889a10 10 0 0115.112 0" />
+        </svg>
+    </div>`;
+     return L.divIcon({
+        html: iconHtml,
+        className: 'custom-leaflet-icon',
+        iconSize: [32, 32],
+        iconAnchor: [16, 16], // Anchor to the center
+        popupAnchor: [0, -16]
+    });
+}
+
+const createOdcIcon = (color: string) => {
+    // A Cube/Server icon representing a distribution cabinet (ODC).
+    // Using a square-ish rounded shape to distinguish from ODPs.
+    const iconHtml = `<div style="background-color: ${color};" class="w-10 h-10 rounded-lg flex items-center justify-center border-2 border-white shadow-lg transform rotate-0">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
+        </svg>
+    </div>`;
+     return L.divIcon({
+        html: iconHtml,
+        className: 'custom-leaflet-icon',
+        iconSize: [40, 40],
+        iconAnchor: [20, 20], // Anchor to the center
+        popupAnchor: [0, -20]
+    });
+}
+
+const createOltIcon = (color: string) => {
+    const iconHtml = `<div style="background-color: ${color};" class="w-10 h-10 rounded-md flex items-center justify-center border-2 border-white shadow-lg">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3h4.5m-7.5 4.5h10.5M6 12h12m-9.75 4.5h7.5M6 21h12" />
+        </svg>
+    </div>`;
+    return L.divIcon({
+        html: iconHtml,
+        className: 'custom-leaflet-icon',
+        iconSize: [40, 40],
+        iconAnchor: [20, 20],
+        popupAnchor: [0, -20]
+    });
+}
+
+const getCustomerIcon = (status: CustomerStatus, isConnected: boolean) => {
+    if (status === CustomerStatus.Active) {
+        return isConnected ? createCustomerIcon('#22c55e') : createCustomerIcon('#ef4444'); // green-500 : red-500
+    }
+    switch (status) {
+        case CustomerStatus.Suspended:
+            return createCustomerIcon('#eab308'); // yellow-500
+        case CustomerStatus.Unregister:
+            return createCustomerIcon('#3b82f6'); // blue-500
+        case CustomerStatus.Inactive:
+            return createCustomerIcon('#6b7280'); // gray-500
+        default:
+            return createCustomerIcon('#6b7280'); // gray-500
+    }
+};
+
+const getRxPowerColor = (rxPower: string) => {
+    if (!rxPower || rxPower === 'N/A') return 'text-gray-400';
+    const powerValue = parseFloat(rxPower);
+    if (isNaN(powerValue)) return 'text-gray-400';
+    if (powerValue > -25) return 'text-green-600 dark:text-green-400';
+    if (powerValue >= -28) return 'text-yellow-600 dark:text-yellow-400';
+    return 'text-red-600 dark:text-red-400';
+};
+
+const ExpandIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5v4m0 0h4" />
+    </svg>
+);
+const CompressIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M10 14l-5 5m0 0v-4m0 4h4m1-11l5-5m0 0h-4m4 0v4m-1 11l5 5m0 0v-4m0 4h-4m1-11l-5 5" />
+    </svg>
+);
+const MyLocationIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+        <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+    </svg>
+);
+const EditPathIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+        <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
+        <path fillRule="evenodd" d="M3 5a2 2 0 012-2h3a1 1 0 110 2H5v10h10v-3a1 1 0 112 0v3a2 2 0 01-2 2H5a2 2 0 01-2-2V5z" clipRule="evenodd" />
+    </svg>
+);
+
+const normalizeNodeKey = (value: unknown) => String(value || '').trim().toLowerCase();
+const normalizePathForEditing = (path: [number, number][], maxPoints = 10): [number, number][] => {
+    if (!Array.isArray(path) || path.length < 2) return path;
+    if (path.length <= maxPoints) return path;
+
+    const sampled: [number, number][] = [];
+    const step = (path.length - 1) / (maxPoints - 1);
+    for (let i = 0; i < maxPoints; i += 1) {
+        const idx = Math.round(i * step);
+        sampled.push(path[idx]);
+    }
+    sampled[0] = path[0];
+    sampled[sampled.length - 1] = path[path.length - 1];
+    return sampled;
+};
+
+
+const NetworkMap: React.FC = () => {
+    const mapContainerRef = useRef<HTMLDivElement>(null);
+    const mapInstanceRef = useRef<any>(null);
+    
+    // Data states
+    const [customers, setCustomers] = useState<Customer[]>([]);
+    const [odps, setOdps] = useState<Odp[]>([]);
+    const [odcs, setOdcs] = useState<Odc[]>([]); // Added ODC State
+    const [activePppoe, setActivePppoe] = useState<PppoeActiveUser[]>([]);
+    const [activeHotspot, setActiveHotspot] = useState<HotspotActiveUser[]>([]);
+    const [appSettings, setAppSettings] = useState<ApiSettings | null>(null);
+    const [acsDevices, setAcsDevices] = useState<AcsDevice[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [isFullScreen, setIsFullScreen] = useState(false);
+    const [isLineEditMode, setIsLineEditMode] = useState(false);
+    const [selectedLineEdgeKey, setSelectedLineEdgeKey] = useState<string | null>(null);
+    const [isSavingLineOverride, setIsSavingLineOverride] = useState(false);
+    const [routeRefreshToken, setRouteRefreshToken] = useState(0);
+    const myLocationMarkerRef = useRef<any>(null);
+    const allMarkersForBoundsRef = useRef<any>(null);
+    const networkLinesByEdgeRef = useRef<Map<string, any>>(new Map());
+    const editableNodeMarkersRef = useRef<any[]>([]);
+    const editingLinePathRef = useRef<[number, number][]>([]);
+
+    const clearEditableNodeMarkers = useCallback(() => {
+        const map = mapInstanceRef.current;
+        if (!map) return;
+        editableNodeMarkersRef.current.forEach((marker) => {
+            try {
+                map.removeLayer(marker);
+            } catch (_e) {
+                // ignore
+            }
+        });
+        editableNodeMarkersRef.current = [];
+    }, []);
+
+    const updateSelectedLineLayerPath = useCallback((path: [number, number][]) => {
+        if (!selectedLineEdgeKey) return;
+        const layer = networkLinesByEdgeRef.current.get(selectedLineEdgeKey);
+        if (!layer) return;
+        layer.setLatLngs(path);
+    }, [selectedLineEdgeKey]);
+
+    const renderEditableNodes = useCallback((path: [number, number][]) => {
+        const map = mapInstanceRef.current;
+        if (!map || !selectedLineEdgeKey) return;
+        clearEditableNodeMarkers();
+
+        const nodeIcon = L.divIcon({
+            className: 'custom-leaflet-icon',
+            html: `<div style="width:12px;height:12px;border-radius:999px;background:#f59e0b;border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,0.2);"></div>`,
+            iconSize: [12, 12],
+            iconAnchor: [6, 6],
+        });
+
+        path.forEach((point, idx) => {
+            const marker = L.marker(point, { draggable: true, icon: nodeIcon, zIndexOffset: 1000 });
+            marker.on('drag', (e: any) => {
+                const next = [...editingLinePathRef.current];
+                next[idx] = [e.latlng.lat, e.latlng.lng];
+                editingLinePathRef.current = next;
+                updateSelectedLineLayerPath(next);
+            });
+            marker.addTo(map);
+            editableNodeMarkersRef.current.push(marker);
+        });
+    }, [clearEditableNodeMarkers, selectedLineEdgeKey, updateSelectedLineLayerPath]);
+
+    const activateLineEditor = useCallback((edgeKey: string, rawPath: [number, number][]) => {
+        const path = normalizePathForEditing(rawPath);
+        setSelectedLineEdgeKey(edgeKey);
+        editingLinePathRef.current = path;
+        renderEditableNodes(path);
+    }, [renderEditableNodes]);
+
+    const handleAddLineNode = useCallback(() => {
+        const path = [...editingLinePathRef.current];
+        if (path.length < 2) return;
+
+        let longestIndex = 0;
+        let longestDistance = 0;
+        for (let i = 0; i < path.length - 1; i += 1) {
+            const a = path[i];
+            const b = path[i + 1];
+            const dist = Math.hypot(a[0] - b[0], a[1] - b[1]);
+            if (dist > longestDistance) {
+                longestDistance = dist;
+                longestIndex = i;
+            }
+        }
+
+        const start = path[longestIndex];
+        const end = path[longestIndex + 1];
+        const mid: [number, number] = [(start[0] + end[0]) / 2, (start[1] + end[1]) / 2];
+        path.splice(longestIndex + 1, 0, mid);
+        editingLinePathRef.current = path;
+        updateSelectedLineLayerPath(path);
+        renderEditableNodes(path);
+    }, [renderEditableNodes, updateSelectedLineLayerPath]);
+
+    const handleRemoveLineNode = useCallback(() => {
+        const path = [...editingLinePathRef.current];
+        if (path.length <= 2) return;
+        path.splice(path.length - 2, 1);
+        editingLinePathRef.current = path;
+        updateSelectedLineLayerPath(path);
+        renderEditableNodes(path);
+    }, [renderEditableNodes, updateSelectedLineLayerPath]);
+
+    const handleSaveLineOverride = useCallback(async () => {
+        if (!selectedLineEdgeKey || editingLinePathRef.current.length < 2) return;
+        setIsSavingLineOverride(true);
+        try {
+            const payload = {
+                path: editingLinePathRef.current.map((point) => ({ lat: point[0], lng: point[1] })),
+            };
+            await fetchWithAuth(`${API_URL}/network/route-overrides/${encodeURIComponent(selectedLineEdgeKey)}`, {
+                method: 'PUT',
+                body: JSON.stringify(payload),
+            });
+            alert('Line override saved.');
+        } catch (error: any) {
+            alert(error.message || 'Failed to save line override.');
+        } finally {
+            setIsSavingLineOverride(false);
+        }
+    }, [selectedLineEdgeKey]);
+
+    const handleResetLineOverride = useCallback(async () => {
+        if (!selectedLineEdgeKey) return;
+        setIsSavingLineOverride(true);
+        try {
+            await fetchWithAuth(`${API_URL}/network/route-overrides/${encodeURIComponent(selectedLineEdgeKey)}`, {
+                method: 'DELETE',
+            });
+            clearEditableNodeMarkers();
+            setSelectedLineEdgeKey(null);
+            setRouteRefreshToken((prev) => prev + 1);
+        } catch (error: any) {
+            alert(error.message || 'Failed to reset line override.');
+        } finally {
+            setIsSavingLineOverride(false);
+        }
+    }, [clearEditableNodeMarkers, selectedLineEdgeKey]);
+
+    // Effect 1: Load data from cache first, then fetch from network
+    useEffect(() => {
+        const loadAndFetchData = async () => {
+            let hasCache = false;
+            const fetchAcsDevicesWithFallback = async () => {
+                try {
+                    const fastRes = await fetchWithAuth(`${API_URL}/acs/devices/cached/fast`);
+                    if (fastRes.ok) {
+                        return fastRes.json();
+                    }
+                } catch (error) {
+                    console.warn("[Map] Fast ACS cache failed, falling back to cached endpoint:", error);
+                }
+
+                try {
+                    const cachedRes = await fetchWithAuth(`${API_URL}/acs/devices/cached`);
+                    if (cachedRes.ok) {
+                        return cachedRes.json();
+                    }
+                } catch (error) {
+                    console.warn("[Map] Cached ACS endpoint failed:", error);
+                }
+
+                return { devices: [] };
+            };
+
+            try {
+                // Try to load from cache first for instant display
+                const cachedCustomers = localStorage.getItem(MAP_CACHE_KEYS.CUSTOMERS);
+                const cachedOdps = localStorage.getItem(MAP_CACHE_KEYS.ODPS);
+                const cachedOdcs = localStorage.getItem(MAP_CACHE_KEYS.ODCS);
+                const cachedActivePppoe = localStorage.getItem(MAP_CACHE_KEYS.ACTIVE_PPPOE);
+                const cachedActiveHotspot = localStorage.getItem(MAP_CACHE_KEYS.ACTIVE_HOTSPOT);
+                const cachedSettings = localStorage.getItem(MAP_CACHE_KEYS.SETTINGS);
+                const cachedAcs = localStorage.getItem(MAP_CACHE_KEYS.ACS_DEVICES);
+
+                if (cachedCustomers && cachedOdps && cachedSettings) {
+                    setCustomers(JSON.parse(cachedCustomers));
+                    setOdps(JSON.parse(cachedOdps));
+                    setOdcs(cachedOdcs ? JSON.parse(cachedOdcs) : []); // Load ODCs
+                    setActivePppoe(cachedActivePppoe ? JSON.parse(cachedActivePppoe) : []);
+                    setActiveHotspot(cachedActiveHotspot ? JSON.parse(cachedActiveHotspot) : []);
+                    setAppSettings(JSON.parse(cachedSettings));
+                    
+                    if (cachedAcs) {
+                        const parsedAcs = JSON.parse(cachedAcs);
+                        const acsArray = Array.isArray(parsedAcs) ? parsedAcs : (parsedAcs.devices || []);
+                        setAcsDevices(acsArray);
+                    } else {
+                        setAcsDevices([]);
+                    }
+                    
+                    setIsLoading(false); 
+                    hasCache = true;
+                    console.log("[Map] Loaded data from cache.");
+                }
+            } catch (error) {
+                console.error("[Map] Failed to load data from cache:", error);
+                Object.values(MAP_CACHE_KEYS).forEach(key => localStorage.removeItem(key));
+            }
+
+            if (!hasCache) {
+                setIsLoading(true);
+            }
+
+            try {
+                console.log("[Map] Fetching fresh data from server...");
+                const [customersRes, odpsRes, odcsRes, pppoeActiveRes, hotspotActiveRes, settingsRes, acsDevicesRes] = await Promise.all([
+                    fetchWithAuth(`${API_URL}/customers`),
+                    fetchWithAuth(`${API_URL}/network/odps`),
+                    fetchWithAuth(`${API_URL}/network/odcs`), // Fetch ODCs
+                    fetchWithAuth(`${API_URL}/pppoe/active`),
+                    fetchWithAuth(`${API_URL}/hotspot/active`),
+                    fetchWithAuth(`${API_URL}/admin/settings`),
+                    fetchAcsDevicesWithFallback(),
+                ]);
+                
+                const freshCustomers = await customersRes.json();
+                const freshOdps = await odpsRes.json();
+                const freshOdcs = await odcsRes.json();
+                const freshPppoe = await pppoeActiveRes.json();
+                const freshHotspot = await hotspotActiveRes.json();
+                const freshSettings = await settingsRes.json();
+                const freshAcsData = acsDevicesRes;
+                
+                const freshAcs = Array.isArray(freshAcsData.devices) ? freshAcsData.devices : [];
+                
+                setCustomers(freshCustomers);
+                setOdps(freshOdps);
+                setOdcs(freshOdcs); // Set ODCs
+                setActivePppoe(freshPppoe);
+                setActiveHotspot(freshHotspot);
+                setAppSettings(freshSettings);
+                setAcsDevices(freshAcs);
+                
+                // Save fresh data to cache
+                localStorage.setItem(MAP_CACHE_KEYS.CUSTOMERS, JSON.stringify(freshCustomers));
+                localStorage.setItem(MAP_CACHE_KEYS.ODPS, JSON.stringify(freshOdps));
+                localStorage.setItem(MAP_CACHE_KEYS.ODCS, JSON.stringify(freshOdcs)); // Cache ODCs
+                localStorage.setItem(MAP_CACHE_KEYS.ACTIVE_PPPOE, JSON.stringify(freshPppoe));
+                localStorage.setItem(MAP_CACHE_KEYS.ACTIVE_HOTSPOT, JSON.stringify(freshHotspot));
+                localStorage.setItem(MAP_CACHE_KEYS.SETTINGS, JSON.stringify(freshSettings));
+                localStorage.setItem(MAP_CACHE_KEYS.ACS_DEVICES, JSON.stringify(freshAcs));
+                
+                console.log("[Map] Fresh data fetched and cache updated.");
+
+            } catch (error) {
+                console.error("[Map] Failed to fetch fresh map data:", error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        loadAndFetchData();
+    }, []);
+
+    // Effect 2: Initialize and update the map whenever data changes
+    useEffect(() => {
+        if (isLoading || !mapContainerRef.current || !appSettings) {
+            return;
+        }
+
+        const map = mapInstanceRef.current;
+        const needsInitialization = !map;
+
+        if (needsInitialization) {
+            // --- Initialize Map ---
+            mapInstanceRef.current = L.map(mapContainerRef.current, { zoomControl: false });
+            
+            mapInstanceRef.current.createPane('animatedLinesPane');
+            const animatedPane = mapInstanceRef.current.getPane('animatedLinesPane');
+            animatedPane.style.zIndex = 450;
+            animatedPane.style.pointerEvents = 'none';
+
+            mapInstanceRef.current.setView([-6.2088, 106.8456], 5);
+            
+            const streets = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap' });
+            allMarkersForBoundsRef.current = L.featureGroup();
+            const satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles &copy; Esri' });
+            const hybrid = L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{ maxZoom: 20, subdomains:['mt0','mt1','mt2','mt3'], attribution: 'Map data &copy; Google' }).addTo(mapInstanceRef.current);
+
+            // Create layer groups
+            const layers = {
+                customerMarkers: L.featureGroup().addTo(mapInstanceRef.current),
+                odpMarkers: L.featureGroup().addTo(mapInstanceRef.current),
+                oltMarkers: L.featureGroup().addTo(mapInstanceRef.current),
+                odpNameLabels: L.featureGroup(), // Layer for ODP names
+                odcNameLabels: L.featureGroup(), // Layer for ODC names
+                oltNameLabels: L.featureGroup(), // Layer for OLT names
+                customerNameLabels: L.featureGroup(), // Layer for names, off by default
+                odcMarkers: L.featureGroup().addTo(mapInstanceRef.current), // Layer for ODC markers
+                customerConnectionLines: L.featureGroup().addTo(mapInstanceRef.current),
+                animatedCustomerLines: L.featureGroup().addTo(mapInstanceRef.current),
+                networkConnectionLines: L.featureGroup().addTo(mapInstanceRef.current), // General connection lines (ODC-ODP, ODC-ODC)
+                animatedNetworkLines: L.featureGroup().addTo(mapInstanceRef.current), 
+            };
+            
+            L.control.layers(
+                { "Hybrid": hybrid, "Streets": streets, "Satellite": satellite }, 
+                { 
+                    "Customers": layers.customerMarkers, 
+                    "ODPs": layers.odpMarkers,
+                    "OLTs": layers.oltMarkers,
+                    "ODCs": layers.odcMarkers,
+                    "Customer Names": layers.customerNameLabels,
+                    "ODP Names": layers.odpNameLabels,
+                    "OLT Names": layers.oltNameLabels,
+                    "ODC Names": layers.odcNameLabels,
+                    "Customer Lines": layers.customerConnectionLines, 
+                    "Network Lines": layers.networkConnectionLines 
+                }
+            ).addTo(mapInstanceRef.current);
+            
+            mapInstanceRef.current.customLayers = layers;
+        }
+
+        // --- Update Map Data ---
+        const { 
+            customerMarkers, 
+            odpMarkers, 
+            oltMarkers,
+            odpNameLabels,
+            oltNameLabels,
+            odcNameLabels,
+            customerNameLabels,
+            odcMarkers,
+            customerConnectionLines, 
+            animatedCustomerLines, 
+            networkConnectionLines, 
+            animatedNetworkLines 
+        } = mapInstanceRef.current.customLayers;
+        
+        // Clear old data
+        customerMarkers.clearLayers();
+        odpMarkers.clearLayers();
+        oltMarkers.clearLayers();
+        odpNameLabels.clearLayers();
+        oltNameLabels.clearLayers();
+        odcNameLabels.clearLayers();
+        customerNameLabels.clearLayers();
+        odcMarkers.clearLayers();
+        customerConnectionLines.clearLayers();
+        animatedCustomerLines.clearLayers();
+        networkConnectionLines.clearLayers();
+        animatedNetworkLines.clearLayers();
+        networkLinesByEdgeRef.current.clear();
+        if (!isLineEditMode) {
+            clearEditableNodeMarkers();
+            if (selectedLineEdgeKey) {
+                setSelectedLineEdgeKey(null);
+            }
+        }
+
+        allMarkersForBoundsRef.current.clearLayers();
+        
+        // Maps for lookup
+        const odpsMap = odps.reduce((acc, odp) => ({ ...acc, [odp.id]: odp }), {} as Record<string, Odp>);
+        const odcsMap = odcs.reduce((acc, odc) => ({ ...acc, [odc.id]: odc }), {} as Record<string, Odc>);
+        const oltDevices = (appSettings.olt?.devices || [])
+            .map((device) => {
+                const lat = Number(device?.location?.lat);
+                const lng = Number(device?.location?.lng);
+                if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
+                    return null;
+                }
+                return {
+                    ...device,
+                    resolvedId: String(device.id || device.host || device.name || ''),
+                    location: { lat, lng },
+                };
+            })
+            .filter(Boolean) as Array<{
+                id?: string;
+                name?: string;
+                host?: string;
+                port?: number;
+                model?: string;
+                connectionType?: 'ssh' | 'telnet' | 'snmp';
+                description?: string;
+                resolvedId: string;
+                location: { lat: number; lng: number };
+            }>;
+
+        const oltParentNodesMap = oltDevices.reduce((acc, device) => {
+            const node = {
+                id: device.resolvedId,
+                location: device.location,
+            };
+            const keys = [device.id, device.host, device.name, device.resolvedId]
+                .filter((value) => typeof value === 'string' && value.trim().length > 0) as string[];
+            keys.forEach((key) => {
+                acc[key] = node;
+                acc[normalizeNodeKey(key)] = node;
+            });
+            return acc;
+        }, {} as Record<string, { id: string; location: { lat: number; lng: number } }>);
+        
+        // Unified map for finding parents (ODP, ODC, or OLT)
+        const allNetworkNodesMap = { ...odpsMap, ...odcsMap, ...oltParentNodesMap };
+        const allNetworkNodesMapNormalized = Object.entries(allNetworkNodesMap).reduce((acc, [key, value]) => {
+            acc[normalizeNodeKey(key)] = value;
+            return acc;
+        }, {} as Record<string, any>);
+
+        const activePppoeUsernames = new Set(activePppoe.map(user => user.name));
+        const activeHotspotUsernames = new Set(activeHotspot.map(user => user.user));
+        const acsDevicesMap = new Map<string, AcsDevice>(acsDevices.map((d) => [d.serialNumber, d]));
+        
+        // --- Calculate Active Network Nodes ---
+        const activeNodeIds = new Set<string>();
+        
+        // 1. Customers make their ODPs active
+        customers.forEach(customer => {
+            const isConnected = activePppoeUsernames.has(customer.pppoeUsername || '') || activeHotspotUsernames.has(customer.pppoeUsername || '');
+            if (isConnected && customer.odpId) {
+                activeNodeIds.add(customer.odpId);
+            }
+        });
+
+        // 2. Propagate "activeness" up the chain (ODP -> ODC, ODC -> ODC)
+        let changedInLoop = true;
+        while (changedInLoop) {
+            changedInLoop = false;
+            // Check ODPs
+            odps.forEach(odp => {
+                if (activeNodeIds.has(odp.id) && odp.parentId && !activeNodeIds.has(odp.parentId)) {
+                    activeNodeIds.add(odp.parentId);
+                    changedInLoop = true;
+                }
+            });
+            // Check ODCs
+            odcs.forEach(odc => {
+                if (activeNodeIds.has(odc.id) && odc.parentId && !activeNodeIds.has(odc.parentId)) {
+                    activeNodeIds.add(odc.parentId);
+                    changedInLoop = true;
+                }
+            });
+        }
+        
+        // --- Network Lines Logic (ODC->ODC, ODC->ODP, ODC->OLT) ---
+        const networkLinePromises: Promise<any>[] = [];
+        
+        const processNodeLine = (node: Odp | Odc) => {
+             if (node.parentId) {
+                const parentNode = allNetworkNodesMap[node.parentId] || allNetworkNodesMapNormalized[normalizeNodeKey(node.parentId)];
+                if (!parentNode) return;
+                // Only draw if both have location
+                // Note: Odc and Odp types both have 'location' but TS might complain if not cast or checked properly, 
+                // however since we fetched them and parsed JSON, they should be objects.
+                if (parentNode.location && node.location) {
+                    const isAnimated = activeNodeIds.has(node.id); // If child is active, line flows
+                    const lineColor = node.lineColor || appSettings.app?.odpLineColor || '#6b7280';
+                    
+                    const startLat = parentNode.location.lat;
+                    const startLng = parentNode.location.lng;
+                    const endLat = node.location.lat;
+                    const endLng = node.location.lng;
+                    const parentNodeId = String(parentNode.id || node.parentId || '').trim();
+                    const edgeKey = `${parentNodeId}->${node.id}`;
+
+                    const linePromise = fetchWithAuth(`${API_URL}/network/get-road-path?startLat=${startLat}&startLng=${startLng}&endLat=${endLat}&endLng=${endLng}&mode=auto&maxDetourRatio=2.8&edgeKey=${encodeURIComponent(edgeKey)}`)
+                        .then(res => res.json())
+                        .then(pathCoords => {
+                            const leafletPath = pathCoords.map((p: { lat: number, lng: number }) => [p.lat, p.lng]);
+                            if (leafletPath.length < 2) throw new Error('Invalid path');
+                            return { status: 'success', path: leafletPath, isAnimated, lineColor, edgeKey };
+                        })
+                        .catch(() => {
+                            return { status: 'failure', path: [[startLat, startLng], [endLat, endLng]], isAnimated, lineColor, edgeKey };
+                        });
+                    networkLinePromises.push(linePromise);
+                }
+            }
+        };
+
+        odps.forEach(processNodeLine);
+        odcs.forEach(processNodeLine);
+
+        // Async draw lines
+        (async () => {
+            const lineResults = await Promise.all(networkLinePromises);
+            
+            lineResults.forEach(result => {
+                const lineOptions: { color: string, weight: number, opacity: number, dashArray?: string } = {
+                    color: result.lineColor,
+                    weight: 4, // Thicker for backbone/distribution
+                    opacity: 0.8,
+                };
+                if (result.status === 'failure') {
+                    lineOptions.dashArray = '5, 5';
+                }
+                const lineLayer = L.polyline(result.path, lineOptions);
+                networkConnectionLines.addLayer(lineLayer);
+                networkLinesByEdgeRef.current.set(result.edgeKey, lineLayer);
+
+                if (isLineEditMode) {
+                    lineLayer.on('click', () => activateLineEditor(result.edgeKey, result.path));
+                }
+            });
+
+            lineResults.forEach(result => {
+                if (result.isAnimated) {
+                    animatedNetworkLines.addLayer(L.polyline(result.path, { className: 'line-animated', pane: 'animatedLinesPane' }));
+                }
+            });
+        })();
+        
+        // --- Draw ODC Markers ---
+        odcs.forEach(odc => {
+            if (!odc.location) return;
+            
+            // Calculate capacity usage (simplified: count children connected)
+            // This is a rough estimate. Real usage might track port numbers.
+            const childrenODPs = odps.filter(o => o.parentId === odc.id).length;
+            const childrenODCs = odcs.filter(o => o.parentId === odc.id).length;
+            const totalChildren = childrenODPs + childrenODCs;
+            const totalPorts = odc.totalPorts || 0;
+            
+            let color = '#8b5cf6'; // Violet for ODC
+            // Optional: Change color based on capacity if needed
+             if (totalPorts > 0) {
+                const ratio = totalChildren / totalPorts; // Note: This assumes 1 child = 1 port, which might vary.
+                if (ratio >= 1) color = '#ef4444'; 
+                else if (ratio >= 0.75) color = '#f59e0b';
+            }
+
+            const popupContent = `<div class="space-y-1 text-sm font-sans" style="min-width: 200px;">
+                <h3 class="font-bold text-base text-gray-800">ODC: ${odc.name}</h3>
+                <p class="text-xs text-gray-500 -mt-1 mb-2">${odc.address || 'No Address'}</p>
+                <div class="border-t border-gray-200 pt-2 grid grid-cols-2 gap-x-4">
+                    <strong class="text-gray-600">Children:</strong><span class="font-bold text-gray-800">${totalChildren} Nodes</span>
+                    <strong class="text-gray-600">Capacity:</strong><span class="text-gray-800">${totalPorts} Ports</span>
+                    <strong class="text-gray-600">Power In:</strong><span class="text-gray-800">${odc.powerInput ? `${odc.powerInput} dBm` : 'N/A'}</span>
+                    <strong class="text-gray-600">Power Out:</strong><span class="text-gray-800">${odc.powerOutput ? `${odc.powerOutput} dBm` : 'N/A'}</span>
+                </div>
+            </div>`;
+            
+            const marker = L.marker([odc.location.lat, odc.location.lng], { icon: createOdcIcon(color) }).bindPopup(popupContent);
+            odcMarkers.addLayer(marker);
+
+            // Add permanent name label for ODC
+            const nameLabel = L.tooltip({
+                permanent: true,
+                direction: 'top',
+                offset: [0, -25], // Adjusted for ODC icon size
+                className: 'odc-name-label'
+            }).setContent(odc.name).setLatLng([odc.location.lat, odc.location.lng]);
+            odcNameLabels.addLayer(nameLabel);
+            allMarkersForBoundsRef.current.addLayer(L.marker([odc.location.lat, odc.location.lng]));
+        });
+
+        // --- Draw ODP Markers ---
+        odps.forEach(odp => {
+            if (!odp.location) return;
+
+            const usedPorts = customers.filter(c => c.odpId === odp.id).length;
+            const totalPorts = odp.totalPorts || 0;
+            let capacityText = `${usedPorts} Customers`, color = '#3b82f6';
+            if (totalPorts > 0) {
+                capacityText = `${usedPorts} / ${totalPorts}`;
+                const ratio = usedPorts / totalPorts;
+                if (ratio >= 1) color = '#ef4444'; else if (ratio >= 0.75) color = '#f59e0b'; else if (ratio > 0) color = '#22c55e';
+            }
+            const popupContent = `<div class="space-y-1 text-sm font-sans" style="min-width: 200px;"><h3 class="font-bold text-base text-gray-800">${odp.name}</h3><p class="text-xs text-gray-500 -mt-1 mb-2">${odp.address}</p><div class="border-t border-gray-200 pt-2 grid grid-cols-2 gap-x-4"><strong class="text-gray-600">Capacity:</strong><span class="font-bold text-gray-800">${capacityText}</span><strong class="text-gray-600">Power In:</strong><span class="text-gray-800">${odp.powerInput ? `${odp.powerInput} dBm` : 'N/A'}</span><strong class="text-gray-600">Power Out:</strong><span class="text-gray-800">${odp.powerOutput ? `${odp.powerOutput} dBm` : 'N/A'}</span></div></div>`;
+            const marker = L.marker([odp.location.lat, odp.location.lng], { icon: createOdpIcon(color) }).bindPopup(popupContent);
+            odpMarkers.addLayer(marker);
+
+            // Add permanent name label for ODP
+            const nameLabel = L.tooltip({
+                permanent: true,
+                direction: 'top',
+                offset: [0, -20], // Adjusted for ODP icon size
+                className: 'odp-name-label'
+            }).setContent(odp.name).setLatLng([odp.location.lat, odp.location.lng]);
+            odpNameLabels.addLayer(nameLabel);
+            allMarkersForBoundsRef.current.addLayer(L.marker([odp.location.lat, odp.location.lng]));
+        });
+
+        // --- Draw OLT Markers ---
+        oltDevices.forEach((olt) => {
+            if (!olt.location) return;
+            const lat = Number(olt.location.lat);
+            const lng = Number(olt.location.lng);
+            if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
+
+            const popupContent = `<div class="space-y-1 text-sm font-sans" style="min-width: 220px;">
+                <h3 class="font-bold text-base text-gray-800">OLT: ${olt.name || '-'}</h3>
+                <p class="text-xs text-gray-500 -mt-1 mb-2">${olt.description || 'No description'}</p>
+                <div class="border-t border-gray-200 pt-2 grid grid-cols-2 gap-x-4">
+                    <strong class="text-gray-600">Host:</strong><span class="font-mono text-gray-800">${olt.host || '-'}</span>
+                    <strong class="text-gray-600">Port:</strong><span class="text-gray-800">${olt.port || 22}</span>
+                    <strong class="text-gray-600">Model:</strong><span class="text-gray-800">${olt.model || 'N/A'}</span>
+                    <strong class="text-gray-600">Koneksi:</strong><span class="text-gray-800">${(olt.connectionType || 'ssh').toUpperCase()}</span>
+                </div>
+            </div>`;
+
+            const marker = L.marker([lat, lng], { icon: createOltIcon('#0f766e') }).bindPopup(popupContent);
+            oltMarkers.addLayer(marker);
+
+            const nameLabel = L.tooltip({
+                permanent: true,
+                direction: 'top',
+                offset: [0, -25],
+                className: 'odc-name-label'
+            }).setContent(olt.name || 'OLT').setLatLng([lat, lng]);
+            oltNameLabels.addLayer(nameLabel);
+
+            allMarkersForBoundsRef.current.addLayer(L.marker([lat, lng]));
+        });
+        
+        // --- Draw Customer Markers & Lines ---
+        customers.forEach(customer => {
+            if (customer.location) {
+                const isConnected = (activePppoeUsernames.has(customer.pppoeUsername || '') || activeHotspotUsernames.has(customer.pppoeUsername || ''));
+                const acsDevice = customer.acsSerialNumber ? acsDevicesMap.get(customer.acsSerialNumber) : null;
+                const popupContent = `<div class="space-y-1 text-sm font-sans" style="min-width: 220px;"><h3 class="font-bold text-base text-gray-800">${customer.name}</h3><p class="text-xs text-gray-500 -mt-1 mb-2">ID: ${customer.id}</p><div class="border-t border-gray-200 pt-2 grid grid-cols-2 gap-x-4"><strong class="text-gray-600">Status:</strong><span class="font-semibold">${customer.status} (${isConnected ? '<span style="color: #22c55e;">Online</span>' : '<span style="color: #ef4444;">Offline</span>'})</span><strong class="text-gray-600">User ACS:</strong><span class="font-mono">${acsDevice?.pppoeUsername || 'N/A'}</span><strong class="text-gray-600">Redaman (RX):</strong><span class="font-semibold ${getRxPowerColor(acsDevice?.rxPower || 'N/A')}">${acsDevice?.rxPower || 'N/A'}</span><strong class="text-gray-600">Nama WiFi:</strong><span class="font-semibold">${acsDevice?.ssid1 || 'N/A'}</span></div></div>`;
+                const marker = L.marker([customer.location.lat, customer.location.lng], { 
+                    icon: getCustomerIcon(customer.status, isConnected) 
+                }).bindPopup(popupContent);
+
+                customerMarkers.addLayer(marker);
+
+                // Add permanent name label to its own layer
+                const nameLabel = L.tooltip({
+                    permanent: true,
+                    direction: 'top',
+                    offset: [0, -32],
+                    className: 'customer-name-label'
+                }).setContent(customer.name).setLatLng([customer.location.lat, customer.location.lng]);
+                customerNameLabels.addLayer(nameLabel);
+
+                allMarkersForBoundsRef.current.addLayer(L.marker([customer.location.lat, customer.location.lng]));
+
+                if (customer.odpId && odpsMap[customer.odpId] && odpsMap[customer.odpId].location) {
+                    const lineCoords: [number, number][] = [[odpsMap[customer.odpId].location!.lat, odpsMap[customer.odpId].location!.lng], [customer.location.lat, customer.location.lng]];
+                    if (isConnected) {
+                        customerConnectionLines.addLayer(L.polyline(lineCoords, { weight: 2, color: '#3b82f6', opacity: 0.8 }));
+                        animatedCustomerLines.addLayer(L.polyline(lineCoords, { className: 'line-animated', pane: 'animatedLinesPane' }));
+                    } else {
+                        customerConnectionLines.addLayer(L.polyline(lineCoords, { weight: 1, color: '#9ca3af', opacity: 0.5 }));
+                    }
+                }
+            }
+        });
+
+        if (needsInitialization && allMarkersForBoundsRef.current.getLayers().length > 0) {
+            setTimeout(() => {
+                mapInstanceRef.current?.invalidateSize();
+                mapInstanceRef.current?.fitBounds(allMarkersForBoundsRef.current.getBounds().pad(0.1));
+            }, 250);
+        }
+
+    }, [isLoading, customers, odps, odcs, activePppoe, activeHotspot, appSettings, acsDevices, isLineEditMode, routeRefreshToken, activateLineEditor, clearEditableNodeMarkers, selectedLineEdgeKey]);
+    
+    // Effect 3: Handle map resize
+    useEffect(() => {
+        if (mapInstanceRef.current) {
+            setTimeout(() => {
+                mapInstanceRef.current.invalidateSize();
+            }, 150);
+        }
+    }, [isFullScreen]);
+
+    useEffect(() => {
+        return () => {
+            if (mapInstanceRef.current) {
+                mapInstanceRef.current.remove();
+                mapInstanceRef.current = null;
+            }
+        };
+    }, []);
+
+    const handleGoToMyLocation = () => {
+        if (!mapInstanceRef.current) return;
+        const map = mapInstanceRef.current;
+
+        map.locate({ setView: true, maxZoom: 16 });
+
+        const onLocationFound = (e: any) => {
+            const radius = e.accuracy;
+            const latlng = e.latlng;
+
+            if (myLocationMarkerRef.current) {
+                map.removeLayer(myLocationMarkerRef.current);
+            }
+
+            const pulsingIcon = L.divIcon({
+                className: 'pulsing-dot-container',
+                html: '<div class="pulsing-dot"></div>',
+                iconSize: [24, 24],
+                iconAnchor: [12, 12],
+            });
+
+            myLocationMarkerRef.current = L.marker(latlng, { icon: pulsingIcon }).addTo(map)
+                .bindPopup(`You are within ${radius.toFixed(0)} meters from this point`).openPopup();
+            
+            allMarkersForBoundsRef.current.addLayer(L.marker(latlng));
+        };
+
+        const onLocationError = (e: any) => {
+            alert(e.message);
+        };
+
+        map.on('locationfound', onLocationFound);
+        map.on('locationerror', onLocationError);
+    };
+
+
+    const rootClasses = isFullScreen
+        ? "fixed inset-0 z-[100] bg-gray-50 dark:bg-gray-900 flex flex-col"
+        : "space-y-6 h-full flex flex-col";
+    
+    const mapWrapperClasses = isFullScreen
+        ? "h-full w-full relative"
+        : "relative flex-grow rounded-lg shadow-md overflow-hidden";
+
+    return (
+        <div className={rootClasses}>
+            <h2 className={`text-2xl font-bold text-gray-800 dark:text-gray-100 flex-shrink-0 transition-opacity duration-300 ${isFullScreen ? 'hidden' : 'block'}`}>Customer & Network Map</h2>
+            
+            <div className={mapWrapperClasses}>
+                {isLoading ? (
+                    <div className="h-full w-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center">
+                        <p className="text-gray-600 dark:text-gray-400 font-semibold">Memuat Peta...</p>
+                    </div>
+                ) : (
+                    <>
+                        <div className="absolute top-2 left-2 z-[1000] flex flex-col space-y-2">
+                            <button
+                                onClick={() => setIsFullScreen(!isFullScreen)}
+                                className="bg-white dark:bg-gray-700 p-1.5 border border-gray-300 dark:border-gray-500 rounded-md shadow-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                                title={isFullScreen ? "Exit Full View" : "Full View"}
+                            >
+                                {isFullScreen ? <CompressIcon /> : <ExpandIcon />}
+                            </button>
+                             <button
+                                onClick={handleGoToMyLocation}
+                                className="bg-white dark:bg-gray-700 p-1.5 border border-gray-300 dark:border-gray-500 rounded-md shadow-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                                title="My Location"
+                            >
+                                <MyLocationIcon />
+                            </button>
+                            <button
+                                onClick={() => {
+                                    const next = !isLineEditMode;
+                                    setIsLineEditMode(next);
+                                    if (!next) {
+                                        clearEditableNodeMarkers();
+                                        setSelectedLineEdgeKey(null);
+                                    }
+                                }}
+                                className={`p-1.5 border rounded-md shadow-md transition-colors ${
+                                    isLineEditMode
+                                        ? 'bg-amber-500 text-white border-amber-600 hover:bg-amber-600'
+                                        : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 border-gray-300 dark:border-gray-500 hover:bg-gray-100 dark:hover:bg-gray-600'
+                                }`}
+                                title={isLineEditMode ? 'Exit Line Edit Mode' : 'Edit Network Line'}
+                            >
+                                <EditPathIcon />
+                            </button>
+                            {isLineEditMode && selectedLineEdgeKey && (
+                                <div className="bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-500 rounded-md shadow-md p-2 w-56 space-y-2">
+                                    <p className="text-xs text-gray-700 dark:text-gray-200 break-all">
+                                        Editing: <span className="font-semibold">{selectedLineEdgeKey}</span>
+                                    </p>
+                                    <div className="grid grid-cols-2 gap-2">
+                                        <button
+                                            onClick={handleAddLineNode}
+                                            className="px-2 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700"
+                                        >
+                                            + Node
+                                        </button>
+                                        <button
+                                            onClick={handleRemoveLineNode}
+                                            className="px-2 py-1 text-xs bg-gray-600 text-white rounded hover:bg-gray-700"
+                                        >
+                                            - Node
+                                        </button>
+                                        <button
+                                            onClick={handleSaveLineOverride}
+                                            disabled={isSavingLineOverride}
+                                            className="px-2 py-1 text-xs bg-green-600 text-white rounded hover:bg-green-700 disabled:bg-green-400"
+                                        >
+                                            Save
+                                        </button>
+                                        <button
+                                            onClick={handleResetLineOverride}
+                                            disabled={isSavingLineOverride}
+                                            className="px-2 py-1 text-xs bg-red-600 text-white rounded hover:bg-red-700 disabled:bg-red-400"
+                                        >
+                                            Reset
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                        <div ref={mapContainerRef} className="h-full w-full" />
+                    </>
+                )}
+            </div>
+        </div>
+    );
+};
+export default NetworkMap;
