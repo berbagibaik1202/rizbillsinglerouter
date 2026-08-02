@@ -26,6 +26,11 @@ Installer akan otomatis membuat `docker.env`, database, dan credential aplikasi.
 
 Kalau ingin update dari UI, biarkan `APP_UPDATE_REPO_URL` mengarah ke repo ini dan `APP_UPDATE_GIT_BRANCH` ke `release-push`.
 Kalau `docker.env` lama belum punya key update, jalankan ulang `bash install-vps.sh` supaya nilai dari `docker.env.example` tersinkron ke file env aktif.
+Boot aplikasi tidak menjalankan migrasi schema otomatis. Kalau ada update database, jalankan manual setelah deploy:
+
+```bash
+docker compose -f docker-compose.vps.yml --env-file docker.env exec app node dist/backend/migrate.js
+```
 
 Kalau kamu ingin bekerja dari source utama, clone repo ini lalu checkout branch `main`.
 

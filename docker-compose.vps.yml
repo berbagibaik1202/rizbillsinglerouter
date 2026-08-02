@@ -33,7 +33,7 @@ services:
       DB_HOST: mariadb
       DB_PORT: 3306
       WA_SESSION_BASE_DIR: ${WA_SESSION_BASE_DIR:-/app/whatsapp_sessions}
-      AUTO_MIGRATE_ON_START: "true"
+      AUTO_MIGRATE_ON_START: "false"
     depends_on:
       mariadb:
         condition: service_healthy
