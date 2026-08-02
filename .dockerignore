@@ -12,3 +12,11 @@ scripts/
 .env
 .env.local
 backend/.env
+backend/logs/
+backend/uploads/
+backend/whatsapp_session/
+backend/import-trace-*.log
+frontendmobil/
+.tmp/
+.tmp-*/
+playlisttv.m3u

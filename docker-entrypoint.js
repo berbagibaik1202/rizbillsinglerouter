@@ -8,6 +8,7 @@ const migrateScript = path.join(rootDir, 'dist', 'backend', 'migrate.js');
 const serverScript = path.join(rootDir, 'dist', 'backend', 'server.js');
 const uploadDir = process.env.WA_SESSION_BASE_DIR || path.join(rootDir, 'whatsapp_sessions');
 const instanceName = process.env.APP_INSTANCE_NAME || process.env.COMPOSE_PROJECT_NAME || 'default';
+const autoMigrateOnStart = process.env.AUTO_MIGRATE_ON_START === 'true';
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -113,7 +114,7 @@ const main = async () => {
   fs.mkdirSync(uploadDir, { recursive: true });
   console.log(`[Docker Entrypoint] instance=${instanceName}`);
 
-  if (process.env.AUTO_MIGRATE_ON_START !== 'false') {
+  if (autoMigrateOnStart) {
     await waitForDatabase();
     if (!fs.existsSync(migrateScript)) {
       console.warn(`[Docker Entrypoint] Migration script not found: ${migrateScript}`);
@@ -128,7 +129,7 @@ const main = async () => {
 
   const { setMigrationChild } = startServer();
 
-  if (process.env.AUTO_MIGRATE_ON_START !== 'false' && fs.existsSync(migrateScript)) {
+  if (autoMigrateOnStart && fs.existsSync(migrateScript)) {
     const migrationChild = runNodeScriptBackground(migrateScript);
     setMigrationChild(migrationChild);
   }
