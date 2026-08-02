@@ -47,24 +47,30 @@ const waitForDatabase = async () => {
   throw new Error('Database was not ready before timeout.');
 };
 
-const runNodeScript = (scriptPath) => new Promise((resolve, reject) => {
+const runNodeScriptBackground = (scriptPath) => {
   const child = spawn(process.execPath, [scriptPath], {
     stdio: 'inherit',
     env: process.env,
   });
 
-  child.on('error', reject);
+  child.on('error', (error) => {
+    console.error(`[Docker Entrypoint] Background script ${path.basename(scriptPath)} failed to start:`, error);
+  });
+
   child.on('exit', (code, signal) => {
     if (code === 0) {
-      resolve();
+      console.log(`[Docker Entrypoint] Background script ${path.basename(scriptPath)} completed.`);
       return;
     }
 
-    reject(new Error(`Script ${path.basename(scriptPath)} exited with code ${code ?? 'null'}${signal ? `, signal ${signal}` : ''}`));
+    console.error(`[Docker Entrypoint] Background script ${path.basename(scriptPath)} exited with code ${code ?? 'null'}${signal ? `, signal ${signal}` : ''}`);
   });
-});
+
+  return child;
+};
 
 const startServer = () => {
+  let migrationChild = null;
   const child = spawn(process.execPath, [serverScript], {
     stdio: 'inherit',
     env: process.env,
@@ -73,6 +79,9 @@ const startServer = () => {
   const forwardSignal = (signal) => {
     if (!child.killed) {
       child.kill(signal);
+    }
+    if (migrationChild && !migrationChild.killed) {
+      migrationChild.kill(signal);
     }
   };
 
@@ -91,6 +100,13 @@ const startServer = () => {
     console.error('[Docker Entrypoint] Failed to start server:', error);
     process.exit(1);
   });
+
+  return {
+    child,
+    setMigrationChild: (nextChild) => {
+      migrationChild = nextChild;
+    },
+  };
 };
 
 const main = async () => {
@@ -99,21 +115,23 @@ const main = async () => {
 
   if (process.env.AUTO_MIGRATE_ON_START !== 'false') {
     await waitForDatabase();
-
     if (!fs.existsSync(migrateScript)) {
-      throw new Error(`Migration script not found: ${migrateScript}`);
+      console.warn(`[Docker Entrypoint] Migration script not found: ${migrateScript}`);
+    } else {
+      console.log('[Docker Entrypoint] Starting idempotent migration in background...');
     }
-
-    console.log('[Docker Entrypoint] Running first-time/ idempotent migration...');
-    await runNodeScript(migrateScript);
-    console.log('[Docker Entrypoint] Migration completed.');
   }
 
   if (!fs.existsSync(serverScript)) {
     throw new Error(`Server script not found: ${serverScript}`);
   }
 
-  startServer();
+  const { setMigrationChild } = startServer();
+
+  if (process.env.AUTO_MIGRATE_ON_START !== 'false' && fs.existsSync(migrateScript)) {
+    const migrationChild = runNodeScriptBackground(migrateScript);
+    setMigrationChild(migrationChild);
+  }
 };
 
 main().catch((error) => {
