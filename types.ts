@@ -1,4 +1,4 @@
-
+﻿
 // types.ts
 
 // Enums
@@ -261,6 +261,7 @@ export interface AcsSyncJob {
     id: string;
     status: 'queued' | 'running' | 'completed' | 'failed' | 'cancelled';
     processed_count: number;
+    total_count: number;
     progress_percent: number;
     message: string | null;
     error_message: string | null;

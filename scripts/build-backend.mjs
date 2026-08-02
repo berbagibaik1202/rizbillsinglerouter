@@ -8,59 +8,29 @@ const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, '..');
 const sourceDir = path.join(rootDir, 'backend');
 const distDir = path.join(rootDir, 'dist', 'backend');
-const sourceManifestPath = path.join(rootDir, 'backend', 'build-manifest.json');
-const distManifestPath = path.join(distDir, 'build-manifest.json');
 const packageJsonPath = path.join(rootDir, 'package.json');
-
 const noObfuscateFiles = new Set([
     path.join('utils', 'oltSnmp.js'),
     path.join('routes', 'oltRoutes.js'),
 ].map((p) => p.replace(/\\/g, '/')));
-
-const ignoredSegments = new Set([
-    'node_modules',
-    '.git',
-    'dist',
-    'data',
-    'logs',
-    'uploads',
-    'whatsapp_session',
-    'whatsapp_sessions',
-    '.cache',
-    '.idea',
-    '.vscode',
-]);
-
-const ignoredBasenames = new Set([
+const ignoredFiles = [
     '.env',
-    '.env.local',
-    '.env.development',
-    '.env.production',
-    '.env.test',
-    'build-manifest.json',
-    'npm-debug.log',
-    'yarn-error.log',
-]);
+    'import-trace-current.log',
+    'logs/',
+    'uploads/',
+    'whatsapp_session/',
+].map((p) => p.replace(/\\/g, '/'));
 
-const shouldIgnoreSourcePath = (relativePath) => {
-    const normalized = relativePath.replace(/\\/g, '/');
-    const parts = normalized.split('/').filter(Boolean);
-    const base = path.posix.basename(normalized);
+function shouldSkipBuildFile(normalizedRelativePath) {
+    const pathName = normalizedRelativePath.replace(/\\/g, '/');
 
-    if (normalized === 'data/settings.json') {
+    if (ignoredFiles.some((entry) => entry.endsWith('/') ? pathName === entry.slice(0, -1) || pathName.startsWith(entry) : pathName === entry)) {
         return true;
     }
 
-    if (base.endsWith('.log') || base.endsWith('.sqlite') || base.endsWith('.sqlite3') || base.endsWith('.db')) {
-        return true;
-    }
-
-    if (base.startsWith('.env') || ignoredBasenames.has(base)) {
-        return true;
-    }
-
-    return parts.some((segment) => ignoredSegments.has(segment));
-};
+    const segments = pathName.split('/');
+    return segments.some((segment) => segment.startsWith('.tmp'));
+}
 
 async function readJson(filePath) {
     return JSON.parse(await fs.readFile(filePath, 'utf8'));
@@ -96,11 +66,6 @@ async function walkDirectory(dirPath) {
     return results;
 }
 
-async function writeJson(filePath, data) {
-    await ensureDir(path.dirname(filePath));
-    await fs.writeFile(filePath, `${JSON.stringify(data, null, 2)}\n`, 'utf8');
-}
-
 async function buildBackend() {
     const packageJson = await readJson(packageJsonPath);
     const obfuscatorOptions = packageJson.obfuscatorOptions || {};
@@ -112,14 +77,11 @@ async function buildBackend() {
             sourcePath,
             relativePath: path.relative(sourceDir, sourcePath).replace(/\\/g, '/'),
         }))
-        .filter(({ relativePath }) => !shouldIgnoreSourcePath(relativePath))
-        .map(({ sourcePath }) => sourcePath);
+        .filter(({ relativePath }) => !shouldSkipBuildFile(relativePath));
     const builtFiles = [];
 
-    for (const sourcePath of files) {
-        const relativePath = path.relative(sourceDir, sourcePath);
-        const normalizedRelativePath = relativePath.replace(/\\/g, '/');
-        const targetPath = path.join(distDir, relativePath);
+    for (const { sourcePath, relativePath: normalizedRelativePath } of files) {
+        const targetPath = path.join(distDir, normalizedRelativePath);
 
         await ensureDir(path.dirname(targetPath));
 
@@ -157,7 +119,7 @@ async function buildBackend() {
     }
 
     const sortedSource = files
-        .map((sourcePath) => path.relative(sourceDir, sourcePath).replace(/\\/g, '/'))
+        .map(({ relativePath }) => relativePath)
         .sort();
     const sortedBuilt = [...builtFiles].sort();
     if (sortedSource.length !== sortedBuilt.length) {
@@ -176,9 +138,7 @@ async function buildBackend() {
         noObfuscateFiles: [...noObfuscateFiles].sort(),
         files: sortedBuilt,
     };
-
-    await writeJson(distManifestPath, manifest);
-    await writeJson(sourceManifestPath, manifest);
+    await fs.writeFile(path.join(distDir, 'build-manifest.json'), JSON.stringify(manifest, null, 2), 'utf8');
 
     console.log(`[build:backend] Built ${builtFiles.length} file(s) into dist/backend`);
 }

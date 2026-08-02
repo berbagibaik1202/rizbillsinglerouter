@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+﻿import React, { useEffect, useRef, useState } from 'react';
 import Card from '../../common/Card';
 import { fetchWithAuth } from '~/components/api';
 
@@ -43,6 +43,17 @@ type UpdateStatusResponse = {
     build?: AppBuildInfo | null;
 };
 
+type UpdateCheckResponse = UpdateStatusResponse & {
+    update_available?: boolean;
+    current?: AppBuildInfo | null;
+    latest?: AppBuildInfo | null;
+    current_head?: string | null;
+    latest_head?: string | null;
+    ahead_by?: number | null;
+    behind_by?: number | null;
+    changelog?: string[];
+};
+
 const formatValue = (value?: string | null, fallback = 'Unknown') => {
     const text = String(value || '').trim();
     return text || fallback;
@@ -62,9 +73,11 @@ const isTransientFetchError = (error: any) => {
 const AppUpdateSettings: React.FC = () => {
     const [isStarting, setIsStarting] = useState(false);
     const [isLoadingStatus, setIsLoadingStatus] = useState(true);
+    const [isCheckingUpdate, setIsCheckingUpdate] = useState(false);
     const [feedback, setFeedback] = useState<{ type: 'success' | 'error' | 'warning'; message: string } | null>(null);
     const [updateJob, setUpdateJob] = useState<UpdateJob | null>(null);
     const [buildInfo, setBuildInfo] = useState<AppBuildInfo | null>(null);
+    const [checkResult, setCheckResult] = useState<UpdateCheckResponse | null>(null);
     const reloadTimerRef = useRef<number | null>(null);
     const reloadScheduledRef = useRef(false);
 
@@ -101,7 +114,12 @@ const AppUpdateSettings: React.FC = () => {
                 if (!res.ok) {
                     throw new Error(data.message || 'Failed to fetch application update status.');
                 }
-                setUpdateJob(data.job ? normalizeUpdateJob(data.job) : null);
+                const nextJob = data.job ? normalizeUpdateJob(data.job) : null;
+                if (nextJob && nextJob.status === 'completed' && getAcknowledgedJobId() === nextJob.id) {
+                    setUpdateJob(null);
+                } else {
+                    setUpdateJob(nextJob);
+                }
                 setBuildInfo(data.build || null);
                 if (data.service_available === false) {
                     setFeedback({
@@ -138,6 +156,36 @@ const AppUpdateSettings: React.FC = () => {
                 type: 'warning',
                 message: lastError.message || 'Failed to fetch application update status. Showing local build info only.',
             });
+        }
+    };
+
+    const handleCheckUpdate = async () => {
+        setIsCheckingUpdate(true);
+        try {
+            const res = await fetchWithAuth(`${API_URL}/check`);
+            const data: UpdateCheckResponse = await res.json().catch(() => ({} as UpdateCheckResponse));
+
+            if (!res.ok && !data.service_available) {
+                throw new Error(data.message || 'Failed to check application updates.');
+            }
+
+            setCheckResult(data);
+            if (data.build) {
+                setBuildInfo(data.build);
+            }
+
+            setFeedback({
+                type: data.update_available ? 'success' : 'warning',
+                message: data.message || (data.update_available ? 'Update tersedia. Silakan tekan tombol update.' : 'Aplikasi sudah berada di versi terbaru.'),
+            });
+        } catch (error: any) {
+            setCheckResult(null);
+            setFeedback({
+                type: 'error',
+                message: error.message || 'Failed to check application updates.',
+            });
+        } finally {
+            setIsCheckingUpdate(false);
         }
     };
 
@@ -247,6 +295,8 @@ const AppUpdateSettings: React.FC = () => {
         : updateJob?.status === 'completed'
             ? 'bg-green-500'
             : 'bg-blue-500';
+    const updateAvailable = checkResult?.update_available === true;
+    const canStartUpdate = updateAvailable && !isStarting && !isUpdateActive && !isLoadingStatus && !isCheckingUpdate;
 
     return (
         <Card title="Application Update">
@@ -275,15 +325,82 @@ const AppUpdateSettings: React.FC = () => {
                 </div>
 
                 <div className="border border-blue-200 dark:border-blue-900/50 p-4 rounded-md bg-blue-50/60 dark:bg-blue-950/10 space-y-3">
-                    <button
-                        onClick={handleStartUpdate}
-                        disabled={isStarting || isUpdateActive || isLoadingStatus}
-                        className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 font-semibold shadow-sm transition-colors flex items-center disabled:bg-blue-400"
-                    >
-                        {isStarting && <svg className="animate-spin -ml-1 mr-3 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 0 1 8-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 0 1 4 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>}
-                        {isStarting ? 'Starting update...' : isUpdateActive ? 'Update Running...' : 'Update Application'}
-                    </button>
+                    <div className="flex flex-col gap-3 sm:flex-row">
+                        <button
+                            onClick={handleCheckUpdate}
+                            disabled={isCheckingUpdate || isLoadingStatus || isUpdateActive || isStarting}
+                            className="px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800 font-semibold shadow-sm transition-colors flex items-center disabled:bg-gray-400"
+                        >
+                            {isCheckingUpdate && <svg className="animate-spin -ml-1 mr-3 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 0 1 8-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 0 1 4 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>}
+                            {isCheckingUpdate ? 'Checking...' : 'Cek Update'}
+                        </button>
+                        <button
+                            onClick={handleStartUpdate}
+                            disabled={!canStartUpdate}
+                            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 font-semibold shadow-sm transition-colors flex items-center disabled:bg-blue-400"
+                        >
+                            {isStarting && <svg className="animate-spin -ml-1 mr-3 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 0 1 8-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 0 1 4 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>}
+                            {isStarting ? 'Starting update...' : isUpdateActive ? 'Update Running...' : updateAvailable ? 'Update Application' : 'Check for Update First'}
+                        </button>
+                    </div>
+                    {!updateAvailable && checkResult && (
+                        <p className="text-sm text-gray-700 dark:text-gray-300">
+                            Tombol update akan aktif setelah cek menemukan pembaruan.
+                        </p>
+                    )}
                 </div>
+
+                {checkResult && (
+                    <div className={`border rounded-md p-4 ${checkResult.update_available ? 'border-green-200 bg-green-50 dark:border-green-900/50 dark:bg-green-950/20' : 'border-slate-200 bg-slate-50 dark:border-slate-700 dark:bg-slate-900/30'}`}>
+                        <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+                            <div>
+                                <p className="font-semibold text-gray-800 dark:text-gray-100">
+                                    {checkResult.update_available ? 'Update tersedia' : 'Tidak ada update'}
+                                </p>
+                                <p className="text-sm mt-1 text-gray-700 dark:text-gray-300">
+                                    {checkResult.message || 'Hasil cek update ditampilkan di bawah.'}
+                                </p>
+                                <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                                    <div className="rounded-md border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/60 p-3">
+                                        <p className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">Versi saat ini</p>
+                                        <p className="mt-1 text-sm font-semibold text-gray-900 dark:text-gray-100">{formatValue(checkResult.current?.app_version || buildInfo?.app_version)}</p>
+                                        <p className="text-xs text-gray-500 dark:text-gray-400 break-all">{formatValue(checkResult.current?.git_commit || buildInfo?.git_commit)}</p>
+                                    </div>
+                                    <div className="rounded-md border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/60 p-3">
+                                        <p className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">Versi terbaru</p>
+                                        <p className="mt-1 text-sm font-semibold text-gray-900 dark:text-gray-100">{formatValue(checkResult.latest?.app_version, 'Latest build')}</p>
+                                        <p className="text-xs text-gray-500 dark:text-gray-400 break-all">{formatValue(checkResult.latest?.git_commit, 'Unknown')}</p>
+                                    </div>
+                                </div>
+                                {(checkResult.behind_by !== null && checkResult.behind_by !== undefined) && (
+                                    <p className="text-xs mt-3 text-gray-600 dark:text-gray-400">
+                                        {checkResult.behind_by > 0
+                                            ? `${checkResult.behind_by} commit baru belum diambil.`
+                                            : 'Tidak ada commit baru di branch remote.'}
+                                    </p>
+                                )}
+                            </div>
+                            <div className="text-right text-xs text-gray-600 dark:text-gray-400">
+                                {checkResult.current_head && <p className="font-mono break-all">Current: {checkResult.current_head}</p>}
+                                {checkResult.latest_head && <p className="font-mono break-all mt-1">Latest: {checkResult.latest_head}</p>}
+                                {(checkResult.ahead_by !== null && checkResult.ahead_by !== undefined) && <p className="mt-1">Ahead: {checkResult.ahead_by}</p>}
+                                {(checkResult.behind_by !== null && checkResult.behind_by !== undefined) && <p className="mt-1">Behind: {checkResult.behind_by}</p>}
+                            </div>
+                        </div>
+                        {Array.isArray(checkResult.changelog) && checkResult.changelog.length > 0 && (
+                            <div className="mt-4">
+                                <p className="text-xs font-semibold uppercase tracking-wide text-gray-600 dark:text-gray-400 mb-2">Perubahan terbaru</p>
+                                <div className="space-y-1 text-xs font-mono text-gray-700 dark:text-gray-300">
+                                    {checkResult.changelog.slice(0, 5).map((line, index) => (
+                                        <div key={`${line}-${index}`} className="break-all rounded bg-white/70 dark:bg-gray-900/50 px-2 py-1 border border-gray-200 dark:border-gray-700">
+                                            {line}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                )}
 
                 {updateJob && (
                     <div className={`border rounded-md p-4 ${updateJob.status === 'failed' ? 'border-red-200 bg-red-50 dark:border-red-900/50 dark:bg-red-950/20' : updateJob.status === 'completed' ? 'border-green-200 bg-green-50 dark:border-green-900/50 dark:bg-green-950/20' : 'border-blue-200 bg-blue-50 dark:border-blue-900/50 dark:bg-blue-950/20'}`}>

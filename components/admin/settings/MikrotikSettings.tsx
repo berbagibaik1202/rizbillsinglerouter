@@ -19,22 +19,20 @@ const MikrotikSettings: React.FC<MikrotikSettingsProps> = ({ settings, appSettin
 
     const inputClasses = "w-full p-2 border rounded bg-gray-50 dark:bg-gray-700 dark:border-gray-600 focus:ring-blue-500 focus:border-blue-500 dark:text-white dark:placeholder-gray-400";
     
-    const webhookUrl = appSettings.baseUrl ? `${appSettings.baseUrl.replace(/\/$/, '')}/api/hotspot/webhook` : 'http://<YOUR_BACKEND_IP>:<PORT>/api/hotspot/webhook';
-    const apiKey = appSettings.apiKey;
+    const apiKey = String(appSettings.apiKey || '').trim();
+    const webhookBaseUrl = appSettings.baseUrl ? `${appSettings.baseUrl.replace(/\/$/, '')}/api/hotspot/webhook` : 'http://<YOUR_BACKEND_IP>:<PORT>/api/hotspot/webhook';
+    const webhookUrl = apiKey ? `${webhookBaseUrl}?apiKey=${encodeURIComponent(apiKey)}` : webhookBaseUrl;
+    const hotspotMacVar = '$"mac-address"';
 
-    // Construct the header string for the API key
-    const apiKeyHeader = apiKey ? `http-header-field="X-API-Key: ${apiKey}"` : '';
+    const buildWebhookScript = (event: 'login' | 'logout') => (
+        `/tool fetch url="${webhookUrl}" http-method=post http-data="{\\"event\\":\\"${event}\\",\\"username\\":\\"$user\\",\\"ip\\":\\"$address\\",\\"mac\\":\\"${hotspotMacVar}\\"}" keep-result=no`
+    );
 
-    const onLoginScript = `/tool fetch url="${webhookUrl}" http-method=post http-data="{\\"event\\":\\"login\\",\\"username\\":\\"$(user)\\",\\"ip\\":\\"$(address)\\",\\"mac\\":\\"$(mac-address)\\"}" http-header-field="Content-Type: application/json" ${apiKeyHeader}`;
-
-    const onLogoutScript = `/tool fetch url="${webhookUrl}" http-method=post http-data="{\\"event\\":\\"logout\\",\\"username\\":\\"$(user)\\",\\"ip\\":\\"$(address)\\",\\"mac\\":\\"$(mac-address)\\"}" http-header-field="Content-Type: application/json" ${apiKeyHeader}`;
+    const onLoginScript = buildWebhookScript('login');
+    const onLogoutScript = buildWebhookScript('logout');
 
 
     const handleCopy = (scriptText: string, type: 'login' | 'logout') => {
-        if (!apiKey) {
-            alert('Please generate an API Key in the "API Key" tab first.');
-            return;
-        }
         navigator.clipboard.writeText(scriptText);
         setCopied(type);
         setTimeout(() => setCopied(null), 2000);
@@ -112,12 +110,11 @@ const MikrotikSettings: React.FC<MikrotikSettingsProps> = ({ settings, appSettin
             <div className="mt-6 pt-6 border-t dark:border-gray-700 space-y-4">
                 <h3 className="text-md font-semibold text-gray-800 dark:text-gray-200">Hotspot Webhook Scripts</h3>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                    Untuk aktivasi voucher hotspot secara real-time, salin skrip ini dan tempelkan ke `IP &gt; Hotspot &gt; User Profiles &gt; (profil voucher Anda) &gt; Tab Scripts`. Ini akan mengirim notifikasi ke backend Anda saat pengguna login atau logout.
+                    Untuk aktivasi voucher hotspot secara real-time, salin skrip ini dan tempelkan ke `IP &gt; Hotspot &gt; User Profiles &gt; (profil voucher Anda) &gt; Tab Scripts`. URL webhook akan membawa API key jika sudah dibuat di tab External API Key.
                 </p>
-
                 {!apiKey && (
-                    <div className="p-3 bg-yellow-100 text-yellow-800 dark:bg-yellow-800/30 dark:text-yellow-300 rounded-md text-sm">
-                        <strong>Warning:</strong> No API Key found. Please go to the "API Key" tab to generate one. The scripts below will not work without it.
+                    <div className="rounded-md border border-amber-300 bg-amber-50 p-3 text-sm text-amber-800 dark:border-amber-700 dark:bg-amber-900/20 dark:text-amber-200">
+                        API key belum dibuat. Buka tab External API Key, generate key dulu, lalu salin ulang script webhook ini agar URL mencantumkan `apiKey`.
                     </div>
                 )}
 

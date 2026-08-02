@@ -45,6 +45,11 @@ const formatDateToYMD = (date: Date): string => {
     return `${year}-${month}-${day}`;
 };
 
+const toDateInputValue = (value?: string | null): string => {
+    if (!value) return '';
+    return String(value).split('T')[0];
+};
+
 const PaymentStatusTag: React.FC<{ status: PaymentStatus }> = ({ status }) => {
     const colorMap: { [key in PaymentStatus]: 'green' | 'red' | 'yellow' } = {
       [PaymentStatus.Paid]: 'green',
@@ -202,13 +207,13 @@ const InvoiceFormModal: React.FC<InvoiceFormModalProps> = ({ isOpen, onClose, on
             if (invoice) { // Editing existing invoice
                 setFormData({
                     customerId: invoice.customerId,
-                    amount: invoice.amount,
-                    issueDate: invoice.issueDate,
-                    dueDate: invoice.dueDate,
+                    amount: Number(invoice.amount) || 0,
+                    issueDate: toDateInputValue(invoice.issueDate),
+                    dueDate: toDateInputValue(invoice.dueDate),
                     status: invoice.status,
                     notes: invoice.notes || '',
-                    billingPeriodStart: invoice.billingPeriodStart,
-                    billingPeriodEnd: invoice.billingPeriodEnd,
+                    billingPeriodStart: toDateInputValue(invoice.billingPeriodStart),
+                    billingPeriodEnd: toDateInputValue(invoice.billingPeriodEnd),
                 });
                 const customerName = customers.find(c => c.id === invoice.customerId)?.name || 'Unknown';
                 setCustomerSearch(`${customerName} (${invoice.customerId})`);
@@ -321,17 +326,19 @@ const InvoiceFormModal: React.FC<InvoiceFormModalProps> = ({ isOpen, onClose, on
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        const amount = Number(formData.amount);
-        if (!formData.customerId || !Number.isFinite(amount) || amount <= 0 || !formData.dueDate) {
+        if (!formData.customerId || formData.amount <= 0 || !formData.dueDate) {
             alert('Please fill out all required fields.');
             return;
         }
-        onSave({ ...formData, amount, id: invoice?.id });
+        onSave({ ...formData, id: invoice?.id });
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: name === 'amount' ? (value === '' ? 0 : Number(value)) : value }));
+        setFormData(prev => ({
+            ...prev,
+            [name]: name === 'amount' ? Number(value) : value,
+        }));
     };
     
     const selectedCustomer = customers.find(c => c.id === formData.customerId);
@@ -641,7 +648,6 @@ const Billing: React.FC = () => {
     const [viewingInvoice, setViewingInvoice] = useState<Invoice | null>(null);
     const [generatingLink, setGeneratingLink] = useState<string | null>(null);
     const [sendingWhatsappId, setSendingWhatsappId] = useState<string | null>(null);
-    const [sendingEmailId, setSendingEmailId] = useState<string | null>(null);
     
     // State for payment link modal
     const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
@@ -665,7 +671,6 @@ const Billing: React.FC = () => {
     const PaidIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>;
     const LinkIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clipRule="evenodd" /></svg>;
     const WhatsappIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 4.315 1.731 6.086l.107.192-.533 1.955 1.976-.518.188.112z" /></svg>;
-    const EmailIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M1.5 6A2.5 2.5 0 014 3.5h16A2.5 2.5 0 0122.5 6v12A2.5 2.5 0 0120 20.5H4A2.5 2.5 0 011.5 18V6zm2.11-.5L12 11.58 20.39 5.5H3.61zM4 18.5h16a.5.5 0 00.5-.5V7.12l-8.21 5.96a1 1 0 01-1.18 0L3.5 7.12V18a.5.5 0 00.5.5z" /></svg>;
     const EditIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" /><path fillRule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clipRule="evenodd" /></svg>;
     const TrashIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" /></svg>;
     const PdfIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>;
@@ -833,11 +838,21 @@ const Billing: React.FC = () => {
             setManualPaymentInvoice(null);
             
             try {
+                const manualAmount = Number(invoiceToPay.amount);
+                const paymentPayload: Record<string, unknown> = {
+                    status: PaymentStatus.Paid,
+                    paymentMethod,
+                };
+
+                if (Number.isFinite(manualAmount) && manualAmount > 0) {
+                    paymentPayload.amount = manualAmount;
+                }
+
                 // Kirim satu permintaan ke backend. Backend akan menangani pembuatan
                 // catatan pembayaran dan pengiriman notifikasi.
                 await fetchWithAuth(`${API_URL}/billing/invoices/${invoiceToPay.id}`, {
                     method: 'PUT',
-                    body: JSON.stringify({ status: PaymentStatus.Paid, paymentMethod }),
+                    body: JSON.stringify(paymentPayload),
                 });
 
                 await fetchAllData();
@@ -869,17 +884,9 @@ const Billing: React.FC = () => {
         const method = isEditing ? 'PUT' : 'POST';
 
         try {
-            const { id, ...invoicePayload } = invoiceData;
-            const normalizedInvoicePayload = {
-                ...invoicePayload,
-                amount: Number(invoicePayload.amount),
-            };
-            if (!Number.isFinite(normalizedInvoicePayload.amount) || normalizedInvoicePayload.amount <= 0) {
-                throw new Error('Nominal invoice tidak valid.');
-            }
             const res = await fetchWithAuth(url, {
                 method,
-                body: JSON.stringify(normalizedInvoicePayload)
+                body: JSON.stringify(invoiceData)
             });
             const responseData = await res.json();
             await fetchAllData();
@@ -978,22 +985,6 @@ const Billing: React.FC = () => {
             showNotification(error.message, 'error');
         } finally {
             setSendingWhatsappId(null);
-        }
-    };
-
-    const handleSendEmail = async (invoiceId: string) => {
-        setSendingEmailId(invoiceId);
-        try {
-            const res = await fetchWithAuth(`${API_URL}/billing/invoices/${invoiceId}/send-email`, {
-                method: 'POST',
-            });
-            const data = await res.json();
-            showNotification(data.message, 'success');
-        } catch (error: any) {
-            console.error("Failed to send email message:", error);
-            showNotification(error.message, 'error');
-        } finally {
-            setSendingEmailId(null);
         }
     };
 
@@ -1180,23 +1171,6 @@ const handleBulkSendWhatsapp = async () => {
         setIsBulkActionInProgress(true);
         try {
             const res = await fetchWithAuth(`${API_URL}/billing/invoices/bulk-send-whatsapp`, {
-                method: 'POST',
-                body: JSON.stringify({ ids: selectedInvoices }),
-            });
-            const data = await res.json();
-            showNotification(data.message);
-            setSelectedInvoices([]);
-        } catch (err: any) {
-            showNotification(err.message, 'error');
-        } finally {
-            setIsBulkActionInProgress(false);
-        }
-    };
-
-    const handleBulkSendEmail = async () => {
-        setIsBulkActionInProgress(true);
-        try {
-            const res = await fetchWithAuth(`${API_URL}/billing/invoices/bulk-send-email`, {
                 method: 'POST',
                 body: JSON.stringify({ ids: selectedInvoices }),
             });
@@ -1473,10 +1447,9 @@ const handleBulkSendWhatsapp = async () => {
                      {selectedInvoices.length > 0 && (
                         <div className="flex items-center justify-start gap-4 bg-gray-100 dark:bg-gray-700 p-3 rounded-md flex-wrap">
                             <span className="text-sm font-semibold text-gray-700 dark:text-gray-200">{selectedInvoices.length} selected</span>
-                             <div className="flex items-center gap-2 flex-wrap">
+                            <div className="flex items-center gap-2 flex-wrap">
                                 <button onClick={handleBulkMarkPaid} disabled={isBulkActionInProgress} className="px-3 py-1.5 text-sm bg-green-600 text-white rounded-md hover:bg-green-700 disabled:bg-gray-400">Mark Paid</button>
-                                <button onClick={handleBulkSendWhatsapp} disabled={isBulkActionInProgress} className="px-3 py-1.5 text-sm bg-cyan-600 text-white rounded-md hover:bg-cyan-700 disabled:bg-gray-400">Send WA</button>
-                                <button onClick={handleBulkSendEmail} disabled={isBulkActionInProgress} className="px-3 py-1.5 text-sm bg-sky-600 text-white rounded-md hover:bg-sky-700 disabled:bg-gray-400">Send Email</button>
+                                <button onClick={handleBulkSendWhatsapp} disabled={isBulkActionInProgress} className="px-3 py-1.5 text-sm bg-cyan-600 text-white rounded-md hover:bg-cyan-700 disabled:bg-gray-400">Send WA Notification</button>
                                 <button onClick={handleBulkDelete} disabled={isBulkActionInProgress} className="px-3 py-1.5 text-sm bg-red-600 text-white rounded-md hover:bg-red-700 disabled:bg-gray-400">Delete</button>
                             </div>
                         </div>
@@ -1533,7 +1506,6 @@ const handleBulkSendWhatsapp = async () => {
                                                     <button onClick={() => setManualPaymentInvoice(invoice)} className="p-2 text-green-600 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700" title="Mark as Paid"><PaidIcon /></button>
                                                     <button onClick={() => { setPayingInvoice(invoice); setIsPaymentModalOpen(true); }} disabled={generatingLink === invoice.id} className="p-2 text-purple-600 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700" title="Generate Payment Link">{generatingLink === invoice.id ? <SpinnerIcon/> : <LinkIcon/>}</button>
                                                     <button onClick={() => handleSendWhatsapp(invoice.id)} disabled={sendingWhatsappId === invoice.id} className="p-2 text-green-500 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700" title="Send WhatsApp Notification">{sendingWhatsappId === invoice.id ? <SpinnerIcon/> : <WhatsappIcon/>}</button>
-                                                    <button onClick={() => handleSendEmail(invoice.id)} disabled={sendingEmailId === invoice.id} className="p-2 text-sky-600 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700" title="Send Email Notification">{sendingEmailId === invoice.id ? <SpinnerIcon/> : <EmailIcon/>}</button>
                                                 </>
                                             )}
                                             <button onClick={() => handleDownloadPdf(invoice)} className="p-2 text-gray-500 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700" title="Cetak / Simpan PDF"><PdfIcon /></button>

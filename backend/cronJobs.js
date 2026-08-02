@@ -1,1 +1,733 @@
-(function(_0x358fc3,_0x5c79e3){const _0x6f9a4f=_0x14d9,_0x55f3e1=_0x358fc3();while(!![]){try{const _0x4b9c58=-parseInt(_0x6f9a4f(0x24b))/(0x1*-0x8d0+0x6b3+0x2*0x10f)*(-parseInt(_0x6f9a4f(0x32b))/(0x209*-0x11+0x1*0xbf5+0x16a6))+parseInt(_0x6f9a4f(0x276))/(-0xa32+-0x16b7+0x20ec)+-parseInt(_0x6f9a4f(0x3b8))/(0x1370+0x1*-0x1782+0x416)*(parseInt(_0x6f9a4f(0x1c2))/(-0xd21*0x1+0x4*0x871+0x149e*-0x1))+parseInt(_0x6f9a4f(0x220))/(-0x1*-0x795+-0x1*0x4ff+-0x290)+-parseInt(_0x6f9a4f(0x2bd))/(0x17*-0x3f+-0xa1*-0x5+0x28b)*(parseInt(_0x6f9a4f(0x2dc))/(-0x1873+0x78+0x1803))+-parseInt(_0x6f9a4f(0x1ca))/(-0x42d*-0x3+0x5f3*-0x2+0x1*-0x98)*(-parseInt(_0x6f9a4f(0x384))/(-0xf98*0x2+-0xc28+0x6*0x73b))+-parseInt(_0x6f9a4f(0x3c2))/(0x1786*-0x1+0x18a7+-0x116*0x1)*(parseInt(_0x6f9a4f(0x3a0))/(0x1a*-0xa3+-0x1ee5+0x243*0x15));if(_0x4b9c58===_0x5c79e3)break;else _0x55f3e1['push'](_0x55f3e1['shift']());}catch(_0x520152){_0x55f3e1['push'](_0x55f3e1['shift']());}}}(_0x3ab6,0x5*-0x25ccc+0xe*0x1df2+0x105b4a));const _0x38e4a4=(function(){const _0x4e7cab=_0x14d9,_0x5c59e4={};_0x5c59e4[_0x4e7cab(0x21a)]=function(_0x145ad8,_0x46ec3c){return _0x145ad8!==_0x46ec3c;},_0x5c59e4[_0x4e7cab(0x271)]=_0x4e7cab(0x1f6);const _0x5e72f0=_0x5c59e4;let _0x1ba18b=!![];return function(_0x554b8b,_0xa226e6){const _0x23701c=_0x4e7cab;if(_0x5e72f0[_0x23701c(0x21a)](_0x5e72f0[_0x23701c(0x271)],_0x5e72f0[_0x23701c(0x271)])){const _0x2a9353=_0x4d8ec9?function(){const _0x190bef=_0x23701c;if(_0xad48c1){const _0x5d72a9=_0x2b7aed[_0x190bef(0x25c)](_0x27882a,arguments);return _0x5cc4e2=null,_0x5d72a9;}}:function(){};return _0x4e805e=![],_0x2a9353;}else{const _0x2e4a90=_0x1ba18b?function(){const _0x2fb866=_0x23701c;if(_0xa226e6){const _0x2254d4=_0xa226e6[_0x2fb866(0x25c)](_0x554b8b,arguments);return _0xa226e6=null,_0x2254d4;}}:function(){};return _0x1ba18b=![],_0x2e4a90;}};}()),_0x3ac654=_0x38e4a4(this,function(){const _0x309887=_0x14d9,_0x463a67={};_0x463a67[_0x309887(0x3d1)]=_0x309887(0x244)+'+$';const _0x4bc602=_0x463a67;return _0x3ac654[_0x309887(0x3a9)]()[_0x309887(0x243)](_0x4bc602[_0x309887(0x3d1)])[_0x309887(0x3a9)]()[_0x309887(0x28d)+'r'](_0x3ac654)['search'](_0x4bc602[_0x309887(0x3d1)]);});_0x3ac654();const _0x1e5668=(function(){const _0x163a6d=_0x14d9,_0x591e5b={};_0x591e5b[_0x163a6d(0x265)]=function(_0x4d16eb,_0x1b6e07){return _0x4d16eb===_0x1b6e07;},_0x591e5b[_0x163a6d(0x3e2)]=_0x163a6d(0x387),_0x591e5b[_0x163a6d(0x1d1)]=_0x163a6d(0x2d5);const _0x589efb=_0x591e5b;let _0x3b5587=!![];return function(_0x34ae49,_0x365af4){const _0x29ebd5=_0x163a6d,_0x5bb7de={'rsGsc':function(_0x6027e8,_0x438753){const _0x24ba37=_0x14d9;return _0x589efb[_0x24ba37(0x265)](_0x6027e8,_0x438753);},'FXZtX':_0x589efb[_0x29ebd5(0x3e2)],'NVttl':_0x29ebd5(0x244)+'+$'};if(_0x589efb['yOkby'](_0x589efb['chXQw'],_0x589efb['chXQw'])){const _0xe8e869=_0x3b5587?function(){const _0x559b2a=_0x29ebd5;if(_0x365af4){if(_0x5bb7de[_0x559b2a(0x3d0)](_0x5bb7de['FXZtX'],_0x5bb7de[_0x559b2a(0x3e3)])){const _0x19d0f2=_0x365af4[_0x559b2a(0x25c)](_0x34ae49,arguments);return _0x365af4=null,_0x19d0f2;}else{const _0x57a1b4=_0x5a7650?function(){const _0x3bef3a=_0x559b2a;if(_0x542f8b){const _0x459dbd=_0x1a9c58[_0x3bef3a(0x25c)](_0x10b621,arguments);return _0x2c4fd9=null,_0x459dbd;}}:function(){};return _0x39eaa5=![],_0x57a1b4;}}}:function(){};return _0x3b5587=![],_0xe8e869;}else return _0x60c52a[_0x29ebd5(0x3a9)]()[_0x29ebd5(0x243)](_0x5bb7de[_0x29ebd5(0x3c6)])[_0x29ebd5(0x3a9)]()[_0x29ebd5(0x28d)+'r'](_0x575300)[_0x29ebd5(0x243)](_0x5bb7de[_0x29ebd5(0x3c6)]);};}()),_0x460b84=_0x1e5668(this,function(){const _0x1902b8=_0x14d9,_0x588dfc={'izHaS':'odAkO','qmOXo':function(_0x428a01,_0x18e69e){return _0x428a01(_0x18e69e);},'muosi':function(_0x1b9972,_0x561855){return _0x1b9972+_0x561855;},'QSeXd':_0x1902b8(0x29b)+_0x1902b8(0x351),'tnNUn':'{}.constru'+'ctor(\x22retu'+'rn\x20this\x22)('+'\x20)','mlKcI':function(_0x2112ef){return _0x2112ef();},'dovhP':_0x1902b8(0x249),'YBdic':_0x1902b8(0x32f),'TdvcD':_0x1902b8(0x360),'XjCfK':_0x1902b8(0x225)};let _0x9f4918;try{if(_0x588dfc[_0x1902b8(0x293)]===_0x588dfc[_0x1902b8(0x293)]){const _0x2030bf=_0x588dfc[_0x1902b8(0x1e4)](Function,_0x588dfc[_0x1902b8(0x3ac)](_0x588dfc[_0x1902b8(0x3ac)](_0x588dfc[_0x1902b8(0x270)],_0x588dfc[_0x1902b8(0x398)]),');'));_0x9f4918=_0x588dfc['mlKcI'](_0x2030bf);}else _0x92c160=!![];}catch(_0x253c68){_0x9f4918=window;}const _0x578937=_0x9f4918['console']=_0x9f4918[_0x1902b8(0x26e)]||{},_0x55bc3a=[_0x1902b8(0x35c),'warn',_0x588dfc[_0x1902b8(0x3a1)],_0x588dfc[_0x1902b8(0x38a)],_0x1902b8(0x347),_0x588dfc[_0x1902b8(0x36a)],_0x588dfc[_0x1902b8(0x321)]];for(let _0x3f8d8d=0x344*-0x4+0x5c8+-0x8*-0xe9;_0x3f8d8d<_0x55bc3a[_0x1902b8(0x335)];_0x3f8d8d++){const _0x17f796=_0x1e5668[_0x1902b8(0x28d)+'r'][_0x1902b8(0x378)][_0x1902b8(0x348)](_0x1e5668),_0x1020c8=_0x55bc3a[_0x3f8d8d],_0x5c6199=_0x578937[_0x1020c8]||_0x17f796;_0x17f796['__proto__']=_0x1e5668[_0x1902b8(0x348)](_0x1e5668),_0x17f796[_0x1902b8(0x3a9)]=_0x5c6199[_0x1902b8(0x3a9)][_0x1902b8(0x348)](_0x5c6199),_0x578937[_0x1020c8]=_0x17f796;}});_0x460b84();import _0xeaf9d1 from'./db.js';import{getSettings,dateToYMD,replacePlaceholders,formatRupiah,formatBillingPeriod,formatDateDisplay,calculateBillingDetails,generateNewInvoiceId,toMySQLDatetime,addMonthsKeepDay,getCurrentFixedCycleStart,parseLocalDateString,randomDelay}from'./utils.js';import{suspendCustomer,restoreCustomerProfile}from'./services.js';function _0x14d9(_0xc0ad73,_0x12b623){const _0x1055f1=_0x3ab6();return _0x14d9=function(_0x3513d9,_0x33421b){_0x3513d9=_0x3513d9-(0x1c6b+-0x1*-0x713+-0x21c1);let _0x2bab62=_0x1055f1[_0x3513d9];if(_0x14d9['ONMlqN']===undefined){var _0x5170c9=function(_0x521447){const _0xffabe2='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=';let _0x3a5a88='',_0x1541aa='',_0x47c1d6=_0x3a5a88+_0x5170c9;for(let _0x4d9f0e=0x5*-0x395+0x915+0x5*0x1c4,_0x2763b6,_0x1546f5,_0x463a69=-0x5*0x337+0xcc1+0xaa*0x5;_0x1546f5=_0x521447['charAt'](_0x463a69++);~_0x1546f5&&(_0x2763b6=_0x4d9f0e%(0x1187+0x1*0x22e9+-0x346c)?_0x2763b6*(0x4*-0x1+0x1344+-0x1300)+_0x1546f5:_0x1546f5,_0x4d9f0e++%(-0x1032+-0x1145+0x217b))?_0x3a5a88+=_0x47c1d6['charCodeAt'](_0x463a69+(0x1*0x78d+0xd7*0x25+-0x2696))-(-0x11d*-0x1+-0x1*-0xbc5+-0x3*0x448)!==-0xcb0+-0x2018+-0x1*-0x2cc8?String['fromCharCode'](-0x1a7b+-0x221e*0x1+0x3d98&_0x2763b6>>(-(-0x17dd*-0x1+0x181*0x19+-0x45*0xe4)*_0x4d9f0e&0x193f+-0x35b*0x9+0x4fa)):_0x4d9f0e:-0x6af+-0x4*-0x93c+-0x1e41){_0x1546f5=_0xffabe2['indexOf'](_0x1546f5);}for(let _0x53db82=0x265b+0x2461+-0x1*0x4abc,_0x499924=_0x3a5a88['length'];_0x53db82<_0x499924;_0x53db82++){_0x1541aa+='%'+('00'+_0x3a5a88['charCodeAt'](_0x53db82)['toString'](0x20f9+-0x1fe6*-0x1+0x2f*-0x161))['slice'](-(-0x1972+-0x9f1*-0x1+0xf83));}return decodeURIComponent(_0x1541aa);};_0x14d9['VnJcRy']=_0x5170c9,_0xc0ad73=arguments,_0x14d9['ONMlqN']=!![];}const _0x400e3a=_0x1055f1[0x2383+0x17d3+-0x3b56],_0x1b29c6=_0x3513d9+_0x400e3a,_0x1a7346=_0xc0ad73[_0x1b29c6];if(!_0x1a7346){const _0x246e0b=function(_0x3b244c){this['PfxNYM']=_0x3b244c,this['bCpGWt']=[0x3f1*0x7+0x1*0x2162+-0x3cf8*0x1,-0xa92+-0xbb*0x32+0x2f18,-0x24d*-0xd+0x55d*-0x1+0x4*-0x623],this['WzQLLP']=function(){return'newState';},this['jFIJVb']='\x5cw+\x20*\x5c(\x5c)\x20*{\x5cw+\x20*',this['TDVuXS']='[\x27|\x22].+[\x27|\x22];?\x20*}';};_0x246e0b['prototype']['Kqbzjb']=function(){const _0x5e73db=new RegExp(this['jFIJVb']+this['TDVuXS']),_0x1e1511=_0x5e73db['test'](this['WzQLLP']['toString']())?--this['bCpGWt'][0x1c8b+-0x2171+0x1*0x4e7]:--this['bCpGWt'][0x351+-0x8ee*0x1+-0x3*-0x1df];return this['eQSgUh'](_0x1e1511);},_0x246e0b['prototype']['eQSgUh']=function(_0x401889){if(!Boolean(~_0x401889))return _0x401889;return this['vMauOM'](this['PfxNYM']);},_0x246e0b['prototype']['vMauOM']=function(_0xe9d53e){for(let _0x3cc5b7=0x1f65+0x2*-0x831+-0x3d*0x3f,_0x4faaae=this['bCpGWt']['length'];_0x3cc5b7<_0x4faaae;_0x3cc5b7++){this['bCpGWt']['push'](Math['round'](Math['random']())),_0x4faaae=this['bCpGWt']['length'];}return _0xe9d53e(this['bCpGWt'][-0xd56+0xffd*0x1+0x1*-0x2a7]);},new _0x246e0b(_0x14d9)['Kqbzjb'](),_0x2bab62=_0x14d9['VnJcRy'](_0x2bab62),_0xc0ad73[_0x1b29c6]=_0x2bab62;}else _0x2bab62=_0x1a7346;return _0x2bab62;},_0x14d9(_0xc0ad73,_0x12b623);}import _0x30462d from'./whatsappService.js';import _0x41c7ce from'./mikrotik-api.js';import{handleWhatsappMessage}from'./routes/chatbotRoutes.js';function _0x3ab6(){const _0xe30a41=['zcbcAwXSAw5Nia','rLbnChm','zNj2zNi','Aw9Krw5K','DNHOB0O','zNjVBuvUDhjPzq','zML4zwrcAwXSra','zxjnCW','C2vUzcbPBNzVAq','psbPlMn1C3rVBq','CMvWBgfJzq','z2voyw1LcIaGia','Bvz2C2K','C2v0','DMvYzhvLjYKkia','BwLRCM90AwTFAq','igLKpt8','r2rpvvC','qMnoAhy','C3rLCev2zxj5','psbJlNbHy2THzW','ndq3mZa3n0TcEuXnua','EMvPtee','DxmGpsaNt3zLCG','y3vZDg9Tzxjjza','qxnPys9kywTHCG','z21Iv3u','BMvZr0O','zhvL','yxrZqxbWigLUyG','yNnJCMLWDgLVBG','kcDby3rPDMuNla','vev6r2S','qxv0BYbjBNzVAq','yxr1CZ0NzxHWAq','BMrLCNm','zcb0B2rHEtOG','tsbPBNzVAwnLCW','y0rsDgG','Bw9Kzq','EvPdsfu','yu9LExK','CLvbD0e','igmUAwqGpsbPlG','q1bbtKvmx0XjrW','Auf3Bxu','C2vY','BgXPBMDFDhLWzq','zYbguK9nihn5CW','DLffBeC','CMvKjYbxsevsrq','CMXjr2i','ofjsAfD6zG','AwrFz2vUjYbbtG','x2f0ieLtie5pva','BgLUzwfY','A0vWDxy','vvbeqvrfigHVDa','zwXHEuLUy3jLBq','zw4Tvvm','zxjZifnfvcbZDa','y3vZDg9Tzxjoyq','y3vZDg9TzxjtDa','uMvMzxjLBMnLia','yu5mu1K','DMviB3rZCg90vq','Bfzmqxq','CNrptgi','B2HRq2i','r0ftDxG','vuvMD0G','ifrYAxbHEsbWyq','vhH0yNm','C3rHBMrIEuvUyq','lMLK','C3rLCa','txzpCw4','shbezgu','s2Hdrgi','z1jzyMu','y3vZDg9TzxjqAa','B2XKrwK','qvzQvfy','tYb3Agf0C2fWCa','DhjPBq','qvmGy3vZDg9Tzq','BgXPBMCGBwfPBG','C3bVDfvZzxi','Aw5Kzxi','yKrgrKK','u0vmrunuigzSyq','CM9UxsbfuLjpuG','DgLTzxPVBMu','BgfNCYbxsevsrq','vcbPzcbguK9nia','Dw5KvhjHBNnWBW','zLjKBMm','DgPsEuO','qvrtqvbq','wxnoBNO','zsa8icHdvvjeqq','BwLUzgvYjWOGia','A2jtvLC','B3vUzcb0CMfUCW','id0Gj3bVC3rWyq','rMfPBgvKihrVia','B3rvC2vYCW','igLUDM9Py2uG','s1LfAgq','zgf0zv92ywX1zq','zMXHDa','ywLS','qu5eierbveuOyW','Dg9mB2nHBgvtDa','rgLrAfy','CwDREvu','rcbPlNrYAxbHEq','A1fKsLO','C19HDca8psa/cG','ywWGAw52B2LJzq','BwvZC2fNzq','wgPdzKS','tYbZExn0zw1FzG','y3DYAhC','icaGicaGifnfta','Bwf4','lM5HBwuGqvmGyW','CgfJA2fNzu5HBq','t3bZEwe','zKr3Eg0','yxjXvM4','mtHju29Wtg4','yxLTzw50CYbWia','zxjZiaOGicaGia','Efr2Cw0','zxjYB3i','D2HHDhnHChboBW','t3zLCMr1zq','w0nYB25DiejPBa','ENr2shu','ihnLCNzPy2vZia','BgvUz3rO','veT5z0e','ugX5y1e','AxnbCNjHEq','twTcs0i','cIaGicaGicaGia','rvzZAfC','tuHNrum','B2zJDeO','ve13DgK','x2XVz3mGu0vuia','uKuGC3rHDhvZpq','y2f0y2G','icaGvvbeqvrfia','icaGtevgvcbktW','sw5PDgLHBcbIAq','Aw5JCMvTzw50tq','AxngAw5PDgu','zxHJzxb0Aw9U','yMLUza','DMDpueq','zMXHzY4','t3PXu28','zuHVDhnWB3rdBW','CgfPzcCGqu5eia','CMfUzg9T','sufPuwy','uLDpq3q','BMn0Aw9UkcKG','w0nYB25Dief1Da','zMfPBgvK','CKnVuLK','icaGicaGia','tM5pqwW','rg5Svuy','x19WCM90B19F','kIbguK9nigHVDa','rcbIAwXSAw5Nua','DKHIrfy','Bg9N','DwuGpsa/','u0nSy1y','zMXHzW','DgfIBgu','lYnWyxKV','qvnXvge','B0XLthu','zgHQwKi','C29Tzq','qu5eigv4CgLYzq','tI9b','z0jNseK','s3Pyv3C','vgr2y0q','yu5Nquu','sML0DgvYtxm','DgvUyw5JzsbMyq','C2vUze1LC3nHzW','yMXLza','y3rVCIGICMv0Dq','suTfid8kicaGia','yLPIre0','DfnUCxK','y2vjzca9igKUAq','Aw52B2LJzvjLBq','uYbot1qGtLvmta','DgLMAwnHDgLVBG','ChjVDg90ExbL','Dhm6','yxrPB24GzM9Yia','C3fys1O','u0Tpv1q','veXisLm','BgLUz190ExbLia','AgrOtK4','D1vewfm','B21LCNmGyYbptG','q3HgB3O','y3vZDg9TzxjfBq','ntbRuMzgDuW','t04GCc5PBNzVAq','ywn0AxzLrgf0zq','EuvkChy','ChvZAa','ywrK','wujKAwm','rhzQu08','iePpsu4Gy3vZDa','ihnRAxaGy3LJBa','we5vCfO','AwXLzdO','rgf5','uLHqDgi','sgzotgy','igrHDgvFDMfSDq','C3rHDhvZ','kGOGicaGicaGia','rgf5CW','DgfOAee','Dg5ovw4','zMXVB3i','DxnLCM5HBwu','pWOGicaGicaGia','zMTQrNu','sKnHA00','w0nYB25DiezHAq','zxjjzaOGicaGia','mZK5mdqWohPLy2PHyG','zg92Afa','qMH4uNO','wwXZDhy','zw5ZDxjLsw5IBW','igrPCMvRB25ZAq','yNjVywrJyxn0ra','qMfJA2DYB3vUza','zNbXDvy','Dg9tDhjPBMC','tsbZExn0zw1FzG','icaGu0vmrunuia','BxvVC2K','uKvSzxe','DhnWB3qGBwfPBG','Dxn0B21LCNmkia','DxnLCG','icaG','yYbptIbJlMLKia','rMzLCvu','icaGicaGicaGia','yxzkv0y','C3rVBwvYswqSia','rxfPrfi','ofDjq1znDq','z2v0rNvSBfLLyq','w1n0yxj0DxbDia','CgfJA2fNzuLK','DgfUzgj5igfRDa','zxj5','Dxn0B21LCKLKia','yxbW','ifnfvca/','qu5pteK','mJjTq3bLDMO','zsbbuYbWywnRyq','Cg9ZDhbHAwq','zu9Uq3jLyxrL','tLz0DgW','tKqGzxHWAxjLCW','Ew1LBNqOCYKGBq','zg9tqKO','C3rHCNrnCW','ie5vteW','t3nes1i','Aw52B2LJzunYzq','Dg9mB3DLCKnHCW','qLDwqw8','CNnhC2m','EgXRBvu','r05Nzxe','AwTHDMy','t1vYs04','tw9UDgHSEsbZDq','wLfUBg0','tuXKvwu','sgrzwuK','rNbivLC','D2HHDhnHCha','wK9msLO','zNjVBq','zw52','rgnUtNe','zxrgyvm','w0nYB25DienOzq','DunpswS','tunts3y','rLHADfG','E30Uy29UC3rYDq','icaGicaGica','Ee1KwNK','CMfUzg9TsML0Da','zwXHEu1HEe1Z','uMXrsLq','y3vZDg9TzxjZia','zgLZywjSzuHVDa','jYKGqu5eicHIAq','AwfQu00','CMvTB3zLqwn0Aq','zhvLrgf0zq','BgLUzYbTyxnPAa','B25LlcbJlMjPBa','tgrUDMK','ruzuiePpsu4GCa','lI4U','w0nYB25DievsuG','BMrLCIbLBwfPBa','zxjqAg9UzsWGyW','yMLSBgLUz1bLCG','ieforcbKyxrLxW','zhvLrgf0zsa8ia','yxrPCW','yw1VDw50','BwLU','r0zRrwq','CM9UxsbeAxrLBq','vvrd','y3rPDMuNlcDtDq','u0vmrunuicOGrG','BgXPBMDqzxjPBW','icaGicaGifDirq','B3rIufq','psDKywLSEv9ZDq','y2uG','sg1HA0K','yMLSBgLUzW','AgTXswS','DgLTzvPVBMu','mtu4odi1AffPDMns','Aw9Ku3rHCNq','yMfZzvvYBa','zsbPBMKU','icaGv0HfuKuGyW','zwXHEvn0zxbfDG','ywLSlcbWlM5HBq','zgf0zq','otGXoti3teTQvuLc','weX3tNO','twXfB0S','lNbOB25Lieftia','AwyUifrPzgfRia','zxjPB2rtDgfYDa','q1bqs04','y2HyuxC','icaGicaGicaGta','w0nYB25DiokCLcbn','icaGicbtruXfqW','q0ThuK9vtKrFuW','psa/ieforcbIAq','uK9nign1C3rVBq','CerlteS','As5HBw91BNqkia','BgvKihrVihnLBG','sw5PDgLHBgL6zq','r0fcAxO','DMfSDwvZ','w0HVDhnWB3qGqW','tg14ru0','yxbWBhLtzxr0Aq','rvjfigKUC3rHDa','zcbKDwuGCMvTAq','Bwf4txm','Cw1pwg8','zMLUza','AwnLCYbPcIaGia','ELDLv3i','ve1hBNK','C3LZDgvT','C3vZCgvUC2LVBG','CgfKu3rHCNq','Cgf5BwvUDa','z2v0rgf0zq','D2fYBG','igjHy2TNCM91BG','quDTzfy','y1L2rNm','DgvTx2zSywDZia','zwXHEvjHBMrVBq','ug1rvfm','BIbIzxjQywXHBG','zMf4Ae0','weHfyNm','ieXfrLqGsK9jtG','CLn0yxr1CYWGCa','Bg95r2y','BfDlBMu','EMT5r2G','BgLHC2KGB3rVBq','ANzHqvC','z0jqvhe','q09btevtq0uOyG','C3bLBMrLzcCPcG','z1rzC0G','ywrHBhvHCNnHlG','ExnczwzVCMveDq','rsGPiaOGicaGia','qwPTs0u','iezst00GAw52BW','ihzVDwnOzxiGAW','tKqGywn0AxzLra','ufzrDKG','AwXSAw5NignYBW','sw5PDgLHBcbOBW','yvfPu20','C3vJy2vZCW','ChbTCK8','C2vUzeLUDM9PyW','DhbzEKK','Cg9ZDhbHAwrFzW','v0HfuKuGzMXHzW','z3rZywm','Aw5JBhvKzxm','icDMAxHLzcCkia','AKr4svO','EwHmCwC','ueziA2G','uevKAeW','BgfNCYbtrvqGpW','DhvZiezst00GAq','Bwv0Ag9K','rvjwsunfuW','DMfSDwuGpsa/','mtG1oteWnMHzwxD0uG','icaGifDirvjfia','EsbYDw50Aw1Lia','j1n1C3bLBMrLza','DgL2zurHDguGsq','DhjHy2u','yMLXq1m','B25L','yxrZqxbWigLUAq','yMjyrwW','zw1HAwW','ywDLswqkicaGia','zca9igmUCgfJAW','C2v0rgf0zq','Aw52B2LJzxmkia','A1rkCeW','qMnyug4','C2XPy2u','reLtqujmrv9cqq','C3bLBNnPB25FyW','zML4zwq','DLfsqvG','vw5WywLKjYWNtW','ChrKvve','zwPqt1y','reDSt3K','icaGiezst00GyW','ihbLBwvYAwTZyq','BgvHzd0','DvnfwhG','wKngwge','ieftign1C3rVBq','vMDWzhK','sNf3CxK','DLjsrMq','C2vHCMnO','kcGOlISPkYKRkq','Bg9HzcbZzxr0Aq','zMv0y2Hby3rPDG','wMfpzwG','CgHVBMu','Aw5MBW','whjLExm','ntuYntjKCgXQqNG','BMfTzq','zsbbuYbJDxn0BW','zgLZywjSzwqGyG','zfn0yxj0id0GpW','Be9SAwW','uKuGy3vZDg9Tzq','Du1sAgG','CYbWie9oihaUAq','C25PCYaO','CMfUzg9TAxPLza','vKrIshC','zhjRzNu','icbbtKqGBwvZCW','icaGicbkt0Loia','As5PzcWGAs5JDq','CMLUzW','yxbWBhK','AfrTEgi','DxfYtwW','svmGtK9uie5vta','AwqNie9sigjPBa','revmrvrfiezstW','vKHss2K','zezIqKe','B0rfqNC','Eu9RyNK','B1LODMW','j2fJDgL2zsCGqq','DhLSA2O','vLnqv2i','y2TPBMCGug9ZDa','w0nYB25DifrVDa','B25JAwXLifrYAq','yxrLza','y29UC29Szq','EeX4q1O','uvnLwgq','ru52uM4','su5trvjuieLova','ifDHCM5PBMC','tw51sfu','ug9ZDhbHAwqGsq','mti2mdmXnxnPtwjMrW','C2v0u3rHBMrIEq','igjLCMPHBgfUla','C0vUywjSzwq','BwLUzgvY','rvjfihr5Cgu9jW','zfHqAKW','CxvLCNK','v2fYBMLUzW','ue9qrxy','Bxrwqwq','ENvjDLC','sw52B2LJzsbszq','BNzVAwnLCYbxsa','id0GpWOGicaGia','CYbNzw5LCMf0zq','zwXHEvn0yxj0tq','ww1Ztxy','vw5WywLK','igzVCIbPBNzVAq','Cg9YDcbHzNrLCG','BgvKihrVihjLyW','ide1CY4UlG','y29UC3rYDwn0BW','Bef0Dgu','v0HfuKuGAs5ZDa','icaGieforcbHyW','CNvUBMLUzY4','y2uGq3jLyxrLza','AxPiyvm','yxr1CW','qLHlB0i','ChjPy2u','rgXzz2i','z2v0tw9UDgG','z2vUzxjHDgLVBG','Aw52B2LJzv9Wyq','CMv0DxjUicHMDq','icaGrLjptsbPBG','ywnRywDLtMfTzq','vfjMBw0','veuOksaTieLova','Dxn0B21LCK5HBq','u3vZCgvUC2LVBG','zcbQB2jZlI4U','B2DZcIaGicaGia','icaGica','zaOGicaGicaGia','Aw9UigHPC3rVCG','Dhj1zq'];_0x3ab6=function(){return _0xe30a41;};return _0x3ab6();}import{recordCashMutation}from'./cashMutationService.js';import{sendInvoiceEmailNotification}from'./emailService.js';function getBusinessDate(_0x1a8a6f){const _0x10d091=_0x14d9,_0x49c273={};_0x49c273[_0x10d091(0x1f4)]='en-US';const _0x5bb4d7=_0x49c273,_0x3a7098=new Date(),_0x2f0546={};_0x2f0546[_0x10d091(0x1c1)]=_0x1a8a6f;const _0x15d585=_0x3a7098[_0x10d091(0x319)+_0x10d091(0x25b)](_0x5bb4d7[_0x10d091(0x1f4)],_0x2f0546);return new Date(_0x15d585);}function normalizeBillingTypeForSuspension(_0xd0ccb6){const _0x541b00=_0x14d9,_0xb197ff={};_0xb197ff['fkjFu']=_0x541b00(0x234),_0xb197ff['Txtbs']=_0x541b00(0x3c4);const _0x3d8f37=_0xb197ff;return String(_0xd0ccb6||'')[_0x541b00(0x2fc)]()[_0x541b00(0x3ce)+'e']()===_0x3d8f37[_0x541b00(0x39c)]?_0x541b00(0x234):_0x3d8f37[_0x541b00(0x2f0)];}function isNonPositiveNumber(_0x57bd0b){const _0x20dad2=_0x14d9,_0x2f8ab4={'uMRhh':function(_0x6d6301,_0x13fb1f){return _0x6d6301(_0x13fb1f);},'doSBJ':function(_0x46e558,_0x1b9320){return _0x46e558<=_0x1b9320;}},_0x24ea50=_0x2f8ab4[_0x20dad2(0x252)](Number,_0x57bd0b);return!Number[_0x20dad2(0x346)](_0x24ea50)||_0x2f8ab4[_0x20dad2(0x3c9)](_0x24ea50,-0x8c8+-0x1f88+0x2850);}let billingLock=![];export const runBillingMaintenance=async()=>{const _0xf596dd=_0x14d9,_0x13ff5e={'DnlUF':_0xf596dd(0x3ba)+_0xf596dd(0x311)+'load\x20setti'+'ngs\x20for\x20Wh'+_0xf596dd(0x228)+'t:','drkfu':function(_0x5da73f,_0x14de58){return _0x5da73f(_0x14de58);},'tjRyJ':function(_0x46f2a8,_0x301cd1){return _0x46f2a8+_0x301cd1;},'bDFFI':function(_0x5f366c,_0x4f7c8c,_0x2a1c2a){return _0x5f366c(_0x4f7c8c,_0x2a1c2a);},'PlycQ':function(_0x67b441,_0xee8aeb){return _0x67b441>=_0xee8aeb;},'FpHVW':function(_0x27145b,_0x475749){return _0x27145b===_0x475749;},'MHgEC':'Active','DGlOy':function(_0x15e1d4,_0x4a11c9){return _0x15e1d4===_0x4a11c9;},'AjmKE':_0xf596dd(0x331),'gBPTq':function(_0x2f6140,_0x12f4e6){return _0x2f6140===_0x12f4e6;},'NnOAl':_0xf596dd(0x316),'lWKne':'linear','CxFoz':function(_0x5ae116,_0x17eec7){return _0x5ae116*_0x17eec7;},'gjMBX':'randomized','aOeyy':function(_0x4cf45d,_0x2dd131){return _0x4cf45d*_0x2dd131;},'fDwxm':function(_0x447983,_0xbb1263){return _0x447983+_0xbb1263;},'GFkEd':function(_0x22864f,_0x39a39d){return _0x22864f*_0x39a39d;},'OzqSo':function(_0x437e65,_0x17d08a){return _0x437e65===_0x17d08a;},'YmsMv':function(_0x349872,_0x2bbdc6){return _0x349872*_0x2bbdc6;},'DlYgb':_0xf596dd(0x2e3),'IAiQf':_0xf596dd(0x3c1),'bbXEl':_0xf596dd(0x308),'zkyGh':function(_0x5a5b8a){return _0x5a5b8a();},'mtVAd':_0xf596dd(0x2c1)+'ta','Ldnvi':function(_0x2766d0,_0x27a62c){return _0x2766d0(_0x27a62c);},'yZCHU':_0xf596dd(0x402)+'ROM\x20packag'+'es','xTvqm':function(_0x545f8a,_0x23cba7){return _0x545f8a===_0x23cba7;},'aSsUY':_0xf596dd(0x402)+_0xf596dd(0x1d7)+'ers\x20WHERE\x20'+'status\x20IN\x20'+_0xf596dd(0x2c7)+_0xf596dd(0x223)+_0xf596dd(0x3ec)+_0xf596dd(0x2d7)+_0xf596dd(0x310)+_0xf596dd(0x260)+_0xf596dd(0x37e)+'IS\x20NULL)\x20A'+_0xf596dd(0x209)+'ate\x20IS\x20NOT'+_0xf596dd(0x3cb),'fpquV':function(_0x196c12,_0x161c5c){return _0x196c12-_0x161c5c;},'rlIGb':function(_0x254523,_0x49ad54){return _0x254523+_0x49ad54;},'RXPtb':function(_0xe60541,_0x1da9ef){return _0xe60541===_0x1da9ef;},'HdYYI':_0xf596dd(0x372),'uPzzG':_0xf596dd(0x37f),'otbPT':function(_0x29c700,_0x109ce4){return _0x29c700>_0x109ce4;},'etFaS':function(_0x155269,_0x5e31ee){return _0x155269(_0x5e31ee);},'OsDKR':function(_0x61a4f6,_0x3a82fe,_0x44f958,_0x2dacf9,_0x2def6c){return _0x61a4f6(_0x3a82fe,_0x44f958,_0x2dacf9,_0x2def6c);},'Jhqrx':function(_0x1fae70){return _0x1fae70();},'ejPOV':_0xf596dd(0x288),'kbSVW':'INSERT\x20INT'+'O\x20invoices'+_0xf596dd(0x3c0),'QaOcx':_0xf596dd(0x212)+'en','MkBKB':function(_0x12d14d,_0x1010ce){return _0x12d14d(_0x1010ce);},'cYvFs':function(_0x3cce89,_0x1d8261){return _0x3cce89!==_0x1d8261;},'ppmrO':'fixed','dhjZB':function(_0x3c3191,_0x35ad6e,_0x50c314,_0x15e19d){return _0x3c3191(_0x35ad6e,_0x50c314,_0x15e19d);},'kQdJZ':function(_0x253895,_0x36274d){return _0x253895(_0x36274d);},'ABLhS':function(_0x31a62c,_0x308490,_0x2b1231,_0x3ce0ab,_0x298df9,_0x476fb1){return _0x31a62c(_0x308490,_0x2b1231,_0x3ce0ab,_0x298df9,_0x476fb1);},'oLeLu':_0xf596dd(0x302)+_0xf596dd(0x2d8)+_0xf596dd(0x1f2)+_0xf596dd(0x213)+'\x20=\x20\x27daily_'+'reminders\x27'+_0xf596dd(0x3f9)+_0xf596dd(0x21f),'muUye':function(_0x1c5501,_0x5115a4){return _0x1c5501!==_0x5115a4;},'xMdZy':_0xf596dd(0x2a9),'KqUce':function(_0x1f735d,_0x1c427e){return _0x1f735d===_0x1c427e;},'TRfmm':'number','UpJFn':function(_0xdf9408,_0x2987d4){return _0xdf9408<_0x2987d4;},'AVjTV':function(_0x43cf78,_0x28309a){return _0x43cf78-_0x28309a;},'EVshW':_0xf596dd(0x2f7),'zWeWr':function(_0x5d5c0a,_0x351113,_0x1f68f7){return _0x5d5c0a(_0x351113,_0x1f68f7);},'XNUpZ':function(_0x4abb5f,_0x4bd468){return _0x4abb5f(_0x4bd468);},'sqXKZ':'Opsya','HngJY':_0xf596dd(0x272)+_0xf596dd(0x2fb)+_0xf596dd(0x33f)+'?','OUrKN':'sent','UEfwH':_0xf596dd(0x353),'PFHkh':_0xf596dd(0x282)+_0xf596dd(0x27a),'FZdYO':function(_0x41cf1e,_0x1acc77){return _0x41cf1e(_0x1acc77);},'kEpuv':_0xf596dd(0x367),'Xreys':_0xf596dd(0x2c4),'uqrMl':_0xf596dd(0x272)+'O\x20system_f'+'lags\x20SET\x20?','Gmlvc':'daily_remi'+_0xf596dd(0x2cb),'ggHSr':_0xf596dd(0x302)+'g\x20FROM\x20sys'+_0xf596dd(0x1f2)+_0xf596dd(0x213)+_0xf596dd(0x406)+_0xf596dd(0x233)+'heck\x27\x20AND\x20'+_0xf596dd(0x315)+'=?','gBgHI':function(_0x2927f5,_0x2a6bcb){return _0x2927f5(_0x2a6bcb);},'ohkCb':_0xf596dd(0x281),'cDRth':_0xf596dd(0x242),'XLwNz':function(_0x4e904d,_0x5f4be6){return _0x4e904d>_0x5f4be6;},'GDwoq':function(_0x163ec4,_0x2f9ca0){return _0x163ec4!==_0x2f9ca0;},'VLstp':_0xf596dd(0x211),'JGThR':_0xf596dd(0x1e8),'TMwti':function(_0x3d65a5,_0x594ba7){return _0x3d65a5+_0x594ba7;},'nesGJ':function(_0x331bde,_0x99fe8a){return _0x331bde===_0x99fe8a;},'ikavf':_0xf596dd(0x39d),'PSNzB':_0xf596dd(0x264),'pYzjO':function(_0x52fb9a,_0x44b19e,_0x8c0704){return _0x52fb9a(_0x44b19e,_0x8c0704);},'DvjSO':function(_0x1e02df,_0x306e78,_0x2c8e15){return _0x1e02df(_0x306e78,_0x2c8e15);},'ZOLJZ':'SELECT\x20sta'+_0xf596dd(0x21c)+_0xf596dd(0x283)+'ERE\x20id=?','UAYLx':function(_0x207db5,_0xf5fa9b){return _0x207db5===_0xf5fa9b;},'EqiDR':function(_0x47d5e1,_0x200b2e,_0x5452d6){return _0x47d5e1(_0x200b2e,_0x5452d6);},'VDbHw':_0xf596dd(0x3b3),'ewEry':function(_0x4b20c6,_0x1c3cde){return _0x4b20c6===_0x1c3cde;},'yhLqg':function(_0x421b5f,_0x34e60a,_0x37c08a){return _0x421b5f(_0x34e60a,_0x37c08a);},'XHEbs':_0xf596dd(0x349),'hkqIk':_0xf596dd(0x3f5)+'OR:'};if(billingLock){console[_0xf596dd(0x35c)](_0xf596dd(0x332)+_0xf596dd(0x3f0)+_0xf596dd(0x278)+_0xf596dd(0x38d)+_0xf596dd(0x1c5));return;}billingLock=!![];try{if(_0x13ff5e[_0xf596dd(0x239)](_0x13ff5e[_0xf596dd(0x34f)],_0x13ff5e[_0xf596dd(0x229)])){_0x1e1511[_0xf596dd(0x35c)](_0xf596dd(0x332)+_0xf596dd(0x3f0)+'\x20berjalan,'+_0xf596dd(0x38d)+_0xf596dd(0x1c5));return;}else{const _0x3d1c0f=await _0x13ff5e[_0xf596dd(0x1fc)](getSettings),_0x401480=_0x3d1c0f['app'][_0xf596dd(0x304)]||_0x13ff5e[_0xf596dd(0x280)],_0x56422f=_0x13ff5e[_0xf596dd(0x3f2)](getBusinessDate,_0x401480),_0xd89dc5=_0x13ff5e['bDFFI'](dateToYMD,new Date(),_0x401480);console[_0xf596dd(0x35c)]('[Cron]\x20↪\x20B'+_0xf596dd(0x20b)+_0xf596dd(0x1f5)+'.\x20Waktu\x20Bi'+_0xf596dd(0x254)+_0x401480+'):\x20'+_0xd89dc5);const _0x3b5f0c=_0x3d1c0f[_0xf596dd(0x1bf)][_0xf596dd(0x299)+_0xf596dd(0x390)]||0x1*-0x167+0x1cb1+-0x1b49,_0xc512f9=_0x56422f[_0xf596dd(0x1ed)]();let _0x191f00=-0x8f*-0xb+-0x11b8+0xb93;const _0x5d1d56=[],[_0x39f6b8]=await _0xeaf9d1[_0xf596dd(0x27d)](_0x13ff5e[_0xf596dd(0x2d0)]),_0x1fe2b7=Object[_0xf596dd(0x2ad)+'s'](_0x39f6b8['map'](_0x5f0763=>[_0x5f0763['id'],_0x5f0763]));if(_0x13ff5e[_0xf596dd(0x1ff)](_0xc512f9,_0x3b5f0c)){const [_0x39cfcf]=await _0xeaf9d1[_0xf596dd(0x27d)]('SELECT\x20fla'+_0xf596dd(0x2d8)+_0xf596dd(0x1f2)+_0xf596dd(0x213)+'\x20=\x20\x27postpa'+_0xf596dd(0x2dd)+'D\x20date_val'+_0xf596dd(0x35d),[_0xd89dc5]);if(_0x13ff5e[_0xf596dd(0x32e)](_0x39cfcf[_0xf596dd(0x335)],0x1876+-0xc2*-0x2a+-0x384a)){console[_0xf596dd(0x35c)](_0xf596dd(0x3e0)+_0xf596dd(0x26a)+'paid\x20Gener'+_0xf596dd(0x37a)+_0xd89dc5+_0xf596dd(0x3f4));const [_0x5b1403]=await _0xeaf9d1[_0xf596dd(0x27d)](_0x13ff5e['aSsUY']),_0x3df646=_0x56422f['getFullYea'+'r'](),_0xfb0c6d=_0x56422f[_0xf596dd(0x298)](),_0x56bd9b=new Date(_0x3df646,_0x13ff5e[_0xf596dd(0x3a8)](_0xfb0c6d,0x482*0x4+0x7*0x13c+-0x1aab*0x1),-0xb1+0x762+-0x6b0),_0x1f74ed=_0x56bd9b[_0xf596dd(0x3b9)+'r'](),_0x608a1f=_0x13ff5e[_0xf596dd(0x2db)](_0x56bd9b[_0xf596dd(0x298)](),-0xd*-0x2cf+-0x24d0+-0x1a*-0x3),_0x199f73=_0x1f74ed+'-'+String(_0x608a1f)[_0xf596dd(0x1eb)](-0xa27*-0x1+-0x2*-0xe19+0x1*-0x2657,'0'),_0x21f19b=_0x199f73+'-01';for(const _0x3c56fa of _0x5b1403){if(_0x13ff5e[_0xf596dd(0x391)](_0x13ff5e[_0xf596dd(0x3d8)],_0x13ff5e['uPzzG']))_0x37246e[_0xf596dd(0x32f)](_0xf596dd(0x39e)+_0xf596dd(0x1da)+_0xf596dd(0x1e2)+_0xf596dd(0x3f6)+_0xf596dd(0x289)+_0xf596dd(0x1bd)+_0x23ec9c['id']+':',_0x1b94e1['message']);else{const [_0x3d255d]=await _0xeaf9d1[_0xf596dd(0x27d)]('\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20'+_0xf596dd(0x3b4)+_0xf596dd(0x1d4)+_0xf596dd(0x306)+_0xf596dd(0x22e)+_0xf596dd(0x3b4)+_0xf596dd(0x3b4)+_0xf596dd(0x1c6)+_0xf596dd(0x3be)+_0xf596dd(0x1d6)+_0xf596dd(0x403)+_0xf596dd(0x24f)+_0xf596dd(0x33a)+'\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+'\x20',[_0x3c56fa['id'],_0x21f19b]);if(_0x13ff5e[_0xf596dd(0x405)](_0x3d255d[_0xf596dd(0x335)],-0x1ed9+-0x1b6a+-0x9d*-0x5f))continue;const _0x69d223=_0x1fe2b7[_0x3c56fa[_0xf596dd(0x3bb)]];if(!_0x69d223)continue;if(_0x13ff5e[_0xf596dd(0x3df)](isNonPositiveNumber,_0x69d223['price']))continue;const _0x4ad066=new Date(_0x3c56fa[_0xf596dd(0x386)]),_0x532f56=new Date(Date[_0xf596dd(0x400)](_0x1f74ed,_0x608a1f,0x21*-0x8f+-0x18ed+0x2b5c));if(_0x13ff5e['otbPT'](_0x4ad066,_0x532f56))continue;const _0x546eab=_0x13ff5e[_0xf596dd(0x3cc)](calculateBillingDetails,_0x3c56fa,_0x69d223,_0x3d1c0f,_0x21f19b);if(_0x13ff5e[_0xf596dd(0x257)](isNonPositiveNumber,_0x546eab[_0xf596dd(0x3fc)]))continue;const _0x2af6a0={'id':_0x13ff5e['Jhqrx'](generateNewInvoiceId),'customerId':_0x3c56fa['id'],..._0x546eab,'issueDate':_0xd89dc5,'status':_0x13ff5e[_0xf596dd(0x238)],'notes':_0xf596dd(0x275)+'nvoice\x20'+_0x199f73};await _0xeaf9d1[_0xf596dd(0x27d)](_0x13ff5e[_0xf596dd(0x30e)],_0x2af6a0),_0x191f00++,queueInvoiceNotification(_0x5d1d56,_0x3c56fa,_0x2af6a0,_0x69d223[_0xf596dd(0x24c)],_0x3d1c0f);}}const _0x5bf209={};_0x5bf209['flag']=_0x13ff5e['QaOcx'],_0x5bf209[_0xf596dd(0x315)]=_0xd89dc5,await _0xeaf9d1[_0xf596dd(0x27d)]('INSERT\x20INT'+_0xf596dd(0x322)+_0xf596dd(0x21b),_0x5bf209);}}const _0x5771ed=_0x3d1c0f[_0xf596dd(0x1bf)][_0xf596dd(0x2ae)+'ueDays']??0x1958+0x29*-0x7+-0x182f;console['log']('[Cron]\x20Che'+'cking\x20Fixe'+_0xf596dd(0x2a8)+_0xf596dd(0x23c)+_0x5771ed+'\x20for\x20'+_0xd89dc5+'...');const [_0x83b134]=await _0xeaf9d1[_0xf596dd(0x27d)](_0xf596dd(0x33a)+_0xf596dd(0x3ab)+_0xf596dd(0x395)+_0xf596dd(0x23a)+_0xf596dd(0x3af)+_0xf596dd(0x3b4)+'\x20WHERE\x20sta'+'tus\x20IN\x20(\x27A'+_0xf596dd(0x401)+_0xf596dd(0x201)+'\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+_0xf596dd(0x290)+_0xf596dd(0x224)+_0xf596dd(0x376)+_0xf596dd(0x33a)+'\x20\x20\x20\x20\x20AND\x20L'+'OWER(TRIM('+_0xf596dd(0x200)+'illing_typ'+'e,\x20\x27\x27)))\x20='+_0xf596dd(0x216)+_0xf596dd(0x355));for(const _0x44d2ee of _0x83b134){const _0x2df21a=_0x13ff5e[_0xf596dd(0x339)](String,_0x44d2ee['billing_ty'+'pe']||'')['trim']()[_0xf596dd(0x3ce)+'e']();if(_0x13ff5e[_0xf596dd(0x1f1)](_0x2df21a,_0x13ff5e[_0xf596dd(0x20f)]))continue;const _0x2ef76b=_0x1fe2b7[_0x44d2ee['packageId']];if(!_0x2ef76b)continue;if(isNonPositiveNumber(_0x2ef76b[_0xf596dd(0x296)]))continue;const _0x1fd5e4=_0x13ff5e[_0xf596dd(0x339)](parseLocalDateString,_0x44d2ee[_0xf596dd(0x386)]);if(!_0x1fd5e4)continue;const _0xf36025=_0x13ff5e[_0xf596dd(0x364)](getCurrentFixedCycleStart,_0x44d2ee,_0x56422f,_0x401480)||_0x1fd5e4;if(!_0xf36025)continue;const _0x94ee96=_0x13ff5e[_0xf596dd(0x301)](dateToYMD,_0xf36025,_0x401480),_0x414189=_0x13ff5e[_0xf596dd(0x3cc)](calculateBillingDetails,_0x44d2ee,_0x2ef76b,_0x3d1c0f,_0x94ee96);if(_0x13ff5e[_0xf596dd(0x31d)](isNonPositiveNumber,_0x414189[_0xf596dd(0x3fc)]))continue;const _0x34c951=parseLocalDateString(_0x414189[_0xf596dd(0x3ef)]);if(!_0x34c951)continue;const _0x51337e=new Date(_0x34c951);_0x51337e[_0xf596dd(0x22d)](_0x13ff5e[_0xf596dd(0x3a8)](_0x51337e[_0xf596dd(0x1ed)](),_0x5771ed));if(_0x13ff5e['otbPT'](_0x51337e,_0x56422f))continue;const [_0x4d953e]=await _0xeaf9d1['query'](_0xf596dd(0x33a)+_0xf596dd(0x324)+'ECT\x20id\x20FRO'+_0xf596dd(0x2cd)+_0xf596dd(0x33a)+_0xf596dd(0x404)+_0xf596dd(0x251)+'rId\x20=\x20?\x20AN'+_0xf596dd(0x35a)+_0xf596dd(0x1cf)+_0xf596dd(0x284)+_0xf596dd(0x355),[_0x44d2ee['id'],_0x94ee96]);if(_0x4d953e[_0xf596dd(0x335)]>-0x1cfe+0x4*0x233+0x1432)continue;const _0x870475={'id':generateNewInvoiceId(),'customerId':_0x44d2ee['id'],..._0x414189,'issueDate':_0xd89dc5,'status':_0x13ff5e['ejPOV'],'notes':_0xf596dd(0x3d5)+_0xf596dd(0x2c6)};await _0xeaf9d1[_0xf596dd(0x27d)](_0xf596dd(0x272)+'O\x20invoices'+_0xf596dd(0x3c0),_0x870475),_0x191f00++,_0x13ff5e['ABLhS'](queueInvoiceNotification,_0x5d1d56,_0x44d2ee,_0x870475,_0x2ef76b['name'],_0x3d1c0f);}await flushGeneratedInvoiceNotifications(_0x5d1d56,_0x3d1c0f,_0x401480),console[_0xf596dd(0x35c)](_0xf596dd(0x26b)+_0xf596dd(0x31f)+_0xf596dd(0x285)+_0xf596dd(0x2cc)+_0x191f00),await _0xeaf9d1[_0xf596dd(0x27d)](_0xf596dd(0x261)+_0xf596dd(0x3aa)+_0xf596dd(0x305)+_0xf596dd(0x393)+_0xf596dd(0x30c)+_0xf596dd(0x29f)+'ERVAL\x2060\x20D'+'AY)');const [_0x4f80e0]=await _0xeaf9d1[_0xf596dd(0x27d)](_0x13ff5e[_0xf596dd(0x363)],[_0xd89dc5]);if(_0x13ff5e['xTvqm'](_0x4f80e0[_0xf596dd(0x335)],0x1348+-0x19b5+0x66d)){if(_0x13ff5e['muUye'](_0x13ff5e[_0xf596dd(0x3e6)],_0x13ff5e[_0xf596dd(0x3e6)]))_0xfcb42=_0x3350d0;else{console['log'](_0xf596dd(0x1d3)+'enjalankan'+_0xf596dd(0x23b)+'an\x20penging'+'at\x20untuk\x20'+_0xd89dc5+'.');const [_0x2d7270]=await _0xeaf9d1[_0xf596dd(0x27d)]('\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20'+_0xf596dd(0x324)+'ECT\x20i.*,\x20c'+_0xf596dd(0x326)+_0xf596dd(0x2a0)+'e,\x20c.phone'+_0xf596dd(0x23f)+_0xf596dd(0x3f7)+'.email\x20AS\x20'+_0xf596dd(0x383)+_0xf596dd(0x1c8)+_0xf596dd(0x3c3)+_0xf596dd(0x2b3)+_0xf596dd(0x3b4)+_0xf596dd(0x29c)+'voices\x20i\x0a\x20'+'\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+_0xf596dd(0x259)+_0xf596dd(0x3ea)+_0xf596dd(0x3b2)+_0xf596dd(0x2b1)+_0xf596dd(0x39f)+'\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+_0xf596dd(0x1f8)+'\x20packages\x20'+'p\x20ON\x20p.id\x20'+_0xf596dd(0x2bc)+'eId\x0a\x20\x20\x20\x20\x20\x20'+_0xf596dd(0x3b4)+_0xf596dd(0x28f)+'atus\x20IN\x20(\x27'+_0xf596dd(0x236)+_0xf596dd(0x2b6)+_0xf596dd(0x3b4)+'\x20');for(const _0x2ebdac of _0x2d7270){const _0x5f4315=new Date(_0x2ebdac['dueDate']),_0x4c3712=_0x3d1c0f[_0xf596dd(0x1bf)]['reminderDa'+_0xf596dd(0x204)+'e'],_0x50bd29=new Set();_0x13ff5e['KqUce'](typeof _0x4c3712,_0x13ff5e[_0xf596dd(0x29e)])&&_0x13ff5e[_0xf596dd(0x405)](_0x4c3712,-0xaee+0x1a*0x6e+-0x2*0x1f)&&_0x50bd29[_0xf596dd(0x389)](_0x4c3712);_0x50bd29['add'](0x259*0x4+-0x42b*-0x3+-0x15e5);for(const _0x4369ae of _0x50bd29){if(_0x13ff5e['xTvqm'](_0xf596dd(0x202),_0xf596dd(0x202))){if(_0x13ff5e['UpJFn'](_0x4369ae,-0x89a*0x2+0x132*0xc+0x3*0xf4))continue;const _0x444391=new Date(_0x5f4315);_0x444391['setDate'](_0x13ff5e[_0xf596dd(0x2fa)](_0x444391[_0xf596dd(0x1ed)](),_0x4369ae));const _0x32787c=_0x13ff5e[_0xf596dd(0x301)](dateToYMD,_0x444391,_0x401480);if(_0x13ff5e['muUye'](_0x32787c,_0xd89dc5))continue;const [_0x400a6a]=await _0xeaf9d1['query'](_0xf596dd(0x33a)+_0xf596dd(0x3b4)+_0xf596dd(0x1d4)+_0xf596dd(0x306)+'whatsapp_l'+_0xf596dd(0x2a3)+_0xf596dd(0x3b4)+'\x20\x20\x20\x20\x20\x20\x20\x20WH'+_0xf596dd(0x27b)+_0xf596dd(0x282)+_0xf596dd(0x30d)+_0xf596dd(0x3b4)+_0xf596dd(0x3b4)+_0xf596dd(0x258)+'age_body\x20L'+_0xf596dd(0x371)+_0xf596dd(0x3b4)+_0xf596dd(0x3b4)+_0xf596dd(0x318)+'reated_at)'+'\x20>=\x20CURDAT'+_0xf596dd(0x205)+_0xf596dd(0x3b4)+_0xf596dd(0x2a4),['%'+_0x2ebdac['id']+'%']);if(_0x400a6a[_0xf596dd(0x335)]===-0x5*0x360+0x12c2+0xf1*-0x2&&_0x2ebdac[_0xf596dd(0x2f8)+_0xf596dd(0x227)]){if(_0x13ff5e[_0xf596dd(0x34b)](_0x13ff5e[_0xf596dd(0x33b)],'gRYbe')){const _0x4ed669=_0x13ff5e[_0xf596dd(0x1e7)](formatBillingPeriod,_0x2ebdac[_0xf596dd(0x3f8)+_0xf596dd(0x1c3)],_0x2ebdac[_0xf596dd(0x3f8)+_0xf596dd(0x2ab)]),_0xd01054=_0x3d1c0f[_0xf596dd(0x3bf)][_0xf596dd(0x1c4)][_0xf596dd(0x2b2)](/\/$/,'')+_0xf596dd(0x361)+_0x2ebdac['id'],_0x1f0a60=_0x13ff5e[_0xf596dd(0x301)](replacePlaceholders,_0x3d1c0f[_0xf596dd(0x3da)][_0xf596dd(0x375)+_0xf596dd(0x300)],{'customerName':_0x2ebdac[_0xf596dd(0x2e5)+'me'],'invoiceId':_0x2ebdac['id'],'amount':_0x13ff5e[_0xf596dd(0x3f2)](formatRupiah,_0x2ebdac[_0xf596dd(0x3fc)]),'paymentLink':_0xd01054,'dueDate':_0x13ff5e[_0xf596dd(0x38e)](formatDateDisplay,_0x2ebdac[_0xf596dd(0x3ef)]),'billingPeriod':_0x4ed669,'packageName':_0x2ebdac[_0xf596dd(0x327)+'e']});try{if(_0x13ff5e[_0xf596dd(0x1f1)](_0x13ff5e[_0xf596dd(0x37b)],_0xf596dd(0x328)))_0x41d1a8[_0xf596dd(0x32f)](_0x13ff5e[_0xf596dd(0x357)],_0x55b140);else{const _0xeb4b54=await _0x30462d[_0xf596dd(0x36e)+'e'](_0x2ebdac[_0xf596dd(0x2f8)+_0xf596dd(0x227)],_0x1f0a60);await _0xeaf9d1[_0xf596dd(0x27d)](_0x13ff5e['HngJY'],{'recipient_number':_0x2ebdac[_0xf596dd(0x2f8)+'one'],'customer_id':_0x2ebdac[_0xf596dd(0x2c0)],'message_body':_0x1f0a60,'status':_0xeb4b54[_0xf596dd(0x20e)]?_0x13ff5e[_0xf596dd(0x3d4)]:_0x13ff5e[_0xf596dd(0x2ee)],'type':_0x13ff5e[_0xf596dd(0x219)],'created_at':toMySQLDatetime(new Date(),_0x401480)}),await _0x13ff5e[_0xf596dd(0x1e7)](randomDelay,0x935*-0x4+0x1c5a+0x1*0x104a,-0x323+-0x2442+-0x1af*-0x23);}}catch(_0x3713eb){}}else{const _0x2324ca=_0x13ff5e[_0xf596dd(0x257)](_0x50aa09,_0x759125['dueDate']);if(!_0x2324ca)return![];const _0x301185=_0x7a3e9e[_0xf596dd(0x1bf)][_0xf596dd(0x1ea)+_0xf596dd(0x396)]||0x1*-0x3c2+0x1*-0xbd3+-0xf95*-0x1,_0x1bf22c=new _0x37fad7(_0x2324ca);_0x1bf22c['setDate'](_0x13ff5e[_0xf596dd(0x309)](_0x1bf22c[_0xf596dd(0x1ed)](),_0x301185));const _0x2bcaa5=_0x13ff5e['bDFFI'](_0x38ba21,_0x1bf22c,_0x1942a9);return _0x13ff5e[_0xf596dd(0x337)](_0x13f0dc,_0x2bcaa5)&&_0x13ff5e[_0xf596dd(0x3d9)](_0x13ff5e[_0xf596dd(0x257)](_0x28f40a,_0x492877[_0xf596dd(0x2e6)+_0xf596dd(0x294)]||'')[_0xf596dd(0x2fc)](),_0x13ff5e[_0xf596dd(0x33c)])&&_0x13ff5e['DGlOy'](_0x48fcf8[_0xf596dd(0x394)],_0x13ff5e[_0xf596dd(0x206)]);}}if(_0x2ebdac[_0xf596dd(0x383)+_0xf596dd(0x317)])try{const _0x2ce297={};_0x2ce297['id']=_0x2ebdac[_0xf596dd(0x2c0)],_0x2ce297['name']=_0x2ebdac[_0xf596dd(0x2e5)+'me'],_0x2ce297[_0xf596dd(0x22a)]=_0x2ebdac[_0xf596dd(0x383)+_0xf596dd(0x317)],await _0x13ff5e['FZdYO'](sendInvoiceEmailNotification,{'settings':_0x3d1c0f,'customer':_0x2ce297,'invoice':_0x2ebdac,'packageName':_0x2ebdac[_0xf596dd(0x327)+'e']||_0x13ff5e[_0xf596dd(0x2e0)],'type':_0x13ff5e[_0xf596dd(0x24a)]});}catch(_0x4475d8){console[_0xf596dd(0x32f)](_0xf596dd(0x39e)+'led\x20to\x20sen'+'d\x20due\x20remi'+_0xf596dd(0x3f6)+'\x20for\x20invoi'+'ce\x20'+_0x2ebdac['id']+':',_0x4475d8['message']);}break;}else{if(_0x13ff5e[_0xf596dd(0x1ff)](_0x20e401[_0xf596dd(0x2cf)],_0x13ff5e[_0xf596dd(0x356)]))return _0x44939f[_0xf596dd(0x3ca)];if(_0x13ff5e['gBPTq'](_0x3f2db9[_0xf596dd(0x2cf)],_0x13ff5e[_0xf596dd(0x1fb)]))return _0x4bee76['min'](_0x13ff5e[_0xf596dd(0x309)](_0x49670e[_0xf596dd(0x3ca)],_0x13ff5e[_0xf596dd(0x382)](_0x354277[_0xf596dd(0x325)](-0x52f*-0x4+-0xba8+-0xe*0xa6,_0x6da4b4),_0x4402cd['incrementM'+'s'])),_0x20675d[_0xf596dd(0x1e3)]);if(_0x13ff5e[_0xf596dd(0x1ff)](_0x64dfa5['mode'],_0x13ff5e['gjMBX'])){const _0x3c5d13=_0x1d0608[_0xf596dd(0x399)](_0x13ff5e[_0xf596dd(0x2d1)](_0x57a24a[_0xf596dd(0x34e)](),_0x199780[_0xf596dd(0x3e7)+_0xf596dd(0x2af)]+(0x162d+-0x2*-0x1123+0x2*-0x1c39)));return _0xcd667e[_0xf596dd(0x3fd)](_0x3fba73[_0xf596dd(0x3ca)]+_0x3c5d13,_0x41195c[_0xf596dd(0x1e3)]);}const _0x21fea8=_0x48d54e['floor'](_0x874169['max'](-0x1246*0x1+-0x2429*0x1+0x366f,_0x1e6dbf)/_0x47ee99[_0xf596dd(0x2bb)]);return _0x54cf8c[_0xf596dd(0x3fd)](_0x13ff5e['fDwxm'](_0xb19b43['startMs'],_0x13ff5e[_0xf596dd(0x3fe)](_0x21fea8,_0x237932['incrementM'+'s'])),_0x2686af['maxMs']);}}}await _0xeaf9d1['query'](_0x13ff5e['uqrMl'],{'flag':_0x13ff5e['Gmlvc'],'date_value':_0xd89dc5});}}await _0xeaf9d1[_0xf596dd(0x27d)](_0xf596dd(0x33a)+_0xf596dd(0x342)+_0xf596dd(0x22e)+_0xf596dd(0x3b4)+'\x20SET\x20statu'+'s=\x27Overdue'+'\x27\x0a\x20\x20\x20\x20\x20\x20\x20\x20'+_0xf596dd(0x221)+'status=\x27Un'+_0xf596dd(0x34d)+_0xf596dd(0x3fa)+_0xf596dd(0x39b),[_0xd89dc5]);const [_0x2d1b3d]=await _0xeaf9d1[_0xf596dd(0x27d)](_0x13ff5e['ggHSr'],[_0xd89dc5]),_0x536115=_0xd89dc5[_0xf596dd(0x231)](-0x22eb*0x1+-0x1d62+0x404d,0x7e4+-0x6af*0x1+-0x97*0x2),[_0x186798]=await _0xeaf9d1[_0xf596dd(0x27d)](_0xf596dd(0x33a)+_0xf596dd(0x3ab)+'i.*,\x20c.nam'+_0xf596dd(0x24d)+'merName,\x20c'+_0xf596dd(0x1cd)+'customerPh'+_0xf596dd(0x3f1)+'ling_type,'+'\x20c.status\x20'+_0xf596dd(0x2fd)+_0xf596dd(0x1f9)+'.name\x20AS\x20p'+_0xf596dd(0x29d)+_0xf596dd(0x33a)+'\x20\x20\x20FROM\x20in'+'voices\x20i\x0a\x20'+_0xf596dd(0x3b4)+_0xf596dd(0x38c)+_0xf596dd(0x381)+_0xf596dd(0x2d3)+_0xf596dd(0x2c0)+'\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20'+_0xf596dd(0x343)+'IN\x20package'+_0xf596dd(0x253)+_0xf596dd(0x22c)+_0xf596dd(0x22b)+'\x20\x20\x20\x20\x20\x20\x20\x20WH'+_0xf596dd(0x1e1)+_0xf596dd(0x2bf)+'due\x27\x0a\x20\x20\x20\x20\x20'+_0xf596dd(0x3b1)),_0x5d4945=new Map();for(const _0x18efc9 of _0x186798){const _0x3e02fc=_0x13ff5e[_0xf596dd(0x368)](parseLocalDateString,_0x18efc9[_0xf596dd(0x3ef)]);if(!_0x3e02fc)continue;if(dateToYMD(_0x3e02fc,_0x401480)[_0xf596dd(0x231)](-0x2640+0x1444+0x11fc,-0x1d*0x29+0x1de3+-0x50b*0x5)!==_0x536115)continue;const _0x4554b2=_0x5d4945['get'](_0x18efc9['customerId']);if(!_0x4554b2){if(_0x13ff5e[_0xf596dd(0x2ec)]!==_0x13ff5e[_0xf596dd(0x2ce)]){_0x5d4945[_0xf596dd(0x2b5)](_0x18efc9[_0xf596dd(0x2c0)],_0x18efc9);continue;}else{const _0x4f3e04=_0x10a204[_0xf596dd(0x25c)](_0x3bd2d5,arguments);return _0x1b204b=null,_0x4f3e04;}}const _0x2eab22=_0x13ff5e[_0xf596dd(0x3df)](parseLocalDateString,_0x4554b2[_0xf596dd(0x3ef)]);if(!_0x2eab22||_0x13ff5e[_0xf596dd(0x1cb)](_0x3e02fc,_0x2eab22)){if(_0x13ff5e['GDwoq'](_0x13ff5e['VLstp'],_0x13ff5e['JGThR']))_0x5d4945[_0xf596dd(0x2b5)](_0x18efc9['customerId'],_0x18efc9);else return _0x39a72c[_0xf596dd(0x3ca)];}}const _0x3024ac=Array[_0xf596dd(0x3dc)](_0x5d4945[_0xf596dd(0x1dd)]()),_0x4f8b4a=_0x3024ac[_0xf596dd(0x365)](_0x1e1143=>{const _0x11cf96=_0xf596dd,_0x3e7945=_0x13ff5e[_0x11cf96(0x257)](parseLocalDateString,_0x1e1143[_0x11cf96(0x3ef)]);if(!_0x3e7945)return![];const _0x46f065=_0x3d1c0f[_0x11cf96(0x1bf)]['suspension'+_0x11cf96(0x396)]||0x2*-0x962+0x43*-0xd+0x162b,_0x29a0e1=new Date(_0x3e7945);_0x29a0e1['setDate'](_0x13ff5e[_0x11cf96(0x329)](_0x29a0e1[_0x11cf96(0x1ed)](),_0x46f065));const _0xcc5828=dateToYMD(_0x29a0e1,_0x401480);return _0xd89dc5>=_0xcc5828&&_0x13ff5e[_0x11cf96(0x34b)](_0x13ff5e['drkfu'](String,_0x1e1143[_0x11cf96(0x2e6)+_0x11cf96(0x294)]||'')[_0x11cf96(0x2fc)](),_0x13ff5e[_0x11cf96(0x33c)])&&_0x13ff5e[_0x11cf96(0x239)](_0x1e1143[_0x11cf96(0x394)],_0x13ff5e[_0x11cf96(0x206)]);}),_0x4f2d64=_0x13ff5e[_0xf596dd(0x239)](_0x2d1b3d[_0xf596dd(0x335)],0x4*-0x597+0x1*-0xe87+0x24e3)||_0x4f8b4a;if(_0x4f2d64){let _0x1ac2ef=![];for(const _0x475317 of _0x3024ac){try{const _0x259575=_0x13ff5e['kQdJZ'](parseLocalDateString,_0x475317['dueDate']);if(!_0x259575)continue;const _0x2185e5=_0x3d1c0f[_0xf596dd(0x1bf)]['suspension'+_0xf596dd(0x396)]||0x1044+-0x501+0xb43*-0x1,_0x3e0ee3=new Date(_0x259575);_0x3e0ee3['setDate'](_0x13ff5e[_0xf596dd(0x33e)](_0x3e0ee3[_0xf596dd(0x1ed)](),_0x2185e5));const _0x3567bc=dateToYMD(_0x3e0ee3,_0x401480),_0x3fc62b=new Date(_0x3e0ee3);_0x3fc62b[_0xf596dd(0x22d)](_0x3fc62b[_0xf596dd(0x1ed)]()-(-0x3c+-0x209d+0x20da*0x1));const _0x12ec6d=dateToYMD(_0x3fc62b,_0x401480);if(_0x13ff5e[_0xf596dd(0x2c3)](_0x12ec6d,_0xd89dc5)&&_0x3d1c0f[_0xf596dd(0x3da)][_0xf596dd(0x1ea)+_0xf596dd(0x27e)]&&_0x475317[_0xf596dd(0x2f8)+_0xf596dd(0x227)]){if(_0x13ff5e[_0xf596dd(0x3d3)]===_0x13ff5e['PSNzB'])return;else{const _0x36dcb4=_0x13ff5e['pYzjO'](formatBillingPeriod,_0x475317[_0xf596dd(0x3f8)+'iodStart'],_0x475317[_0xf596dd(0x3f8)+_0xf596dd(0x2ab)]),_0x65f285=replacePlaceholders(_0x3d1c0f[_0xf596dd(0x3da)][_0xf596dd(0x1ea)+_0xf596dd(0x27e)],{'customerName':_0x475317[_0xf596dd(0x2e5)+'me'],'invoiceId':_0x475317['id'],'amount':formatRupiah(_0x475317[_0xf596dd(0x3fc)]),'dueDate':_0x13ff5e['gBgHI'](formatDateDisplay,_0x475317['dueDate']),'billingPeriod':_0x36dcb4,'packageName':_0x475317[_0xf596dd(0x327)+'e']}),_0x5978cf=await _0x30462d[_0xf596dd(0x36e)+'e'](_0x475317['customerPh'+'one'],_0x65f285);await _0xeaf9d1[_0xf596dd(0x27d)]('INSERT\x20INT'+_0xf596dd(0x2fb)+'_logs\x20SET\x20'+'?',{'recipient_number':_0x475317[_0xf596dd(0x2f8)+_0xf596dd(0x227)],'customer_id':_0x475317['customerId'],'message_body':_0x65f285,'status':_0x5978cf[_0xf596dd(0x20e)]?_0x13ff5e[_0xf596dd(0x3d4)]:_0x13ff5e[_0xf596dd(0x2ee)],'type':_0xf596dd(0x2a1)+_0xf596dd(0x273),'created_at':_0x13ff5e[_0xf596dd(0x38b)](toMySQLDatetime,new Date(),_0x401480)}),await _0x13ff5e[_0xf596dd(0x301)](randomDelay,-0xf67*-0x1+0x3*-0xb4f+0x1*0x1a56,0x2504+0x1c15+-0x2d91);}}if(_0x13ff5e[_0xf596dd(0x337)](_0xd89dc5,_0x3567bc)){const [[_0x2919cf]]=await _0xeaf9d1['query'](_0x13ff5e[_0xf596dd(0x3db)],[_0x475317['id']]);_0x2919cf&&_0x13ff5e['UAYLx'](_0x2919cf[_0xf596dd(0x394)],_0x13ff5e[_0xf596dd(0x206)])&&await _0x13ff5e[_0xf596dd(0x3b7)](suspendCustomer,_0x475317[_0xf596dd(0x2c0)],_0x475317);}}catch(_0x52e2c6){if(_0x13ff5e[_0xf596dd(0x1f1)](_0x13ff5e['VDbHw'],_0x13ff5e[_0xf596dd(0x256)]))return _0xd6f7ce[_0xf596dd(0x3fd)](_0x13ff5e[_0xf596dd(0x329)](_0x32f85c[_0xf596dd(0x3ca)],_0x13ff5e[_0xf596dd(0x287)](_0x19bd4e['max'](-0x11*0x56+0x3cd*-0x4+0xa75*0x2,_0xfadf29),_0x4f3714[_0xf596dd(0x345)+'s'])),_0x59187e[_0xf596dd(0x1e3)]);else _0x1ac2ef=!![];}}if(!_0x1ac2ef){if(_0x13ff5e['ewEry'](_0x2d1b3d['length'],0xb*0xe2+0x1*-0x1cc3+0x130d*0x1)){const _0xb3c64a={};_0xb3c64a[_0xf596dd(0x35f)]='daily_susp'+'ension_che'+'ck',_0xb3c64a[_0xf596dd(0x315)]=_0xd89dc5,await _0xeaf9d1[_0xf596dd(0x27d)](_0x13ff5e[_0xf596dd(0x25e)],_0xb3c64a);}}}await _0x13ff5e[_0xf596dd(0x218)](reconcileTripayPayments,_0x401480,_0x56422f);}}catch(_0x17ff20){if(_0x13ff5e['gBPTq'](_0x13ff5e[_0xf596dd(0x1f7)],_0xf596dd(0x2aa))){const _0x5a1e94=new _0x400e3a(),_0x3e5a74={};_0x3e5a74[_0xf596dd(0x1c1)]=_0x1b29c6;const _0x579c5e=_0x5a1e94[_0xf596dd(0x319)+'ring'](_0x13ff5e[_0xf596dd(0x297)],_0x3e5a74);return new _0x1a7346(_0x579c5e);}else console[_0xf596dd(0x32f)](_0x13ff5e[_0xf596dd(0x1c0)],_0x17ff20);}finally{billingLock=![];}};function getBroadcastDelayProfile(_0x3d8f6e){const _0x21ba75=_0x14d9,_0x84d890={'Ylstv':_0x21ba75(0x2f3),'rUAwA':function(_0x156992,_0x592b6a){return _0x156992(_0x592b6a);},'LHhUk':_0x21ba75(0x2df),'vAoFp':_0x21ba75(0x255)},_0x82d208=String(_0x3d8f6e?.[_0x21ba75(0x3da)]?.['broadcastD'+'elayMode']||_0x84d890[_0x21ba75(0x3a3)]),_0x320c28=Math[_0x21ba75(0x325)](0xd*-0xca+-0x6e*0x7+0x4*0x351,_0x84d890[_0x21ba75(0x2d2)](Number,_0x3d8f6e?.[_0x21ba75(0x3da)]?.[_0x21ba75(0x3a6)+_0x21ba75(0x286)+'s']??0x1*-0x17c1+0x17a4+-0x31*-0x15)),_0x5f51aa=Math['max'](0x1*0xf1+-0x34f+0x25e,_0x84d890[_0x21ba75(0x2d2)](Number,_0x3d8f6e?.[_0x21ba75(0x3da)]?.[_0x21ba75(0x3a6)+_0x21ba75(0x2e2)+'entMs']??-0x1*0xc31+-0x2f*-0x9b+-0xd56*0x1)),_0x4103af=Math['max'](_0x320c28,_0x84d890[_0x21ba75(0x2d2)](Number,_0x3d8f6e?.['whatsapp']?.[_0x21ba75(0x3a6)+_0x21ba75(0x3e8)]??0x1bb4*-0x1+-0x1b35+0x3*0x1b6b)),_0x3216b2=Math[_0x21ba75(0x325)](-0x208+0x1*-0x1d7f+0x3f1*0x8,Number(_0x3d8f6e?.[_0x21ba75(0x3da)]?.[_0x21ba75(0x3a6)+_0x21ba75(0x1c7)+_0x21ba75(0x3bd)]??0xa34+0x2617+0x3046*-0x1)),_0x247827=Math[_0x21ba75(0x325)](0x16b3+-0x18e2+0x22f,_0x84d890[_0x21ba75(0x2d2)](Number,_0x3d8f6e?.[_0x21ba75(0x3da)]?.[_0x21ba75(0x3a6)+_0x21ba75(0x1f3)+_0x21ba75(0x36c)]??-0x1*-0x6a1+-0x71*-0x25+-0x111a));return{'mode':['flat',_0x84d890['LHhUk'],_0x84d890[_0x21ba75(0x3a3)],_0x84d890['vAoFp']][_0x21ba75(0x215)](_0x82d208)?_0x82d208:_0x84d890[_0x21ba75(0x3a3)],'startMs':_0x320c28,'incrementMs':_0x5f51aa,'maxMs':_0x4103af,'stepEvery':_0x3216b2,'randomJitterMs':_0x247827};}function computeBroadcastDelay(_0x2f3102,_0x5fd6d9){const _0x1faf32=_0x14d9,_0x44a065={};_0x44a065[_0x1faf32(0x35e)]=_0x1faf32(0x1de)+_0x1faf32(0x303)+':',_0x44a065[_0x1faf32(0x1be)]=function(_0x3085e8,_0x48839c){return _0x3085e8===_0x48839c;},_0x44a065[_0x1faf32(0x1d8)]='flat',_0x44a065[_0x1faf32(0x25d)]=function(_0xf6b7ca,_0x5b727a){return _0xf6b7ca===_0x5b727a;},_0x44a065['zeiLA']='KxYom',_0x44a065[_0x1faf32(0x240)]=function(_0x19d081,_0x57eec5){return _0x19d081+_0x57eec5;},_0x44a065[_0x1faf32(0x2b4)]=function(_0x5a71e5,_0x5d3073){return _0x5a71e5*_0x5d3073;},_0x44a065['TjNYH']=function(_0x3b528c,_0x171f8c){return _0x3b528c===_0x171f8c;},_0x44a065[_0x1faf32(0x295)]=_0x1faf32(0x255),_0x44a065[_0x1faf32(0x2ea)]=_0x1faf32(0x336),_0x44a065[_0x1faf32(0x1fe)]='GltCv',_0x44a065[_0x1faf32(0x314)]=function(_0x4754bb,_0x9da7ef){return _0x4754bb+_0x9da7ef;},_0x44a065[_0x1faf32(0x1df)]=function(_0x5b9173,_0x44ad71){return _0x5b9173+_0x44ad71;},_0x44a065[_0x1faf32(0x269)]=function(_0x58f9af,_0x439976){return _0x58f9af/_0x439976;};const _0x38193d=_0x44a065;if(_0x38193d['HmakI'](_0x5fd6d9[_0x1faf32(0x2cf)],_0x38193d[_0x1faf32(0x1d8)]))return _0x5fd6d9[_0x1faf32(0x3ca)];if(_0x38193d[_0x1faf32(0x25d)](_0x5fd6d9[_0x1faf32(0x2cf)],_0x1faf32(0x2df))){if(_0x38193d[_0x1faf32(0x2be)]!=='KxYom')_0x5c4d7e=![];else return Math['min'](_0x38193d['Vgpdy'](_0x5fd6d9[_0x1faf32(0x3ca)],_0x38193d[_0x1faf32(0x2b4)](Math[_0x1faf32(0x325)](0x1a67+-0x75c+-0x130b,_0x2f3102),_0x5fd6d9[_0x1faf32(0x345)+'s'])),_0x5fd6d9['maxMs']);}if(_0x38193d['TjNYH'](_0x5fd6d9[_0x1faf32(0x2cf)],_0x38193d['BXKoB'])){if(_0x38193d['hTmxb'](_0x38193d[_0x1faf32(0x2ea)],_0x38193d['jvaAW']))_0x3efcb0[_0x1faf32(0x32f)](_0x38193d[_0x1faf32(0x35e)],_0xeb7a01);else{const _0x53bcdd=Math[_0x1faf32(0x399)](Math[_0x1faf32(0x34e)]()*_0x38193d['KYEhd'](_0x5fd6d9[_0x1faf32(0x3e7)+'erMs'],0x2278+0x84*0x39+-0x1*0x3fdb));return Math[_0x1faf32(0x3fd)](_0x38193d[_0x1faf32(0x1df)](_0x5fd6d9[_0x1faf32(0x3ca)],_0x53bcdd),_0x5fd6d9[_0x1faf32(0x1e3)]);}}const _0x4f837c=Math['floor'](_0x38193d[_0x1faf32(0x269)](Math['max'](0x1*-0x703+0x4ae+0x3*0xc7,_0x2f3102),_0x5fd6d9['stepEvery']));return Math['min'](_0x38193d['LmxEM'](_0x5fd6d9[_0x1faf32(0x3ca)],_0x4f837c*_0x5fd6d9['incrementM'+'s']),_0x5fd6d9[_0x1faf32(0x1e3)]);}function queueInvoiceNotification(_0x5d6653,_0x313b20,_0x2f4e31,_0x2f7223,_0x2dc606){const _0x18fb98=_0x14d9,_0x2a587c={'ofctJ':function(_0x560225,_0x4fcfb2,_0x9a11d3){return _0x560225(_0x4fcfb2,_0x9a11d3);},'MLdUe':function(_0x5b8897,_0x4f0300){return _0x5b8897(_0x4f0300);}};if(!_0x2dc606['billing']['whatsappNo'+_0x18fb98(0x377)+'sEnabled']||!_0x2dc606[_0x18fb98(0x1bf)][_0x18fb98(0x210)+_0x18fb98(0x3c5)]||!_0x313b20[_0x18fb98(0x248)])return;const _0x3a0fd8=_0x2dc606[_0x18fb98(0x3bf)][_0x18fb98(0x1c4)][_0x18fb98(0x2b2)](/\/$/,'')+_0x18fb98(0x361)+_0x2f4e31['id'],_0x3b5fc6=formatBillingPeriod(_0x2f4e31[_0x18fb98(0x3f8)+'iodStart'],_0x2f4e31['billingPer'+_0x18fb98(0x2ab)]),_0x4386f2=_0x2a587c[_0x18fb98(0x33d)](replacePlaceholders,_0x2dc606['whatsapp'][_0x18fb98(0x3cd)+_0x18fb98(0x26d)],{'customerName':_0x313b20[_0x18fb98(0x24c)],'customerId':_0x313b20['id'],'invoiceId':_0x2f4e31['id'],'amount':_0x2a587c[_0x18fb98(0x3d7)](formatRupiah,_0x2f4e31[_0x18fb98(0x3fc)]),'dueDate':formatDateDisplay(_0x2f4e31['dueDate']),'paymentLink':_0x3a0fd8,'packageName':_0x2f7223,'billingPeriod':_0x3b5fc6}),_0x1ad283={};_0x1ad283['customerId']=_0x313b20['id'],_0x1ad283[_0x18fb98(0x248)]=_0x313b20[_0x18fb98(0x248)],_0x1ad283[_0x18fb98(0x320)]=_0x4386f2,_0x5d6653[_0x18fb98(0x388)](_0x1ad283);}async function flushGeneratedInvoiceNotifications(_0x508002,_0xa1cf3e,_0x32de0b){const _0x5efc6c=_0x14d9,_0x1a3bb8={'ZbCQJ':function(_0x10d8e9,_0x5249ba,_0x4134a6){return _0x10d8e9(_0x5249ba,_0x4134a6);},'KhCDb':function(_0x4bde87,_0x3718b4){return _0x4bde87===_0x3718b4;},'omvwl':function(_0x35c178,_0x14cdf8){return _0x35c178(_0x14cdf8);},'vQElG':function(_0x1c88a7,_0x34d47d){return _0x1c88a7<_0x34d47d;},'GABiz':_0x5efc6c(0x20a),'rtOLb':'zNDqx','tylkj':'INSERT\x20INT'+'O\x20whatsapp'+_0x5efc6c(0x33f)+'?','BHDgH':'sent','wUDXS':function(_0x821dd8,_0x4847f6,_0x15ea5a){return _0x821dd8(_0x4847f6,_0x15ea5a);},'MlEoK':function(_0xe325d3,_0xa5300e){return _0xe325d3===_0xa5300e;},'vHbDV':'NfgjD','HpDde':'aVysR','RWOCt':function(_0x2d1728,_0x2f1f99){return _0x2d1728-_0x2f1f99;},'BhxRz':function(_0x22b642,_0x1daff2){return _0x22b642!==_0x1daff2;},'fTuBg':'gUPxJ','oldEi':_0x5efc6c(0x262)};if(!Array[_0x5efc6c(0x338)](_0x508002)||_0x1a3bb8[_0x5efc6c(0x2f6)](_0x508002['length'],-0x2309+-0x25c0+0x1*0x48c9))return;const _0x339d92=_0x1a3bb8['omvwl'](getBroadcastDelayProfile,_0xa1cf3e);for(let _0x4ff62e=0x595*0x1+0x2205+-0x279a;_0x1a3bb8[_0x5efc6c(0x2d9)](_0x4ff62e,_0x508002[_0x5efc6c(0x335)]);_0x4ff62e++){if(_0x1a3bb8[_0x5efc6c(0x1dc)]===_0x1a3bb8[_0x5efc6c(0x2eb)]){if(!_0x4d7f1a[_0x5efc6c(0x1bf)][_0x5efc6c(0x330)+_0x5efc6c(0x377)+_0x5efc6c(0x279)]||!_0x40ece5[_0x5efc6c(0x1bf)][_0x5efc6c(0x210)+_0x5efc6c(0x3c5)]||!_0x417cf8[_0x5efc6c(0x248)])return;const _0x17cf10=_0x25e6b3[_0x5efc6c(0x3bf)]['baseUrl']['replace'](/\/$/,'')+_0x5efc6c(0x361)+_0x3c9aca['id'],_0x2addd3=_0x1a3bb8['ZbCQJ'](_0x26f874,_0x4fbc0d[_0x5efc6c(0x3f8)+_0x5efc6c(0x1c3)],_0x14106a[_0x5efc6c(0x3f8)+_0x5efc6c(0x2ab)]),_0x5432f3=_0x4d8b4e(_0x5029b3[_0x5efc6c(0x3da)]['invoiceCre'+_0x5efc6c(0x26d)],{'customerName':_0x39ee6a['name'],'customerId':_0x17b23d['id'],'invoiceId':_0x36d8db['id'],'amount':_0x30ee9f(_0x3051db[_0x5efc6c(0x3fc)]),'dueDate':_0xed33f8(_0x304568[_0x5efc6c(0x3ef)]),'paymentLink':_0x17cf10,'packageName':_0x2a6b43,'billingPeriod':_0x2addd3}),_0x5d6647={};_0x5d6647['customerId']=_0x11c01e['id'],_0x5d6647[_0x5efc6c(0x248)]=_0x2fbccb[_0x5efc6c(0x248)],_0x5d6647['message']=_0x5432f3,_0x4ced68[_0x5efc6c(0x388)](_0x5d6647);}else{const _0x1b2d74=_0x508002[_0x4ff62e];try{const _0x295ce5=await _0x30462d[_0x5efc6c(0x36e)+'e'](_0x1b2d74[_0x5efc6c(0x248)],_0x1b2d74[_0x5efc6c(0x320)]);await _0xeaf9d1[_0x5efc6c(0x27d)](_0x1a3bb8[_0x5efc6c(0x268)],{'recipient_number':_0x1b2d74[_0x5efc6c(0x248)],'customer_id':_0x1b2d74[_0x5efc6c(0x2c0)],'message_body':_0x1b2d74[_0x5efc6c(0x320)],'status':_0x295ce5[_0x5efc6c(0x20e)]?_0x1a3bb8['BHDgH']:_0x5efc6c(0x353),'type':_0x5efc6c(0x2c9)+_0x5efc6c(0x292),'error_message':_0x295ce5['error']||null,'created_at':_0x1a3bb8[_0x5efc6c(0x380)](toMySQLDatetime,new Date(),_0x32de0b)});}catch(_0x2a17e7){if(_0x1a3bb8[_0x5efc6c(0x1cc)](_0x1a3bb8[_0x5efc6c(0x35b)],_0x1a3bb8[_0x5efc6c(0x2f5)])){_0x39998b['warn']('[Startup]\x20'+'Background'+_0x5efc6c(0x334)+'disabled\x20b'+'y\x20runtime\x20'+_0x5efc6c(0x34a));return;}else console[_0x5efc6c(0x32f)]('Failed\x20to\x20'+_0x5efc6c(0x2b0)+'ce\x20notific'+'ation:',_0x2a17e7);}if(_0x4ff62e<_0x1a3bb8[_0x5efc6c(0x350)](_0x508002[_0x5efc6c(0x335)],-0x19*0x161+-0x51*-0x35+0x11b5)){if(_0x1a3bb8[_0x5efc6c(0x3a2)](_0x1a3bb8['fTuBg'],_0x1a3bb8[_0x5efc6c(0x2f9)])){const _0x5037a3=_0x1a3bb8['wUDXS'](computeBroadcastDelay,_0x4ff62e,_0x339d92);await new Promise(_0x34275d=>setTimeout(_0x34275d,_0x5037a3));}else{if(_0x4f656e){const _0x100b70=_0x55dab7[_0x5efc6c(0x25c)](_0x250af9,arguments);return _0x479e82=null,_0x100b70;}}}}}}async function reconcileTripayPayments(_0x1a0d76,_0xc4514b){const _0xec7585=_0x14d9,_0x31ab8a={'ptdUQ':_0xec7585(0x3ba)+_0xec7585(0x344)+_0xec7585(0x2fe)+'tenance\x20fa'+'iled:','HfNLf':function(_0x83461d,_0x6e3692){return _0x83461d!==_0x6e3692;},'KzXWw':_0xec7585(0x2c8),'LnykO':function(_0x64888c,_0x41f3fa){return _0x64888c===_0x41f3fa;},'ZQnlm':_0xec7585(0x362),'aNLSY':function(_0x50ce2d,_0x4bd915,_0x30629a){return _0x50ce2d(_0x4bd915,_0x30629a);},'xLxCZ':'Tripay\x20Gat'+'eway\x20(Auto'+')','DcnNq':_0xec7585(0x29a)+'yment','uCOIk':_0xec7585(0x1ec),'Jqwqy':_0xec7585(0x1e9),'aNgAE':'[Cron]\x20Fai'+_0xec7585(0x28b)+_0xec7585(0x26c)+'pay\x20paymen'+_0xec7585(0x379)};try{if(_0x31ab8a[_0xec7585(0x392)](_0x31ab8a[_0xec7585(0x369)],_0x31ab8a[_0xec7585(0x369)]))_0x3cc5b7[_0xec7585(0x389)](_0x4faaae);else{const [_0x5ef2c2]=await _0xeaf9d1[_0xec7585(0x27d)]('\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20'+_0xec7585(0x3ab)+_0xec7585(0x25a)+_0xec7585(0x3b6)+_0xec7585(0x1d9)+_0xec7585(0x3b4)+_0xec7585(0x207)+_0xec7585(0x1e6)+_0xec7585(0x1d2)+_0xec7585(0x3f3)+_0xec7585(0x32c)+_0xec7585(0x385)+_0xec7585(0x374)+_0xec7585(0x2a5)+_0xec7585(0x221)+'i.status\x20='+'\x20\x27Paid\x27\x20AN'+_0xec7585(0x31c)+_0xec7585(0x2e7)+_0xec7585(0x25f)+'L\x20AND\x20p.id'+'\x20IS\x20NULL\x0a\x20'+_0xec7585(0x355));if(_0x5ef2c2[_0xec7585(0x335)]===0x2ba*-0xd+0x19*0x79+0x17a1){if(_0x31ab8a['LnykO'](_0x31ab8a[_0xec7585(0x3d6)],_0x31ab8a[_0xec7585(0x3d6)]))return;else _0x26836d['error'](_0x31ab8a[_0xec7585(0x237)],_0x5564be);}const _0x1eb574=_0x31ab8a[_0xec7585(0x2e8)](toMySQLDatetime,_0xc4514b,_0x1a0d76),_0x192384=Date['now']();let _0x4e0525=-0x2e7*0x3+0xa6c*0x1+-0x1b7;for(const _0x35c9a9 of _0x5ef2c2){const _0x5614b1='PAY-CRON-'+_0x192384+'-'+_0x35c9a9['id'][_0xec7585(0x231)](-(0x2d*-0x13+-0x206a+0x23c5))+'-'+_0x4e0525,_0x2e301f={};_0x2e301f['id']=_0x5614b1,_0x2e301f['invoiceId']=_0x35c9a9['id'],_0x2e301f['customerId']=_0x35c9a9[_0xec7585(0x2c0)],_0x2e301f[_0xec7585(0x1c9)]=_0x1eb574,_0x2e301f[_0xec7585(0x3fc)]=_0x35c9a9[_0xec7585(0x3fc)],_0x2e301f[_0xec7585(0x21d)]=_0x31ab8a[_0xec7585(0x26f)];const _0x1f88c9=_0x2e301f;await _0xeaf9d1[_0xec7585(0x27d)](_0xec7585(0x272)+'O\x20payments'+_0xec7585(0x3c0),_0x1f88c9),await _0x31ab8a[_0xec7585(0x2e8)](recordCashMutation,_0xeaf9d1,{'date':_0x1eb574,'direction':'in','category':_0x31ab8a[_0xec7585(0x3de)],'amount':_0x35c9a9['amount'],'method':_0x1f88c9[_0xec7585(0x21d)],'description':'Pembayaran'+_0xec7585(0x313)+_0x35c9a9['id']+(_0xec7585(0x3a5)+_0xec7585(0x1fd)+_0xec7585(0x3fb)),'reference_type':_0x31ab8a[_0xec7585(0x3e1)],'reference_id':_0x5614b1,'customer_id':_0x35c9a9['customerId'],'source':_0x31ab8a[_0xec7585(0x241)],'timezone':_0x1a0d76}),_0x4e0525++;}console[_0xec7585(0x35c)](_0xec7585(0x352)+'o-logged\x20'+_0x4e0525+(_0xec7585(0x2ef)+_0xec7585(0x3c8)+'issing\x20fro'+'m\x20transact'+_0xec7585(0x2a6)+'y.'));}}catch(_0x44394a){console[_0xec7585(0x32f)](_0x31ab8a[_0xec7585(0x36b)],_0x44394a);}}export const runHotspotMaintenance=async()=>{const _0x423fda=_0x14d9,_0xc4bbb3={'DiQhV':function(_0x3a95,_0x3e4a3d){return _0x3a95*_0x3e4a3d;},'ztvHu':function(_0xad7a3,_0xa29d74){return _0xad7a3+_0xa29d74;},'biqCS':_0x423fda(0x3e4)+_0x423fda(0x370)+'rn\x20this\x22)('+'\x20)','ZCFXa':function(_0x381e3d){return _0x381e3d();},'FNrqO':'warn','tSnqy':_0x423fda(0x249),'SKOWT':_0x423fda(0x32f),'BWVAo':_0x423fda(0x347),'YqtUJ':_0x423fda(0x360),'cwrhw':_0x423fda(0x225),'WltGL':function(_0x2c0e2c,_0x3ed2a6){return _0x2c0e2c<_0x3ed2a6;},'aiaAg':function(_0x45256a,_0xbf9ae7,_0x22a035){return _0x45256a(_0xbf9ae7,_0x22a035);},'LpMdb':function(_0x1466fe,_0x16d11e){return _0x1466fe>_0x16d11e;},'uSEXx':function(_0x2bbd96,_0x29ec62){return _0x2bbd96===_0x29ec62;},'qgkyU':_0x423fda(0x2ed),'TmnKF':function(_0x3da3e4,_0xa22fe2){return _0x3da3e4!==_0xa22fe2;},'GNgeq':_0x423fda(0x214),'BcNhv':_0x423fda(0x1fa),'aQiSm':'bmlVi','dXPjL':_0x423fda(0x2f2),'rCoRY':_0x423fda(0x1de)+_0x423fda(0x303)+':'};try{const _0x4ae40=await _0xc4bbb3[_0x423fda(0x23e)](getSettings),_0x5e77ba=_0x4ae40[_0x423fda(0x3bf)][_0x423fda(0x304)]||_0x423fda(0x2c1)+'ta',_0xd36ce6=_0xc4bbb3['aiaAg'](toMySQLDatetime,new Date(),_0x5e77ba),[_0x45f338]=await _0xeaf9d1[_0x423fda(0x27d)](_0x423fda(0x33a)+_0x423fda(0x3ab)+_0x423fda(0x359)+'spot_vouch'+_0x423fda(0x32d)+_0x423fda(0x404)+_0x423fda(0x340)+_0x423fda(0x267)+_0x423fda(0x3c7)+_0x423fda(0x2de)+'\x20NULL\x0a\x20\x20\x20\x20'+_0x423fda(0x3b4)+_0x423fda(0x366)+_0x423fda(0x31e)+_0x423fda(0x3e5),[_0xd36ce6]);if(_0xc4bbb3['LpMdb'](_0x45f338[_0x423fda(0x335)],0x3cd*-0x1+0x1794+-0x13c7)){console['log'](_0x423fda(0x1de)+_0x423fda(0x3ff)+'ukan\x20'+_0x45f338[_0x423fda(0x335)]+(_0x423fda(0x208)+_0x423fda(0x203)));const _0x5b58dd=await _0x41c7ce[_0x423fda(0x246)+_0x423fda(0x34c)+'nnections'](),_0xa84abd=await _0x41c7ce['fetchHotsp'+_0x423fda(0x312)]();for(const _0x17b0cd of _0x45f338){const _0x3c4be7=_0xa84abd[_0x423fda(0x1e5)](_0x3a5ca6=>_0x3a5ca6[_0x423fda(0x24c)]===_0x17b0cd['username']);if(_0x3c4be7){if(_0xc4bbb3['uSEXx'](_0xc4bbb3['qgkyU'],_0xc4bbb3[_0x423fda(0x31b)]))try{if(_0xc4bbb3['TmnKF']('IcWKL',_0xc4bbb3[_0x423fda(0x3d2)]))await _0x41c7ce[_0x423fda(0x3eb)+_0x423fda(0x2ff)](_0x3c4be7['id']);else{const _0x9857e7=_0xfa5283[_0x423fda(0x399)](_0xc4bbb3[_0x423fda(0x31a)](_0x3de0a5[_0x423fda(0x34e)](),_0x3b95a1[_0x423fda(0x3e7)+'erMs']+(-0x38*-0x25+0xbfa*0x3+0x3b*-0xbf)));return _0x4c5845[_0x423fda(0x3fd)](_0x487d95['startMs']+_0x9857e7,_0x491419[_0x423fda(0x1e3)]);}}catch(_0x33b180){}else{let _0x26a5f7;try{const _0xf98696=_0x38c2ef(YOIbru[_0x423fda(0x333)](_0x423fda(0x29b)+'nction()\x20',YOIbru[_0x423fda(0x226)])+');');_0x26a5f7=YOIbru[_0x423fda(0x23e)](_0xf98696);}catch(_0x717f7b){_0x26a5f7=_0x9a958;}const _0x170a3e=_0x26a5f7[_0x423fda(0x26e)]=_0x26a5f7['console']||{},_0x58ed9d=[_0x423fda(0x35c),YOIbru['FNrqO'],YOIbru[_0x423fda(0x373)],YOIbru[_0x423fda(0x37c)],YOIbru[_0x423fda(0x3cf)],YOIbru['YqtUJ'],YOIbru[_0x423fda(0x323)]];for(let _0x54aa24=0x1bda+0x6d*-0x26+0x1*-0xbac;YOIbru['WltGL'](_0x54aa24,_0x58ed9d['length']);_0x54aa24++){const _0x1385cc=_0x11e7d1[_0x423fda(0x28d)+'r']['prototype'][_0x423fda(0x348)](_0x201681),_0x160fd7=_0x58ed9d[_0x54aa24],_0x4ff12c=_0x170a3e[_0x160fd7]||_0x1385cc;_0x1385cc[_0x423fda(0x358)]=_0x5431c4[_0x423fda(0x348)](_0x2924b0),_0x1385cc[_0x423fda(0x3a9)]=_0x4ff12c[_0x423fda(0x3a9)][_0x423fda(0x348)](_0x4ff12c),_0x170a3e[_0x160fd7]=_0x1385cc;}}}else{if(_0x17b0cd[_0x423fda(0x2b7)+'d'])try{if(_0xc4bbb3[_0x423fda(0x23d)](_0xc4bbb3[_0x423fda(0x2ba)],_0xc4bbb3[_0x423fda(0x20d)])){if(_0x103fa5){const _0x4690ed=_0x57ee97[_0x423fda(0x25c)](_0x569eeb,arguments);return _0x27ebd=null,_0x4690ed;}}else await _0x41c7ce[_0x423fda(0x3eb)+_0x423fda(0x2ff)](_0x17b0cd['mikrotik_i'+'d']);}catch(_0x2b54d6){}}const _0xcfea5b=_0x5b58dd[_0x423fda(0x1e5)](_0x3ba7f7=>_0x3ba7f7[_0x423fda(0x3b0)]===_0x17b0cd[_0x423fda(0x39a)]);if(_0xcfea5b)try{await _0x41c7ce[_0x423fda(0x3ee)+_0x423fda(0x2e9)+_0x423fda(0x2d6)](_0xcfea5b[_0xc4bbb3[_0x423fda(0x27c)]]);}catch(_0x547c19){}await _0xeaf9d1[_0x423fda(0x27d)](_0x423fda(0x2e1)+'spot_vouch'+_0x423fda(0x2e4)+_0x423fda(0x2ca)+_0x423fda(0x2da)+_0x423fda(0x2b8),[_0x17b0cd['id']]);}}}catch(_0x3d7e7d){console[_0x423fda(0x32f)](_0xc4bbb3[_0x423fda(0x354)],_0x3d7e7d);}};export const startBackgroundServices=()=>{const _0x12dae5=_0x14d9,_0xcb4629={'kTJpL':function(_0x20b6b0,_0x31e157){return _0x20b6b0(_0x31e157);},'BcXPn':function(_0x21904c){return _0x21904c();},'ZaOeh':function(_0x119572,_0x1cfd57){return _0x119572===_0x1cfd57;},'RlQJT':_0x12dae5(0x2a7),'MvOqn':_0x12dae5(0x3ad),'avJWF':_0x12dae5(0x3ba)+'Syncing\x20Wh'+_0x12dae5(0x2c5)+_0x12dae5(0x30f)+_0x12dae5(0x28a)+_0x12dae5(0x28c),'iajSM':function(_0x14e683,_0x1c1f11,_0xdccb98){return _0x14e683(_0x1c1f11,_0xdccb98);},'MnuHU':function(_0x231197,_0x55414d){return _0x231197===_0x55414d;},'arqVn':'gmbWu','GdOUW':function(_0x567f3a,_0x108505){return _0x567f3a!==_0x108505;},'tahhA':_0x12dae5(0x266),'leXPZ':_0x12dae5(0x250),'lAtte':'[Startup]\x20'+_0x12dae5(0x344)+'lling\x20main'+_0x12dae5(0x36d)+'iled:','POPEv':_0x12dae5(0x3ba)+_0x12dae5(0x20c)+'tspot\x20main'+'tenance\x20fa'+_0x12dae5(0x38f),'TLHJS':function(_0x2fbb4d,_0x2cc256){return _0x2fbb4d===_0x2cc256;},'HfiBh':function(_0x3dec43,_0x3865c7){return _0x3dec43===_0x3865c7;},'TzIbi':'igsfz','AGmdV':_0x12dae5(0x1db)+_0x12dae5(0x1ef)+_0x12dae5(0x2a2),'YsNnz':function(_0x29d340){return _0x29d340();},'vQRAX':function(_0x284dc8){return _0x284dc8();},'dFbBA':function(_0x102054,_0x3294ed,_0x18161c){return _0x102054(_0x3294ed,_0x18161c);},'jDxIZ':function(_0x18ff58,_0xf08fed){return _0x18ff58*_0xf08fed;},'CPPKN':function(_0x1e2734,_0x2195ef){return _0x1e2734*_0x2195ef;},'vxhoJ':_0x12dae5(0x3a7)+'\x20services\x20'+_0x12dae5(0x291)};if(_0xcb4629[_0x12dae5(0x37d)](process['env'][_0x12dae5(0x2d4)+'HTWEIGHT'],_0xcb4629[_0x12dae5(0x3e9)])||_0xcb4629['HfiBh'](process[_0x12dae5(0x3dd)][_0x12dae5(0x232)+_0x12dae5(0x1d5)+_0x12dae5(0x21e)],_0xcb4629['RlQJT'])){if(_0xcb4629['TzIbi']!==_0xcb4629['TzIbi'])return _0xcb4629[_0x12dae5(0x22f)](_0x47c1d6,_0x4d9f0e||'')[_0x12dae5(0x2fc)]()[_0x12dae5(0x3ce)+'e']()===_0x12dae5(0x234)?'fixed':_0x12dae5(0x3c4);else{console[_0x12dae5(0x1ee)]('[Startup]\x20'+_0x12dae5(0x3a7)+_0x12dae5(0x334)+_0x12dae5(0x24e)+_0x12dae5(0x222)+_0x12dae5(0x34a));return;}}console[_0x12dae5(0x35c)](_0xcb4629[_0x12dae5(0x1f0)]);const _0x33dc7f=async()=>{const _0x1aae05=_0x12dae5;try{const _0x3f3273=await _0xcb4629[_0x1aae05(0x230)](getSettings);_0x30462d[_0x1aae05(0x1e0)+'ngs'](_0x3f3273);const _0x2892b1=_0xcb4629['kTJpL'](Boolean,_0x3f3273?.['whatsapp']?.[_0x1aae05(0x2f1)+_0x1aae05(0x36f)]);if(_0xcb4629[_0x1aae05(0x247)](process[_0x1aae05(0x3dd)]['DISABLE_WH'+_0x1aae05(0x30a)],_0xcb4629[_0x1aae05(0x3e9)])||_0x2892b1){if(_0xcb4629[_0x1aae05(0x2f4)]!==_0xcb4629[_0x1aae05(0x2f4)])_0x5d30c1[_0x1aae05(0x32f)](_0x1aae05(0x3ba)+_0x1aae05(0x20c)+_0x1aae05(0x3ae)+_0x1aae05(0x36d)+_0x1aae05(0x38f),_0x4d5b43);else{console[_0x1aae05(0x1ee)](_0x1aae05(0x3ba)+'WhatsApp\x20s'+_0x1aae05(0x3bc)+_0x1aae05(0x1ce)+'melakukan\x20'+'koneksi.'),await _0x30462d[_0x1aae05(0x277)](!![]);return;}}console[_0x1aae05(0x35c)](_0xcb4629[_0x1aae05(0x3b5)]),_0xcb4629[_0x1aae05(0x3ed)](setTimeout,()=>{const _0x17b182=_0x1aae05;_0x30462d[_0x17b182(0x3a4)+_0x17b182(0x307)+'rt'](handleWhatsappMessage);},-0x2*-0x172f+0x1988+0x106*-0xd);}catch(_0xbaeed6){if(_0xcb4629[_0x1aae05(0x274)](_0x1aae05(0x2c2),_0xcb4629[_0x1aae05(0x32a)]))console[_0x1aae05(0x32f)]('[Startup]\x20'+_0x1aae05(0x311)+_0x1aae05(0x245)+'ngs\x20for\x20Wh'+'atsApp\x20ini'+'t:',_0xbaeed6);else{const _0x2fbbeb=_0x884e05[_0x1aae05(0x25c)](_0x19f502,arguments);return _0x22f271=null,_0x2fbbeb;}}};_0x33dc7f(),_0xcb4629[_0x12dae5(0x30b)](runBillingMaintenance)[_0x12dae5(0x341)](_0x483ef5=>{const _0x43bea3=_0x12dae5;_0xcb4629[_0x43bea3(0x2b9)](_0xcb4629[_0x43bea3(0x397)],_0xcb4629['leXPZ'])?console[_0x43bea3(0x32f)](_0xcb4629[_0x43bea3(0x28e)],_0x483ef5):_0x3c4a00['set'](_0x2abc34[_0x43bea3(0x2c0)],_0x2d01b0);}),_0xcb4629[_0x12dae5(0x235)](runHotspotMaintenance)[_0x12dae5(0x341)](_0xedf88b=>{const _0x37f099=_0x12dae5;console[_0x37f099(0x32f)](_0xcb4629[_0x37f099(0x27f)],_0xedf88b);}),_0xcb4629[_0x12dae5(0x263)](setInterval,runBillingMaintenance,_0xcb4629[_0x12dae5(0x217)]((-0x126+0x1923+-0x7f5*0x3)*(0x10*-0xe9+-0x10*0x7f+0x16bc),0x3fa+-0x1*-0x2206+-0x886*0x4)),setInterval(runHotspotMaintenance,_0xcb4629[_0x12dae5(0x1d0)](0x36*0x37+0x3b0+-0x5e*0x29,0x1f42+-0x914+-0x1246)),console[_0x12dae5(0x35c)](_0xcb4629[_0x12dae5(0x2ac)]);};
+
+
+
+
+
+// cronJobs.js (FULL TIMEZONE-AWARE VERSION)
+
+import pool from './db.js';
+import {
+    getSettings,
+    dateToYMD,
+    replacePlaceholders,
+    formatRupiah,
+    formatBillingPeriod,
+    formatDateDisplay,
+    calculateBillingDetails,
+    generateNewInvoiceId,
+    toMySQLDatetime,
+    addMonthsKeepDay,
+    getCurrentFixedCycleStart,
+    parseLocalDateString,
+    randomDelay
+} from './utils.js';
+
+import { suspendCustomer, restoreCustomerProfile } from './services.js';
+import whatsappService from './whatsappService.js';
+import mikrotikApi from './mikrotik-api.js';
+import { handleWhatsappMessage } from './routes/chatbotRoutes.js';
+import { recordCashMutation } from './cashMutationService.js';
+import { sendInvoiceEmailNotification } from './emailService.js';
+
+/* ==========================================================
+   UTILITAS TIMEZONE
+========================================================== */
+
+// Fungsi untuk mendapatkan objek Date yang merepresentasikan waktu lokal bisnis
+function getBusinessDate(timezone) {
+    const now = new Date();
+    const localString = now.toLocaleString('en-US', { timeZone: timezone });
+    return new Date(localString);
+}
+
+function normalizeBillingTypeForSuspension(value) {
+    return String(value || '').trim().toLowerCase() === 'fixed' ? 'fixed' : 'postpaid';
+}
+
+function isNonPositiveNumber(value) {
+    const numericValue = Number(value);
+    return !Number.isFinite(numericValue) || numericValue <= 0;
+}
+
+/* ==========================================================
+   FLAG LOCK MENCEGAH OVERLAPPING JOB
+========================================================== */
+
+let billingLock = false;
+
+/* ==========================================================
+   CRON BILLING UTAMA (DAILY)
+========================================================== */
+
+export const runBillingMaintenance = async () => {
+    if (billingLock) {
+        console.log(`[Cron] Billing masih berjalan, skip cycle ini.`);
+        return;
+    }
+    billingLock = true;
+
+    try {
+        const settings = await getSettings();
+        const tz = settings.app.timezone || 'Asia/Jakarta'; // Default fallback
+        
+        const businessNow = getBusinessDate(tz); 
+        const todayYMD = dateToYMD(new Date(), tz);
+
+        console.log(`[Cron] ↪ Billing cron berjalan. Waktu Bisnis (${tz}): ${todayYMD}`);
+
+        const generationDay = settings.billing.generationDay || 1;
+        const currentDay = businessNow.getDate(); // Ambil tanggal (1-31)
+
+        /* ======================================================
+           BAGIAN 1 — GENERATE INVOICE (DAILY CHECK)
+        ====================================================== */
+        
+        let generatedCount = 0;
+        const generatedInvoiceNotifications = [];
+        const [packages] = await pool.query("SELECT * FROM packages");
+        const packageMap = Object.fromEntries(packages.map(p => [p.id, p]));
+
+        // --- 1.A: POSTPAID GENERATION (Only on Generation Day, e.g., 1st) ---
+        if (currentDay === generationDay) {
+             const [flag] = await pool.query(
+                `SELECT flag FROM system_flags WHERE flag = 'postpaid_gen' AND date_value = ?`,
+                [todayYMD]
+            );
+
+            if (flag.length === 0) {
+                console.log(`[Cron] Checking Postpaid Generation for ${todayYMD}...`);
+                
+                const [postpaidCustomers] = await pool.query(
+                    "SELECT * FROM customers WHERE status IN ('Active','Suspended') AND (billing_type = 'postpaid' OR billing_type IS NULL) AND activeDate IS NOT NULL"
+                );
+
+                // Target Billing Month for Postpaid is PREVIOUS month
+                const targetYear = businessNow.getFullYear();
+                const targetMonth = businessNow.getMonth(); // 0-11 (Current)
+                const billingDate = new Date(targetYear, targetMonth - 1, 1); // Month-1
+                const billYear = billingDate.getFullYear();
+                const billMonth = billingDate.getMonth() + 1; // 1-based
+                const monthStr = `${billYear}-${String(billMonth).padStart(2, '0')}`;
+                const periodStr = `${monthStr}-01`;
+
+                for (const c of postpaidCustomers) {
+                    const [exist] = await pool.query(`
+                        SELECT id FROM invoices
+                        WHERE customerId = ? AND billingPeriodStart = ?
+                    `, [c.id, periodStr]);
+
+                    if (exist.length > 0) continue;
+
+                    const pkg = packageMap[c.packageId];
+                    if (!pkg) continue;
+                    if (isNonPositiveNumber(pkg.price)) continue;
+                    
+                    // Skip if activeDate is after the billing period end
+                    const activeDate = new Date(c.activeDate);
+                    // Last day of billing month
+                    const endOfBillMonth = new Date(Date.UTC(billYear, billMonth, 0));
+                    if (activeDate > endOfBillMonth) continue;
+
+                    const details = calculateBillingDetails(c, pkg, settings, periodStr);
+                    if (isNonPositiveNumber(details.amount)) continue;
+
+                    const newInv = {
+                        id: generateNewInvoiceId(),
+                        customerId: c.id,
+                        ...details,
+                        issueDate: todayYMD,
+                        status: 'Unpaid',
+                        notes: `Postpaid Invoice ${monthStr}`
+                    };
+
+                    await pool.query("INSERT INTO invoices SET ?", newInv);
+                    generatedCount++;
+                    queueInvoiceNotification(generatedInvoiceNotifications, c, newInv, pkg.name, settings);
+                }
+
+                // Set Flag
+                await pool.query("INSERT INTO system_flags SET ?", { flag: 'postpaid_gen', date_value: todayYMD });
+            }
+        }
+
+        const fixedLeadDays = settings.billing.fixedBillDueDays ?? 10;
+        console.log(`[Cron] Checking Fixed Billing lead=${fixedLeadDays} for ${todayYMD}...`);
+        
+        const [fixedCustomers] = await pool.query(`
+            SELECT *
+            FROM customers
+            WHERE status IN ('Active','Suspended')
+              AND activeDate IS NOT NULL
+              AND LOWER(TRIM(COALESCE(billing_type, ''))) = 'fixed'
+        `);
+        
+        for (const c of fixedCustomers) {
+            const billingType = String(c.billing_type || '').trim().toLowerCase();
+            if (billingType !== 'fixed') continue;
+
+            const pkg = packageMap[c.packageId];
+            if (!pkg) continue;
+            if (isNonPositiveNumber(pkg.price)) continue;
+
+            const activeDateObj = parseLocalDateString(c.activeDate);
+            if (!activeDateObj) continue;
+
+            const currentStart = getCurrentFixedCycleStart(c, businessNow, tz) || activeDateObj;
+            if (!currentStart) continue;
+
+            const periodStartStr = dateToYMD(currentStart, tz);
+            const details = calculateBillingDetails(c, pkg, settings, periodStartStr);
+            if (isNonPositiveNumber(details.amount)) {
+                continue;
+            }
+            const dueDateObj = parseLocalDateString(details.dueDate);
+            if (!dueDateObj) {
+                continue;
+            }
+
+            const leadDate = new Date(dueDateObj);
+            leadDate.setDate(leadDate.getDate() - fixedLeadDays);
+
+            if (leadDate > businessNow) {
+                continue;
+            }
+
+            const [exist] = await pool.query(`
+                SELECT id FROM invoices
+                WHERE customerId = ? AND billingPeriodStart = ?
+            `, [c.id, periodStartStr]);
+
+            if (exist.length > 0) {
+                continue;
+            }
+
+            const newInv = {
+                id: generateNewInvoiceId(),
+                customerId: c.id,
+                ...details,
+                issueDate: todayYMD,
+                status: 'Unpaid',
+                notes: `Monthly subscription`
+            };
+
+            await pool.query("INSERT INTO invoices SET ?", newInv);
+            generatedCount++;
+            queueInvoiceNotification(generatedInvoiceNotifications, c, newInv, pkg.name, settings);
+        }
+
+        await flushGeneratedInvoiceNotifications(generatedInvoiceNotifications, settings, tz);
+        console.log(`[Cron] Total invoices generated today: ${generatedCount}`);
+        
+        // Clean flags
+        await pool.query(`DELETE FROM system_flags WHERE date_value < (CURDATE() - INTERVAL 60 DAY)`);
+
+
+        /* ======================================================
+           BAGIAN 2 — REMINDER (Tetap sama)
+        ====================================================== */
+
+        const [reminderFlag] = await pool.query(
+            "SELECT flag FROM system_flags WHERE flag = 'daily_reminders' AND date_value = ?",
+            [todayYMD]
+        );
+
+        if (reminderFlag.length === 0) {
+
+            console.log(`[Cron] ✔ Menjalankan pemeriksaan pengingat untuk ${todayYMD}.`);
+
+            const [unpaid] = await pool.query(`
+                SELECT i.*, c.name AS customerName, c.phone AS customerPhone, c.email AS customerEmail, p.name AS packageName
+                FROM invoices i
+                JOIN customers c ON c.id = i.customerId
+                LEFT JOIN packages p ON p.id = c.packageId
+                WHERE i.status IN ('Unpaid','Overdue')
+            `);
+
+            for (const inv of unpaid) {
+                const dueDateObj = new Date(inv.dueDate);
+                const reminderLead = settings.billing.reminderDaysBeforeDue;
+                const offsets = new Set();
+                if (typeof reminderLead === 'number' && reminderLead > 0) {
+                    offsets.add(reminderLead);
+                }
+                offsets.add(0); // Always try to remind on the due date itself
+
+                for (const offset of offsets) {
+                    if (offset < 0) continue;
+
+                    const reminderDate = new Date(dueDateObj);
+                    reminderDate.setDate(reminderDate.getDate() - offset);
+                    const reminderDateStr = dateToYMD(reminderDate, tz);
+
+                    if (reminderDateStr !== todayYMD) continue;
+
+                    const [dupe] = await pool.query(`
+                        SELECT id FROM whatsapp_logs
+                        WHERE type='Invoice Reminder'
+                        AND message_body LIKE ?
+                        AND DATE(created_at) >= CURDATE() 
+                    `, [`%${inv.id}%`]);
+
+                    if (dupe.length === 0 && inv.customerPhone) {
+                        const period = formatBillingPeriod(inv.billingPeriodStart, inv.billingPeriodEnd);
+                        const link = `${settings.app.baseUrl.replace(/\/$/, "")}/#pay/${inv.id}`;
+
+                        const msg = replacePlaceholders(settings.whatsapp.invoiceReminder, {
+                            customerName: inv.customerName,
+                            invoiceId: inv.id,
+                            amount: formatRupiah(inv.amount),
+                            paymentLink: link,
+                            dueDate: formatDateDisplay(inv.dueDate),
+                            billingPeriod: period,
+                            packageName: inv.packageName
+                        });
+
+                        try {
+                            const result = await whatsappService.sendMessage(inv.customerPhone, msg);
+                            await pool.query("INSERT INTO whatsapp_logs SET ?", {
+                                recipient_number: inv.customerPhone,
+                                customer_id: inv.customerId,
+                                message_body: msg,
+                                status: result.success ? 'sent' : 'failed',
+                                type: 'Invoice Reminder',
+                                created_at: toMySQLDatetime(new Date(), tz)
+                            });
+                            await randomDelay(2000, 5000); // 2-5 second delay
+                        } catch (e) { }
+                    }
+
+                    if (inv.customerEmail) {
+                        try {
+                            await sendInvoiceEmailNotification({
+                                settings,
+                                customer: {
+                                    id: inv.customerId,
+                                    name: inv.customerName,
+                                    email: inv.customerEmail,
+                                },
+                                invoice: inv,
+                                packageName: inv.packageName || 'N/A',
+                                type: 'due',
+                            });
+                        } catch (emailError) {
+                            console.error(`[Cron] Failed to send due reminder email for invoice ${inv.id}:`, emailError.message);
+                        }
+                    }
+
+                    break; // Only one reminder per invoice per day
+                }
+            }
+
+            /* INSERT FLAG + AUTO-EXPIRE */
+            await pool.query(
+                "INSERT INTO system_flags SET ?",
+                { flag: 'daily_reminders', date_value: todayYMD }
+            );
+        } 
+
+
+        /* ======================================================
+           BAGIAN 3 — AUTO-OVERDUE (Tetap sama)
+        ====================================================== */
+
+        // Query ini aman dijalankan berulang karena hanya mengubah invoice Unpaid yang sudah lewat due date.
+        await pool.query(`
+            UPDATE invoices
+            SET status='Overdue'
+            WHERE status='Unpaid' AND dueDate < ?
+        `, [todayYMD]);
+
+
+        /* ======================================================
+           BAGIAN 4 — SUSPENSION (Tetap sama)
+        ====================================================== */
+
+    const [suspensionFlag] = await pool.query(
+        "SELECT flag FROM system_flags WHERE flag='daily_suspension_check' AND date_value=?",
+        [todayYMD]
+    );
+
+        const currentMonthKey = todayYMD.slice(0, 7);
+
+        const [rawTargets] = await pool.query(`
+            SELECT i.*, c.name AS customerName, c.phone AS customerPhone, c.billing_type, c.status AS customerStatus, p.name AS packageName
+            FROM invoices i
+            JOIN customers c ON c.id = i.customerId
+            LEFT JOIN packages p ON p.id = c.packageId
+            WHERE i.status = 'Overdue'
+        `);
+        const latestOverdueByCustomer = new Map();
+
+        for (const inv of rawTargets) {
+            const dueDateObj = parseLocalDateString(inv.dueDate);
+            if (!dueDateObj) continue;
+            if (dateToYMD(dueDateObj, tz).slice(0, 7) !== currentMonthKey) continue;
+
+            const existingOverdue = latestOverdueByCustomer.get(inv.customerId);
+            if (!existingOverdue) {
+                latestOverdueByCustomer.set(inv.customerId, inv);
+                continue;
+            }
+
+            const existingOverdueDueDate = parseLocalDateString(existingOverdue.dueDate);
+            if (!existingOverdueDueDate || dueDateObj > existingOverdueDueDate) {
+                latestOverdueByCustomer.set(inv.customerId, inv);
+            }
+        }
+
+        const targets = Array.from(latestOverdueByCustomer.values());
+
+        const hasEligibleActiveSuspensions = targets.some((inv) => {
+            const dueDateObj = parseLocalDateString(inv.dueDate);
+            if (!dueDateObj) return false;
+
+            const suspendDays = settings.billing.suspensionDays || 0;
+            const suspendDate = new Date(dueDateObj);
+            suspendDate.setDate(suspendDate.getDate() + suspendDays);
+            const suspendDateStr = dateToYMD(suspendDate, tz);
+
+            return todayYMD >= suspendDateStr
+                && String(inv.customerStatus || '').trim() === 'Active'
+                && inv.status === 'Overdue';
+        });
+
+        const shouldRunSuspensionCheck = suspensionFlag.length === 0 || hasEligibleActiveSuspensions;
+
+        if (shouldRunSuspensionCheck) {
+            let hadSuspensionProcessingErrors = false;
+
+            for (const inv of targets) {
+                try {
+                    const dueDateObj = parseLocalDateString(inv.dueDate);
+                    if (!dueDateObj) {
+                        continue;
+                    }
+
+                    const suspendDays = settings.billing.suspensionDays || 0;
+                    // Tanggal suspend = due date + suspend days
+                    const suspendDate = new Date(dueDateObj);
+                    suspendDate.setDate(suspendDate.getDate() + suspendDays);
+                    const suspendDateStr = dateToYMD(suspendDate, tz);
+
+                    // Tanggal warning = 1 hari sebelum suspend
+                    const warnDate = new Date(suspendDate);
+                    warnDate.setDate(warnDate.getDate() - 1);
+                    const warnDateStr = dateToYMD(warnDate, tz);
+
+                    /* WARNING */
+                    if (warnDateStr === todayYMD &&
+                        settings.whatsapp.suspensionWarning &&
+                        inv.customerPhone) {
+
+                        const period = formatBillingPeriod(inv.billingPeriodStart, inv.billingPeriodEnd);
+
+                        const msg = replacePlaceholders(settings.whatsapp.suspensionWarning, {
+                            customerName: inv.customerName,
+                            invoiceId: inv.id,
+                            amount: formatRupiah(inv.amount),
+                            dueDate: formatDateDisplay(inv.dueDate),
+                            billingPeriod: period,
+                            packageName: inv.packageName
+                        });
+
+                        const result = await whatsappService.sendMessage(inv.customerPhone, msg);
+                        await pool.query("INSERT INTO whatsapp_logs SET ?", {
+                            recipient_number: inv.customerPhone,
+                            customer_id: inv.customerId,
+                            message_body: msg,
+                            status: result.success ? 'sent' : 'failed',
+                            type: 'Suspension Warning',
+                            created_at: toMySQLDatetime(new Date(), tz)
+                        });
+                        await randomDelay(2000, 5000); // 2-5 second delay
+                    }
+
+                    /* SUSPEND */
+                    // Jika hari ini sudah lewat atau sama dengan tanggal suspend
+                    if (todayYMD >= suspendDateStr) {
+
+                        const [[statusCheck]] = await pool.query(
+                            "SELECT status FROM invoices WHERE id=?",
+                            [inv.id]
+                        );
+
+                        if (statusCheck && statusCheck.status === 'Overdue') {
+                            await suspendCustomer(inv.customerId, inv);
+                        }
+                    }
+                } catch (customerError) {
+                    hadSuspensionProcessingErrors = true;
+                }
+            }
+
+            if (!hadSuspensionProcessingErrors) {
+                if (suspensionFlag.length === 0) {
+                    await pool.query(
+                        "INSERT INTO system_flags SET ?",
+                        { flag: 'daily_suspension_check', date_value: todayYMD }
+                    );
+                }
+            }
+        } 
+
+        await reconcileTripayPayments(tz, businessNow);
+
+    } catch (err) {
+        console.error("[Cron] ERROR:", err);
+
+    } finally {
+        billingLock = false;
+    }
+};
+
+function getBroadcastDelayProfile(settings) {
+    const delayMode = String(settings?.whatsapp?.broadcastDelayMode || 'step');
+    const delayStartMs = Math.max(0, Number(settings?.whatsapp?.broadcastDelayStartMs ?? 1000));
+    const delayIncrementMs = Math.max(0, Number(settings?.whatsapp?.broadcastDelayIncrementMs ?? 750));
+    const delayMaxMs = Math.max(delayStartMs, Number(settings?.whatsapp?.broadcastDelayMaxMs ?? 7000));
+    const delayStepEvery = Math.max(1, Number(settings?.whatsapp?.broadcastDelayStepEvery ?? 5));
+    const delayRandomJitterMs = Math.max(0, Number(settings?.whatsapp?.broadcastDelayRandomJitterMs ?? 1500));
+
+    return {
+        mode: ['flat', 'linear', 'step', 'randomized'].includes(delayMode) ? delayMode : 'step',
+        startMs: delayStartMs,
+        incrementMs: delayIncrementMs,
+        maxMs: delayMaxMs,
+        stepEvery: delayStepEvery,
+        randomJitterMs: delayRandomJitterMs,
+    };
+}
+
+function computeBroadcastDelay(index, profile) {
+    if (profile.mode === 'flat') {
+        return profile.startMs;
+    }
+    if (profile.mode === 'linear') {
+        return Math.min(
+            profile.startMs + (Math.max(0, index) * profile.incrementMs),
+            profile.maxMs,
+        );
+    }
+    if (profile.mode === 'randomized') {
+        const randomOffset = Math.floor(Math.random() * (profile.randomJitterMs + 1));
+        return Math.min(profile.startMs + randomOffset, profile.maxMs);
+    }
+
+    const stepIndex = Math.floor(Math.max(0, index) / profile.stepEvery);
+    return Math.min(
+        profile.startMs + (stepIndex * profile.incrementMs),
+        profile.maxMs,
+    );
+}
+
+function queueInvoiceNotification(queue, customer, invoice, packageName, settings) {
+    if (!settings.billing.whatsappNotificationsEnabled ||
+        !settings.billing.sendInvoiceOnCreate ||
+        !customer.phone) {
+        return;
+    }
+
+    const paymentLink = `${settings.app.baseUrl.replace(/\/$/, "")}/#pay/${invoice.id}`;
+    const period = formatBillingPeriod(invoice.billingPeriodStart, invoice.billingPeriodEnd);
+    const msg = replacePlaceholders(settings.whatsapp.invoiceCreated, {
+        customerName: customer.name,
+        customerId: customer.id,
+        invoiceId: invoice.id,
+        amount: formatRupiah(invoice.amount),
+        dueDate: formatDateDisplay(invoice.dueDate),
+        paymentLink,
+        packageName,
+        billingPeriod: period,
+    });
+
+    queue.push({
+        customerId: customer.id,
+        phone: customer.phone,
+        message: msg,
+    });
+}
+
+async function flushGeneratedInvoiceNotifications(queue, settings, tz) {
+    if (!Array.isArray(queue) || queue.length === 0) {
+        return;
+    }
+
+    const delayProfile = getBroadcastDelayProfile(settings);
+
+    for (let index = 0; index < queue.length; index++) {
+        const item = queue[index];
+        try {
+            const result = await whatsappService.sendMessage(item.phone, item.message);
+            await pool.query("INSERT INTO whatsapp_logs SET ?", {
+                recipient_number: item.phone,
+                customer_id: item.customerId,
+                message_body: item.message,
+                status: result.success ? 'sent' : 'failed',
+                type: 'Auto Invoice Created',
+                error_message: result.error || null,
+                created_at: toMySQLDatetime(new Date(), tz)
+            });
+        } catch (e) {
+            console.error("Failed to send invoice notification:", e);
+        }
+
+        if (index < queue.length - 1) {
+            const waitMs = computeBroadcastDelay(index, delayProfile);
+            await new Promise(resolve => setTimeout(resolve, waitMs));
+        }
+    }
+}
+
+
+async function reconcileTripayPayments(tz, businessNow) {
+    try {
+        const [missingPayments] = await pool.query(`
+            SELECT i.id, i.customerId, i.amount
+            FROM invoices i
+            LEFT JOIN payments p ON p.invoiceId = i.id
+            WHERE i.status = 'Paid' AND i.tripayReference IS NOT NULL AND p.id IS NULL
+        `);
+
+        if (missingPayments.length === 0) {
+            return;
+        }
+
+        const paymentTimestamp = toMySQLDatetime(businessNow, tz);
+        const nowMs = Date.now();
+        let insertedCount = 0;
+
+        for (const invoice of missingPayments) {
+            const paymentId = `PAY-CRON-${nowMs}-${invoice.id.slice(-4)}-${insertedCount}`;
+            const paymentRecord = {
+                id: paymentId,
+                invoiceId: invoice.id,
+                customerId: invoice.customerId,
+                date: paymentTimestamp,
+                amount: invoice.amount,
+                method: 'Tripay Gateway (Auto)'
+            };
+            await pool.query('INSERT INTO payments SET ?', paymentRecord);
+            await recordCashMutation(pool, {
+                date: paymentTimestamp,
+                direction: 'in',
+                category: 'invoice_payment',
+                amount: invoice.amount,
+                method: paymentRecord.method,
+                description: `Pembayaran invoice ${invoice.id} direkonsiliasi otomatis`,
+                reference_type: 'payment',
+                reference_id: paymentId,
+                customer_id: invoice.customerId,
+                source: 'system',
+                timezone: tz,
+            });
+            insertedCount++;
+        }
+
+        console.log(`[Cron] Auto-logged ${insertedCount} Tripay payment(s) missing from transaction history.`);
+    } catch (error) {
+        console.error("[Cron] Failed to reconcile Tripay payments:", error);
+    }
+}
+
+
+/* ==========================================================
+   HOTSPOT JOB (ROBUST & SECURE)
+========================================================== */
+
+export const runHotspotMaintenance = async () => {
+    // ... (Hotspot logic remains same as before)
+    // Copied from previous file for completeness
+    try {
+        const settings = await getSettings();
+        const tz = settings.app.timezone || 'Asia/Jakarta';
+        const currentDbTime = toMySQLDatetime(new Date(), tz);
+
+        const [expiredVouchers] = await pool.query(`
+            SELECT * FROM hotspot_vouchers 
+            WHERE status='active' AND expires_at IS NOT NULL
+              AND expires_at <= ?
+        `, [currentDbTime]);
+
+        if (expiredVouchers.length > 0) {
+            console.log(`[Hotspot Cron] Ditemukan ${expiredVouchers.length} voucher kadaluarsa.`);
+            const activeSessions = await mikrotikApi.fetchActiveHotspotConnections();
+            const routerUsers = await mikrotikApi.fetchHotspotUsers();
+
+            for (const v of expiredVouchers) {
+                const routerUser = routerUsers.find(u => u.name === v.username);
+                if (routerUser) {
+                    try {
+                        await mikrotikApi.disableHotspotUser(routerUser.id);
+                    } catch (e) {}
+                } else if (v.mikrotik_id) {
+                    try {
+                        await mikrotikApi.disableHotspotUser(v.mikrotik_id);
+                    } catch (e) {}
+                }
+
+                const session = activeSessions.find(x => x.user === v.username);
+                if (session) {
+                    try {
+                        await mikrotikApi.removeActiveHotspotUser(session['.id']);
+                    } catch (e) {}
+                }
+
+                await pool.query(`UPDATE hotspot_vouchers SET status='expired' WHERE id=?`, [v.id]);
+            }
+        }
+    } catch (err) {
+        console.error("[Hotspot Cron] ERROR:", err);
+    }
+};
+
+
+/* ==========================================================
+   START BACKGROUND SERVICES
+========================================================== */
+
+export const startBackgroundServices = () => {
+    console.log("Initialize background jobs...");
+    
+    const initWhatsApp = async () => {
+        try {
+            const settings = await getSettings();
+            const standbyEnabled = Boolean(settings?.whatsapp?.standbyEnabled);
+            const autoConnectWhatsApp = String(process.env.AUTO_CONNECT_WHATSAPP || 'false').toLowerCase() === 'true';
+
+            whatsappService.setMessageHandler(handleWhatsappMessage);
+
+            if (process.env.DISABLE_WHATSAPP === 'true' || standbyEnabled) {
+                console.warn("[Startup] WhatsApp standby aktif. Tidak melakukan koneksi.");
+                await whatsappService.setStandby(true);
+                return;
+            }
+
+            if (!autoConnectWhatsApp) {
+                console.log("[Startup] WhatsApp auto-connect disabled. Waiting for manual Connect button.");
+                return;
+            }
+
+            console.log("[Startup] Init WA after 15s...");
+            setTimeout(() => {
+                whatsappService.connectToWhatsApp(handleWhatsappMessage);
+            }, 15000);
+        } catch (error) {
+            console.error("[Startup] Failed to load settings for WhatsApp init:", error);
+        }
+    };
+
+    initWhatsApp();
+
+    runBillingMaintenance().catch(err => {
+        console.error("[Startup] Initial billing maintenance failed:", err);
+    });
+    runHotspotMaintenance().catch(err => {
+        console.error("[Startup] Initial hotspot maintenance failed:", err);
+    });
+
+    // Changed interval to every 30 minutes for better responsiveness to daily changes
+    setInterval(runBillingMaintenance, 30 * 60 * 1000); 
+    setInterval(runHotspotMaintenance, 60 * 1000); 
+
+    console.log("Background services running.");
+};

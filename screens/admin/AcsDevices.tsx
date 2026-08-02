@@ -1,4 +1,4 @@
-
+﻿
 import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import Card from '../../components/common/Card';
 import { AcsDevice, AcsSyncJob, formatDateTimeDisplay } from '../../types';
@@ -562,6 +562,28 @@ const AcsDevices: React.FC = () => {
                             <p className="text-sm mt-1">
                                 {syncJob?.message || syncNotice || 'ACS sync job queued.'}
                             </p>
+                            <div className="mt-3">
+                                <div className="h-2 w-full overflow-hidden rounded-full bg-blue-100 dark:bg-blue-950/60">
+                                    <div
+                                        className={`h-full rounded-full transition-all duration-500 ${
+                                            syncJob?.status === 'failed'
+                                                ? 'bg-red-500'
+                                                : syncJob?.status === 'cancelled'
+                                                    ? 'bg-gray-400'
+                                                    : 'bg-blue-600'
+                                        }`}
+                                        style={{ width: `${Math.max(0, Math.min(100, syncProgress))}%` }}
+                                    />
+                                </div>
+                                <div className="mt-1 flex items-center justify-between text-xs opacity-80">
+                                    <span>{syncProgress}%</span>
+                                    <span>
+                                        {syncJob
+                                            ? `${syncJob.processed_count}/${syncJob.total_count || syncJob.processed_count || 0}`
+                                            : '0/0'}
+                                    </span>
+                                </div>
+                            </div>
                             {syncJob?.error_message && (
                                 <p className="text-sm mt-1 text-red-600 dark:text-red-300">
                                     {syncJob.error_message}
