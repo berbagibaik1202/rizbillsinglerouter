@@ -42,7 +42,7 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 60s
+      start_period: 300s
     expose:
       - "3002"
     volumes:
@@ -64,7 +64,7 @@ services:
       WATCHDOG_SERVICE_NAME: app
       WATCHDOG_PROJECT_NAME: ${COMPOSE_PROJECT_NAME:-rizkitechbill}
       WATCHDOG_INTERVAL_SECONDS: 30
-      WATCHDOG_GRACE_SECONDS: 30
+      WATCHDOG_GRACE_SECONDS: 300
       WATCHDOG_DEBUG: "true"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
