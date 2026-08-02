@@ -70,6 +70,132 @@ const CustomerPortal: React.FC<CustomerPortalProps> = ({ customer, onVideoPlayer
     setTimeout(() => setToast(null), 4000);
   }, []);
 
+  const fetchInitialData = useCallback(async () => {
+    if (!customer) return;
+
+    setIsLoading(true);
+    setPortalError(null);
+
+    try {
+      const results = await Promise.allSettled([
+        fetchWithAuth(`${API_URL}/billing/invoices?customerId=${customer.id}`).then(res => res.json()),
+        fetchWithAuth(`${API_URL}/network/packages`).then(res => res.json()),
+      ]);
+
+      const [invoicesResult, packagesResult] = results;
+      const errors: string[] = [];
+
+      if (invoicesResult.status === 'fulfilled' && Array.isArray(invoicesResult.value)) {
+        setInvoices(invoicesResult.value.sort((a, b) => new Date(b.issueDate).getTime() - new Date(a.issueDate).getTime()));
+      } else {
+        errors.push('invoices');
+        console.error('Failed to fetch invoices:', invoicesResult.status === 'rejected' && invoicesResult.reason);
+      }
+
+      if (packagesResult.status === 'fulfilled' && Array.isArray(packagesResult.value)) {
+        const fetchedPackages = packagesResult.value;
+        setAllPackages(fetchedPackages);
+        const pkg = fetchedPackages.find(p => p.id === customer.packageId);
+        setCustomerPackage(pkg || null);
+      } else {
+        errors.push('packages');
+        console.error('Failed to fetch packages:', packagesResult.status === 'rejected' && packagesResult.reason);
+      }
+
+      if (errors.length > 0) {
+        setPortalError(`Gagal memuat: ${errors.join(', ')}. Silakan refresh halaman.`);
+      }
+    } catch (error) {
+      console.error('Error in fetchInitialData:', error);
+      setPortalError('Terjadi kesalahan saat memuat data.');
+    } finally {
+      setIsLoading(false);
+    }
+  }, [customer]);
+
+  const fetchDeferredData = useCallback(async () => {
+    if (!customer) return;
+
+    setIsDeviceLoading(true);
+    setDeviceError(null);
+
+    try {
+      const results = await Promise.allSettled([
+        fetchWithAuth(`${API_URL}/customers/complaints?customerId=${customer.id}`).then(res => res.json()),
+        fetchWithAuth(`${API_URL}/customers/app-settings`).then(res => res.json()),
+        customer.acsSerialNumber ? fetchWithAuth(`${API_URL}/acs/customer-device?customerId=${customer.id}`).then(res => res.json()) : Promise.resolve(null),
+        fetchWithAuth(`${API_URL}/customers/${customer.id}/package-change`).then(res => res.json()),
+        fetchWithAuth(`${API_URL}/customers/${customer.id}/affiliate-data`).then(res => res.json()),
+        fetchWithAuth(`${API_URL}/customers/my-bonus-voucher`).then(res => res.json()),
+      ]);
+
+      const [
+        complaintsResult,
+        settingsResult,
+        deviceResult,
+        pendingChangeResult,
+        affiliateDataResult,
+        bonusVoucherResult,
+      ] = results;
+
+      if (complaintsResult.status === 'fulfilled' && Array.isArray(complaintsResult.value)) {
+        const complaintsWithLastActivity = (complaintsResult.value as Complaint[]).map(c => {
+          const lastReplyDate = c.replies && c.replies.length > 0
+            ? new Date(Math.max(...c.replies.map((r: ComplaintReply) => new Date(r.createdAt).getTime())))
+            : null;
+          const submittedDate = new Date(c.dateSubmitted);
+          const lastActivity = lastReplyDate && lastReplyDate > submittedDate ? lastReplyDate : submittedDate;
+          return { ...c, lastActivity };
+        });
+
+        setComplaints(complaintsWithLastActivity.sort((a, b) => b.lastActivity.getTime() - a.lastActivity.getTime()));
+      } else {
+        console.error('Failed to fetch complaints:', complaintsResult.status === 'rejected' && complaintsResult.reason);
+      }
+
+      if (settingsResult.status === 'fulfilled') {
+        setSettings(settingsResult.value);
+      } else {
+        console.error('Failed to fetch settings:', settingsResult.status === 'rejected' && settingsResult.reason);
+      }
+
+      if (deviceResult.status === 'fulfilled') {
+        setDeviceDetails(deviceResult.value);
+      } else {
+        if (deviceResult.reason instanceof Error) {
+          setDeviceError(deviceResult.reason.message);
+        } else {
+          setDeviceError('Gagal mengambil data perangkat.');
+        }
+      }
+
+      if (pendingChangeResult.status === 'fulfilled') {
+        setPendingChange(pendingChangeResult.value);
+      } else {
+        console.error('Failed to fetch pending change:', pendingChangeResult.status === 'rejected' && pendingChangeResult.reason);
+      }
+
+      if (affiliateDataResult.status === 'fulfilled') {
+        setAffiliateData(affiliateDataResult.value);
+      } else {
+        console.error('Failed to fetch affiliate data:', affiliateDataResult.status === 'rejected' && affiliateDataResult.reason);
+      }
+
+      if (bonusVoucherResult.status === 'fulfilled') {
+        setBonusVoucher(bonusVoucherResult.value);
+      } else {
+        console.error('Failed to fetch bonus voucher:', bonusVoucherResult.status === 'rejected' && bonusVoucherResult.reason);
+      }
+    } catch (error) {
+      console.error('Error in fetchDeferredData:', error);
+      if (error instanceof Error) {
+        setDeviceError(error.message);
+      }
+    } finally {
+      setIsDeviceLoading(false);
+    }
+  }, [customer]);
+
   const fetchData = useCallback(async () => {
     if (!customer) return;
 
@@ -77,19 +203,19 @@ const CustomerPortal: React.FC<CustomerPortalProps> = ({ customer, onVideoPlayer
     setIsDeviceLoading(true);
     setPortalError(null);
     setDeviceError(null);
-    
+
     try {
       const results = await Promise.allSettled([
-          fetchWithAuth(`${API_URL}/billing/invoices?customerId=${customer.id}`).then(res => res.json()),
-          fetchWithAuth(`${API_URL}/customers/complaints?customerId=${customer.id}`).then(res => res.json()),
-          fetchWithAuth(`${API_URL}/network/packages`).then(res => res.json()),
-          fetchWithAuth(`${API_URL}/customers/app-settings`).then(res => res.json()),
-          customer.acsSerialNumber ? fetchWithAuth(`${API_URL}/acs/customer-device?customerId=${customer.id}`).then(res => res.json()) : Promise.resolve(null),
-          fetchWithAuth(`${API_URL}/customers/${customer.id}/package-change`).then(res => res.json()),
-          fetchWithAuth(`${API_URL}/customers/${customer.id}/affiliate-data`).then(res => res.json()),
-          fetchWithAuth(`${API_URL}/customers/my-bonus-voucher`).then(res => res.json()),
+        fetchWithAuth(`${API_URL}/billing/invoices?customerId=${customer.id}`).then(res => res.json()),
+        fetchWithAuth(`${API_URL}/customers/complaints?customerId=${customer.id}`).then(res => res.json()),
+        fetchWithAuth(`${API_URL}/network/packages`).then(res => res.json()),
+        fetchWithAuth(`${API_URL}/customers/app-settings`).then(res => res.json()),
+        customer.acsSerialNumber ? fetchWithAuth(`${API_URL}/acs/customer-device?customerId=${customer.id}`).then(res => res.json()) : Promise.resolve(null),
+        fetchWithAuth(`${API_URL}/customers/${customer.id}/package-change`).then(res => res.json()),
+        fetchWithAuth(`${API_URL}/customers/${customer.id}/affiliate-data`).then(res => res.json()),
+        fetchWithAuth(`${API_URL}/customers/my-bonus-voucher`).then(res => res.json()),
       ]);
-      
+
       const [
         invoicesResult,
         complaintsResult,
@@ -103,83 +229,79 @@ const CustomerPortal: React.FC<CustomerPortalProps> = ({ customer, onVideoPlayer
 
       let errors: string[] = [];
 
-      // Process results
       if (invoicesResult.status === 'fulfilled' && Array.isArray(invoicesResult.value)) {
-          setInvoices(invoicesResult.value.sort((a, b) => new Date(b.issueDate).getTime() - new Date(a.issueDate).getTime()));
-      } else { 
-        errors.push('invoices'); 
-        console.error('Failed to fetch invoices:', invoicesResult.status === 'rejected' && invoicesResult.reason); 
+        setInvoices(invoicesResult.value.sort((a, b) => new Date(b.issueDate).getTime() - new Date(a.issueDate).getTime()));
+      } else {
+        errors.push('invoices');
+        console.error('Failed to fetch invoices:', invoicesResult.status === 'rejected' && invoicesResult.reason);
       }
 
       if (complaintsResult.status === 'fulfilled' && Array.isArray(complaintsResult.value)) {
-          const complaintsWithLastActivity = (complaintsResult.value as Complaint[]).map(c => {
-              const lastReplyDate = c.replies && c.replies.length > 0
-                  ? new Date(Math.max(...c.replies.map((r: ComplaintReply) => new Date(r.createdAt).getTime())))
-                  : null;
-              const submittedDate = new Date(c.dateSubmitted);
-              
-              const lastActivity = lastReplyDate && lastReplyDate > submittedDate ? lastReplyDate : submittedDate;
-              
-              return { ...c, lastActivity };
-          });
-          
-          setComplaints(complaintsWithLastActivity.sort((a,b) => b.lastActivity.getTime() - a.lastActivity.getTime()));
-      } else { 
-        errors.push('complaints'); 
-        console.error('Failed to fetch complaints:', complaintsResult.status === 'rejected' && complaintsResult.reason); 
+        const complaintsWithLastActivity = (complaintsResult.value as Complaint[]).map(c => {
+          const lastReplyDate = c.replies && c.replies.length > 0
+            ? new Date(Math.max(...c.replies.map((r: ComplaintReply) => new Date(r.createdAt).getTime())))
+            : null;
+          const submittedDate = new Date(c.dateSubmitted);
+          const lastActivity = lastReplyDate && lastReplyDate > submittedDate ? lastReplyDate : submittedDate;
+          return { ...c, lastActivity };
+        });
+
+        setComplaints(complaintsWithLastActivity.sort((a, b) => b.lastActivity.getTime() - a.lastActivity.getTime()));
+      } else {
+        errors.push('complaints');
+        console.error('Failed to fetch complaints:', complaintsResult.status === 'rejected' && complaintsResult.reason);
       }
 
       if (packagesResult.status === 'fulfilled' && Array.isArray(packagesResult.value)) {
-          const fetchedPackages = packagesResult.value;
-          setAllPackages(fetchedPackages);
-          const pkg = fetchedPackages.find(p => p.id === customer.packageId);
-          setCustomerPackage(pkg || null);
-      } else { 
-        errors.push('packages'); 
-        console.error('Failed to fetch packages:', packagesResult.status === 'rejected' && packagesResult.reason); 
+        const fetchedPackages = packagesResult.value;
+        setAllPackages(fetchedPackages);
+        const pkg = fetchedPackages.find(p => p.id === customer.packageId);
+        setCustomerPackage(pkg || null);
+      } else {
+        errors.push('packages');
+        console.error('Failed to fetch packages:', packagesResult.status === 'rejected' && packagesResult.reason);
       }
-      
+
       if (settingsResult.status === 'fulfilled') {
-          setSettings(settingsResult.value);
-      } else { 
-        errors.push('settings'); 
-        console.error('Failed to fetch settings:', settingsResult.status === 'rejected' && settingsResult.reason); 
+        setSettings(settingsResult.value);
+      } else {
+        errors.push('settings');
+        console.error('Failed to fetch settings:', settingsResult.status === 'rejected' && settingsResult.reason);
       }
 
       if (deviceResult.status === 'fulfilled') {
-          setDeviceDetails(deviceResult.value);
-      } else { 
+        setDeviceDetails(deviceResult.value);
+      } else {
         if (deviceResult.reason instanceof Error) {
-            setDeviceError(deviceResult.reason.message);
+          setDeviceError(deviceResult.reason.message);
         } else {
-            setDeviceError('Gagal mengambil data perangkat.');
+          setDeviceError('Gagal mengambil data perangkat.');
         }
       }
 
       if (pendingChangeResult.status === 'fulfilled') {
-          setPendingChange(pendingChangeResult.value);
-      } else { 
-        errors.push('package change status'); 
-        console.error('Failed to fetch pending change:', pendingChangeResult.status === 'rejected' && pendingChangeResult.reason); 
+        setPendingChange(pendingChangeResult.value);
+      } else {
+        errors.push('package change status');
+        console.error('Failed to fetch pending change:', pendingChangeResult.status === 'rejected' && pendingChangeResult.reason);
       }
 
       if (affiliateDataResult.status === 'fulfilled') {
-          setAffiliateData(affiliateDataResult.value);
-      } else { 
-        errors.push('affiliate data'); 
-        console.error('Failed to fetch affiliate data:', affiliateDataResult.status === 'rejected' && affiliateDataResult.reason); 
+        setAffiliateData(affiliateDataResult.value);
+      } else {
+        errors.push('affiliate data');
+        console.error('Failed to fetch affiliate data:', affiliateDataResult.status === 'rejected' && affiliateDataResult.reason);
       }
 
       if (bonusVoucherResult.status === 'fulfilled') {
-          setBonusVoucher(bonusVoucherResult.value);
-      } else { 
-        console.error('Failed to fetch bonus voucher:', bonusVoucherResult.status === 'rejected' && bonusVoucherResult.reason); 
+        setBonusVoucher(bonusVoucherResult.value);
+      } else {
+        console.error('Failed to fetch bonus voucher:', bonusVoucherResult.status === 'rejected' && bonusVoucherResult.reason);
       }
 
       if (errors.length > 0) {
-          setPortalError(`Gagal memuat: ${errors.join(', ')}. Silakan refresh halaman.`);
+        setPortalError(`Gagal memuat: ${errors.join(', ')}. Silakan refresh halaman.`);
       }
-
     } catch (error) {
       console.error('Error in fetchData:', error);
       setPortalError('Terjadi kesalahan saat memuat data.');
@@ -190,8 +312,9 @@ const CustomerPortal: React.FC<CustomerPortalProps> = ({ customer, onVideoPlayer
   }, [customer, isRefreshing]);
 
   useEffect(() => {
-    fetchData();
-  }, [customer.id, fetchData]);
+    fetchInitialData();
+    fetchDeferredData();
+  }, [fetchInitialData, fetchDeferredData]);
 
   // ✅ TAMBAHKAN fungsi handleRefreshAllData yang missing
   const handleRefreshAllData = async () => {
