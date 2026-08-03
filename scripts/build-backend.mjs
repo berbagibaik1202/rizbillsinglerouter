@@ -12,6 +12,9 @@ const packageJsonPath = path.join(rootDir, 'package.json');
 const noObfuscateFiles = new Set([
     path.join('utils', 'oltSnmp.js'),
     path.join('routes', 'oltRoutes.js'),
+    'db.js',
+    'env.js',
+    'server.js',
 ].map((p) => p.replace(/\\/g, '/')));
 const ignoredFiles = [
     '.env',
@@ -94,6 +97,7 @@ async function buildBackend() {
             const result = JavaScriptObfuscator.obfuscate(sourceCode, {
                 ...obfuscatorOptions,
                 target: 'node',
+                selfDefending: false,
             });
             await fs.writeFile(targetPath, result.getObfuscatedCode(), 'utf8');
         } else {
