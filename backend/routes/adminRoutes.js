@@ -1845,6 +1845,31 @@ router.get('/app-update/status', async (req, res) => {
     }
 });
 
+router.get('/app-update/check', async (req, res) => {
+    if (req.user.role !== 'admin') return res.status(403).json({ message: 'Forbidden' });
+
+    try {
+        const { response, data } = await callAppUpdateService('GET', '/check');
+        const localBuildInfo = await resolveLocalAppBuildInfo();
+        return res.status(200).json({
+            ...data,
+            success: response.ok,
+            service_available: response.ok,
+            build: data?.build || localBuildInfo,
+        });
+    } catch (error) {
+        console.error('[App Update] Failed to check for application updates:', error);
+        return res.status(200).json({
+            success: false,
+            service_available: false,
+            update_available: false,
+            message: error.message || 'Failed to check application updates.',
+            job: null,
+            build: await resolveLocalAppBuildInfo(),
+        });
+    }
+});
+
 router.post('/app-update', async (req, res) => {
     if (req.user.role !== 'admin') return res.status(403).json({ message: 'Forbidden' });
 

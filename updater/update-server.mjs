@@ -93,6 +93,137 @@ const formatJob = (job) => {
     };
 };
 
+const runGitOutput = (args, cwd = WORKSPACE_DIR, extraEnv = {}) => {
+    return new Promise((resolve, reject) => {
+        const child = spawn('git', args, {
+            cwd,
+            env: {
+                ...process.env,
+                HOME: RUNTIME_HOME,
+                DOCKER_CONFIG: DOCKER_CONFIG_DIR,
+                XDG_CONFIG_HOME: path.join(RUNTIME_HOME, '.config'),
+                APP_UPDATE_HOME: RUNTIME_HOME,
+                APP_UPDATE_DOCKER_CONFIG: DOCKER_CONFIG_DIR,
+                ...extraEnv,
+            },
+            shell: false,
+        });
+
+        let stdout = '';
+        let stderr = '';
+
+        child.stdout.on('data', (chunk) => {
+            stdout += String(chunk);
+        });
+
+        child.stderr.on('data', (chunk) => {
+            stderr += String(chunk);
+        });
+
+        child.on('error', reject);
+        child.on('close', (code) => {
+            if (code === 0) {
+                resolve(String(stdout || '').trim());
+                return;
+            }
+
+            const error = new Error(stderr.trim() || `git ${args.join(' ')} failed with exit code ${code}`);
+            error.exitCode = code;
+            reject(error);
+        });
+    });
+};
+
+const readGitFileAtRef = async (refName, relativeFilePath) => {
+    try {
+        return await runGitOutput(['show', `${refName}:${relativeFilePath}`]);
+    } catch {
+        return null;
+    }
+};
+
+const resolveBuildInfoFromRef = async (refName) => {
+    const manifestCandidates = [
+        'release-manifest.json',
+        'build-manifest.json',
+        'package.json',
+    ];
+
+    for (const filePath of manifestCandidates) {
+        const raw = await readGitFileAtRef(refName, filePath);
+        if (!raw) continue;
+
+        try {
+            const data = JSON.parse(raw);
+            const builtAt = data.builtAt || data.built_at || null;
+            const appVersion = data.appVersion || data.app_version || data.version || null;
+            const gitCommit = data.gitCommit || data.git_commit || null;
+            const gitBranch = data.gitBranch || data.git_branch || null;
+
+            if (appVersion || builtAt || gitCommit || gitBranch) {
+                return {
+                    app_version: appVersion || (gitCommit ? `build-${gitCommit}` : 'unknown'),
+                    built_at: builtAt,
+                    git_commit: gitCommit,
+                    git_branch: gitBranch,
+                    source_file: filePath,
+                };
+            }
+        } catch {
+            // Ignore invalid JSON and continue searching.
+        }
+    }
+
+    return {
+        app_version: 'unknown',
+        built_at: null,
+        git_commit: null,
+        git_branch: null,
+        source_file: null,
+    };
+};
+
+const resolveUpdateCheck = async () => {
+    await runGitOutput(['fetch', GIT_REMOTE, '--prune']);
+
+    const currentHead = await runGitOutput(['rev-parse', 'HEAD']);
+    const latestHead = await runGitOutput(['rev-parse', `${GIT_REMOTE}/${GIT_BRANCH}`]);
+    const behindBy = Number(await runGitOutput(['rev-list', '--count', `HEAD..${GIT_REMOTE}/${GIT_BRANCH}`]) || 0);
+    const aheadBy = Number(await runGitOutput(['rev-list', '--count', `${GIT_REMOTE}/${GIT_BRANCH}..HEAD`]) || 0);
+    const changelogRaw = await runGitOutput([
+        'log',
+        '--oneline',
+        '--decorate=short',
+        '--no-merges',
+        '--max-count=5',
+        `HEAD..${GIT_REMOTE}/${GIT_BRANCH}`,
+    ]);
+    const changelog = changelogRaw
+        ? changelogRaw.split(/\r?\n/).map((line) => line.trim()).filter(Boolean)
+        : [];
+
+    const current = await resolveBuildInfo();
+    const latest = await resolveBuildInfoFromRef(`${GIT_REMOTE}/${GIT_BRANCH}`);
+    const updateAvailable = behindBy > 0;
+
+    return {
+        success: true,
+        service_available: true,
+        update_available: updateAvailable,
+        message: updateAvailable
+            ? `Update tersedia. ${behindBy} commit baru belum diambil.`
+            : 'Aplikasi sudah berada di versi terbaru.',
+        current,
+        latest,
+        current_head: currentHead,
+        latest_head: latestHead,
+        ahead_by: aheadBy,
+        behind_by: behindBy,
+        changelog,
+        build: current,
+    };
+};
+
 const persistJob = (job) => {
     currentJob = job;
     return job;
@@ -286,6 +417,26 @@ const server = http.createServer(async (req, res) => {
             job: formatJob(currentJob),
             build: await resolveBuildInfo(),
         });
+        return;
+    }
+
+    if (url.pathname === '/check' && req.method === 'GET') {
+        try {
+            const payload = await resolveUpdateCheck();
+            sendJson(res, 200, {
+                ...payload,
+                job: formatJob(currentJob),
+            });
+        } catch (error) {
+            sendJson(res, 200, {
+                success: false,
+                service_available: false,
+                update_available: false,
+                message: error.message || 'Failed to check application updates.',
+                job: formatJob(currentJob),
+                build: await resolveBuildInfo(),
+            });
+        }
         return;
     }
 
