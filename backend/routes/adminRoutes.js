@@ -1667,9 +1667,11 @@ router.get('/database/backup', (req, res) => {
     const date = new Date().toISOString().slice(0, 10);
     const fileName = `backup-${DB_NAME}-${date}${extension}`;
     const filePath = path.join(UPLOAD_DIR, fileName);
+    const ignoredTables = ['database_restore_jobs'];
+    const ignoreArgs = ignoredTables.map((table) => ` --ignore-table=${DB_NAME}.${table}`).join('');
 
     const mysqldumpBin = resolveMysqlBinary('mysqldump');
-    const command = `"${mysqldumpBin}" --host=${DB_HOST || 'localhost'} --user=${DB_USER} ${DB_PASSWORD ? `--password=${DB_PASSWORD}`: ''} ${DB_NAME} > "${filePath}"`;
+    const command = `"${mysqldumpBin}" --host=${DB_HOST || 'localhost'} --user=${DB_USER} ${DB_PASSWORD ? `--password=${DB_PASSWORD}`: ''}${ignoreArgs} ${DB_NAME} > "${filePath}"`;
 
     exec(command, (error, stdout, stderr) => {
         if (error) {

@@ -15,7 +15,7 @@ import fs from 'fs';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import pool, { getDatabaseConfigSummary, testDatabaseConnection } from './db.js'; // Import the database pool
-// import { migrateDatabase } from './migrate.js'; // Import the migration function
+import { migrateDatabase } from './migrate.js';
 import { getSettings, formatRupiah, formatBillingPeriod, replacePlaceholders, toMySQLDatetime, dateToYMD, parseLocalDateString } from './utils.js'; // Import getSettings
 import tripayService from './tripayService.js';
 import whatsappService from './whatsappService.js'; // Diperlukan untuk notifikasi
@@ -403,10 +403,6 @@ app.get(['/health', '/api/health'], async (req, res) => {
 
 // --- Server Startup ---
 const startServer = async () => {
-    // Migrasi database dinonaktifkan dari startup server.
-    // Jalankan secara manual menggunakan skrip terpisah jika diperlukan.
-    // await migrateDatabase();
-
     console.log('[Startup] Initializing backend server...');
     console.log(`[Startup] Instance=${process.env.APP_INSTANCE_NAME || process.env.COMPOSE_PROJECT_NAME || 'default'}`);
     console.log(`[Startup] NODE_ENV=${process.env.NODE_ENV || '(unset)'}`);
@@ -446,6 +442,10 @@ const startServer = async () => {
     console.log(`[Startup] DISABLE_BACKGROUND_SERVICES=${process.env.DISABLE_BACKGROUND_SERVICES || '(unset)'}`);
     console.log(`[Startup] DISABLE_WHATSAPP=${process.env.DISABLE_WHATSAPP || '(unset)'}`);
     console.log('[Startup] Database config summary from db.js:', getDatabaseConfigSummary());
+
+    console.log('[Startup] Running database migration before listening...');
+    await migrateDatabase();
+    console.log('[Startup] Database migration completed.');
 
     app.locals.databaseReady = false;
     let databaseReady = false;

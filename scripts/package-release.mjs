@@ -18,6 +18,8 @@ const rootFilesToCopy = [
     'package.json',
     'package-lock.json',
     'server.js',
+    'pwa-192.png',
+    'pwa-512.png',
     'install-vps.sh',
     'docker-entrypoint.js',
     'docker-compose.vps.yml',
@@ -122,32 +124,6 @@ async function collectCurrentAssetReferences(sourceDir) {
     return referenced;
 }
 
-async function pruneUnusedReleaseAssets(releaseDirPath, sourceDir) {
-    const referenced = await collectCurrentAssetReferences(sourceDir);
-    const assetsDir = path.join(releaseDirPath, 'assets');
-
-    try {
-        const assetFiles = await walkDirectory(assetsDir);
-        for (const filePath of assetFiles) {
-            const relativePath = path.relative(releaseDirPath, filePath).replace(/\\/g, '/');
-            if (!referenced.has(relativePath)) {
-                await fs.rm(filePath, { force: true });
-            }
-        }
-    } catch {
-        // no assets directory yet
-    }
-
-    const releaseFiles = await walkDirectory(releaseDirPath);
-    for (const filePath of releaseFiles) {
-        const relativePath = path.relative(releaseDirPath, filePath).replace(/\\/g, '/');
-        const baseName = path.basename(relativePath);
-        if (/^workbox-[^/]+\.js$/.test(baseName) && !referenced.has(baseName)) {
-            await fs.rm(filePath, { force: true });
-        }
-    }
-}
-
 async function writeJson(filePath, data) {
     await ensureDir(path.dirname(filePath));
     await fs.writeFile(filePath, `${JSON.stringify(data, null, 2)}\n`, 'utf8');
@@ -244,6 +220,7 @@ async function writeReleaseReadme(targetPath) {
         '```',
         '',
         'Kalau mau multi-instance, set `APP_INSTANCE_NAME`, `COMPOSE_PROJECT_NAME`, `DB_NAME`, dan `WA_SESSION_BASE_DIR` berbeda untuk tiap folder deploy.',
+        'Folder `backend/whatsapp_session` hanya dipakai sebagai fallback lokal untuk Windows atau environment tanpa `/opt`. Di VPS/Linux, sesi WhatsApp utama tetap di bawah `WA_SESSION_BASE_DIR`.',
         'Network proxy yang dipakai adalah external network yang sama dengan NPM, dan installer akan membuatnya otomatis kalau belum ada.',
         'Di halaman Settings ada tab `Update App` untuk menjalankan update aplikasi tanpa menghapus volume database MariaDB.',
         '',
@@ -272,7 +249,6 @@ async function main() {
     await writeReleaseDockerfile(path.join(releaseDir, 'Dockerfile'));
     await writeReleaseDockerignore(path.join(releaseDir, '.dockerignore'));
     await writeReleaseReadme(path.join(releaseDir, 'README.md'));
-    await pruneUnusedReleaseAssets(releaseDir, distDir);
 
     if (backendManifest) {
         await writeJson(releaseBackendManifestPath, backendManifest);

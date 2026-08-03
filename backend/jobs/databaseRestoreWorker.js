@@ -57,6 +57,24 @@ const cleanupBackupFiles = async (backupPath) => {
 const RESTORE_BATCH_SIZE = 50;
 const RESTORE_BATCH_MAX_BYTES = 512 * 1024;
 const RESTORE_BATCH_PAUSE_MS = Math.max(0, Number(process.env.DATABASE_RESTORE_BATCH_PAUSE_MS || 10));
+const RESTORE_PROGRESS_UPDATE_EVERY_STATEMENTS = Math.max(1, Number(process.env.DATABASE_RESTORE_PROGRESS_UPDATE_EVERY_STATEMENTS || 10));
+const RESTORE_PROGRESS_UPDATE_INTERVAL_MS = Math.max(1000, Number(process.env.DATABASE_RESTORE_PROGRESS_UPDATE_INTERVAL_MS || 5000));
+const INTERNAL_RESTORE_TABLES = new Set(['database_restore_jobs']);
+
+const shouldSkipStatement = (statement) => {
+    const normalized = String(statement || '').trim();
+    if (!normalized) {
+        return true;
+    }
+
+    const lower = normalized.toLowerCase();
+    const targetsInternalTable = [...INTERNAL_RESTORE_TABLES].some((table) => lower.includes(table));
+    if (!targetsInternalTable) {
+        return false;
+    }
+
+    return /^(create|drop|alter|truncate|insert\s+into|replace\s+into|delete\s+from|lock\s+tables|unlock\s+tables)\b/i.test(normalized);
+};
 
 const ensureRestoreStillActive = async () => {
     const currentJob = await getDatabaseRestoreJobById(jobId);
@@ -123,10 +141,26 @@ const main = async () => {
             throw new Error('Backup file does not contain any SQL statements.');
         }
 
+        const restoreStatements = statements.filter((statement) => !shouldSkipStatement(statement));
+
+        if (restoreStatements.length === 0) {
+            throw new Error('Backup file does not contain any restorable SQL statements.');
+        }
+
+        await updateDatabaseRestoreJob(jobId, {
+            total_statements: restoreStatements.length,
+            processed_count: 0,
+            progress_percent: 1,
+            message: `Parsed ${restoreStatements.length} SQL statement(s). Starting restore...`,
+            updated_at: new Date(),
+        });
+
         let processedCount = 0;
-        let currentProgressPercent = 0;
+        let currentProgressPercent = 1;
         let batch = [];
         let batchBytes = 0;
+        const skippedInternalStatements = statements.length - restoreStatements.length;
+        let lastProgressUpdateAt = Date.now();
 
         await connection.query('SET FOREIGN_KEY_CHECKS=0;');
 
@@ -145,33 +179,52 @@ const main = async () => {
             batchBytes = 0;
         };
 
-        for (const statement of statements) {
-            const trimmedStatement = String(statement || '').trim();
-            if (!trimmedStatement) {
-                continue;
-            }
-
+        for (const trimmedStatement of restoreStatements) {
             processedCount += 1;
             batch.push(trimmedStatement);
             batchBytes += Buffer.byteLength(trimmedStatement, 'utf8') + 2;
 
+            const now = Date.now();
+            const progressPercent = Math.min(
+                99,
+                Math.max(1, Math.round((processedCount / restoreStatements.length) * 100))
+            );
+            const shouldReportProgress = (
+                processedCount === 1
+                || processedCount === restoreStatements.length
+                || processedCount % RESTORE_PROGRESS_UPDATE_EVERY_STATEMENTS === 0
+                || now - lastProgressUpdateAt >= RESTORE_PROGRESS_UPDATE_INTERVAL_MS
+            );
+
+            if (shouldReportProgress && (progressPercent !== currentProgressPercent || now - lastProgressUpdateAt >= RESTORE_PROGRESS_UPDATE_INTERVAL_MS || processedCount === 1 || processedCount === restoreStatements.length)) {
+                currentProgressPercent = progressPercent;
+                lastProgressUpdateAt = now;
+                await updateDatabaseRestoreJob(jobId, {
+                    processed_count: processedCount,
+                    progress_percent: progressPercent,
+                    message: `Restoring database: ${processedCount}/${restoreStatements.length} SQL statement(s) processed.`,
+                    updated_at: new Date(),
+                });
+            }
+
             const shouldFlush = batch.length >= RESTORE_BATCH_SIZE || batchBytes >= RESTORE_BATCH_MAX_BYTES;
-            if (!shouldFlush && processedCount !== statements.length) {
+            if (!shouldFlush && processedCount !== restoreStatements.length) {
                 continue;
             }
 
             await flushBatch();
-            const progressPercent = Math.min(
+            const flushedProgressPercent = Math.min(
                 99,
-                Math.max(1, Math.round((processedCount / statements.length) * 100))
+                Math.max(1, Math.round((processedCount / restoreStatements.length) * 100))
             );
 
-            if (progressPercent !== currentProgressPercent || processedCount === statements.length) {
-                currentProgressPercent = progressPercent;
+            if (flushedProgressPercent !== currentProgressPercent || processedCount === restoreStatements.length) {
+                currentProgressPercent = flushedProgressPercent;
+                lastProgressUpdateAt = Date.now();
                 await updateDatabaseRestoreJob(jobId, {
                     processed_count: processedCount,
-                    progress_percent: progressPercent,
-                    message: `Processed ${processedCount} SQL statement(s).`,
+                    progress_percent: flushedProgressPercent,
+                    message: `Processed ${processedCount}/${restoreStatements.length} SQL statement(s).`,
                     updated_at: new Date(),
                 });
             }
@@ -181,9 +234,11 @@ const main = async () => {
         await connection.query('SET FOREIGN_KEY_CHECKS=1;');
 
         await finalizeDatabaseRestoreJob(jobId, RESTORE_JOB_STATUSES.COMPLETED, {
-            processed_count: statements.length,
+            processed_count: processedCount,
             progress_percent: 100,
-            message: `Database restored successfully from ${path.basename(backupPath)}.`,
+            message: skippedInternalStatements > 0
+                ? `Database restored successfully from ${path.basename(backupPath)}. Skipped ${skippedInternalStatements} internal statement(s).`
+                : `Database restored successfully from ${path.basename(backupPath)}.`,
         });
 
         await cleanupBackupFiles(backupPath);

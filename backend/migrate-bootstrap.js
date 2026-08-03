@@ -85,7 +85,8 @@ log(`DB_PASSWORD=${process.env.DB_PASSWORD ? 'set' : '(unset)'}`);
 
 try {
   await import('./preload-env.js');
-  await import('./migrate.js');
+  const { migrateDatabase } = await import('./migrate.js');
+  await migrateDatabase();
   log(`migrate.js finished loading in ${Date.now() - startedAt}ms`);
 } catch (error) {
   logError('Failed to load migrate.js:', error);

@@ -11,6 +11,7 @@ Aturan pakai:
 
 - Jangan campur source React penuh ke branch release kalau tujuanmu hanya distribusi build.
 - Update aplikasi berjalan cukup tarik branch `release-push` dari repo yang sama.
+- Branch `release-push` dipublish sebagai snapshot terbaru dari folder `release/`, jadi isi branch selalu menggantikan snapshot sebelumnya.
 
 ## Skema Repo
 
@@ -67,7 +68,20 @@ git checkout release-push
 git pull origin release-push
 ```
 
-Untuk build release dari source, pakai workflow build yang sudah ada di `package.json`, lalu publish hasilnya ke branch `release-push` di repo yang sama.
+Untuk build release dari source, pakai workflow berikut:
+
+```bash
+npm run build:release
+npm run release:push
+```
+
+Kalau ingin satu langkah penuh, gunakan:
+
+```bash
+npm run release:publish
+```
+
+Perintah publish akan mengambil isi folder `release/` yang dibuat dari hasil build `dist/`, lalu force-update branch `release-push` supaya branch itu selalu berisi snapshot terbaru, bukan riwayat perubahan source.
 
 ## Ganti URL Origin Repo Lama
 
@@ -107,6 +121,7 @@ docker compose --env-file docker.env -f docker-compose.vps.yml up -d --build
 ```
 
 `git clean -fdx` akan ikut menghapus file hasil generate seperti `assets/`, cache build, dan file sementara lain yang tidak perlu dibawa ke release berikutnya.
+Folder `backend/whatsapp_session` dipertahankan hanya sebagai fallback untuk run lokal di Windows atau environment tanpa `/opt`. Untuk VPS/Linux, sesi WhatsApp utama tetap memakai `WA_SESSION_BASE_DIR` di `/app/whatsapp_sessions/...`.
 
 ## Backup Database Langsung
 

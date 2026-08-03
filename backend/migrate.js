@@ -603,21 +603,30 @@ export const migrateDatabase = async () => {
     }
 };
 
-// Self-executing function to run the migration
-(async () => {
-    try {
-        await migrateDatabase();
-        console.log('Migration process completed successfully.');
-        process.exitCode = 0;
-    } catch (error) {
-        console.error('Migration process failed.');
-        process.exitCode = 1;
-    } finally {
-        try {
-            await pool.end();
-            console.log('[DB Migration] MySQL pool closed.');
-        } catch (poolError) {
-            console.warn('[DB Migration] Failed to close MySQL pool:', poolError?.message || poolError);
-        }
+const isDirectExecution = (() => {
+    if (!process.argv[1]) {
+        return false;
     }
+
+    return path.resolve(process.argv[1]) === __filename;
 })();
+
+if (isDirectExecution) {
+    (async () => {
+        try {
+            await migrateDatabase();
+            console.log('Migration process completed successfully.');
+            process.exitCode = 0;
+        } catch (error) {
+            console.error('Migration process failed.');
+            process.exitCode = 1;
+        } finally {
+            try {
+                await pool.end();
+                console.log('[DB Migration] MySQL pool closed.');
+            } catch (poolError) {
+                console.warn('[DB Migration] Failed to close MySQL pool:', poolError?.message || poolError);
+            }
+        }
+    })();
+}

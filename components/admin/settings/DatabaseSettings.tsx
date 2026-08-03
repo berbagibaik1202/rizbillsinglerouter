@@ -4,6 +4,7 @@ import { fetchWithAuth } from '~/components/api';
 
 const API_URL = '/api/admin';
 const DEFAULT_BACKUP_EXTENSION = '.riz';
+const RESTORE_JOB_STORAGE_KEY = 'database_restore_job_id';
 
 type RestoreJobStatus = 'queued' | 'running' | 'completed' | 'failed' | 'canceled';
 
@@ -40,6 +41,14 @@ const DatabaseSettings: React.FC = () => {
         total_statements: Number(job?.total_statements || 0),
     });
 
+    const rememberRestoreJobId = (jobId: string) => {
+        window.localStorage.setItem(RESTORE_JOB_STORAGE_KEY, jobId);
+    };
+
+    const forgetRestoreJobId = () => {
+        window.localStorage.removeItem(RESTORE_JOB_STORAGE_KEY);
+    };
+
     const fetchRestoreJob = async (jobId?: string) => {
         const url = jobId
             ? `${API_URL}/database/restore/jobs/${encodeURIComponent(jobId)}`
@@ -57,10 +66,26 @@ const DatabaseSettings: React.FC = () => {
 
     const loadActiveRestoreJob = async () => {
         try {
+            const storedJobId = window.localStorage.getItem(RESTORE_JOB_STORAGE_KEY);
+            if (storedJobId) {
+                try {
+                    const storedJob = await fetchRestoreJob(storedJobId);
+                    if (storedJob) {
+                        setRestoreJob(storedJob);
+                        return;
+                    }
+                } catch {
+                    forgetRestoreJobId();
+                }
+            }
+
             const job = await fetchRestoreJob();
             setRestoreJob(job);
             if (!job) {
                 reloadScheduledRef.current = false;
+                forgetRestoreJobId();
+            } else {
+                rememberRestoreJobId(job.id);
             }
         } catch (error: any) {
             setFeedback({ type: 'error', message: error.message });
@@ -96,7 +121,9 @@ const DatabaseSettings: React.FC = () => {
             }
 
             if (data.job) {
-                setRestoreJob(normalizeRestoreJob(data.job));
+                const normalizedJob = normalizeRestoreJob(data.job);
+                setRestoreJob(normalizedJob);
+                rememberRestoreJobId(normalizedJob.id);
             }
 
             setFeedback({
@@ -120,6 +147,7 @@ const DatabaseSettings: React.FC = () => {
         }
 
         reloadScheduledRef.current = true;
+        forgetRestoreJobId();
         setFeedback({ type: 'success', message: 'Database restored successfully. Reloading page...' });
         reloadTimerRef.current = window.setTimeout(() => {
             window.location.reload();
@@ -134,6 +162,9 @@ const DatabaseSettings: React.FC = () => {
 
     useEffect(() => {
         if (!restoreJob || restoreJob.status === 'completed' || restoreJob.status === 'failed' || restoreJob.status === 'canceled') {
+            if (restoreJob) {
+                forgetRestoreJobId();
+            }
             return;
         }
 
@@ -224,7 +255,9 @@ const DatabaseSettings: React.FC = () => {
             }
 
             if (data.job) {
-                setRestoreJob(normalizeRestoreJob(data.job));
+                const normalizedJob = normalizeRestoreJob(data.job);
+                setRestoreJob(normalizedJob);
+                rememberRestoreJobId(normalizedJob.id);
             }
 
             setFeedback({

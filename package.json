@@ -13,6 +13,8 @@
     "dev:backend": "node backend/bootstrap.js",
     "build:backend": "node scripts/build-backend.mjs",
     "build:release": "npm run build && node scripts/package-release.mjs",
+    "release:push": "node scripts/publish-release-push.mjs",
+    "release:publish": "npm run build:release && npm run release:push",
     "build": "tsc && vite build && npm run build:backend",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
