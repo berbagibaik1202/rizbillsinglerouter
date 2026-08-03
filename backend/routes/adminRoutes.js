@@ -4,30 +4,30 @@ import { getSettings, formatRupiah, replacePlaceholders, dbDateToISO, toMySQLDat
 import mikrotikApi from '../mikrotik-api.js';
 import whatsappService from '../whatsappService.js';
 import { sendTestEmail } from '../emailService.js';
+import { getCashSummary } from '../cashMutationService.js';
 import { v4 as uuidv4 } from 'uuid';
 import multer from 'multer';
 import path from 'path';
 import { exec, spawn, spawnSync } from 'child_process';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
-import mysql from 'mysql2/promise';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import { getDeviceProfileByModel } from '../utils/deviceProfiles.js';
 import { getLastDigiflazzPing } from '../services/digiflazzWebhookState.js';
 import { isSnmpEnabledForDevice, readSnmpSystemInfo } from '../utils/oltSnmp.js';
-import { resolveNamespacedStorageDir } from '../storagePaths.js';
+import { handleWhatsappMessage } from './chatbotRoutes.js';
+import {
+    insertWhatsAppLog,
+    updateWhatsAppLogById,
+} from '../services/whatsappLogService.js';
 
 const { promises: fsPromises } = fs;
 
 const router = express.Router();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const UPLOAD_DIR = resolveNamespacedStorageDir({
-    exactDirEnv: 'UPLOAD_DIR',
-    baseDirEnv: 'UPLOAD_BASE_DIR',
-    defaultBaseDir: '/opt/uploads',
-});
+const UPLOAD_DIR = path.join(__dirname, '..', 'uploads');
 const upload = multer({ dest: UPLOAD_DIR });
 const playlistStorage = multer.diskStorage({
     destination: function (_req, _file, cb) {
@@ -43,7 +43,53 @@ const playlistStorage = multer.diskStorage({
 });
 const playlistUpload = multer({ storage: playlistStorage });
 let adminNotificationsHasKeyColumn = null;
-let activeDatabaseRestoreJob = null;
+const DASHBOARD_ROUTER_TIMEOUT_MS = 6500;
+
+const getKirimdevTemplateConfig = (settings = {}) => {
+    const gateway = settings?.whatsapp?.customGateway || {};
+    return {
+        name: String(gateway.outsideWindowTemplateName || '').trim(),
+        language: String(gateway.outsideWindowTemplateLanguage || 'id').trim() || 'id',
+    };
+};
+
+const sendOutboundWhatsAppMessage = async (settings, recipientNumber, messageBody) => {
+    whatsappService.applySettings(settings);
+
+    const deliveryMode = String(settings?.whatsapp?.deliveryMode || 'baileys').toLowerCase();
+    const templateConfig = getKirimdevTemplateConfig(settings);
+
+    if (deliveryMode === 'custom' && templateConfig.name) {
+        return whatsappService.sendTemplateMessage(
+            recipientNumber,
+            messageBody,
+            templateConfig.name,
+            templateConfig.language,
+        );
+    }
+
+    return whatsappService.sendMessage(recipientNumber, messageBody);
+};
+
+const withDashboardTimeout = (promise, fallback, timeoutMs = DASHBOARD_ROUTER_TIMEOUT_MS, label = 'dashboard task') => {
+    return new Promise((resolve) => {
+        const timer = setTimeout(() => {
+            console.warn(`[Admin Dashboard] ${label} timed out after ${timeoutMs}ms; using fallback.`);
+            resolve(fallback);
+        }, timeoutMs);
+
+        Promise.resolve(promise)
+            .then((result) => {
+                clearTimeout(timer);
+                resolve(result);
+            })
+            .catch((error) => {
+                clearTimeout(timer);
+                console.warn(`[Admin Dashboard] ${label} failed:`, error?.message || error);
+                resolve(fallback);
+            });
+    });
+};
 
 const isValidPlaylistFilename = (filename = '') => {
     return /\.(m3u8?|txt)$/i.test(String(filename || '').trim());
@@ -218,86 +264,6 @@ const resolveMysqlBinary = (binaryName) => {
     return resolvedName;
 };
 
-const splitSqlStatements = (sqlContent) => {
-    const statements = [];
-    let delimiter = ';';
-    let buffer = '';
-    let inSingleQuote = false;
-    let inDoubleQuote = false;
-    let inBacktick = false;
-    let escapeNext = false;
-
-    const pushStatement = () => {
-        const trimmed = buffer.trim();
-        if (trimmed) statements.push(trimmed);
-        buffer = '';
-    };
-
-    const lines = sqlContent
-        .replace(/^\uFEFF/, '')
-        .replace(/\r\n/g, '\n')
-        .replace(/^--.*$/gm, '')
-        .replace(/^#.*$/gm, '')
-        .replace(/\/\*!\d+\s*([\s\S]*?)\*\//g, '$1')
-        .replace(/\/\*(?!\!)[\s\S]*?\*\//g, '');
-
-    for (const rawLine of lines.split('\n')) {
-        const delimiterMatch = rawLine.trim().match(/^DELIMITER\s+(.+)$/i);
-        if (delimiterMatch) {
-            if (buffer.trim()) pushStatement();
-            delimiter = delimiterMatch[1];
-            continue;
-        }
-
-        buffer += `${rawLine}\n`;
-
-        for (let i = 0; i < buffer.length; i++) {
-            const char = buffer[i];
-
-            if (escapeNext) {
-                escapeNext = false;
-                continue;
-            }
-
-            if (char === '\\') {
-                escapeNext = true;
-                continue;
-            }
-
-            if (!inDoubleQuote && !inBacktick && char === '\'') {
-                inSingleQuote = !inSingleQuote;
-                continue;
-            }
-
-            if (!inSingleQuote && !inBacktick && char === '"') {
-                inDoubleQuote = !inDoubleQuote;
-                continue;
-            }
-
-            if (!inSingleQuote && !inDoubleQuote && char === '`') {
-                inBacktick = !inBacktick;
-            }
-        }
-
-        const trimmedBuffer = buffer.trimEnd();
-        if (!inSingleQuote && !inDoubleQuote && !inBacktick && trimmedBuffer.endsWith(delimiter)) {
-            buffer = trimmedBuffer.slice(0, -delimiter.length);
-            pushStatement();
-        }
-    }
-
-    if (buffer.trim()) pushStatement();
-    return statements;
-};
-
-const normalizeSqlDumpContent = (sqlContent) => {
-    return sqlContent
-        .replace(/^\uFEFF/, '')
-        .replace(/\r\n/g, '\n')
-        .replace(/^\s*\\-\\-\s?/gm, '-- ')
-        .replace(/^\s*\\#/gm, '#');
-};
-
 const ensureAdminNotificationsKeyColumn = async () => {
     if (adminNotificationsHasKeyColumn !== null) {
         return adminNotificationsHasKeyColumn;
@@ -312,73 +278,206 @@ const ensureAdminNotificationsKeyColumn = async () => {
     return adminNotificationsHasKeyColumn;
 };
 
-const nowIso = () => new Date().toISOString();
-
-const isDatabaseRestoreJobActive = (job) => !!job && ['queued', 'running'].includes(job.status);
-
-const getDatabaseRestoreJobResponse = (job) => {
-    if (!job) return null;
-    const { child_process: _childProcess, ...safeJob } = job;
-    return safeJob;
+const DATABASE_RESTORE_JOB_STATUSES = {
+    QUEUED: 'queued',
+    RUNNING: 'running',
+    COMPLETED: 'completed',
+    FAILED: 'failed',
+    CANCELED: 'canceled',
 };
 
-const getActiveDatabaseRestoreJob = () => (isDatabaseRestoreJobActive(activeDatabaseRestoreJob) ? activeDatabaseRestoreJob : null);
-
-const getDatabaseRestoreJobById = (jobId) => {
-    const job = activeDatabaseRestoreJob;
-    if (!job || job.id !== jobId) return null;
-    return job;
-};
-
-const createDatabaseRestoreJob = (backupFile) => ({
-    id: uuidv4(),
-    status: 'queued',
-    processed_count: 0,
-    total_statements: 0,
-    progress_percent: 0,
-    message: 'Database restore job queued.',
-    error_message: null,
-    backup_path: backupFile?.path || null,
-    original_filename: backupFile?.originalname || null,
-    started_at: null,
-    finished_at: null,
-    created_at: nowIso(),
-    updated_at: nowIso(),
-    cancel_requested: false,
-    child_process: null,
-});
-
-const updateDatabaseRestoreJob = (job, patch = {}) => {
-    if (!job) return null;
-    Object.assign(job, patch);
-    job.updated_at = nowIso();
-    return job;
-};
-
-const setDatabaseRestoreProgress = (job, progress, message, extraPatch = {}) => {
-    if (!job) return null;
-    job.progress_percent = Math.max(0, Math.min(100, Number(progress || 0)));
-    if (message !== undefined) {
-        job.message = String(message || '').trim() || job.message;
-    }
-    Object.assign(job, extraPatch);
-    job.updated_at = nowIso();
-    return job;
-};
-
-const cleanupRestoreFiles = async (files = []) => {
-    await Promise.all(files.map(async (filePath) => {
-        if (!filePath) return;
-        try {
-            await fsPromises.unlink(filePath);
-        } catch {}
-    }));
-};
-
+const DATABASE_RESTORE_WORKER_PATH = path.join(__dirname, '../jobs/databaseRestoreWorker.js');
+const DATABASE_RESTORE_JOB_POLL_INTERVAL_MS = 5000;
+let databaseRestoreSchedulerStarted = false;
+let databaseRestoreWorkerRunning = false;
 const APP_UPDATE_SERVICE_URL = String(process.env.APP_UPDATE_SERVICE_URL || 'http://app-updater:3140').replace(/\/+$/, '');
 const APP_UPDATE_SERVICE_TOKEN = String(process.env.APP_UPDATE_TOKEN || process.env.APP_UPDATE_SERVICE_TOKEN || '').trim();
 const APP_UPDATE_REQUEST_TIMEOUT_MS = Math.max(5000, Number(process.env.APP_UPDATE_REQUEST_TIMEOUT_MS || 15000));
-const APP_ROOT_DIR = path.resolve(__dirname, '..', '..');
+
+const formatDatabaseRestoreJob = (job) => {
+    if (!job) return null;
+
+    return {
+        ...job,
+        processed_count: Number(job.processed_count || 0),
+        progress_percent: Number(job.progress_percent || 0),
+        total_statements: Number(job.total_statements || 0),
+        worker_pid: job.worker_pid == null ? null : Number(job.worker_pid),
+        created_at: job.created_at ? dbDateToISO(job.created_at) : null,
+        updated_at: job.updated_at ? dbDateToISO(job.updated_at) : null,
+        started_at: job.started_at ? dbDateToISO(job.started_at) : null,
+        finished_at: job.finished_at ? dbDateToISO(job.finished_at) : null,
+    };
+};
+
+const getDatabaseRestoreJobById = async (jobId) => {
+    const [rows] = await pool.query(
+        'SELECT * FROM database_restore_jobs WHERE id = ? LIMIT 1',
+        [jobId]
+    );
+    return rows.length > 0 ? rows[0] : null;
+};
+
+const getActiveDatabaseRestoreJob = async () => {
+    const [rows] = await pool.query(
+        `SELECT * FROM database_restore_jobs
+         WHERE status IN (?, ?)
+         ORDER BY created_at DESC
+         LIMIT 1`,
+        [DATABASE_RESTORE_JOB_STATUSES.QUEUED, DATABASE_RESTORE_JOB_STATUSES.RUNNING]
+    );
+    return rows.length > 0 ? rows[0] : null;
+};
+
+const getNextQueuedDatabaseRestoreJob = async () => {
+    const [rows] = await pool.query(
+        `SELECT * FROM database_restore_jobs
+         WHERE status = ?
+         ORDER BY created_at ASC
+         LIMIT 1`,
+        [DATABASE_RESTORE_JOB_STATUSES.QUEUED]
+    );
+    return rows.length > 0 ? rows[0] : null;
+};
+
+const createDatabaseRestoreJob = async ({ backupPath, originalFilename }) => {
+    const id = uuidv4();
+    await pool.query(
+        `INSERT INTO database_restore_jobs
+            (id, status, processed_count, progress_percent, message, backup_path, original_filename, worker_pid, total_statements)
+         VALUES (?, ?, 0, 0, ?, ?, ?, NULL, 0)`,
+        [id, DATABASE_RESTORE_JOB_STATUSES.QUEUED, 'Queued for processing', backupPath, originalFilename || null]
+    );
+    return getDatabaseRestoreJobById(id);
+};
+
+const updateDatabaseRestoreJob = async (jobId, fields = {}) => {
+    const keys = Object.keys(fields);
+    if (keys.length === 0) return;
+
+    const assignments = keys.map((key) => `\`${key}\` = ?`).join(', ');
+    const values = keys.map((key) => fields[key]);
+    values.push(jobId);
+
+    await pool.query(
+        `UPDATE database_restore_jobs SET ${assignments} WHERE id = ?`,
+        values
+    );
+};
+
+const finalizeDatabaseRestoreJob = async (jobId, status, fields = {}) => {
+    await updateDatabaseRestoreJob(jobId, {
+        status,
+        progress_percent: status === DATABASE_RESTORE_JOB_STATUSES.COMPLETED ? 100 : Number(fields.progress_percent || 0),
+        finished_at: fields.finished_at || new Date(),
+        updated_at: new Date(),
+        ...fields,
+    });
+};
+
+const claimDatabaseRestoreJob = async (jobId) => {
+    const [result] = await pool.query(
+        `UPDATE database_restore_jobs
+         SET status = ?, started_at = COALESCE(started_at, NOW()), message = ?, updated_at = NOW()
+         WHERE id = ? AND status = ?`,
+        [DATABASE_RESTORE_JOB_STATUSES.RUNNING, 'Database restore worker starting...', jobId, DATABASE_RESTORE_JOB_STATUSES.QUEUED]
+    );
+
+    return result.affectedRows > 0;
+};
+
+const launchDatabaseRestoreWorker = (jobId) => {
+    const child = spawn(process.execPath, [DATABASE_RESTORE_WORKER_PATH, jobId], {
+        detached: true,
+        stdio: 'ignore',
+        windowsHide: true,
+    });
+
+    updateDatabaseRestoreJob(jobId, {
+        worker_pid: child.pid || null,
+        updated_at: new Date(),
+    }).catch((error) => {
+        console.error('[Database Restore] Failed to store worker pid:', error);
+    });
+
+    child.unref();
+    return child;
+};
+
+const processDatabaseRestoreQueue = async () => {
+    if (databaseRestoreWorkerRunning) return;
+
+    const nextJob = await getNextQueuedDatabaseRestoreJob();
+    if (!nextJob) {
+        return;
+    }
+
+    databaseRestoreWorkerRunning = true;
+    try {
+        const claimed = await claimDatabaseRestoreJob(nextJob.id);
+        if (!claimed) {
+            return;
+        }
+
+        launchDatabaseRestoreWorker(nextJob.id);
+    } catch (error) {
+        console.error('[Database Restore] Failed to launch restore worker:', error);
+        await finalizeDatabaseRestoreJob(nextJob.id, DATABASE_RESTORE_JOB_STATUSES.FAILED, {
+            error_message: error.message || 'Failed to launch database restore worker.',
+            message: error.message || 'Failed to launch database restore worker.',
+        });
+        if (nextJob.backup_path) {
+            fs.unlink(nextJob.backup_path, () => {});
+        }
+    } finally {
+        databaseRestoreWorkerRunning = false;
+    }
+};
+
+export const startDatabaseRestoreJobScheduler = () => {
+    if (process.env.CPANEL_LIGHTWEIGHT === 'true' || process.env.DISABLE_BACKGROUND_SERVICES === 'true') {
+        console.warn('[Database Restore] Restore scheduler disabled by runtime flag.');
+        return;
+    }
+
+    if (databaseRestoreSchedulerStarted) return;
+    databaseRestoreSchedulerStarted = true;
+
+    pool.query(
+        `UPDATE database_restore_jobs
+         SET status = ?, message = ?, updated_at = NOW()
+         WHERE status = ?`,
+        [DATABASE_RESTORE_JOB_STATUSES.QUEUED, 'Recovered after service restart', DATABASE_RESTORE_JOB_STATUSES.RUNNING]
+    ).catch((error) => {
+        console.error('[Database Restore] Failed to recover running jobs on startup:', error);
+    });
+
+    const tick = () => {
+        processDatabaseRestoreQueue().catch((error) => {
+            console.error('[Database Restore] Scheduler tick failed:', error);
+        });
+    };
+
+    tick();
+    setInterval(tick, DATABASE_RESTORE_JOB_POLL_INTERVAL_MS);
+};
+
+const cancelDatabaseRestoreWorker = (workerPid) => {
+    const pid = Number(workerPid);
+    if (!Number.isFinite(pid) || pid <= 0) {
+        return false;
+    }
+
+    try {
+        process.kill(pid, 'SIGTERM');
+        return true;
+    } catch (error) {
+        if (error?.code === 'ESRCH') {
+            return false;
+        }
+        throw error;
+    }
+};
 
 const callAppUpdateService = async (method, endpoint, body) => {
     if (!APP_UPDATE_SERVICE_TOKEN) {
@@ -410,6 +509,8 @@ const callAppUpdateService = async (method, endpoint, body) => {
         clearTimeout(timeout);
     }
 };
+
+const APP_ROOT_DIR = path.resolve(__dirname, '..', '..');
 
 const readJsonIfExists = async (filePath) => {
     try {
@@ -461,6 +562,132 @@ router.get('/server-time', (req, res) => {
     // Mengembalikan waktu server saat ini dalam format UTC ISO 8601
     // Frontend dapat dengan andal membuat objek Date dari string ini.
     res.json({ serverTime: new Date().toISOString() });
+});
+
+router.get('/dashboard-summary', async (req, res) => {
+    try {
+        const settings = await getSettings();
+        const timezone = settings.app?.timezone || 'Asia/Jakarta';
+
+        const [
+            [customerKpiRows],
+            [invoiceKpiRows],
+            [userKpiRows],
+            [recentTransactionRows],
+            routerStatsEnabled,
+            activePppoeConnections,
+            activeHotspotConnections,
+            [activeVoucherRows],
+        ] = await Promise.all([
+            pool.query(`
+                SELECT
+                    COUNT(*) AS totalCustomers,
+                    COALESCE(SUM(status = 'Active'), 0) AS activeCustomers,
+                    COALESCE(SUM(status = 'Unregister'), 0) AS pendingRegistrations
+                FROM customers
+            `),
+            pool.query(`
+                SELECT
+                    COALESCE(SUM(status = 'Overdue'), 0) AS overdueCount,
+                    COALESCE(SUM(CASE WHEN status = 'Overdue' THEN amount ELSE 0 END), 0) AS overdueAmount,
+                    COALESCE(SUM(status = 'Unpaid'), 0) AS unpaidCount,
+                    COALESCE(SUM(CASE WHEN status = 'Unpaid' THEN amount ELSE 0 END), 0) AS unpaidAmount
+                FROM invoices
+            `),
+            pool.query(`
+                SELECT COUNT(*) AS resellerCount
+                FROM users
+                WHERE role = 'reseller'
+            `),
+            pool.query(`
+                SELECT
+                    cm.*,
+                    c.name AS customer_name,
+                    u.username AS user_name,
+                    cb.username AS created_by_name
+                FROM cash_mutations cm
+                LEFT JOIN customers c ON c.id = cm.customer_id
+                LEFT JOIN users u ON u.id = cm.user_id
+                LEFT JOIN users cb ON cb.id = cm.created_by
+                ORDER BY cm.date DESC
+                LIMIT 15
+            `),
+            withDashboardTimeout(
+                mikrotikApi.testMikrotikConnection().then(() => true),
+                false,
+                DASHBOARD_ROUTER_TIMEOUT_MS,
+                'router connectivity check'
+            ),
+            withDashboardTimeout(
+                mikrotikApi.fetchActivePppoeConnections(),
+                [],
+                DASHBOARD_ROUTER_TIMEOUT_MS,
+                'active PPPoE fetch'
+            ),
+            withDashboardTimeout(
+                mikrotikApi.fetchActiveHotspotConnections(),
+                [],
+                DASHBOARD_ROUTER_TIMEOUT_MS,
+                'active hotspot fetch'
+            ),
+            pool.query(`
+                SELECT username
+                FROM hotspot_vouchers
+                WHERE status = 'active'
+            `),
+        ]);
+
+        const cashSummary = await getCashSummary(pool, timezone);
+        const [invoiceKpi] = invoiceKpiRows;
+        const [customerKpi] = customerKpiRows;
+        const [userKpi] = userKpiRows;
+        const activeHotspotUsernames = new Set((activeHotspotConnections || []).map((row) => row?.user).filter(Boolean));
+        const onlineVouchers = (activeVoucherRows || []).reduce((count, voucher) => {
+            if (!voucher?.username) {
+                return count;
+            }
+            if (!routerStatsEnabled) {
+                return count + 1;
+            }
+            return count + (activeHotspotUsernames.has(voucher.username) ? 1 : 0);
+        }, 0);
+
+        res.json({
+            serverTime: new Date().toISOString(),
+            routerStatsEnabled: Boolean(routerStatsEnabled),
+            routerStats: {
+                pppoeOnline: Number((activePppoeConnections || []).length || 0),
+                hotspotOnline: Number((activeHotspotConnections || []).length || 0),
+                onlineVouchers: Number(onlineVouchers || 0),
+            },
+            totals: {
+                totalCustomers: Number(customerKpi?.totalCustomers || 0),
+                activeCustomers: Number(customerKpi?.activeCustomers || 0),
+                pendingRegistrations: Number(customerKpi?.pendingRegistrations || 0),
+                revenueThisMonth: Number(cashSummary.currentMonthIn || 0),
+                revenueLastMonth: Number(cashSummary.previousMonthIn || 0),
+                expenseThisMonth: Number(cashSummary.currentMonthOut || 0),
+                cashBalance: Number(cashSummary.balance || 0),
+                totalOverdue: {
+                    count: Number(invoiceKpi?.overdueCount || 0),
+                    amount: Number(invoiceKpi?.overdueAmount || 0),
+                },
+                totalUnpaid: {
+                    count: Number(invoiceKpi?.unpaidCount || 0),
+                    amount: Number(invoiceKpi?.unpaidAmount || 0),
+                },
+                resellerCount: Number(userKpi?.resellerCount || 0),
+            },
+            recentTransactions: recentTransactionRows.map((row) => ({
+                ...row,
+                date: dbDateToISO(row.date),
+                created_at: dbDateToISO(row.created_at),
+            })),
+        });
+    } catch (error) {
+        console.error('[Admin Dashboard] Failed to build summary:', error);
+        res.status(500).json({ message: error.message || 'Failed to load dashboard summary.' });
+    }
 });
 
 
@@ -622,6 +849,8 @@ router.put('/settings', async (req, res) => {
 
         try {
             await whatsappService.setStandby(Boolean(newSettings?.whatsapp?.standbyEnabled));
+            whatsappService.applySettings(newSettings);
+            await whatsappService.ensureInboundTransport(handleWhatsappMessage);
         } catch (waError) {
             console.error("Failed to apply WhatsApp standby setting:", waError);
         }
@@ -736,6 +965,45 @@ router.get('/settings/video-playlist/debug', async (req, res) => {
     } catch (error) {
         console.error('[Admin Playlist Debug] Failed:', error);
         res.status(500).json({ message: error.message || 'Gagal debug playlist.' });
+    }
+});
+
+router.get('/settings/video-playlist/export', async (req, res) => {
+    try {
+        const rawUrl = String(req.query.url || '').trim();
+        if (!rawUrl) {
+            return res.status(400).json({ message: 'URL playlist tidak tersedia.' });
+        }
+
+        let body = '';
+        let channelCount = 0;
+        let finalUrl = rawUrl;
+
+        if (rawUrl.startsWith('/uploads/')) {
+            const filePath = path.join(UPLOAD_DIR, path.basename(rawUrl));
+            if (!fs.existsSync(filePath)) {
+                return res.status(404).json({ message: 'File upload tidak ditemukan.' });
+            }
+            body = await fsPromises.readFile(filePath, 'utf8');
+        } else {
+            const debugResult = await debugPlaylistSource(rawUrl);
+            body = debugResult.body;
+            finalUrl = debugResult.response.url || rawUrl;
+        }
+
+        const playlistCheck = validatePlaylistContent(body);
+        channelCount = playlistCheck.extinfCount;
+
+        const safeName = `playlist-${Date.now()}.m3u8`;
+        res.setHeader('Content-Type', 'application/vnd.apple.mpegurl; charset=utf-8');
+        res.setHeader('Content-Disposition', `attachment; filename="${safeName}"`);
+        res.setHeader('Cache-Control', 'no-store');
+        res.setHeader('X-Playlist-Channel-Count', String(channelCount));
+        res.setHeader('X-Playlist-Final-Url', finalUrl);
+        return res.send(body);
+    } catch (error) {
+        console.error('[Admin Playlist Export] Failed:', error);
+        res.status(500).json({ message: error.message || 'Gagal export playlist.' });
     }
 });
 
@@ -922,11 +1190,32 @@ router.get('/whatsapp/status', (req, res) => res.json(whatsappService.getStatus(
 router.get('/whatsapp/qr', (req, res) => res.json(whatsappService.getQrCode()));
 router.post('/whatsapp/connect', async (req, res) => {
     try {
-        await whatsappService.connectToWhatsApp();
-        res.json({ success: true, message: "WhatsApp connection started." });
+        const settings = await getSettings();
+        const requestedMode = String(req.body?.deliveryMode || settings?.whatsapp?.deliveryMode || 'baileys').toLowerCase();
+        const normalizedMode = requestedMode === 'wa' ? 'fonnte' : requestedMode;
+
+        if (normalizedMode !== 'baileys') {
+            return res.status(400).json({ success: false, message: 'Baileys connection can only be requested when delivery mode is Baileys.' });
+        }
+
+        whatsappService.applySettings({
+            ...settings,
+            whatsapp: {
+                ...settings.whatsapp,
+                deliveryMode: 'baileys',
+                standbyEnabled: false,
+            },
+        });
+
+        const result = await whatsappService.requestBaileysConnection(handleWhatsappMessage);
+        if (result?.mode !== 'baileys') {
+            return res.status(500).json({ success: false, message: 'Failed to start Baileys connection.' });
+        }
+
+        res.json({ success: true, message: 'Baileys connection requested.' });
     } catch (e) {
-        console.error('[WhatsApp Connect] Error:', e);
-        res.status(500).json({ success: false, message: e?.message || 'Failed to start WhatsApp connection.' });
+        console.error('[WhatsApp] Failed to request Baileys connection:', e);
+        res.status(500).json({ success: false, message: 'Failed to request Baileys connection.' });
     }
 });
 router.post('/whatsapp/logout', async (req, res) => {
@@ -938,12 +1227,195 @@ router.post('/whatsapp/logout', async (req, res) => {
     }
 });
 
+const normalizeDigits = (value) => {
+    const digits = String(value || '').replace(/\D/g, '');
+    if (!digits) return '';
+    if (digits.startsWith('62')) return digits;
+    if (digits.startsWith('0')) return `62${digits.slice(1)}`;
+    if (digits.startsWith('8')) return `62${digits}`;
+    return digits;
+};
+
+const messageBelongsToConversation = (message, conversation, ownPhoneNumber = '') => {
+    const conversationId = String(conversation?.id || '').trim();
+    const conversationPhone = normalizeDigits(conversation?.phoneNumber || conversation?.phone || '');
+    const ownDigits = normalizeDigits(ownPhoneNumber);
+    const messageConversationId = String(
+        message?.conversationId ||
+        message?.conversation_id ||
+        message?.conversation?.id ||
+        message?.thread_id ||
+        message?.chat_id ||
+        ''
+    ).trim();
+
+    if (conversationId && messageConversationId && messageConversationId === conversationId) {
+        return true;
+    }
+
+    const candidateNumbers = [
+        message?.from,
+        message?.to,
+        message?.contactPhone,
+        message?.contact_phone,
+        message?.senderPhone,
+        message?.recipientPhone,
+    ].map(normalizeDigits).filter(Boolean);
+
+    if (conversationPhone && candidateNumbers.includes(conversationPhone)) {
+        return true;
+    }
+
+    if (conversationPhone && ownDigits) {
+        const counterpart = candidateNumbers.find((number) => number !== ownDigits);
+        if (counterpart && counterpart === conversationPhone) {
+            return true;
+        }
+    }
+
+    return false;
+};
+
+router.get('/whatsapp/kirimdev/chat', async (req, res) => {
+    try {
+        const settings = await getSettings();
+        whatsappService.applySettings(settings);
+
+        const gateway = settings?.whatsapp?.customGateway || {};
+        if (!String(gateway.apiKey || '').trim()) {
+            return res.status(400).json({ message: 'Kirimdev API key is not configured.' });
+        }
+
+        const conversationId = String(req.query.conversationId || '').trim();
+        const messageCursor = String(req.query.messageCursor || req.query.cursor || '').trim();
+        const conversationLimit = Number(req.query.conversationLimit ?? 50) || 50;
+        const messageLimit = Number(req.query.messageLimit ?? 100) || 100;
+
+        const inbox = await whatsappService.listKirimdevConversations(gateway, {
+            limit: conversationLimit,
+        });
+        const messagesFeed = await whatsappService.listKirimdevMessages(gateway, {
+            limit: messageLimit,
+            phoneNumberId: inbox.phoneNumberId,
+            cursor: messageCursor || undefined,
+        });
+
+        const selectedConversation = conversationId
+            ? inbox.conversations.find((conversation) => conversation.id === conversationId)
+                || (await whatsappService.fetchKirimdevConversation(gateway, conversationId, { phoneNumberId: inbox.phoneNumberId })).conversation
+            : inbox.conversations[0] || null;
+
+        const selectedMessages = selectedConversation
+            ? messagesFeed.messages.filter((message) => messageBelongsToConversation(message, selectedConversation, inbox.phoneNumberId))
+            : [];
+
+        selectedMessages.sort((a, b) => new Date(a.createdAt || 0).getTime() - new Date(b.createdAt || 0).getTime());
+        inbox.conversations.sort((a, b) => new Date(b.updatedAt || 0).getTime() - new Date(a.updatedAt || 0).getTime());
+
+        res.json({
+            success: true,
+            phoneNumberId: inbox.phoneNumberId,
+            conversations: inbox.conversations,
+            selectedConversation,
+            messages: selectedMessages,
+            meta: {
+                conversations: inbox.meta,
+                messages: messagesFeed.meta,
+            },
+        });
+    } catch (error) {
+        console.error('[Kirimdev Chat] Failed to load inbox:', error);
+        res.status(500).json({ message: error.message || 'Failed to load Kirimdev chat inbox.' });
+    }
+});
+
+router.post('/whatsapp/kirimdev/chat/reply', async (req, res) => {
+    try {
+        const { conversationId, phoneNumber, message } = req.body || {};
+        if (!String(message || '').trim()) {
+            return res.status(400).json({ message: 'Message is required.' });
+        }
+
+        const settings = await getSettings();
+        whatsappService.applySettings(settings);
+
+        const targetPhone = String(phoneNumber || '').trim();
+        if (!targetPhone) {
+            return res.status(400).json({ message: 'Phone number is required.' });
+        }
+
+        const result = await whatsappService.sendMessage(targetPhone, message);
+        if (!result.success) {
+            return res.status(500).json({ success: false, message: result.error || 'Failed to send message.' });
+        }
+
+        res.json({
+            success: true,
+            message: 'Reply sent successfully.',
+            conversationId: conversationId || null,
+            transport: result.transport || 'custom',
+        });
+    } catch (error) {
+        console.error('[Kirimdev Chat] Failed to send reply:', error);
+        res.status(500).json({ message: error.message || 'Failed to send reply.' });
+    }
+});
+
 router.post('/whatsapp/test-message', async (req, res) => {
     const { phoneNumber, message } = req.body;
-    const result = await whatsappService.sendMessage(phoneNumber, message);
+    try {
+        const settings = await getSettings();
+        whatsappService.applySettings(settings);
+    } catch (settingsError) {
+        console.warn('[WhatsApp Test] Failed to refresh settings before test send:', settingsError);
+    }
+
+    const normalizedRecipient = String(phoneNumber || '').trim();
+    const testMessage = String(message || '').trim();
+    const logId = await insertWhatsAppLog({
+        recipient_number: normalizedRecipient,
+        customer_id: null,
+        message_body: testMessage,
+        status: 'queued',
+        type: 'Test Message',
+        error_message: null,
+        transport: null,
+    });
+
+    const result = await whatsappService.sendMessage(normalizedRecipient, testMessage);
     if (result.success) {
-        res.json({ success: true, message: "Test message sent!" });
+        await updateWhatsAppLogById(logId, {
+            status: 'sent',
+            error_message: null,
+            transport: result.transport || null,
+            provider_message_id: result.providerMessageId || null,
+            sent_at: new Date(),
+            updated_at: new Date(),
+        });
+
+        res.json({
+            success: true,
+            message: result.transport === 'custom'
+                ? (result.messageKind === 'template'
+                    ? 'Test message sent via Kirimdev template fallback.'
+                    : 'Test message queued via Kirimdev.')
+                : 'Test message sent via WhatsApp Web.',
+            transport: result.transport || 'unknown',
+            messageKind: result.messageKind || 'text',
+            fallbackUsed: Boolean(result.fallbackUsed),
+            recipient: normalizedRecipient,
+            gatewayMessage: result.gatewayMessage || null,
+            providerMessageId: result.providerMessageId || null,
+            logId,
+        });
     } else {
+        await updateWhatsAppLogById(logId, {
+            status: 'failed',
+            error_message: result.error || 'Failed to send test message.',
+            transport: result.transport || null,
+            updated_at: new Date(),
+        });
+
         res.status(500).json({ success: false, message: result.error });
     }
 });
@@ -963,11 +1435,9 @@ router.get('/whatsapp/logs', async (req, res) => {
 
 router.post('/whatsapp/broadcast', async (req, res) => {
     const { filter, message, delayMode, delayStartMs, delayIncrementMs, delayMaxMs, delayStepEvery, delayRandomJitterMs } = req.body;
-    if (whatsappService.getStatus().status !== 'connected') {
-        return res.status(400).json({ success: false, message: 'WhatsApp is not connected.' });
-    }
     try {
         const settings = await getSettings();
+        whatsappService.applySettings(settings);
         const tz = settings.app.timezone;
         const delayProfile = getBroadcastDelayProfile(settings, {
             delayMode,
@@ -1004,16 +1474,25 @@ router.post('/whatsapp/broadcast', async (req, res) => {
                 customerId: customer.id,
                 packageName: customer.packageName || 'N/A'
             });
-            const result = await whatsappService.sendMessage(customer.phone, personalizedMessage);
-            
-            await pool.query('INSERT INTO whatsapp_logs SET ?', {
+            const logId = await insertWhatsAppLog({
                 recipient_number: customer.phone,
                 customer_id: customer.id,
                 message_body: personalizedMessage,
-                status: result.success ? 'sent' : 'failed',
+                status: 'queued',
                 type: 'Broadcast Message',
-                error_message: result.error || null,
+                error_message: null,
                 created_at: toMySQLDatetime(new Date(), tz),
+            });
+
+            const result = await sendOutboundWhatsAppMessage(settings, customer.phone, personalizedMessage);
+
+            await updateWhatsAppLogById(logId, {
+                status: result.success ? 'sent' : 'failed',
+                error_message: result.error || null,
+                transport: result.transport || null,
+                provider_message_id: result.providerMessageId || null,
+                sent_at: result.success ? new Date() : null,
+                updated_at: new Date(),
             });
 
             if(result.success) sentCount++;
@@ -1048,16 +1527,25 @@ router.post('/whatsapp/resend', async (req, res) => {
         const [logs] = await pool.query('SELECT * FROM whatsapp_logs WHERE id IN (?)', [logIds]);
         for (let index = 0; index < logs.length; index++) {
             const log = logs[index];
-            const result = await whatsappService.sendMessage(log.recipient_number, log.message_body);
-            
-            await pool.query('INSERT INTO whatsapp_logs SET ?', {
+            const resendLogId = await insertWhatsAppLog({
                 recipient_number: log.recipient_number,
                 customer_id: log.customer_id,
                 message_body: log.message_body,
-                status: result.success ? 'sent' : 'failed',
+                status: 'queued',
                 type: `Resend: ${log.type}`,
-                error_message: result.error || null,
+                error_message: null,
                 created_at: toMySQLDatetime(new Date(), tz),
+            });
+
+            const result = await sendOutboundWhatsAppMessage(settings, log.recipient_number, log.message_body);
+
+            await updateWhatsAppLogById(resendLogId, {
+                status: result.success ? 'sent' : 'failed',
+                error_message: result.error || null,
+                transport: result.transport || null,
+                provider_message_id: result.providerMessageId || null,
+                sent_at: result.success ? new Date() : null,
+                updated_at: new Date(),
             });
 
             if (index < logs.length - 1) {
@@ -1152,9 +1640,21 @@ router.post('/notifications', async (req, res) => {
 
 
 // --- Chatbot Status ---
-router.get('/chatbot-status', (req, res) => {
-    const apiKey = process.env.API_KEY;
-    res.json({ configured: !!apiKey });
+router.get('/chatbot-status', async (req, res) => {
+    try {
+        const settings = await getSettings();
+        const apiKey = String(settings.gemini?.apiKey || '').trim();
+        const enabled = Boolean(settings.gemini?.enabled);
+
+        res.json({
+            configured: Boolean(apiKey),
+            enabled,
+            apiKeyPresent: Boolean(apiKey),
+        });
+    } catch (error) {
+        console.error('[Admin Chatbot Status] Failed to read Gemini settings:', error);
+        res.status(500).json({ configured: false, enabled: false });
+    }
 });
 
 // --- Database Backup & Restore ---
@@ -1187,334 +1687,182 @@ router.get('/database/backup', (req, res) => {
     });
 });
 
-router.post('/database/restore', upload.single('backup'), (req, res) => {
+router.get('/database/restore/jobs/active', async (req, res) => {
+    try {
+        const job = await getActiveDatabaseRestoreJob();
+        if (!job) {
+            return res.json({ success: true, job: null });
+        }
+
+        return res.json({ success: true, job: formatDatabaseRestoreJob(job) });
+    } catch (error) {
+        console.error('[Database Restore] Error fetching active job:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Failed to fetch active database restore job.',
+        });
+    }
+});
+
+router.get('/database/restore/jobs/:jobId', async (req, res) => {
+    try {
+        const job = await getDatabaseRestoreJobById(req.params.jobId);
+        if (!job) {
+            return res.status(404).json({
+                success: false,
+                message: 'Database restore job not found.',
+            });
+        }
+
+        return res.json({ success: true, job: formatDatabaseRestoreJob(job) });
+    } catch (error) {
+        console.error('[Database Restore] Error fetching job status:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Failed to fetch database restore job status.',
+        });
+    }
+});
+
+router.post('/database/restore', upload.single('backup'), async (req, res) => {
     if (req.user.role !== 'admin') return res.status(403).json({ message: 'Forbidden' });
     const backupFile = req.file;
     if (!backupFile) {
         return res.status(400).json({ message: 'No backup file uploaded.' });
     }
 
-    if (getActiveDatabaseRestoreJob()) {
-        return res.status(409).json({
-            success: false,
-            message: 'A database restore job is already running.',
-            job: getDatabaseRestoreJobResponse(getActiveDatabaseRestoreJob()),
-        });
-    }
-
-    const job = createDatabaseRestoreJob(backupFile);
-    activeDatabaseRestoreJob = job;
-
-    const runRestore = async () => {
-        const { DB_USER, DB_PASSWORD, DB_NAME, DB_HOST } = process.env;
-
-        const cleanupJobFiles = async () => {
-            await cleanupRestoreFiles([backupFile.path]);
-        };
-
-        const shouldFallbackToSqlFile = (error) => {
-            if (!error) return false;
-            if (error.code === 'ENOENT') return true;
-            const message = String(error.message || '');
-            return /not recognized as an internal or external command/i.test(message)
-                || /not found/.test(message)
-                || /Unknown command '\\-'/i.test(message);
-        };
-
-        const restoreViaSqlFile = async () => {
-            if (!DB_NAME) throw new Error('DB_NAME is not configured.');
-            const connection = await mysql.createConnection({
-                host: DB_HOST || 'localhost',
-                user: DB_USER || 'root',
-                password: DB_PASSWORD || '',
-                database: DB_NAME,
-                multipleStatements: true,
+    try {
+        const activeJob = await getActiveDatabaseRestoreJob();
+        if (activeJob) {
+            fs.unlink(backupFile.path, () => {});
+            return res.status(409).json({
+                success: false,
+                message: 'Database restore job is already running.',
+                job: formatDatabaseRestoreJob(activeJob),
             });
-
-            try {
-                await connection.query('SET FOREIGN_KEY_CHECKS=0;');
-                const sqlContent = normalizeSqlDumpContent(await fsPromises.readFile(backupFile.path, 'utf8'));
-                const statements = splitSqlStatements(sqlContent);
-                updateDatabaseRestoreJob(job, {
-                    total_statements: statements.length,
-                    processed_count: 0,
-                    progress_percent: statements.length > 0 ? 10 : 100,
-                    message: statements.length > 0 ? `Applying ${statements.length} SQL statement(s) via fallback...` : 'No SQL statements found in backup.',
-                });
-
-                for (let index = 0; index < statements.length; index += 1) {
-                    if (job.cancel_requested) {
-                        throw new Error('Database restore job canceled.');
-                    }
-                    const statement = statements[index];
-                    if (!statement) continue;
-                    await connection.query(statement);
-                    const processedCount = index + 1;
-                    const progressPercent = statements.length > 0
-                        ? Math.min(99, Math.round((processedCount / statements.length) * 95))
-                        : 100;
-                    updateDatabaseRestoreJob(job, {
-                        processed_count: processedCount,
-                        progress_percent: progressPercent,
-                        message: `Restoring database (${processedCount}/${statements.length})...`,
-                    });
-                }
-
-                await connection.query('SET FOREIGN_KEY_CHECKS=1;');
-            } finally {
-                await connection.end();
-            }
-        };
-
-        updateDatabaseRestoreJob(job, {
-            status: 'running',
-            started_at: nowIso(),
-            message: 'Reading database backup...',
-            error_message: null,
-            progress_percent: 1,
-        });
-
-        try {
-            if (!DB_NAME) {
-                throw new Error('DB_NAME is not configured.');
-            }
-
-            const rawSqlContent = await fsPromises.readFile(backupFile.path, 'utf8');
-            const normalizedSqlContent = normalizeSqlDumpContent(rawSqlContent);
-            const statements = splitSqlStatements(normalizedSqlContent);
-
-            updateDatabaseRestoreJob(job, {
-                total_statements: statements.length,
-                message: statements.length > 0 ? `Prepared ${statements.length} SQL statement(s).` : 'No SQL statements found in backup.',
-                progress_percent: statements.length > 0 ? 5 : 100,
-            });
-
-            if (job.cancel_requested) {
-                updateDatabaseRestoreJob(job, {
-                    status: 'canceled',
-                    finished_at: nowIso(),
-                    message: 'Database restore job canceled.',
-                    progress_percent: 0,
-                });
-                await cleanupJobFiles();
-                return;
-            }
-
-            const mysqlBin = resolveMysqlBinary('mysql');
-            const commandArgs = [
-                '--binary-mode=1',
-                '--default-character-set=utf8mb4',
-                `--host=${DB_HOST || 'localhost'}`,
-                `--user=${DB_USER || 'root'}`,
-            ];
-            if (DB_PASSWORD) {
-                commandArgs.push(`--password=${DB_PASSWORD}`);
-            }
-            commandArgs.push(DB_NAME);
-
-            let cliRestoreResult;
-            try {
-                cliRestoreResult = await new Promise((resolve, reject) => {
-                    const child = spawn(mysqlBin, commandArgs, {
-                        stdio: ['pipe', 'pipe', 'pipe'],
-                    });
-
-                    updateDatabaseRestoreJob(job, {
-                        child_process: child,
-                        message: 'Applying SQL backup via MySQL CLI...',
-                        progress_percent: Math.max(job.progress_percent, 10),
-                    });
-
-                    let stderr = '';
-                    child.stderr.on('data', (chunk) => {
-                        stderr += chunk.toString();
-                    });
-
-                    child.on('error', reject);
-                    child.on('close', (code, signal) => {
-                        resolve({ code, signal, stderr });
-                    });
-
-                    child.stdin.on('error', () => {});
-                    child.stdin.write(normalizedSqlContent);
-                    child.stdin.end();
-                });
-            } finally {
-                updateDatabaseRestoreJob(job, {
-                    child_process: null,
-                });
-            }
-
-            if (job.cancel_requested) {
-                updateDatabaseRestoreJob(job, {
-                    status: 'canceled',
-                    finished_at: nowIso(),
-                    message: 'Database restore job canceled.',
-                    progress_percent: 0,
-                });
-                await cleanupJobFiles();
-                return;
-            }
-
-            if (cliRestoreResult && cliRestoreResult.code !== 0) {
-                const error = new Error(cliRestoreResult.stderr || `mysql exited with code ${cliRestoreResult.code}`);
-                console.error(`Restore exec error: ${error.message}`);
-
-                if (shouldFallbackToSqlFile(error)) {
-                    updateDatabaseRestoreJob(job, {
-                        message: 'MySQL CLI unavailable. Falling back to SQL connector restore...',
-                        progress_percent: Math.max(job.progress_percent, 20),
-                    });
-
-                    try {
-                        await restoreViaSqlFile();
-                        updateDatabaseRestoreJob(job, {
-                            status: 'completed',
-                            finished_at: nowIso(),
-                            message: 'Database restored successfully using the MySQL connector fallback. The application may need to be restarted.',
-                            progress_percent: 100,
-                        });
-                        return;
-                    } catch (fallbackError) {
-                        console.error('Fallback restore failed:', fallbackError);
-                        throw fallbackError;
-                    }
-                }
-
-                throw error;
-            }
-
-            updateDatabaseRestoreJob(job, {
-                status: 'completed',
-                finished_at: nowIso(),
-                message: 'Database restored successfully! The application may need to be restarted.',
-                progress_percent: 100,
-                processed_count: statements.length,
-            });
-        } catch (error) {
-            if (job.cancel_requested) {
-                updateDatabaseRestoreJob(job, {
-                    status: 'canceled',
-                    finished_at: nowIso(),
-                    message: 'Database restore job canceled.',
-                    progress_percent: 0,
-                });
-            } else if (shouldFallbackToSqlFile(error)) {
-                try {
-                    updateDatabaseRestoreJob(job, {
-                        message: 'MySQL CLI unavailable. Falling back to SQL connector restore...',
-                        progress_percent: Math.max(job.progress_percent, 20),
-                    });
-                    await restoreViaSqlFile();
-                    updateDatabaseRestoreJob(job, {
-                        status: 'completed',
-                        finished_at: nowIso(),
-                        message: 'Database restored successfully using the MySQL connector fallback. The application may need to be restarted.',
-                        progress_percent: 100,
-                    });
-                } catch (fallbackError) {
-                    console.error('Fallback restore failed:', fallbackError);
-                    updateDatabaseRestoreJob(job, {
-                        status: 'failed',
-                        finished_at: nowIso(),
-                        error_message: fallbackError.message || 'Failed to restore database.',
-                        message: fallbackError.message || 'Failed to restore database.',
-                    });
-                }
-            } else {
-                console.error('Restore preparation failed:', error);
-                updateDatabaseRestoreJob(job, {
-                    status: 'failed',
-                    finished_at: nowIso(),
-                    error_message: error.message || 'Failed to restore database.',
-                    message: error.message || 'Failed to restore database.',
-                });
-            }
-        } finally {
-            await cleanupJobFiles();
         }
-    };
 
-    void runRestore();
+        const job = await createDatabaseRestoreJob({
+            backupPath: backupFile.path,
+            originalFilename: backupFile.originalname,
+        });
 
-    return res.status(202).json({
-        success: true,
-        message: 'Database restore job queued.',
-        job: getDatabaseRestoreJobResponse(job),
-    });
-});
+        setImmediate(() => {
+            processDatabaseRestoreQueue().catch((error) => {
+                console.error('[Database Restore] Error while starting queued job:', error);
+            });
+        });
 
-router.get('/database/restore/jobs/active', (req, res) => {
-    if (req.user.role !== 'admin') return res.status(403).json({ message: 'Forbidden' });
-    return res.json({
-        success: true,
-        job: getDatabaseRestoreJobResponse(getActiveDatabaseRestoreJob()),
-    });
-});
-
-router.get('/database/restore/jobs/:jobId', (req, res) => {
-    if (req.user.role !== 'admin') return res.status(403).json({ message: 'Forbidden' });
-    const jobId = String(req.params.jobId || '').trim();
-    const job = getDatabaseRestoreJobById(jobId);
-    if (!job) {
-        return res.status(404).json({
+        return res.status(202).json({
+            success: true,
+            started: true,
+            message: 'Database restore job queued and will run in the background.',
+            job: formatDatabaseRestoreJob(job),
+        });
+    } catch (error) {
+        console.error('[Database Restore] Fatal error while enqueueing restore job:', error);
+        fs.unlink(backupFile.path, () => {});
+        return res.status(500).json({
             success: false,
-            message: 'Database restore job not found.',
-            job: null,
+            message: error.message || 'Failed to enqueue database restore job.',
         });
     }
-    return res.json({
-        success: true,
-        job: getDatabaseRestoreJobResponse(job),
-    });
 });
 
-router.post('/database/restore/jobs/:jobId/cancel', (req, res) => {
+router.post('/database/restore/jobs/:jobId/cancel', async (req, res) => {
     if (req.user.role !== 'admin') return res.status(403).json({ message: 'Forbidden' });
-    const jobId = String(req.params.jobId || '').trim();
-    const job = getDatabaseRestoreJobById(jobId);
 
-    if (!job) {
-        return res.status(404).json({
-            success: false,
-            message: 'Database restore job not found.',
-            job: null,
+    try {
+        const job = await getDatabaseRestoreJobById(req.params.jobId);
+        if (!job) {
+            return res.status(404).json({
+                success: false,
+                message: 'Database restore job not found.',
+            });
+        }
+
+        if (![DATABASE_RESTORE_JOB_STATUSES.QUEUED, DATABASE_RESTORE_JOB_STATUSES.RUNNING].includes(job.status)) {
+            return res.status(409).json({
+                success: false,
+                message: `Restore job cannot be canceled from status '${job.status}'.`,
+                job: formatDatabaseRestoreJob(job),
+            });
+        }
+
+        await updateDatabaseRestoreJob(job.id, {
+            status: DATABASE_RESTORE_JOB_STATUSES.CANCELED,
+            message: 'Restore canceled by admin.',
+            error_message: null,
+            finished_at: new Date(),
+            worker_pid: null,
+            updated_at: new Date(),
         });
-    }
 
-    if (!isDatabaseRestoreJobActive(job)) {
+        const terminated = cancelDatabaseRestoreWorker(job.worker_pid);
+        if (job.backup_path) {
+            fs.unlink(job.backup_path, () => {});
+        }
+
         return res.json({
             success: true,
-            message: 'Database restore job is already finished.',
-            job: getDatabaseRestoreJobResponse(job),
+            message: terminated
+                ? 'Restore job canceled and worker terminated.'
+                : 'Restore job canceled.',
+            job: formatDatabaseRestoreJob(await getDatabaseRestoreJobById(job.id)),
+        });
+    } catch (error) {
+        console.error('[Database Restore] Failed to cancel restore job:', error);
+        return res.status(500).json({
+            success: false,
+            message: error.message || 'Failed to cancel database restore job.',
         });
     }
+});
 
-    job.cancel_requested = true;
-    updateDatabaseRestoreJob(job, {
-        message: 'Database restore cancellation requested.',
-    });
+router.get('/app-update/status', async (req, res) => {
+    if (req.user.role !== 'admin') return res.status(403).json({ message: 'Forbidden' });
 
-    if (job.child_process) {
-        try {
-            job.child_process.kill();
-        } catch {}
-    }
-
-    if (job.status === 'queued') {
-        updateDatabaseRestoreJob(job, {
-            status: 'canceled',
-            finished_at: nowIso(),
-            progress_percent: 0,
-            message: 'Database restore job canceled.',
+    try {
+        const { response, data } = await callAppUpdateService('GET', '/status');
+        const localBuildInfo = await resolveLocalAppBuildInfo();
+        return res.status(200).json({
+            ...data,
+            success: response.ok,
+            service_available: response.ok,
+            build: data?.build || localBuildInfo,
+        });
+    } catch (error) {
+        console.error('[App Update] Failed to fetch update status:', error);
+        return res.status(200).json({
+            success: false,
+            service_available: false,
+            message: error.message || 'Failed to fetch application update status.',
+            job: null,
+            build: await resolveLocalAppBuildInfo(),
         });
     }
+});
 
-    return res.json({
-        success: true,
-        message: 'Database restore job cancellation requested.',
-        job: getDatabaseRestoreJobResponse(job),
-    });
+router.post('/app-update', async (req, res) => {
+    if (req.user.role !== 'admin') return res.status(403).json({ message: 'Forbidden' });
+
+    try {
+        const { response, data } = await callAppUpdateService('POST', '/update');
+        const localBuildInfo = await resolveLocalAppBuildInfo();
+        return res.status(response.status).json({
+            ...data,
+            service_available: response.ok,
+            build: data?.build || localBuildInfo,
+        });
+    } catch (error) {
+        console.error('[App Update] Failed to start application update:', error);
+        return res.status(503).json({
+            success: false,
+            service_available: false,
+            message: error.message || 'Failed to start application update.',
+            build: await resolveLocalAppBuildInfo(),
+        });
+    }
 });
 
 
@@ -1861,83 +2209,6 @@ router.get('/debug/suspension-audit', async (req, res) => {
     } catch (error) {
         console.error('Suspension audit failed:', error);
         res.status(500).json({ message: 'Failed to run suspension audit.', error: error.message });
-    }
-});
-
-router.get('/app-update/status', async (req, res) => {
-    if (req.user.role !== 'admin') return res.status(403).json({ message: 'Forbidden' });
-
-    try {
-        const { response, data } = await callAppUpdateService('GET', '/status');
-        const localBuildInfo = await resolveLocalAppBuildInfo();
-        return res.status(200).json({
-            ...data,
-            success: response.ok,
-            service_available: response.ok,
-            build: data?.build || localBuildInfo,
-        });
-    } catch (error) {
-        console.error('[App Update] Failed to fetch update status:', error);
-        return res.status(200).json({
-            success: false,
-            service_available: false,
-            message: error.message || 'Failed to fetch application update status.',
-            job: null,
-            build: await resolveLocalAppBuildInfo(),
-        });
-    }
-});
-
-router.get('/app-update/check', async (req, res) => {
-    if (req.user.role !== 'admin') return res.status(403).json({ message: 'Forbidden' });
-
-    try {
-        const { response, data } = await callAppUpdateService('GET', '/check');
-        const localBuildInfo = await resolveLocalAppBuildInfo();
-        return res.status(200).json({
-            ...data,
-            success: response.ok && data?.success !== false,
-            service_available: response.ok,
-            build: data?.build || localBuildInfo,
-        });
-    } catch (error) {
-        console.error('[App Update] Failed to check for application updates:', error);
-        return res.status(200).json({
-            success: false,
-            service_available: false,
-            message: error.message || 'Failed to check application updates.',
-            update_available: false,
-            build: await resolveLocalAppBuildInfo(),
-            current: await resolveLocalAppBuildInfo(),
-            latest: null,
-            current_head: null,
-            latest_head: null,
-            ahead_by: null,
-            behind_by: null,
-            changelog: [],
-        });
-    }
-});
-
-router.post('/app-update', async (req, res) => {
-    if (req.user.role !== 'admin') return res.status(403).json({ message: 'Forbidden' });
-
-    try {
-        const { response, data } = await callAppUpdateService('POST', '/update');
-        const localBuildInfo = await resolveLocalAppBuildInfo();
-        return res.status(response.status).json({
-            ...data,
-            service_available: response.ok,
-            build: data?.build || localBuildInfo,
-        });
-    } catch (error) {
-        console.error('[App Update] Failed to start application update:', error);
-        return res.status(503).json({
-            success: false,
-            service_available: false,
-            message: error.message || 'Failed to start application update.',
-            build: await resolveLocalAppBuildInfo(),
-        });
     }
 });
 

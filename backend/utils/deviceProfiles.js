@@ -1,1 +1,224 @@
-const _0x5f126a=_0x1d1b;(function(_0x1bd393,_0x51977e){const _0x3d8f34=_0x1d1b,_0x348163=_0x1bd393();while(!![]){try{const _0x432f2b=parseInt(_0x3d8f34(0x1e4))/(-0x203+0x23e7+0x19*-0x15b)+-parseInt(_0x3d8f34(0x19f))/(-0x1f9d+-0x1*-0x1091+0xf0e)*(-parseInt(_0x3d8f34(0x29e))/(0xd3d*0x1+0xded+-0x1b27))+parseInt(_0x3d8f34(0x21a))/(-0x83*0x1f+-0x58*0x67+0x3349*0x1)+parseInt(_0x3d8f34(0x19c))/(-0x7c0*0x2+-0xfb*-0x19+-0x8fe)+parseInt(_0x3d8f34(0x21c))/(-0x6bf+0x89+0x4c*0x15)*(-parseInt(_0x3d8f34(0x20f))/(0x5b2+0x166f+-0x3*0x95e))+-parseInt(_0x3d8f34(0x216))/(-0x5ce+-0x89*0x33+0x2121)+-parseInt(_0x3d8f34(0x297))/(-0x764+0xd2d+-0x20*0x2e)*(-parseInt(_0x3d8f34(0x199))/(-0x47b*0x2+0x48a+0x476));if(_0x432f2b===_0x51977e)break;else _0x348163['push'](_0x348163['shift']());}catch(_0x3acc0f){_0x348163['push'](_0x348163['shift']());}}}(_0x2edf,0x6868b+-0x8f8b2+-0x59a*-0x1c6));const _0x11e709=(function(){const _0xb358bf=_0x1d1b,_0x543cc1={};_0x543cc1[_0xb358bf(0x257)]=function(_0x1c76f4,_0x2eb697){return _0x1c76f4!==_0x2eb697;},_0x543cc1['AnnCt']=function(_0x10886d,_0x3c096a){return _0x10886d===_0x3c096a;},_0x543cc1[_0xb358bf(0x285)]=_0xb358bf(0x272),_0x543cc1[_0xb358bf(0x278)]=_0xb358bf(0x213),_0x543cc1['ShRpS']=_0xb358bf(0x227);const _0x47cd47=_0x543cc1;let _0x53624e=!![];return function(_0x161eb0,_0x153735){const _0x291feb=_0xb358bf;if(_0x47cd47[_0x291feb(0x257)](_0x47cd47['lgGEJ'],_0x47cd47['ShRpS'])){const _0x156cdf=_0x53624e?function(){const _0x3d3811=_0x291feb,_0x1e6daa={'QBrqu':function(_0x24d1aa,_0x5320ef){const _0x2b58bf=_0x1d1b;return _0x47cd47[_0x2b58bf(0x257)](_0x24d1aa,_0x5320ef);}};if(_0x47cd47[_0x3d3811(0x194)](_0x47cd47[_0x3d3811(0x285)],_0x3d3811(0x272))){if(_0x153735){const _0x55022b=_0x153735[_0x3d3811(0x277)](_0x161eb0,arguments);return _0x153735=null,_0x55022b;}}else{if(_0x5b7763&&_0x1e6daa[_0x3d3811(0x207)](_0x4efed5[_0x3d3811(0x1fa)],_0x5faafb))return![];return _0x279110[_0x3d3811(0x25b)+'rn']['test'](_0x4eb484);}}:function(){};return _0x53624e=![],_0x156cdf;}else{const _0x3d0dca=_0x3e4ff3[_0x291feb(0x24e)+'r'][_0x291feb(0x1a7)]['bind'](_0x5e0fd7),_0x2cc66e=_0x28f7f3[_0x342abd],_0x59ed52=_0x1db642[_0x2cc66e]||_0x3d0dca;_0x3d0dca[_0x291feb(0x1f0)]=_0x96e622['bind'](_0x1275e4),_0x3d0dca[_0x291feb(0x1d8)]=_0x59ed52['toString'][_0x291feb(0x223)](_0x59ed52),_0x2ecddc[_0x2cc66e]=_0x3d0dca;}};}()),_0x486ad4=_0x11e709(this,function(){const _0xd42893=_0x1d1b,_0x253b64={};_0x253b64['jVqTD']='(((.+)+)+)'+'+$';const _0x544cb2=_0x253b64;return _0x486ad4[_0xd42893(0x1d8)]()[_0xd42893(0x1e9)](_0x544cb2[_0xd42893(0x1ee)])[_0xd42893(0x1d8)]()[_0xd42893(0x24e)+'r'](_0x486ad4)['search'](_0xd42893(0x244)+'+$');});_0x486ad4();const _0xed2a75=(function(){let _0x2063b8=!![];return function(_0x2c4fa1,_0x216642){const _0x40d3f2=_0x2063b8?function(){const _0x11c109=_0x1d1b;if(_0x216642){const _0xfee19f=_0x216642[_0x11c109(0x277)](_0x2c4fa1,arguments);return _0x216642=null,_0xfee19f;}}:function(){};return _0x2063b8=![],_0x40d3f2;};}()),_0x220084=_0xed2a75(this,function(){const _0x3d545a=_0x1d1b,_0x126940={'VpOrn':'WIKMH','BgNlu':function(_0xaa56e6,_0x42b59e){return _0xaa56e6+_0x42b59e;},'Ulmwh':'{}.constru'+_0x3d545a(0x212)+_0x3d545a(0x1f5)+'\x20)','IRPqt':'gzjsl','NTIcS':_0x3d545a(0x288),'Yaiha':function(_0x13942c){return _0x13942c();},'kZZeO':_0x3d545a(0x219),'bYWNv':_0x3d545a(0x28c),'VJwZX':_0x3d545a(0x21b),'WyNgj':_0x3d545a(0x196),'bwWHL':_0x3d545a(0x2bc),'gXAuB':function(_0x2a6d85,_0x36cd0f){return _0x2a6d85<_0x36cd0f;}},_0x454952=function(){const _0x3a3e83=_0x3d545a;let _0x1f3dba;try{if(_0x126940[_0x3a3e83(0x25d)]!==_0x126940[_0x3a3e83(0x25d)]){const _0x54f28c=_0x49bf54?function(){const _0x2ccd9a=_0x3a3e83;if(_0x32477b){const _0x2da223=_0x5514c3[_0x2ccd9a(0x277)](_0x454f5c,arguments);return _0x4248c3=null,_0x2da223;}}:function(){};return _0x43a7aa=![],_0x54f28c;}else _0x1f3dba=Function(_0x126940[_0x3a3e83(0x21d)]('return\x20(fu'+_0x3a3e83(0x191),_0x126940[_0x3a3e83(0x1d6)])+');')();}catch(_0x163832){if(_0x126940[_0x3a3e83(0x26a)]===_0x126940[_0x3a3e83(0x1c6)]){if(_0x3bfd57){const _0x31eb6b=_0x3a5b77[_0x3a3e83(0x277)](_0x49b44b,arguments);return _0x276aa1=null,_0x31eb6b;}}else _0x1f3dba=window;}return _0x1f3dba;},_0x514907=_0x126940['Yaiha'](_0x454952),_0x599336=_0x514907[_0x3d545a(0x2ac)]=_0x514907[_0x3d545a(0x2ac)]||{},_0x49aa23=[_0x126940[_0x3d545a(0x273)],_0x126940[_0x3d545a(0x192)],_0x126940[_0x3d545a(0x20b)],_0x3d545a(0x239),_0x126940[_0x3d545a(0x27b)],_0x3d545a(0x2b8),_0x126940['bwWHL']];for(let _0x1b784f=0x2*0x577+0xe74+0x1*-0x1962;_0x126940[_0x3d545a(0x294)](_0x1b784f,_0x49aa23[_0x3d545a(0x1bd)]);_0x1b784f++){const _0x449951=_0xed2a75[_0x3d545a(0x24e)+'r'][_0x3d545a(0x1a7)]['bind'](_0xed2a75),_0xb1d338=_0x49aa23[_0x1b784f],_0x4533b7=_0x599336[_0xb1d338]||_0x449951;_0x449951['__proto__']=_0xed2a75[_0x3d545a(0x223)](_0xed2a75),_0x449951['toString']=_0x4533b7[_0x3d545a(0x1d8)][_0x3d545a(0x223)](_0x4533b7),_0x599336[_0xb1d338]=_0x449951;}});_0x220084();const _0x399229={};_0x399229[_0x5f126a(0x186)]=[_0x5f126a(0x1ed)+_0x5f126a(0x259)+_0x5f126a(0x1c8)+_0x5f126a(0x295)+_0x5f126a(0x18a)+_0x5f126a(0x1ad),'InternetGa'+_0x5f126a(0x259)+_0x5f126a(0x1c8)+_0x5f126a(0x295)+_0x5f126a(0x18a)+_0x5f126a(0x1f1),'Device.WiF'+_0x5f126a(0x1c5)+_0x5f126a(0x1d3)],_0x399229[_0x5f126a(0x1f2)]=[_0x5f126a(0x1ed)+_0x5f126a(0x259)+_0x5f126a(0x1c8)+_0x5f126a(0x295)+'nfiguratio'+'n.1.KeyPas'+'sphrase',_0x5f126a(0x1ed)+_0x5f126a(0x259)+_0x5f126a(0x1c8)+'e.1.WLANCo'+_0x5f126a(0x18a)+'n.5.KeyPas'+'sphrase','Device.WiF'+'i.AccessPo'+_0x5f126a(0x200)+_0x5f126a(0x2ab)+'ssphrase'],_0x399229[_0x5f126a(0x21e)+_0x5f126a(0x2b2)]=[_0x5f126a(0x1ed)+_0x5f126a(0x259)+_0x5f126a(0x184)+_0x5f126a(0x188)+_0x5f126a(0x289)+_0x5f126a(0x18f)+_0x5f126a(0x28e)+_0x5f126a(0x237)+_0x5f126a(0x2b2),_0x5f126a(0x1a9)+'.Interface'+_0x5f126a(0x262)+'e'],_0x399229[_0x5f126a(0x1c7)]=[_0x5f126a(0x1ed)+_0x5f126a(0x259)+_0x5f126a(0x184)+_0x5f126a(0x23a)+'COM_WANPON'+'InterfaceC'+_0x5f126a(0x2b9)+_0x5f126a(0x1c9),_0x5f126a(0x187)+_0x5f126a(0x25a)+_0x5f126a(0x215)+_0x5f126a(0x1d1)+'Level'];const _0x5964b3={};function _0x2edf(){const _0x5511c8=['msbTDwX0As1Zzq','ufbdB25Uzwn0Aq','z3bVBI1VBNvFEW','ChrnB2r1BguUmq','DguGE3bVCNr9ia','zw1WB3j0Fsb2Ba','C2HVigDWB24GBW','z1HbDui','zs4XlLDmqu5dBW','BMvWCM9MAwXLlq','mtH2zeDNA0i','Fsb7B250swr9ia','C2HVihbVBIbWBW','lw9UDv97zNjHBq','CMfTzx0VE3nSBW','wLrf','z2vTCg9YDcb7zW','mtGYmZy3oxn1D2r3Aa','u2HHCMvKs2v5oW','uhjVzMLSzx0SEW','C3j2uhjVzMLSzq','CMvIB290t251','CMvTB3rLlw9UDq','zxjMywnLq29UzG','Aw50zxjMywnLia','yZmWmc1JmZiW','Dh0GDxnLCI12Ba','r3vUywTHBIbWyq','msbZDgf0zsbSBW','ifntsuq','CML0Es5lzxLqyq','y29UC29Szq','x0vWB25jBNrLCG','CMvNAxn0zxjpBG','swr9','mc8Wl3TWB259ia','ENrLlw9UDc1Nzq','yw1L','Cg9Ulw9UDs1TBG','BNrjzh0SE3nLCG','zgLZywjSzsbWCG','B250','CM9MAwXLFq','DgfIBgu','B25MAwCUuLHqBW','DMvUzg9Y','zs1Pzcb7C3j2ua','DhjHy2u','z3bVBIaWlZa','CMvIB290','Bwv9l3TZBg90Fq','zw5HyMXLihbYBW','B251ihvUy2zN','AwfSFsbVBwnPia','x3TMCMfTzx0VEW','C3LZDgvTvxb0Aq','yxrPB24Gz3bVBG','B3rUB30','Dh06E29UDeLKFq','C2XVDh0VE3bVCG','zNjHBwv9l3TZBa','lxzSyw4GE3vZzq','yMLUzfnLCNzPyW','zs5xqu5ezxzPyW','tgv2zwW','C3nPza','rgv2AwnLlK9WDa','zs4QlLDbtKnVBG','CMvNAxn0CMf0Aq','BMzPz3vYyxrPBW','B250igfKzcb7Ca','lLjyug93zxi','CLzSyw59ihj4lq','lxnYDNbYB2zPBa','AwnLlIOUv0foua','C2HVDYbJyxjKia','BMn0Aw9UkcKG','yLLxtNy','C2XVDg5VihTZBa','qw5Uq3q','C2vYDMLJzsb7CW','zxHJzxb0Aw9U','C2HVDYbYDw4GAq','B250swr9','ndu2mZq1mfvUzKfqvq','t01Fr3bVBKLUDa','zxrOigv0Af8WlW','nJm2mtyWzKv6z05s','DgnVBNqGE3rJBW','t05dB25Uzwn0Aq','mLjkA0DKDq','zs5yx0H1yxDLAq','zw5HyMXLv2vIvW','B2zPBguTAwqGEW','AwnLlJeUv0foua','zvbVCNrjzh0GDG','zY5pChrPy2fSva','C2HVD09UDvn0yq','ChjVDg90ExbL','qMvIzxjHCgeGzG','rgv2AwnLlLbqua','DgvZDa','zx0GB250lxnYDG','zgvSzxrLt250','BI4XlLntsuq','CNzPy2uGDxnLCG','BgLUzvbYB2zPBa','y29TBwfUzhm','sw50zxjMywnLqW','uhjVzMLSzxm','CMzHy2vdB25MAq','DMXHBN0','BwL0ihn0yxrLia','C2vYAwfSFq','BIbTB2rLihbLCG','E29UDeLKFq','B259ihTVBNrjza','zs4XlLDbtKnVBG','E2n0Dhj9ihDHAG','Cg9YDcb7DNbVCG','BgvUz3rO','igvXDwLWigDWBW','zMLUza','lwDLBMvYAwm','Bs1NCM91Ca','BNuGyNKGC24GEW','Cg9Ulw9UDq','DgvYBwLUywW','As5tu0LelIOUuW','tLrjy1m','CNHqB3DLCG','zs5mqu5ezxzPyW','D2vY','B3r9','zwjLCMfWysbTBW','y2rHDgeTB2X0lq','B251igfJDgL2yq','ugXHy2vOB2XKzq','AwfSFsX7BgLUzq','B3r9l3TWB3j0Fq','AwnHBfnPz25HBa','BMvYAwm','u0Le','B3j0Fsb7B250sq','y2fYzfnSB3q','vwXTD2G','Fs97Cg9YDh06EW','Dg9tDhjPBMC','CMvtAgfYzwrlzq','BwfUywDLBwvUDa','Dg9mB3DLCKnHCW','B24TB251x3TMCG','BgLZDerLDMLJzq','x0Dqt04UuLHqBW','t01FrxbVBKLUDa','ihTWB259ihTVBG','BYb7Cg9UFsb7BW','ChjVy2vZC29Y','As5by2nLC3nqBW','mZe1mdflsND4sMG','BMf1DgG','ENrLlw9SDc1JmW','CIb7Cg9UFsX7BW','C2HVDYbTywmGzW','C2vHCMnO','ChjVzMLSzs1Pza','De9WDgLJywXqyq','zxjZAw9UihTWBW','sw50zxjUzxrhyq','ALzXveq','B250ihTVBNrjza','x19WCM90B19F','BI41lLntsuq','A2v5','C2HVD0LUDgvYzG','zx0VE3nSB3r9lW','CM4GDgHPCYiPka','C2vYDMLJzs1WBW','BMfTzsb7y3vZDa','t3b0AwnHBe1Vza','C3mTDhLWzsb3yq','DhLWzq','zs4QlLHFq1qTqW','zYbNCg9Ulw9UDq','igrOy3aGDMXHBG','B251igrLywn0Aq','B24Ums5yx0HxxW','Aw50lIOUu2vJDq','lIOUt3b0AwnHBa','AhvHD2vPlw9UDa','BN0GE29UDeLKFq','Dh0VE3bVCNr9oG','CMfUC2nLAxzLCG','zs5yx0fmvv9pBG','uujYCxu','ihzWB3j0ihTWBW','zgLZywjSzq','AwCGE3bVCNrjza','vKP3wLG','B250ihT0y29UDa','C2HVDYbWCM9Jzq','CNqGE3n2y0LKFq','n0TssMz2uW','AwCUuLHqB3DLCG','C2LVBG','y3rVCIGICMv0Dq','BfvjzLG','uhjVzMLSzx0','zMfJzs4QlK9WDa','ntq4mZi1nMn5weHLtq','CMvIB290t250','Cgf0Ahm','Bg9N','nZuZmZiWwMvYt1zV','Aw5MBW','nde0odK4ogjwDeHNza','qMDoBhu','ChbWB2vvC2vYBG','C2HVDYbVBNqGDG','BM8GB251ihTWBW','AwGGzhvSDtSGyG','ihn0ywjPBc4','yMLUza','ywKGDg9WB2XVzW','DxnLCLzSyw59la','zgvS','yLbxqM8','BMCGmIbPBMDYzq','u2vZDwfPA2fUia','B250ihjLyM9VDa','E3nLCMLHBh0GBW','FsX7DMXHBN0SEW','B250lwXPBMvWCG','mdaTyZmYma','Dg9JB2WGD2vI','zMLSDgvY','rgv2AwnLlLDPrG','ugLRDuq','Dw5YzwDPC3rLCG','Fs8XihvZzxiTDG','B2zPBgv9ig9UDa','BI41lLbYzvnOyq','B24UkI5vC2vYBG','CMvKs2v5lJeUua','zxjYB3i','zs4QlLHFwLrflq','ihTZCNzqCM9MAq','sw50zxjHzMnLqW','B2X0','CxvPCMTZ','yw5szw1VDgu','C3nVCG','zs4XlLHFq01dqW','z3bVBI1VBhrFEW','C2HVDYbNCg9Uia','kcGOlISPkYKRkq','BMzVigfSBa','C2vJDxjPDhKTBq','zwXHAcbNyw50Aq','FsbZBI1HDxrOia','C2HVDYbVBNqGBW','lKLUDgvYzMfJzq','zs4XlLHFsfDFtW','zh0GC24GE3nLCG','DMf0zsb7Cg9YDa','y29UC3rYDwn0BW','y3r0CIb7y3r0CG','v2fUuMvTB3rL','oNTVBNrjzh0','BNrjzh0GChjVzG','DgnVBNrhzw1tzq','C2HVDYbWB24GCa','AxjTD2fYzsbTzq','B250igrLBgv0zq','A2rHCM8','DgvTCgvYyxr1CG','Dgv3yxLezxzPyW','AwnHBc5jBNrLCG','Bw9KzwXqyxr0zq','Cg9Usw50zxjMyq','vNbpCM4','zwrpBNu','DvbVCNqX','DhjPBq','y29UzMLNDxjLia','lIOUvxnLCM5HBq','zMLUze9UDuj5uW','CNzPy2u','lLnPz25HBeXLDG','AwiGzgLPC2KU','C2HVD09UDvzLCG','zs4QlLHFr3bVBG','x0DWB25jBNrLCG','svjqCxq','zgLHz25VC3rPyW','CMf0DxjL','qY1eqvrb','wfbVD2vY','B251ihn0yxrLia','zgLZywjSzvDLyG','CMvIB290ihnLDa','zxzNqvK','A1PAzu8','C2HVDYbVBNqGAq','zxj2AwnLswr9ia','BI4XlLbYzvnOyq','yxbWBhK','BgDhruO','BNrjzh0','B3DLCIbHDhrLBG','v3Loz2O','Aw9YAxr5ida','CNr9ihTVBNrjza','zMfJzunVBMzPzW','BM90zxm','DeLKFq','Cg9Ulw9UDv97zG','CMfTlLjyug93zq','AwXLihT0y29UDa','qu5fue9osw50zq','whvKvvy','yw1LFs97C2XVDa','zxHPDa','vMv0Due','BMvJDgLVBKrLDG','BgfUFsb2BgfUia','BI1VBNvFE2zYyq','D2fYBG'];_0x2edf=function(){return _0x5511c8;};return _0x2edf();}_0x5964b3['id']=_0x5f126a(0x2b1)+_0x5f126a(0x1d2),_0x5964b3[_0x5f126a(0x1fa)]=_0x5f126a(0x2b6),_0x5964b3[_0x5f126a(0x2ba)]=_0x5f126a(0x29c),_0x5964b3[_0x5f126a(0x25b)+'rn']=/zte|zxhn|f6xx|f6\d+/i,_0x5964b3[_0x5f126a(0x218)]=_0x399229,_0x5964b3[_0x5f126a(0x23e)]=[_0x5f126a(0x2a8)+'th\x20IGD\x20leb'+_0x5f126a(0x221)+_0x5f126a(0x1cb)+'del\x20butuh\x20'+_0x5f126a(0x271)+_0x5f126a(0x247)+_0x5f126a(0x2aa)];const _0x392101={};_0x392101[_0x5f126a(0x186)]=[_0x5f126a(0x1ed)+_0x5f126a(0x259)+_0x5f126a(0x1c8)+_0x5f126a(0x295)+_0x5f126a(0x18a)+_0x5f126a(0x1ad),_0x5f126a(0x1ed)+'tewayDevic'+_0x5f126a(0x1c8)+_0x5f126a(0x295)+_0x5f126a(0x18a)+_0x5f126a(0x1f1),_0x5f126a(0x231)+_0x5f126a(0x1c5)+'SID'],_0x392101['key']=['InternetGa'+_0x5f126a(0x259)+_0x5f126a(0x1c8)+_0x5f126a(0x295)+_0x5f126a(0x18a)+_0x5f126a(0x276)+_0x5f126a(0x238)+_0x5f126a(0x1d9)+'y',_0x5f126a(0x1ed)+_0x5f126a(0x259)+_0x5f126a(0x1c8)+_0x5f126a(0x295)+_0x5f126a(0x18a)+_0x5f126a(0x236)+_0x5f126a(0x238)+_0x5f126a(0x1d9)+'y',_0x5f126a(0x231)+_0x5f126a(0x1e3)+'int.*.Secu'+_0x5f126a(0x2ab)+'ssphrase'],_0x392101[_0x5f126a(0x21e)+_0x5f126a(0x2b2)]=['InternetGa'+_0x5f126a(0x259)+_0x5f126a(0x184)+_0x5f126a(0x188)+_0x5f126a(0x289)+'ice.*.WANP'+_0x5f126a(0x28e)+_0x5f126a(0x237)+_0x5f126a(0x2b2),'Device.PPP'+_0x5f126a(0x24a)+'.*.Usernam'+'e'],_0x392101[_0x5f126a(0x1c7)]=['Device.PON'+_0x5f126a(0x24a)+_0x5f126a(0x201)+_0x5f126a(0x265)+'el','Device.Opt'+'ical.Inter'+'face.*.Opt'+_0x5f126a(0x1d1)+_0x5f126a(0x185),_0x5f126a(0x1ed)+'tewayDevic'+_0x5f126a(0x184)+_0x5f126a(0x1ba)+_0x5f126a(0x289)+_0x5f126a(0x1a3)+_0x5f126a(0x19e)+_0x5f126a(0x1ff)+_0x5f126a(0x1f8)+'ule.RXPowe'+'r',_0x5f126a(0x1ed)+_0x5f126a(0x259)+_0x5f126a(0x184)+_0x5f126a(0x24b)+_0x5f126a(0x290)+_0x5f126a(0x18c),'InternetGa'+'tewayDevic'+_0x5f126a(0x184)+_0x5f126a(0x23a)+'COM_WANPON'+_0x5f126a(0x1b1)+'onfig.RXPo'+_0x5f126a(0x1c9),_0x5f126a(0x1ed)+_0x5f126a(0x259)+_0x5f126a(0x184)+_0x5f126a(0x268)+_0x5f126a(0x23c)+_0x5f126a(0x2b9)+_0x5f126a(0x1c9),_0x5f126a(0x1ed)+_0x5f126a(0x259)+'e.WANDevic'+'e.*.X_FH_G'+_0x5f126a(0x25c)+'ceConfig.R'+_0x5f126a(0x26e),_0x5f126a(0x1ed)+_0x5f126a(0x259)+_0x5f126a(0x184)+_0x5f126a(0x1fb)+_0x5f126a(0x19a)+_0x5f126a(0x2a4)+_0x5f126a(0x210),_0x5f126a(0x1ed)+_0x5f126a(0x259)+'e.WANDevic'+_0x5f126a(0x1fb)+_0x5f126a(0x1df)+_0x5f126a(0x2a4)+'ig.RXPower',_0x5f126a(0x1ed)+'tewayDevic'+_0x5f126a(0x206)+_0x5f126a(0x1eb)+_0x5f126a(0x282)+'r',_0x5f126a(0x1ed)+_0x5f126a(0x259)+_0x5f126a(0x1a0)+_0x5f126a(0x1de)+_0x5f126a(0x1c9),'InternetGa'+_0x5f126a(0x259)+'e.WANDevic'+_0x5f126a(0x241)+_0x5f126a(0x269)+_0x5f126a(0x27e)+_0x5f126a(0x18c),_0x5f126a(0x1ed)+'tewayDevic'+_0x5f126a(0x184)+_0x5f126a(0x241)+_0x5f126a(0x2ad)+_0x5f126a(0x27e)+_0x5f126a(0x18c),_0x5f126a(0x1ed)+_0x5f126a(0x259)+_0x5f126a(0x184)+'e.1.X_CU_W'+_0x5f126a(0x284)+_0x5f126a(0x1b3)+_0x5f126a(0x1a5)+_0x5f126a(0x205)+_0x5f126a(0x18c)];const _0xcb7323={};_0xcb7323['id']=_0x5f126a(0x202)+_0x5f126a(0x1c0),_0xcb7323['type']=_0x5f126a(0x2b6),_0xcb7323[_0x5f126a(0x2ba)]='Huawei',_0xcb7323['modelPatte'+'rn']=/huawei|hg8|eg8|echo/i,_0xcb7323[_0x5f126a(0x218)]=_0x392101,_0xcb7323[_0x5f126a(0x23e)]=[_0x5f126a(0x1a8)+_0x5f126a(0x255)+'ngunci\x20Pre'+_0x5f126a(0x29f)+'\x20KeyPassph'+'rase\x20lebih'+_0x5f126a(0x222)];const _0x4502d7={};_0x4502d7[_0x5f126a(0x17c)+'me']=['show\x20syste'+_0x5f126a(0x1c1)],_0x4502d7[_0x5f126a(0x1e2)]=[_0x5f126a(0x20d)+_0x5f126a(0x240)],_0x4502d7[_0x5f126a(0x258)+'e']=['show\x20tempe'+_0x5f126a(0x26c)],_0x4502d7[_0x5f126a(0x1d5)]=[_0x5f126a(0x190)+_0x5f126a(0x193)+_0x5f126a(0x17e)],_0x4502d7[_0x5f126a(0x263)+'n']=[_0x5f126a(0x293)+_0x5f126a(0x1c2)+_0x5f126a(0x1b6)],_0x4502d7['onuPower']=[_0x5f126a(0x299)+'wer\x20attenu'+_0x5f126a(0x17d)+_0x5f126a(0x29a)+_0x5f126a(0x1f4)+'{port}:{on'+_0x5f126a(0x280)],_0x4502d7[_0x5f126a(0x233)+_0x5f126a(0x25e)]=[_0x5f126a(0x243)+_0x5f126a(0x179)];const _0x258f88={};function _0x1d1b(_0x22a4b8,_0x56bb10){const _0x1126c6=_0x2edf();return _0x1d1b=function(_0x266ee3,_0x2af3a9){_0x266ee3=_0x266ee3-(0x1033+-0x24fd+0x1642);let _0x4db773=_0x1126c6[_0x266ee3];if(_0x1d1b['qJSyeR']===undefined){var _0x36352a=function(_0x5b7763){const _0x4efed5='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=';let _0x5faafb='',_0x279110='',_0x4eb484=_0x5faafb+_0x36352a;for(let _0x39336e=0x21a7+-0xbc0+-0x15e7,_0x4ccb1f,_0x5cf41a,_0x3c5675=-0xf39+0x1307+-0x3ce;_0x5cf41a=_0x5b7763['charAt'](_0x3c5675++);~_0x5cf41a&&(_0x4ccb1f=_0x39336e%(0x5*-0x97+-0x17cb+0x1ac2)?_0x4ccb1f*(0x2311+-0x2329*0x1+-0x58*-0x1)+_0x5cf41a:_0x5cf41a,_0x39336e++%(-0x1003+0xf58+0xaf))?_0x5faafb+=_0x4eb484['charCodeAt'](_0x3c5675+(0x17*0x1ac+0x1284+-0xe*0x411))-(-0x2*0x1335+0x112a+0x154a)!==0x8be+0x71b*0x3+-0xa05*0x3?String['fromCharCode'](0x1182+-0x75*-0x4d+-0x33b4&_0x4ccb1f>>(-(-0x10f1+-0x13a6+0x2499)*_0x39336e&-0x24db+0x2*0xefe+-0x1*-0x6e5)):_0x39336e:0x7*0x4e1+-0x239c+0x175*0x1){_0x5cf41a=_0x4efed5['indexOf'](_0x5cf41a);}for(let _0x44a46e=0x11b7+0xf3c+-0x20f3,_0x8aa226=_0x5faafb['length'];_0x44a46e<_0x8aa226;_0x44a46e++){_0x279110+='%'+('00'+_0x5faafb['charCodeAt'](_0x44a46e)['toString'](0x1138+-0x1e69+-0x105*-0xd))['slice'](-(0x2461*-0x1+-0x833+0x1b7*0x1a));}return decodeURIComponent(_0x279110);};_0x1d1b['lGptmZ']=_0x36352a,_0x22a4b8=arguments,_0x1d1b['qJSyeR']=!![];}const _0xafeafa=_0x1126c6[-0x12e1+0xdf*0xd+-0x3c7*-0x2],_0x28577a=_0x266ee3+_0xafeafa,_0x5911bb=_0x22a4b8[_0x28577a];if(!_0x5911bb){const _0x276fc9=function(_0xc79fce){this['TbmczA']=_0xc79fce,this['kuFmha']=[0x1a0e+-0xc49+0x371*-0x4,-0xa0f+-0x78a+0x1199,-0x1*-0x2223+0x1085+-0x32a8],this['uXocWf']=function(){return'newState';},this['vGyriA']='\x5cw+\x20*\x5c(\x5c)\x20*{\x5cw+\x20*',this['IlRRTQ']='[\x27|\x22].+[\x27|\x22];?\x20*}';};_0x276fc9['prototype']['gFbYQu']=function(){const _0x305a80=new RegExp(this['vGyriA']+this['IlRRTQ']),_0x5d06d0=_0x305a80['test'](this['uXocWf']['toString']())?--this['kuFmha'][0x241+-0xe39+0xbf9*0x1]:--this['kuFmha'][0xbfb+-0x47*-0x89+-0x31fa];return this['fFTTJV'](_0x5d06d0);},_0x276fc9['prototype']['fFTTJV']=function(_0x1e340d){if(!Boolean(~_0x1e340d))return _0x1e340d;return this['MVjoac'](this['TbmczA']);},_0x276fc9['prototype']['MVjoac']=function(_0x175dad){for(let _0x56b205=-0x17f2+-0x5*0x25+0x18ab,_0x6f88e8=this['kuFmha']['length'];_0x56b205<_0x6f88e8;_0x56b205++){this['kuFmha']['push'](Math['round'](Math['random']())),_0x6f88e8=this['kuFmha']['length'];}return _0x175dad(this['kuFmha'][0x12*-0x6f+0x101f*-0x2+-0x280c*-0x1]);},new _0x276fc9(_0x1d1b)['gFbYQu'](),_0x4db773=_0x1d1b['lGptmZ'](_0x4db773),_0x22a4b8[_0x28577a]=_0x4db773;}else _0x4db773=_0x5911bb;return _0x4db773;},_0x1d1b(_0x22a4b8,_0x56bb10);}_0x258f88[_0x5f126a(0x209)]=[_0x5f126a(0x261)+_0x5f126a(0x1c4),_0x5f126a(0x2a5)+_0x5f126a(0x242)+_0x5f126a(0x181)+_0x5f126a(0x1ca),_0x5f126a(0x1fe)+_0x5f126a(0x24d)+'}\x20{ontId}'],_0x258f88['enable']=[_0x5f126a(0x261)+'terminal',_0x5f126a(0x2a5)+'gpon-olt_{'+_0x5f126a(0x181)+_0x5f126a(0x1ca),_0x5f126a(0x1cd)+_0x5f126a(0x291)+'{ontId}'],_0x258f88['delete']=[_0x5f126a(0x261)+_0x5f126a(0x1c4),_0x5f126a(0x2a5)+_0x5f126a(0x242)+_0x5f126a(0x181)+_0x5f126a(0x1ca),_0x5f126a(0x220)+_0x5f126a(0x27d)+'}'];const _0x5446c7={};_0x5446c7[_0x5f126a(0x2ae)+'t']=[_0x5f126a(0x261)+'terminal',_0x5f126a(0x2a5)+_0x5f126a(0x242)+_0x5f126a(0x181)+'ot}','onu\x20add\x20{p'+_0x5f126a(0x1d4)+_0x5f126a(0x24c)+_0x5f126a(0x17a)+_0x5f126a(0x22d)+_0x5f126a(0x1a2)+_0x5f126a(0x1af)+_0x5f126a(0x1ab)+_0x5f126a(0x1ea)+_0x5f126a(0x23b)+'le}'],_0x5446c7[_0x5f126a(0x183)+'e']=[_0x5f126a(0x1f6)+_0x5f126a(0x20e)+_0x5f126a(0x208)+'rt}/{ontId'+_0x5f126a(0x234)+'lan\x20{userV'+_0x5f126a(0x28a)+'{vlan}'],_0x5446c7[_0x5f126a(0x1f3)+'ace']=[_0x5f126a(0x197)+'nterface\x20g'+_0x5f126a(0x281)+_0x5f126a(0x29b)+_0x5f126a(0x204)+_0x5f126a(0x1b8)],_0x5446c7[_0x5f126a(0x253)+_0x5f126a(0x264)]=[_0x5f126a(0x2a5)+_0x5f126a(0x28f)+'frame}/{sl'+'ot}/{port}'+_0x5f126a(0x251),_0x5f126a(0x1f7)+'omerName}','descriptio'+'n\x20{descrip'+'tion}',_0x5f126a(0x19d)+_0x5f126a(0x252)+_0x5f126a(0x283)+_0x5f126a(0x214),_0x5f126a(0x29d)+'emport}\x20tc'+_0x5f126a(0x20c)+_0x5f126a(0x2af),_0x5f126a(0x1f6)+'rt\x20{servic'+_0x5f126a(0x1a4)+_0x5f126a(0x1bc)+_0x5f126a(0x2a7)+'an\x20{userVl'+'an}\x20vlan\x20{'+_0x5f126a(0x1b4),'exit','pon-onu-mn'+_0x5f126a(0x1fc)+'_{frame}/{'+_0x5f126a(0x180)+_0x5f126a(0x17f),_0x5f126a(0x195)+_0x5f126a(0x275)+_0x5f126a(0x29d)+_0x5f126a(0x292)+'an\x20{vlan}',_0x5f126a(0x287)],_0x5446c7[_0x5f126a(0x1a6)+'te']=['show\x20gpon\x20'+_0x5f126a(0x26f)+_0x5f126a(0x242)+'frame}/{sl'+_0x5f126a(0x1d0)+'\x20{ontId}'],_0x5446c7['showOnuPow'+'er']=[_0x5f126a(0x254)+_0x5f126a(0x27a)+'uation\x20gpo'+_0x5f126a(0x28b)+_0x5f126a(0x2bf)+'/{port}:{o'+_0x5f126a(0x279)],_0x5446c7['showOnuMac']=[_0x5f126a(0x1e8)+'pon\x20onu\x20gp'+_0x5f126a(0x1dc)+_0x5f126a(0x286)+_0x5f126a(0x1d7)+_0x5f126a(0x198)],_0x5446c7[_0x5f126a(0x267)+_0x5f126a(0x211)]=['show\x20gpon\x20'+_0x5f126a(0x2a3)+_0x5f126a(0x1be)+_0x5f126a(0x28b)+_0x5f126a(0x2bf)+'/{port}:{o'+_0x5f126a(0x279)],_0x5446c7[_0x5f126a(0x2a2)]=[_0x5f126a(0x261)+'terminal',_0x5f126a(0x1c3),_0x5f126a(0x2b3)+_0x5f126a(0x1fc)+_0x5f126a(0x17b)+_0x5f126a(0x180)+_0x5f126a(0x17f),_0x5f126a(0x2be)],_0x5446c7['shutdownOn'+_0x5f126a(0x25f)]=[_0x5f126a(0x261)+_0x5f126a(0x1c4),_0x5f126a(0x1c3),'pon-onu-mn'+_0x5f126a(0x1fc)+'_{frame}/{'+'slot}/{por'+_0x5f126a(0x17f),_0x5f126a(0x2a5)+_0x5f126a(0x19b)+_0x5f126a(0x2a9)+'ck'],_0x5446c7['diagnostic'+'s']=_0x4502d7,_0x5446c7['changeSeri'+'al']=[_0x5f126a(0x261)+'terminal','interface\x20'+_0x5f126a(0x28f)+_0x5f126a(0x181)+_0x5f126a(0x1d0)+_0x5f126a(0x251),_0x5f126a(0x189)+'on-method\x20'+'sn\x20{serial'+'}'],_0x5446c7[_0x5f126a(0x1a1)+_0x5f126a(0x23f)]=[_0x5f126a(0x261)+_0x5f126a(0x1c4),'pon-onu',_0x5f126a(0x2b3)+_0x5f126a(0x1fc)+_0x5f126a(0x17b)+_0x5f126a(0x180)+_0x5f126a(0x17f),_0x5f126a(0x246)+_0x5f126a(0x228)+_0x5f126a(0x1f9)+_0x5f126a(0x1b7)+_0x5f126a(0x1b5)+_0x5f126a(0x178)+_0x5f126a(0x22f)],_0x5446c7[_0x5f126a(0x270)+_0x5f126a(0x250)]=['configure\x20'+_0x5f126a(0x1c4),'pon-onu','pon-onu-mn'+_0x5f126a(0x1fc)+'_{frame}/{'+_0x5f126a(0x180)+_0x5f126a(0x17f),_0x5f126a(0x246)+_0x5f126a(0x228)+'ss-type\x20wa'+_0x5f126a(0x1b7)+_0x5f126a(0x1b5)+_0x5f126a(0x2b5)+'otocol\x20web'],_0x5446c7['adminOnu']=_0x258f88;const _0x14e5da={};_0x14e5da['id']=_0x5f126a(0x1e6)+_0x5f126a(0x22e),_0x14e5da['type']=_0x5f126a(0x23d),_0x14e5da[_0x5f126a(0x2ba)]=_0x5f126a(0x29c),_0x14e5da[_0x5f126a(0x25b)+'rn']=/c300|c320/i,_0x14e5da['commands']=_0x5446c7,_0x14e5da[_0x5f126a(0x27f)]=[_0x5f126a(0x229)+'frame/slot'+'/port\x20sesu'+_0x5f126a(0x224)+'i;\x20isi\x20{sv'+'cId}\x20unik.'];const _0x5224e6={};_0x5224e6['ontInfoAll']=[_0x5f126a(0x274)+_0x5f126a(0x245)],_0x5224e6['ontOptical']=[_0x5f126a(0x249)+'ptical-inf'+_0x5f126a(0x1e1)+'ntId}'],_0x5224e6['ontVersion']=[_0x5f126a(0x21f)+_0x5f126a(0x1ec)+_0x5f126a(0x203)],_0x5224e6[_0x5f126a(0x233)+_0x5f126a(0x25e)]=['show\x20ont\x20u'+_0x5f126a(0x1e5)];const _0x4236db={};_0x4236db[_0x5f126a(0x217)]=[_0x5f126a(0x2a5)+_0x5f126a(0x2bd),_0x5f126a(0x22a)+_0x5f126a(0x1e0)+_0x5f126a(0x280)],_0x4236db[_0x5f126a(0x1ac)]=[_0x5f126a(0x2a5)+_0x5f126a(0x2bd),_0x5f126a(0x256)+_0x5f126a(0x1e0)+_0x5f126a(0x280)];const _0x192239={};_0x192239['registerOn'+'t']=[_0x5f126a(0x2a5)+_0x5f126a(0x2bd),_0x5f126a(0x18b)+_0x5f126a(0x1b9)+_0x5f126a(0x248)+_0x5f126a(0x22b)+'mci\x20ont-li'+_0x5f126a(0x296)+'id\x20{linePr'+_0x5f126a(0x235)+_0x5f126a(0x18e)+_0x5f126a(0x2bb)+_0x5f126a(0x2b7)],_0x192239[_0x5f126a(0x183)+'e']=[_0x5f126a(0x1f6)+'rt\x20vlan\x20{v'+'lan}\x20gpon\x20'+_0x5f126a(0x2b0)+_0x5f126a(0x1ef)+'}\x20gemport\x20'+_0x5f126a(0x28d)+_0x5f126a(0x1ae)+_0x5f126a(0x182)+_0x5f126a(0x18d)+_0x5f126a(0x24f)+'}'],_0x192239['ipconfig']=[_0x5f126a(0x2a5)+_0x5f126a(0x2bd),'ont\x20ipconf'+_0x5f126a(0x20a)+_0x5f126a(0x298)+'ip-index\x200'+_0x5f126a(0x1fd)+'\x20{vlan}\x20pr'+_0x5f126a(0x27c)],_0x192239[_0x5f126a(0x26b)+'s']=_0x5224e6,_0x192239[_0x5f126a(0x1da)]=_0x4236db;const _0x13fd75={};_0x13fd75['id']=_0x5f126a(0x1cc)+_0x5f126a(0x2a6),_0x13fd75[_0x5f126a(0x1fa)]=_0x5f126a(0x23d),_0x13fd75[_0x5f126a(0x2ba)]=_0x5f126a(0x26d),_0x13fd75['modelPatte'+'rn']=/cdata|fd16|fd12|fd160|fd120/i,_0x13fd75[_0x5f126a(0x1b0)]=_0x192239,_0x13fd75[_0x5f126a(0x27f)]=[_0x5f126a(0x1ce)+_0x5f126a(0x1e7)+_0x5f126a(0x2b4)+_0x5f126a(0x1cf)+_0x5f126a(0x2a0)+_0x5f126a(0x2a1)+_0x5f126a(0x22c)+_0x5f126a(0x225)+_0x5f126a(0x1bb)+_0x5f126a(0x266)];const profiles=[_0x5964b3,_0xcb7323,_0x14e5da,_0x13fd75];export const getDeviceProfileByModel=(_0x552d10='',_0x4d594c=null)=>{const _0x1149ed=_0x5f126a,_0x4d21a1={'llrvM':function(_0x2b1231,_0x48cf1e){return _0x2b1231!==_0x48cf1e;},'PikuD':function(_0x32f7aa,_0x5aaafb){return _0x32f7aa(_0x5aaafb);}},_0x1d3bf7=_0x4d21a1[_0x1149ed(0x232)](String,_0x552d10||'')[_0x1149ed(0x260)]()[_0x1149ed(0x1db)+'e']();return profiles[_0x1149ed(0x1bf)](_0x4df812=>{const _0x1de083=_0x1149ed;if(_0x4d594c&&_0x4d21a1['llrvM'](_0x4df812[_0x1de083(0x1fa)],_0x4d594c))return![];return _0x4df812[_0x1de083(0x25b)+'rn'][_0x1de083(0x1aa)](_0x1d3bf7);})||null;};export const listDeviceProfiles=(_0x476240=null)=>_0x476240?profiles[_0x5f126a(0x230)](_0x3e2bef=>_0x3e2bef[_0x5f126a(0x1fa)]===_0x476240):profiles;const _0x36d1f2={};_0x36d1f2['getDeviceP'+'rofileByMo'+_0x5f126a(0x226)]=getDeviceProfileByModel,_0x36d1f2[_0x5f126a(0x1dd)+_0x5f126a(0x1b2)]=listDeviceProfiles;export default _0x36d1f2;
+// Lightweight registry of device profiles (ONT/OLT) keyed by vendor/model pattern.
+// This is the first step toward model-aware operations for ACS (ONT) and SSH (OLT).
+
+const profiles = [
+  {
+    id: "zte-ont-generic",
+    type: "ont",
+    vendor: "ZTE",
+    modelPattern: /zte|zxhn|f6xx|f6\d+/i,
+    paths: {
+      ssid: [
+        "InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.SSID",
+        "InternetGatewayDevice.LANDevice.1.WLANConfiguration.5.SSID",
+        "Device.WiFi.SSID.*.SSID",
+      ],
+      key: [
+        "InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.KeyPassphrase",
+        "InternetGatewayDevice.LANDevice.1.WLANConfiguration.5.KeyPassphrase",
+        "Device.WiFi.AccessPoint.*.Security.KeyPassphrase",
+      ],
+      pppoeUsername: [
+        "InternetGatewayDevice.WANDevice.*.WANConnectionDevice.*.WANPPPConnection.*.Username",
+        "Device.PPP.Interface.*.Username",
+      ],
+      rxPower: [
+        "InternetGatewayDevice.WANDevice.*.X_ZTE-COM_WANPONInterfaceConfig.RXPower",
+        "Device.Optical.Interface.*.OpticalSignalLevel",
+      ],
+    },
+    quirks: ["Gunakan path IGD lebih dulu; beberapa model butuh reboot setelah ganti SSID"],
+  },
+  {
+    id: "huawei-ont-generic",
+    type: "ont",
+    vendor: "Huawei",
+    modelPattern: /huawei|hg8|eg8|echo/i,
+    paths: {
+      ssid: [
+        "InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.SSID",
+        "InternetGatewayDevice.LANDevice.1.WLANConfiguration.5.SSID",
+        "Device.WiFi.SSID.*.SSID",
+      ],
+      key: [
+        "InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.PreSharedKey.1.PreSharedKey",
+        "InternetGatewayDevice.LANDevice.1.WLANConfiguration.5.PreSharedKey.1.PreSharedKey",
+        "Device.WiFi.AccessPoint.*.Security.KeyPassphrase",
+      ],
+      pppoeUsername: [
+        "InternetGatewayDevice.WANDevice.*.WANConnectionDevice.*.WANPPPConnection.*.Username",
+        "Device.PPP.Interface.*.Username",
+      ],
+      rxPower: [
+        'Device.PON.Interface.*.Optical.SignalLevel', 
+    'Device.Optical.Interface.*.OpticalSignalLevel',
+    'InternetGatewayDevice.WANDevice.1.WANConnectionDevice.1.WANPONConnection.1.X_HW_OpticalModule.RXPower', 
+    'InternetGatewayDevice.WANDevice.1.X_HW_OptModule.1.RXPower', 
+    'InternetGatewayDevice.WANDevice.*.X_ZTE-COM_WANPONInterfaceConfig.RXPower', 
+    'InternetGatewayDevice.WANDevice.*.X_GponInterafceConfig.RXPower', 
+    'InternetGatewayDevice.WANDevice.*.X_FH_GponInterfaceConfig.RXPower', 
+    'InternetGatewayDevice.WANDevice.*.X_CT-COM_GponInterfaceConfig.RXPower', 
+    'InternetGatewayDevice.WANDevice.*.X_CT-COM_EponInterfaceConfig.RXPower', 
+    'InternetGatewayDevice.X_ALU_OntOpticalParam.RXPower', 
+    'InternetGatewayDevice.X_Huawei_GPON.RXPower', 
+    'InternetGatewayDevice.WANDevice.1.X_CMCC_GponInterfaceConfig.RXPower', 
+    'InternetGatewayDevice.WANDevice.1.X_CMCC_EponInterfaceConfig.RXPower', 
+    'InternetGatewayDevice.WANDevice.1.X_CU_WANEPONInterfaceConfig.OpticalTransceiver.RXPower' 
+      ],
+    },
+    quirks: ["Beberapa firmware mengunci PreSharedKey; KeyPassphrase lebih stabil."],
+  },
+  {
+    id: "zte-olt-c300-c320",
+    type: "olt",
+    vendor: "ZTE",
+    modelPattern: /c300|c320/i,
+    commands: {
+      registerOnt: [
+        "configure terminal",
+        "interface gpon-olt_{frame}/{slot}",
+        "onu add {port} {ontId} sn {serial} omci ont-lineprofile-id {lineProfile} ont-srvprofile-id {srvProfile}",
+      ],
+      bindService: [
+        "service-port {svcId} vport {port}/{ontId}/1 user-vlan {userVlan} vlan {vlan}",
+      ],
+      // Referensi tambahan (show / konfigurasi TCONT, GEM, service-port di interface ONU)
+      showInterface: [
+        "show run interface gpon-onu_{frame}/{slot}/{port}:{ontId}"
+      ],
+      // Best effort pattern (meniru urutan umum registrasi ZTE)
+      tcontGemService: [
+        "interface gpon-onu_{frame}/{slot}/{port}:{ontId}",
+        "name {customerName}",
+        "description {description}",
+        "tcont {tcontId} profile {tcontProfile}",
+        "gemport {gemport} tcont {tcontId}",
+        "service-port {servicePortId} vport {vport} user-vlan {userVlan} vlan {vlan}",
+        "exit",
+        "pon-onu-mng gpon-onu_{frame}/{slot}/{port}:{ontId}",
+        "service {serviceId} gemport {gemport} vlan {vlan}",
+        "exit"
+      ],
+      showOnuState: [
+        "show gpon onu state gpon-olt_{frame}/{slot}/{port} {ontId}"
+      ],
+      showOnuPower: [
+        "show pon power attenuation gpon-onu_{frame}/{slot}/{port}:{ontId}"
+      ],
+      showOnuMac: [
+        "show mac gpon onu gpon-onu_{frame}/{slot}/{port}:{ontId}"
+      ],
+      showOnuVersion: [
+        "show gpon remote-onu equip gpon-onu_{frame}/{slot}/{port}:{ontId}"
+      ],
+      rebootOnu: [
+        "configure terminal",
+        "pon-onu",
+        "pon-onu-mng gpon-onu_{frame}/{slot}/{port}:{ontId}",
+        "reboot"
+      ],
+      shutdownOnuPort1: [
+        "configure terminal",
+        "pon-onu",
+        "pon-onu-mng gpon-onu_{frame}/{slot}/{port}:{ontId}",
+        "interface eth eth_0/1 state lock"
+      ],
+      diagnostics: {
+        systemUptime: ["show system-group"],
+        processor: ["show processor"],
+        temperature: ["show temperature"],
+        cardSlot: ["show card slotno {slotno}"],
+        findOnuBySn: ["sho gpon onu by sn {serial}"],
+        onuPower: ["sho pon power attenuation gpon-onu_{frame}/{slot}/{port}:{ontId}"],
+        unregisteredOnu: ["show gpon onu uncfg"]
+      },
+      changeSerial: [
+        "configure terminal",
+        "interface gpon-onu_{frame}/{slot}/{port}:{ontId}",
+        "registration-method sn {serial}"
+      ],
+      enableWebWanRemote: [
+        "configure terminal",
+        "pon-onu",
+        "pon-onu-mng gpon-onu_{frame}/{slot}/{port}:{ontId}",
+        "security-mng 2 ingress-type wan mode permit state enable protocol web"
+      ],
+      disableWebWanRemote: [
+        "configure terminal",
+        "pon-onu",
+        "pon-onu-mng gpon-onu_{frame}/{slot}/{port}:{ontId}",
+        "security-mng 2 ingress-type wan mode permit state disable protocol web"
+      ],
+      adminOnu: {
+        disable: [
+          "configure terminal",
+          "interface gpon-olt_{frame}/{slot}",
+          "onu deactivate {port} {ontId}"
+        ],
+        enable: [
+          "configure terminal",
+          "interface gpon-olt_{frame}/{slot}",
+          "onu activate {port} {ontId}"
+        ],
+        delete: [
+          "configure terminal",
+          "interface gpon-olt_{frame}/{slot}",
+          "no onu {port} {ontId}"
+        ]
+      }
+    },
+    notes: ["Sesuaikan frame/slot/port sesuai topologi; isi {svcId} unik."],
+  },
+  {
+    id: "cdata-olt-c300-c320",
+    type: "olt",
+    vendor: "C-DATA",
+    modelPattern: /cdata|fd16|fd12|fd160|fd120/i,
+    commands: {
+      registerOnt: [
+        "interface gpon 0/0",
+        "ont add {pon} {ontId} sn-auth {serial} omci ont-lineprofile-id {lineProfile} ont-srvprofile-id {srvProfile}",
+      ],
+      bindService: [
+        "service-port vlan {vlan} gpon 0/0/{pon} ont {ontId} gemport 1 multi-service user-vlan {userVlan} rx-cttr {cttr}",
+      ],
+      ipconfig: [
+        "interface gpon 0/0",
+        "ont ipconfig {portId} {ontId} ip-index 0 dhcp vlan {vlan} priority 0",
+      ],
+      diagnostics: {
+        ontInfoAll: ["show ont info all"],
+        ontOptical: ["show ont optical-info {pon} {ontId}"],
+        ontVersion: ["show ont version {pon} {ontId}"],
+        unregisteredOnu: ["show ont unauth"],
+      },
+      management: {
+        rebootOnt: [
+          "interface gpon 0/0",
+          "ont reboot {pon} {ontId}"
+        ],
+        deleteOnt: [
+          "interface gpon 0/0",
+          "ont delete {pon} {ontId}"
+        ]
+      }
+    },
+    notes: ["Placeholder {pon},{ontId},{serial},{lineProfile},{srvProfile},{vlan},{userVlan},{cttr} wajib diisi."],
+  },
+];
+
+export const getDeviceProfileByModel = (model = "", typeFilter = null) => {
+  const normalized = String(model || "").trim().toLowerCase();
+  return profiles.find((p) => {
+    if (typeFilter && p.type !== typeFilter) return false;
+    return p.modelPattern.test(normalized);
+  }) || null;
+};
+
+export const listDeviceProfiles = (typeFilter = null) =>
+  typeFilter ? profiles.filter((p) => p.type === typeFilter) : profiles;
+
+export default {
+  getDeviceProfileByModel,
+  listDeviceProfiles,
+};

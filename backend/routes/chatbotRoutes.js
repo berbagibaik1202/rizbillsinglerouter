@@ -1,1 +1,775 @@
-const _0x17ec91=_0xef5a;(function(_0x2b53d1,_0x50c5f7){const _0x52f056=_0xef5a,_0xa6b058=_0x2b53d1();while(!![]){try{const _0x2ac790=parseInt(_0x52f056(0x330))/(0xe*-0xd+0xd1*0x25+-0x5*0x5e6)*(-parseInt(_0x52f056(0x28b))/(-0x1a81+0x625*-0x5+-0x197*-0x24))+-parseInt(_0x52f056(0x44a))/(0xd35*-0x1+-0x971*-0x3+-0xf1b)+parseInt(_0x52f056(0x272))/(0x1779+0x2297+0x3a0c*-0x1)+-parseInt(_0x52f056(0x404))/(0x1b16+0xf02*-0x1+-0xc0f)*(parseInt(_0x52f056(0x54e))/(0x122d+-0x70c+-0xb1b))+parseInt(_0x52f056(0x431))/(-0x3*0x7cf+0x3d*0x97+-0xc87)*(parseInt(_0x52f056(0x360))/(-0x2234+-0x1b*-0x21+0x1ec1))+-parseInt(_0x52f056(0x2df))/(0x11*0x67+0x5c3+0xc91*-0x1)+parseInt(_0x52f056(0x2c5))/(-0xc10+0xad*0x1f+-0x8d9);if(_0x2ac790===_0x50c5f7)break;else _0xa6b058['push'](_0xa6b058['shift']());}catch(_0x28f5ae){_0xa6b058['push'](_0xa6b058['shift']());}}}(_0x2354,-0x1*-0x4bab9+0x48e3*-0x13+0x55b3f));const _0x487563=(function(){const _0x36897d=_0xef5a,_0x584fa3={};_0x584fa3[_0x36897d(0x290)]=_0x36897d(0x309),_0x584fa3[_0x36897d(0x31c)]=_0x36897d(0x4e1),_0x584fa3[_0x36897d(0x161)]=_0x36897d(0x444);const _0x494f9f=_0x584fa3;let _0x509c9e=!![];return function(_0x716405,_0x57fa2c){const _0x2aab2c=_0x36897d,_0x438718={};_0x438718[_0x2aab2c(0x577)]=_0x494f9f['viITm'],_0x438718[_0x2aab2c(0x174)]=_0x494f9f[_0x2aab2c(0x31c)],_0x438718[_0x2aab2c(0x19d)]=_0x494f9f[_0x2aab2c(0x161)];const _0x3e1631=_0x438718,_0x89df41=_0x509c9e?function(){const _0x5e7b80=_0x2aab2c;if(_0x3e1631[_0x5e7b80(0x577)]!==_0x3e1631[_0x5e7b80(0x174)]){if(_0x57fa2c){if('AtUxS'!==_0x3e1631['dnGgP'])_0x445c53=_0x5e7b80(0x15d)+_0x5e7b80(0x5e2)+_0x5e7b80(0x295)+_0x5e7b80(0x411)+_0x3412ee+(_0x5e7b80(0x164)+_0x5e7b80(0x673)+_0x5e7b80(0x1f7)+_0x5e7b80(0x3f1));else{const _0x4ff901=_0x57fa2c[_0x5e7b80(0x3ab)](_0x716405,arguments);return _0x57fa2c=null,_0x4ff901;}}}else{_0x4eb2e7['warn'](_0x5e7b80(0x43f)+_0x5e7b80(0x26e)+'urned\x20no\x20t'+_0x5e7b80(0x24b)+_0x5e7b80(0x3f7)+_0x5e7b80(0x628)+':',_0x55c627[_0x5e7b80(0x592)](_0x2c9b89,null,-0x70a*-0x1+0x1367*0x2+-0x2dd6));const _0x565e4e={};_0x565e4e[_0x5e7b80(0x358)]='Maaf,\x20saya'+_0x5e7b80(0x34e)+_0x5e7b80(0x4f8)+_0x5e7b80(0x17c)+_0x5e7b80(0x631)+_0x5e7b80(0x62a)+'ilakan\x20cob'+_0x5e7b80(0x615)+'engan\x20kali'+_0x5e7b80(0x3f9)+'erbeda.\x20😊',_0x425bb2[_0x5e7b80(0x659)](_0x565e4e);}}:function(){};return _0x509c9e=![],_0x89df41;};}()),_0x154563=_0x487563(this,function(){const _0x1295da=_0xef5a,_0x104656={};_0x104656[_0x1295da(0x339)]=_0x1295da(0x604)+'+$';const _0x22a7e6=_0x104656;return _0x154563[_0x1295da(0x510)]()[_0x1295da(0x49a)](_0x22a7e6[_0x1295da(0x339)])[_0x1295da(0x510)]()['constructo'+'r'](_0x154563)[_0x1295da(0x49a)](_0x22a7e6[_0x1295da(0x339)]);});_0x154563();const _0x428b49=(function(){let _0x34c9a3=!![];return function(_0x58ab6c,_0x39f3b8){const _0x1f7f42=_0x34c9a3?function(){if(_0x39f3b8){const _0x187832=_0x39f3b8['apply'](_0x58ab6c,arguments);return _0x39f3b8=null,_0x187832;}}:function(){};return _0x34c9a3=![],_0x1f7f42;};}()),_0x4e8ef7=_0x428b49(this,function(){const _0x6ffd9e=_0xef5a,_0x380440={'qUCBW':function(_0x8ac4f9,_0x5e492f){return _0x8ac4f9(_0x5e492f);},'bxSCi':function(_0x531309,_0x582901){return _0x531309+_0x582901;},'OoxXr':function(_0x3631f5,_0x36d70c){return _0x3631f5+_0x36d70c;},'BNAlx':_0x6ffd9e(0x4a9)+_0x6ffd9e(0x518)+_0x6ffd9e(0x51f)+'\x20)','rXMRs':function(_0x18bd48){return _0x18bd48();},'ywrpM':_0x6ffd9e(0x20f),'IuHph':_0x6ffd9e(0x5f7),'HqOqu':_0x6ffd9e(0x4a5),'FIiLV':'exception','abcNu':_0x6ffd9e(0x38c)},_0x30d768=function(){const _0x1eff59=_0x6ffd9e;let _0x5b9e3f;try{_0x5b9e3f=_0x380440['qUCBW'](Function,_0x380440[_0x1eff59(0x406)](_0x380440[_0x1eff59(0x2f0)]('return\x20(fu'+_0x1eff59(0x215),_0x380440['BNAlx']),');'))();}catch(_0x4f20c2){_0x5b9e3f=window;}return _0x5b9e3f;},_0xe3cc65=_0x380440[_0x6ffd9e(0x5ba)](_0x30d768),_0x3c5111=_0xe3cc65[_0x6ffd9e(0x4af)]=_0xe3cc65[_0x6ffd9e(0x4af)]||{},_0x3dbd12=[_0x380440['ywrpM'],_0x380440[_0x6ffd9e(0x347)],_0x380440[_0x6ffd9e(0x241)],'error',_0x380440[_0x6ffd9e(0x5bd)],_0x380440[_0x6ffd9e(0x501)],'trace'];for(let _0x1d9ff9=-0x2*-0xa7c+-0xf*-0x38+-0xc20*0x2;_0x1d9ff9<_0x3dbd12[_0x6ffd9e(0x4fc)];_0x1d9ff9++){const _0x537d3b=_0x428b49[_0x6ffd9e(0x4cc)+'r'][_0x6ffd9e(0x2f9)][_0x6ffd9e(0x57d)](_0x428b49),_0x3b0886=_0x3dbd12[_0x1d9ff9],_0x20f4b9=_0x3c5111[_0x3b0886]||_0x537d3b;_0x537d3b[_0x6ffd9e(0x36f)]=_0x428b49[_0x6ffd9e(0x57d)](_0x428b49),_0x537d3b[_0x6ffd9e(0x510)]=_0x20f4b9[_0x6ffd9e(0x510)][_0x6ffd9e(0x57d)](_0x20f4b9),_0x3c5111[_0x3b0886]=_0x537d3b;}});_0x4e8ef7();import _0x1afea4 from'express';import{GoogleGenAI,Type}from'@google/genai';import{getSettings,formatRupiah,formatDateDisplay,formatBillingPeriod}from'../utils.js';import _0x5f3780 from'../db.js';import{getCustomerDeviceDetails,rebootCustomerDevice,updateCustomerWlan}from'../services.js';import _0x21c77c from'../whatsappConversationManager.js';function _0xef5a(_0x457bde,_0x47816d){const _0x56a89f=_0x2354();return _0xef5a=function(_0x5e2542,_0x426d58){_0x5e2542=_0x5e2542-(0x2bb*-0x5+0x40a*-0x3+-0x1b1*-0x10);let _0x202f0a=_0x56a89f[_0x5e2542];if(_0xef5a['PzdDXN']===undefined){var _0x22513d=function(_0x2b6521){const _0x156923='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=';let _0xfe34a9='',_0x268204='',_0x490fbe=_0xfe34a9+_0x22513d;for(let _0x4d062b=0x144b+-0xa20+0x13*-0x89,_0x9b4401,_0x2a6c5a,_0x2320c7=0x1112+0x14ce+-0x25e0;_0x2a6c5a=_0x2b6521['charAt'](_0x2320c7++);~_0x2a6c5a&&(_0x9b4401=_0x4d062b%(0x1b5d+-0x638+-0x3*0x70b)?_0x9b4401*(0x511*0x4+-0x1cef+0x8eb)+_0x2a6c5a:_0x2a6c5a,_0x4d062b++%(0xdfe+-0x1*0x11ad+0x3b3))?_0xfe34a9+=_0x490fbe['charCodeAt'](_0x2320c7+(-0xc87*-0x3+0x158c+-0x3b17))-(0x232e+-0xefd+0x1427*-0x1)!==-0xf1*-0x5+-0x287*0xa+0x1491?String['fromCharCode'](-0x1*0x79+0x1bcb+0x125*-0x17&_0x9b4401>>(-(0x1*-0xf0f+0xbc7+-0x1a5*-0x2)*_0x4d062b&0x720+0x1d80+-0x5*0x752)):_0x4d062b:-0x1dd+0x1*-0x2425+0x23*0x116){_0x2a6c5a=_0x156923['indexOf'](_0x2a6c5a);}for(let _0x3764f9=0x948+-0x1b2b+-0x11e3*-0x1,_0x40ffd6=_0xfe34a9['length'];_0x3764f9<_0x40ffd6;_0x3764f9++){_0x268204+='%'+('00'+_0xfe34a9['charCodeAt'](_0x3764f9)['toString'](0x15*0x9+0x11*-0x52+0x4c5))['slice'](-(-0x1d2f+-0x111d+-0x2e4e*-0x1));}return decodeURIComponent(_0x268204);};_0xef5a['mHnVFT']=_0x22513d,_0x457bde=arguments,_0xef5a['PzdDXN']=!![];}const _0x5d7c5c=_0x56a89f[0x3a6+-0x42d*0x1+0x87],_0x1d0230=_0x5e2542+_0x5d7c5c,_0x3ed804=_0x457bde[_0x1d0230];if(!_0x3ed804){const _0x2cc797=function(_0x3f6dac){this['bTeByx']=_0x3f6dac,this['HkavkI']=[-0x751*-0x5+0xe8a+-0x331e,-0x1*0x1106+0x4*-0x2d5+-0x1c5a*-0x1,0x220c*0x1+-0xa*0x139+-0x15d2],this['dWaADs']=function(){return'newState';},this['LaGgLd']='\x5cw+\x20*\x5c(\x5c)\x20*{\x5cw+\x20*',this['AvKKme']='[\x27|\x22].+[\x27|\x22];?\x20*}';};_0x2cc797['prototype']['zDkffo']=function(){const _0x41b2e5=new RegExp(this['LaGgLd']+this['AvKKme']),_0x5944dc=_0x41b2e5['test'](this['dWaADs']['toString']())?--this['HkavkI'][-0x2188+-0xaf4+0x7*0x65b]:--this['HkavkI'][-0x77*0x6+-0x2d7*0x1+0x1*0x5a1];return this['uHvpKO'](_0x5944dc);},_0x2cc797['prototype']['uHvpKO']=function(_0x17b97f){if(!Boolean(~_0x17b97f))return _0x17b97f;return this['RgkyDH'](this['bTeByx']);},_0x2cc797['prototype']['RgkyDH']=function(_0x42478a){for(let _0x364697=-0xb13+0x1c41+-0x112e,_0x2a36ce=this['HkavkI']['length'];_0x364697<_0x2a36ce;_0x364697++){this['HkavkI']['push'](Math['round'](Math['random']())),_0x2a36ce=this['HkavkI']['length'];}return _0x42478a(this['HkavkI'][-0x191*-0x11+0x11e5+-0x2c86]);},new _0x2cc797(_0xef5a)['zDkffo'](),_0x202f0a=_0xef5a['mHnVFT'](_0x202f0a),_0x457bde[_0x1d0230]=_0x202f0a;}else _0x202f0a=_0x3ed804;return _0x202f0a;},_0xef5a(_0x457bde,_0x47816d);}import _0x24cefc from'../whatsappService.js';import{Boom}from'@hapi/boom';const router=_0x1afea4['Router'](),RATE_LIMIT_INDICATORS=[/too many requests/i,/quota exceeded/i,/resource_exhausted/i,/429/],formatGeminiQuotaWarning=(_0x505e3d,_0x55e20b)=>{const _0x1f1001=_0xef5a,_0x57810c={};_0x57810c[_0x1f1001(0x2f5)]='Coba\x20lagi\x20'+'nanti.';const _0xe1ffb4=_0x57810c,_0x4befc2=_0x55e20b?_0x1f1001(0x4ac)+_0x1f1001(0x2b8)+_0x55e20b+'.':_0xe1ffb4[_0x1f1001(0x2f5)];return'Maaf,\x20laya'+'nan\x20chatbo'+'t\x20'+_0x505e3d+(_0x1f1001(0x64e)+_0x1f1001(0x498)+'ara\x20karena'+_0x1f1001(0x576)+'ini\x20habis.'+'\x20')+_0x4befc2+_0x1f1001(0x243);},extractRetryDelayFromError=_0x36ae8b=>{const _0xabba11=_0xef5a;if(!_0x36ae8b)return null;const _0x3f5c55=_0x36ae8b?.[_0xabba11(0x3b1)]||_0x36ae8b?.[_0xabba11(0x1fb)]?.[_0xabba11(0x3b1)];if(Array[_0xabba11(0x5c0)](_0x3f5c55)){const _0x1aae1c=_0x3f5c55['find'](_0x496e17=>typeof _0x496e17==='object'&&_0x496e17?.[_0xabba11(0x36e)]?.['includes'](_0xabba11(0x318)));if(_0x1aae1c?.['retryDelay'])return _0x1aae1c[_0xabba11(0x51e)];}try{const _0x4a0941=JSON[_0xabba11(0x592)](_0x36ae8b),_0x9bba5a=_0x4a0941[_0xabba11(0x190)](/"retryDelay":"([^"]+)"/i);if(_0x9bba5a)return _0x9bba5a[-0x169d+-0x233e*0x1+0x39dc];}catch(_0x3621ac){}return null;},isRateLimitError=_0x5b5e13=>{const _0x2ab87d=_0xef5a,_0x29b859={'VZUwx':function(_0x15012c,_0x3f23b7){return _0x15012c(_0x3f23b7);},'sdKbv':function(_0x822a14,_0x46668b){return _0x822a14===_0x46668b;},'gsYSf':function(_0x64d812,_0x41e031){return _0x64d812(_0x41e031);}};if(!_0x5b5e13)return![];const _0xfbe1c6=_0x29b859[_0x2ab87d(0x31e)](Number,_0x5b5e13['status']||_0x5b5e13[_0x2ab87d(0x1c4)]||_0x5b5e13['code']);if(!Number[_0x2ab87d(0x2ed)](_0xfbe1c6)&&_0x29b859[_0x2ab87d(0x2ac)](_0xfbe1c6,0x72d+-0x500*-0x3+-0x1480))return!![];const _0x18fce5=_0x29b859[_0x2ab87d(0x4e4)](String,_0x5b5e13?.[_0x2ab87d(0x346)]||_0x5b5e13?.[_0x2ab87d(0x1fb)]?.[_0x2ab87d(0x346)]||'');if(RATE_LIMIT_INDICATORS[_0x2ab87d(0x160)](_0x4b8fa9=>_0x4b8fa9[_0x2ab87d(0x60a)](_0x18fce5)))return!![];try{const _0x4df251=JSON['stringify'](_0x5b5e13);return RATE_LIMIT_INDICATORS[_0x2ab87d(0x160)](_0x50bacc=>_0x50bacc['test'](_0x4df251));}catch(_0x3901fe){return![];}},formatRateLimitWarning=(_0x942975,_0x1a30b8,_0x1a75c4)=>{const _0x58c76a=_0xef5a,_0x43b667={};_0x43b667['SfAaj']=_0x58c76a(0x38a);const _0x409357=_0x43b667,_0x20842b=_0x1a30b8?'\x20dalam\x20'+_0x1a30b8:_0x409357[_0x58c76a(0x526)],_0x102fe8=_0x1a75c4?'\x20('+_0x1a75c4+')':'';return _0x58c76a(0x614)+_0x58c76a(0x67d)+'t\x20'+_0x942975+(_0x58c76a(0x47f)+_0x58c76a(0x602)+_0x58c76a(0x42f)+_0x58c76a(0x5d5)+_0x58c76a(0x2cc)+_0x58c76a(0x19f))+_0x102fe8+(_0x58c76a(0x66d)+_0x58c76a(0x640))+_0x20842b+_0x58c76a(0x539);},_0x20852c={};_0x20852c[_0x17ec91(0x4ed)]=Type[_0x17ec91(0x1b7)],_0x20852c[_0x17ec91(0x2ae)]={};const _0x3af157={};_0x3af157[_0x17ec91(0x4bd)]=_0x17ec91(0x419)+_0x17ec91(0x2f8),_0x3af157[_0x17ec91(0x39f)+'n']=_0x17ec91(0x17f)+'g\x20(restart'+_0x17ec91(0x1d9)+_0x17ec91(0x37d)+_0x17ec91(0x475)+'router\x20int'+'ernet\x20mili'+_0x17ec91(0x1e8)+_0x17ec91(0x296)+_0x17ec91(0x26b)+_0x17ec91(0x1df)+_0x17ec91(0x494)+'t.',_0x3af157['parameters']=_0x20852c;const rebootDeviceFunction=_0x3af157,_0x5773f2={};_0x5773f2[_0x17ec91(0x4ed)]=Type['OBJECT'],_0x5773f2[_0x17ec91(0x2ae)]={},_0x5773f2[_0x17ec91(0x273)]=[_0x17ec91(0x46b)],_0x5773f2[_0x17ec91(0x2ae)][_0x17ec91(0x46b)]={},_0x5773f2[_0x17ec91(0x2ae)][_0x17ec91(0x46b)][_0x17ec91(0x4ed)]=Type[_0x17ec91(0x2cb)],_0x5773f2[_0x17ec91(0x2ae)][_0x17ec91(0x46b)][_0x17ec91(0x39f)+'n']='Nama\x20Wi-Fi'+_0x17ec91(0x5ce)+_0x17ec91(0x4f0)+_0x17ec91(0x1fd)+'n.';const _0x5d756b={};_0x5d756b['name']=_0x17ec91(0x198)+_0x17ec91(0x205),_0x5d756b['descriptio'+'n']=_0x17ec91(0x5e0)+_0x17ec91(0x5a7)+_0x17ec91(0x47d)+_0x17ec91(0x5df)+_0x17ec91(0x1e8)+'n.',_0x5d756b[_0x17ec91(0x3b5)]=_0x5773f2;const changeWifiNameFunction=_0x5d756b,_0x1f3830={};_0x1f3830['type']=Type['OBJECT'],_0x1f3830[_0x17ec91(0x2ae)]={},_0x1f3830[_0x17ec91(0x273)]=[_0x17ec91(0x3e3)+'rd'],_0x1f3830[_0x17ec91(0x2ae)][_0x17ec91(0x3e3)+'rd']={},_0x1f3830[_0x17ec91(0x2ae)][_0x17ec91(0x3e3)+'rd'][_0x17ec91(0x4ed)]=Type[_0x17ec91(0x2cb)],_0x1f3830[_0x17ec91(0x2ae)][_0x17ec91(0x3e3)+'rd'][_0x17ec91(0x39f)+'n']=_0x17ec91(0x151)+'\x20Wi-Fi\x20bar'+'u\x20yang\x20dii'+_0x17ec91(0x55b)+_0x17ec91(0x4c6);const _0x173bde={};_0x173bde['name']=_0x17ec91(0x198)+_0x17ec91(0x559),_0x173bde['descriptio'+'n']=_0x17ec91(0x18d)+'ata\x20sandi\x20'+_0x17ec91(0x33c)+_0x17ec91(0x4f3)+_0x17ec91(0x246)+_0x17ec91(0x328)+_0x17ec91(0x29a),_0x173bde['parameters']=_0x1f3830;const changeWifiPasswordFunction=_0x173bde,_0x284b52={};_0x284b52['type']=Type[_0x17ec91(0x1b7)],_0x284b52[_0x17ec91(0x2ae)]={};const _0x480ccd={};_0x480ccd[_0x17ec91(0x4bd)]=_0x17ec91(0x38d),_0x480ccd[_0x17ec91(0x39f)+'n']=_0x17ec91(0x2b9)+_0x17ec91(0x177)+'\x20(SSID)\x20da'+'n\x20menampil'+_0x17ec91(0x326)+_0x17ec91(0x2db)+_0x17ec91(0x1d4)+_0x17ec91(0x5f3)+_0x17ec91(0x210)+_0x17ec91(0x47b)+'milik\x20pela'+'nggan.\x20Gun'+_0x17ec91(0x4c0)+_0x17ec91(0x186)+'\x20pengguna\x20'+_0x17ec91(0x18e)+'cek\x20wifi\x22,'+_0x17ec91(0x1ab)+_0x17ec91(0x57b)+_0x17ec91(0x59b)+_0x17ec91(0x4cf)+_0x17ec91(0x5c6)+_0x17ec91(0x2ba)+'au\x20pertany'+_0x17ec91(0x345)+'.',_0x480ccd['parameters']=_0x284b52;const checkWifiFunction=_0x480ccd,_0x2f0589={};_0x2f0589['type']=Type[_0x17ec91(0x1b7)],_0x2f0589[_0x17ec91(0x2ae)]={};const _0x58fed2={};_0x58fed2[_0x17ec91(0x4bd)]=_0x17ec91(0x2b1)+_0x17ec91(0x275),_0x58fed2[_0x17ec91(0x39f)+'n']='Memeriksa\x20'+'status\x20tag'+_0x17ec91(0x378)+_0x17ec91(0x218)+_0x17ec91(0x2fe)+_0x17ec91(0x269)+_0x17ec91(0x322)+'jatuh\x20temp'+_0x17ec91(0x279)+_0x17ec91(0x154)+_0x17ec91(0x674)+_0x17ec91(0x632)+_0x17ec91(0x311)+_0x17ec91(0x245),_0x58fed2[_0x17ec91(0x3b5)]=_0x2f0589;const getBillingStatusFunction=_0x58fed2,_0x13463a={};_0x13463a['type']=Type[_0x17ec91(0x1b7)],_0x13463a[_0x17ec91(0x2ae)]={},_0x13463a[_0x17ec91(0x273)]=['customerId'],_0x13463a[_0x17ec91(0x2ae)][_0x17ec91(0x2e6)]={},_0x13463a[_0x17ec91(0x2ae)][_0x17ec91(0x2e6)]['type']=Type[_0x17ec91(0x2cb)],_0x13463a[_0x17ec91(0x2ae)][_0x17ec91(0x2e6)][_0x17ec91(0x39f)+'n']=_0x17ec91(0x54c)+_0x17ec91(0x27c)+'rangkatnya'+_0x17ec91(0x523)+_0x17ec91(0x1b1);const _0x3f1958={};_0x3f1958[_0x17ec91(0x4bd)]=_0x17ec91(0x34b)+_0x17ec91(0x66a),_0x3f1958[_0x17ec91(0x39f)+'n']=_0x17ec91(0x17f)+_0x17ec91(0x3e5)+_0x17ec91(0x1d9)+_0x17ec91(0x37d)+_0x17ec91(0x19c)+_0x17ec91(0x2de)+'\x20tertentu\x20'+'berdasarka'+_0x17ec91(0x608)+'ggan.',_0x3f1958[_0x17ec91(0x3b5)]=_0x13463a;const adminRebootDeviceFunction=_0x3f1958,_0x2d1719={};_0x2d1719[_0x17ec91(0x4ed)]=Type[_0x17ec91(0x1b7)],_0x2d1719[_0x17ec91(0x2ae)]={},_0x2d1719['required']=['customerId',_0x17ec91(0x46b)],_0x2d1719[_0x17ec91(0x2ae)][_0x17ec91(0x2e6)]={},_0x2d1719[_0x17ec91(0x2ae)][_0x17ec91(0x46b)]={},_0x2d1719[_0x17ec91(0x2ae)][_0x17ec91(0x2e6)][_0x17ec91(0x4ed)]=Type['STRING'],_0x2d1719[_0x17ec91(0x2ae)][_0x17ec91(0x2e6)][_0x17ec91(0x39f)+'n']=_0x17ec91(0x54c)+_0x17ec91(0x389)+_0x17ec91(0x5ad)+'ya\x20akan\x20di'+_0x17ec91(0x50b),_0x2d1719[_0x17ec91(0x2ae)][_0x17ec91(0x46b)]['type']=Type[_0x17ec91(0x2cb)],_0x2d1719[_0x17ec91(0x2ae)][_0x17ec91(0x46b)]['descriptio'+'n']=_0x17ec91(0x15d)+_0x17ec91(0x5ce)+_0x17ec91(0x4f0)+'n.';const _0xbc740f={};_0xbc740f[_0x17ec91(0x4bd)]='admin_chan'+_0x17ec91(0x3d0)+'me',_0xbc740f[_0x17ec91(0x39f)+'n']='Mengubah\x20n'+_0x17ec91(0x5a7)+'an\x20Wi-Fi\x20('+'SSID)\x20mili'+_0x17ec91(0x1e8)+_0x17ec91(0x5bc)+'.',_0xbc740f[_0x17ec91(0x3b5)]=_0x2d1719;const adminChangeWifiNameFunction=_0xbc740f,_0x3f0bbd={};_0x3f0bbd['type']=Type[_0x17ec91(0x1b7)],_0x3f0bbd[_0x17ec91(0x2ae)]={},_0x3f0bbd[_0x17ec91(0x273)]=['customerId',_0x17ec91(0x3e3)+'rd'],_0x3f0bbd[_0x17ec91(0x2ae)][_0x17ec91(0x2e6)]={},_0x3f0bbd[_0x17ec91(0x2ae)][_0x17ec91(0x3e3)+'rd']={},_0x3f0bbd[_0x17ec91(0x2ae)][_0x17ec91(0x2e6)][_0x17ec91(0x4ed)]=Type[_0x17ec91(0x2cb)],_0x3f0bbd[_0x17ec91(0x2ae)][_0x17ec91(0x2e6)][_0x17ec91(0x39f)+'n']='ID\x20Pelangg'+'an\x20yang\x20ka'+_0x17ec91(0x1a5)+_0x17ec91(0x611)+_0x17ec91(0x372)+'.',_0x3f0bbd[_0x17ec91(0x2ae)][_0x17ec91(0x3e3)+'rd'][_0x17ec91(0x4ed)]=Type[_0x17ec91(0x2cb)],_0x3f0bbd[_0x17ec91(0x2ae)][_0x17ec91(0x3e3)+'rd'][_0x17ec91(0x39f)+'n']=_0x17ec91(0x151)+_0x17ec91(0x594)+_0x17ec91(0x5b2)+'nginkan.';const _0x155571={};_0x155571['name']='admin_chan'+_0x17ec91(0x51b)+'ssword',_0x155571[_0x17ec91(0x39f)+'n']=_0x17ec91(0x18d)+'ata\x20sandi\x20'+_0x17ec91(0x33c)+'ord\x20jaring'+_0x17ec91(0x246)+_0x17ec91(0x328)+_0x17ec91(0x570)+'ntu.',_0x155571[_0x17ec91(0x3b5)]=_0x3f0bbd;const adminChangeWifiPasswordFunction=_0x155571,_0x317d49={};_0x317d49['type']=Type[_0x17ec91(0x1b7)],_0x317d49[_0x17ec91(0x2ae)]={},_0x317d49[_0x17ec91(0x273)]=['customerId'],_0x317d49[_0x17ec91(0x2ae)][_0x17ec91(0x2e6)]={},_0x317d49[_0x17ec91(0x2ae)][_0x17ec91(0x2e6)]['type']=Type[_0x17ec91(0x2cb)],_0x317d49[_0x17ec91(0x2ae)][_0x17ec91(0x2e6)][_0x17ec91(0x39f)+'n']=_0x17ec91(0x54c)+_0x17ec91(0x27c)+_0x17ec91(0x586)+_0x17ec91(0x630)+_0x17ec91(0x4cd)+_0x17ec91(0x3c3);const _0x359faf={};_0x359faf['name']=_0x17ec91(0x4a6)+_0x17ec91(0x56a),_0x359faf[_0x17ec91(0x39f)+'n']=_0x17ec91(0x2b9)+'nama\x20Wi-Fi'+'\x20(SSID)\x20da'+_0x17ec91(0x53e)+'erangkat\x20y'+'ang\x20terhub'+'ung\x20ke\x20jar'+'ingan\x20Wi-F'+_0x17ec91(0x229)+_0x17ec91(0x2e2)+_0x17ec91(0x4bb)+_0x17ec91(0x176),_0x359faf[_0x17ec91(0x3b5)]=_0x317d49;const adminCheckWifiFunction=_0x359faf,getCustomerContext=async(_0x12faec,_0x1503b4)=>{const _0x12658f=_0x17ec91,_0x3a09e2={'GgYuP':_0x12658f(0x5b3)+_0x12658f(0x58a)+'d','DHaJv':_0x12658f(0x181)+_0x12658f(0x4b9)+_0x12658f(0x5f8),'JKfiA':'Maaf,\x20saya'+_0x12658f(0x34e)+'at\x20mempros'+_0x12658f(0x17c)+_0x12658f(0x631)+_0x12658f(0x62a)+_0x12658f(0x255)+_0x12658f(0x615)+_0x12658f(0x2bf)+'mat\x20yang\x20b'+_0x12658f(0x50e),'sxwHU':function(_0x4e5df8,_0x3331de){return _0x4e5df8===_0x3331de;},'tPezk':'vYpwt','lvTCs':_0x12658f(0x62b)+'ame,\x20p.spe'+_0x12658f(0x3e8)+'e\x20FROM\x20pac'+_0x12658f(0x32e)+'IN\x20custome'+_0x12658f(0x2c1)+_0x12658f(0x1bf)+_0x12658f(0x680)+_0x12658f(0x193)+'?','uqrZl':function(_0x17389d,_0x545e9c){return _0x17389d||_0x545e9c;},'VZpBd':'N/A','WYfuy':_0x12658f(0x5a6),'GjSQK':_0x12658f(0x169),'CFVox':_0x12658f(0x25a),'iCAsw':'router','Zdkab':'restart','kzuAt':_0x12658f(0x3c8),'NcbOG':'sinyal','NrYzK':_0x12658f(0x566),'OvdTz':_0x12658f(0x415),'hZqCJ':_0x12658f(0x356),'ojWcK':_0x12658f(0x26d),'RjFHj':_0x12658f(0x3ea),'NObmv':'cek\x20wifi','gjuHI':_0x12658f(0x4de),'CqnaF':_0x12658f(0x3ba)+'angkat','LSWPK':_0x12658f(0x5ef),'nyUAC':function(_0x421984,_0x19b2e3){return _0x421984(_0x19b2e3);},'vJNSF':function(_0x1c4231,_0x5f0bd3){return _0x1c4231===_0x5f0bd3;},'ltcXK':_0x12658f(0x639),'ImMRA':_0x12658f(0x59f),'wOCPK':_0x12658f(0x271)+_0x12658f(0x616)+'l\x20detail\x20p'+_0x12658f(0x1b3)+'aat\x20ini.','ZcHOQ':_0x12658f(0x5de),'zGbdT':_0x12658f(0x629)+_0x12658f(0x60e)+_0x12658f(0x2de)+_0x12658f(0x37e),'AdqaD':'Unknown'};let _0x449653=null;try{if(_0x3a09e2[_0x12658f(0x3c1)](_0x12658f(0x520),_0x3a09e2[_0x12658f(0x4cb)])){const [[_0x471011]]=await _0x5f3780['query'](_0x12658f(0x3e6)+'\x20name,\x20sta'+_0x12658f(0x432)+_0x12658f(0x5fc)+_0x12658f(0x60d)+_0x12658f(0x5c8)+_0x12658f(0x178)+_0x12658f(0x4d4),[_0x12faec]);if(!_0x471011){const _0x586352={};_0x586352['id']=_0x12faec;const _0x59f648={};return _0x59f648[_0x12658f(0x1fb)]=_0x12658f(0x33a)+_0x12658f(0x5b5)+_0x12658f(0x189),_0x59f648[_0x12658f(0x320)]=_0x586352,JSON[_0x12658f(0x592)](_0x59f648);}_0x449653=_0x471011;const [_0x209668]=await _0x5f3780['query']('SELECT\x20id,'+'\x20amount,\x20s'+_0x12658f(0x304)+_0x12658f(0x514)+'ingPeriodS'+_0x12658f(0x37a)+_0x12658f(0x39c)+'nd\x20FROM\x20in'+'voices\x20WHE'+_0x12658f(0x159)+_0x12658f(0x55d)+_0x12658f(0x439)+_0x12658f(0x171)+'C\x20LIMIT\x205',[_0x12faec]),[[_0x46a6ed]]=await _0x5f3780[_0x12658f(0x646)](_0x3a09e2[_0x12658f(0x42d)],[_0x12faec]),_0x3f64ed={};_0x3f64ed['id']=_0x449653['id'],_0x3f64ed[_0x12658f(0x4bd)]=_0x449653['name'],_0x3f64ed[_0x12658f(0x45a)]=_0x449653[_0x12658f(0x45a)],_0x3f64ed[_0x12658f(0x5d9)]=_0x449653[_0x12658f(0x5d9)];const _0x2d24c8={'customer':_0x3f64ed,'package':_0x3a09e2[_0x12658f(0x1f3)](_0x46a6ed,_0x3a09e2[_0x12658f(0x387)]),'recent_invoices':_0x209668};let _0x28647b={};const _0x34ca46=_0x1503b4[_0x12658f(0x192)+'e'](),_0x365fdc=[_0x3a09e2[_0x12658f(0x455)],_0x12658f(0x32a),_0x3a09e2['GjSQK'],_0x12658f(0x321),_0x12658f(0x5ac),_0x3a09e2[_0x12658f(0x1ef)],_0x3a09e2[_0x12658f(0x2b4)],_0x3a09e2[_0x12658f(0x5c3)],_0x3a09e2[_0x12658f(0x4d7)],_0x3a09e2[_0x12658f(0x5bb)],_0x3a09e2[_0x12658f(0x4ff)],_0x3a09e2[_0x12658f(0x42b)],_0x3a09e2[_0x12658f(0x17a)],_0x3a09e2[_0x12658f(0x3aa)],_0x12658f(0x29e),_0x3a09e2[_0x12658f(0x27d)],_0x3a09e2[_0x12658f(0x44e)],_0x3a09e2[_0x12658f(0x34c)],_0x3a09e2['CqnaF']];if(_0x449653['acsSerialN'+_0x12658f(0x2cd)]&&_0x365fdc['some'](_0x32fd49=>_0x34ca46[_0x12658f(0x537)](_0x32fd49))){if(_0x3a09e2[_0x12658f(0x3c1)](_0x3a09e2['LSWPK'],_0x3a09e2['LSWPK']))try{const _0x1702de=await _0x3a09e2[_0x12658f(0x663)](getCustomerDeviceDetails,_0x12faec);if(_0x1702de){if(_0x3a09e2[_0x12658f(0x239)](_0x3a09e2[_0x12658f(0x303)],_0x12658f(0x3c9))){const _0x505a98={};_0x505a98[_0x12658f(0x1e4)]=_0xa9833e?.[0x116+-0xeda+0xdc4],_0x1cf8c5[_0x12658f(0x383)+_0x12658f(0x15e)](_0x52645e,_0x3a09e2['GgYuP'],_0x505a98);}else{const _0x1bfec3={};_0x1bfec3[_0x12658f(0x64d)]=_0x1702de['isOnline'],_0x1bfec3[_0x12658f(0x1dc)]=_0x1702de[_0x12658f(0x1dc)],_0x1bfec3[_0x12658f(0x274)]=_0x1702de[_0x12658f(0x274)],_0x1bfec3[_0x12658f(0x58f)+'fi_name']=_0x1702de[_0x12658f(0x1e4)+'s']?.[-0x1100+-0x8*0x486+0x3530]?.[_0x12658f(0x415)]||_0x3a09e2[_0x12658f(0x387)];const _0x1a25ef={};_0x1a25ef[_0x12658f(0x1e4)+'s']=_0x1702de[_0x12658f(0x1e4)+'s'];const _0x53f975={};_0x53f975[_0x12658f(0x4b5)+'tus']=_0x1bfec3,_0x53f975[_0x12658f(0x29d)+_0x12658f(0x206)]=_0x1a25ef,_0x28647b=_0x53f975;}}}catch(_0x16c2be){if('fWooj'!==_0x3a09e2[_0x12658f(0x543)])_0xb34eef=_0x347ac9(_0x3a09e2[_0x12658f(0x4a1)],_0x48a672);else{const _0x513a60={};_0x513a60['device_sta'+'tus_error']=_0x3a09e2[_0x12658f(0x1a3)],_0x28647b=_0x513a60;}}else{const _0x39033e=_0x20a106[_0x12658f(0x256)];if(!_0x39033e){_0x312867[_0x12658f(0x5f7)](_0x12658f(0x43f)+'Gemini\x20ret'+_0x12658f(0x305)+'ext\x20or\x20fun'+'ction\x20call'+_0x12658f(0x628)+':',_0x2b62ec[_0x12658f(0x592)](_0x124006,null,-0x142b+-0x293*0x7+0x2*0x1319));const _0xd5824b={};_0xd5824b[_0x12658f(0x358)]=_0x3a09e2[_0x12658f(0x2b6)],_0x2ad031[_0x12658f(0x659)](_0xd5824b);}else{const _0x58d140={};_0x58d140[_0x12658f(0x358)]=_0x39033e,_0x32c7ac[_0x12658f(0x659)](_0x58d140);}}}const _0x5d942e={..._0x2d24c8,..._0x28647b};return JSON[_0x12658f(0x592)](_0x5d942e,null,-0x1a6b*0x1+0x1*0xf0d+0xb6*0x10);}else _0x331ce6=_0x12658f(0x34d)+'\x20tidak\x20dap'+_0x12658f(0x3c6)+_0x12658f(0x16d)+_0x12658f(0x32d)+'nda\x20saat\x20i'+'ni.\x20Mungki'+_0x12658f(0x4d2)+_0x12658f(0x23e)+'ang\x20offlin'+_0x12658f(0x30f);}catch(_0x1b9019){if(_0x3a09e2['ZcHOQ']!==_0x12658f(0x5de)){if(_0x197c62){const _0x12b3b6=_0x290a5d[_0x12658f(0x3ab)](_0x3bc98b,arguments);return _0x4d46eb=null,_0x12b3b6;}}else{const _0x58b3d0={};return _0x58b3d0[_0x12658f(0x1fb)]=_0x3a09e2[_0x12658f(0x35c)],_0x58b3d0[_0x12658f(0x320)]={},_0x58b3d0[_0x12658f(0x320)]['id']=_0x12faec,_0x58b3d0[_0x12658f(0x320)][_0x12658f(0x4bd)]=_0x449653?.[_0x12658f(0x4bd)]||_0x3a09e2[_0x12658f(0x59d)],JSON[_0x12658f(0x592)](_0x58b3d0);}}};router[_0x17ec91(0x3db)](_0x17ec91(0x353),async(_0x23ca4c,_0x5329c8)=>{const _0x1dea1d=_0x17ec91,_0x5cf183={'AjVct':_0x1dea1d(0x50c)+'han\x20Anda\x20s'+_0x1dea1d(0x4c7)+_0x1dea1d(0x35a)+_0x1dea1d(0x500),'csoeo':'[Chatbot]\x20'+'Failed\x20to\x20'+_0x1dea1d(0x1c0)+_0x1dea1d(0x251)+_0x1dea1d(0x2a5)+_0x1dea1d(0x22e)+_0x1dea1d(0x55c),'GxzDC':function(_0x60feaa,_0xb3ac39){return _0x60feaa(_0xb3ac39);},'amWvr':function(_0xf8dc66,_0x4071b2,_0x3f7966){return _0xf8dc66(_0x4071b2,_0x3f7966);},'oYdGj':_0x1dea1d(0x38a),'mdStj':'[Whatsapp\x20'+'AI\x20Chat]\x20F'+'ailed\x20to\x20n'+'otify\x20user'+'\x20about\x20cha'+_0x1dea1d(0x1e9)+':','qXtlU':_0x1dea1d(0x5a4)+_0x1dea1d(0x30d),'NfLXY':_0x1dea1d(0x41c),'aAflE':function(_0x6be129,_0x2dfddb){return _0x6be129===_0x2dfddb;},'KHiMK':_0x1dea1d(0x2d9),'IDgEB':_0x1dea1d(0x5d0),'aeBGW':function(_0x42d207){return _0x42d207();},'Srsna':_0x1dea1d(0x43f)+_0x1dea1d(0x369)+_0x1dea1d(0x21f)+_0x1dea1d(0x4e5)+_0x1dea1d(0x28f)+_0x1dea1d(0x67a)+_0x1dea1d(0x633),'HocQs':function(_0x2a3fd6,_0x47cdc6){return _0x2a3fd6===_0x47cdc6;},'aeVIR':function(_0x58458a,_0x2609f5,_0x34c661){return _0x58458a(_0x2609f5,_0x34c661);},'MaFNO':'LOjFO','oKdId':_0x1dea1d(0x3e1),'CEhgP':function(_0x37824f,_0x335e2c,_0x3ef45f){return _0x37824f(_0x335e2c,_0x3ef45f);},'SFsDJ':_0x1dea1d(0x2da)+_0x1dea1d(0x2ec)+_0x1dea1d(0x23d)+_0x1dea1d(0x4ce)+_0x1dea1d(0x5a0)+_0x1dea1d(0x438)+_0x1dea1d(0x1e7)+_0x1dea1d(0x41d)+_0x1dea1d(0x44c),'CKWiX':function(_0x1da1fd,_0x3e0c89){return _0x1da1fd>_0x3e0c89;},'fRuAU':function(_0x83941a,_0x2d4b10){return _0x83941a||_0x2d4b10;},'LYBiY':'get_billin'+_0x1dea1d(0x275),'wJyPt':function(_0x5e3045,_0x42b242){return _0x5e3045!==_0x42b242;},'qsxDb':_0x1dea1d(0x150),'UOKYG':'aMvfh','yVIMY':_0x1dea1d(0x419)+'ice','AYTmt':'change_wif'+_0x1dea1d(0x205),'oEQJC':function(_0x40d533,_0x4afcda,_0x283f23){return _0x40d533(_0x4afcda,_0x283f23);},'LzlLj':'change_wif'+_0x1dea1d(0x559),'CIDTH':_0x1dea1d(0x3a4),'penjL':_0x1dea1d(0x34b)+_0x1dea1d(0x66a),'sXGLM':function(_0x1113b9,_0x5f5c29,_0x111ae7){return _0x1113b9(_0x5f5c29,_0x111ae7);},'jBuMX':_0x1dea1d(0x1f1)+_0x1dea1d(0x51b)+_0x1dea1d(0x57a),'kULDb':_0x1dea1d(0x4a6)+_0x1dea1d(0x56a),'nhZqx':function(_0x45bb58,_0x1205f4){return _0x45bb58===_0x1205f4;},'sgzdq':_0x1dea1d(0x529),'PPHcB':_0x1dea1d(0x323),'CNiSh':function(_0x4b8d6f,_0x1f47c5){return _0x4b8d6f===_0x1f47c5;},'nKsFZ':_0x1dea1d(0x1b8),'uSCkZ':function(_0x4462b2,_0x8272c7){return _0x4462b2===_0x8272c7;},'kzfEV':'zEOyK','jWvwF':_0x1dea1d(0x2ea),'RgnjH':'YMcHC','YkvoY':_0x1dea1d(0x34d)+_0x1dea1d(0x34e)+'at\x20mempros'+_0x1dea1d(0x17c)+_0x1dea1d(0x631)+_0x1dea1d(0x62a)+'ilakan\x20cob'+_0x1dea1d(0x615)+_0x1dea1d(0x2bf)+_0x1dea1d(0x3f9)+_0x1dea1d(0x50e),'nZcAA':function(_0x37fd12,_0x343c0f){return _0x37fd12!==_0x343c0f;},'VIwNU':'ZGYEO','rSEyF':_0x1dea1d(0x369)+_0x1dea1d(0x643),'tbVmg':_0x1dea1d(0x448)+'VALID','LiByL':function(_0x3a5a66,_0xf0ff31){return _0x3a5a66(_0xf0ff31);},'nYAWx':_0x1dea1d(0x2fc),'jAOWd':_0x1dea1d(0x550),'xOaXC':'error','Uaxuz':'Gemini\x20API'+_0x1dea1d(0x4b2)+_0x1dea1d(0x3d3)+_0x1dea1d(0x513)+_0x1dea1d(0x2c3)+_0x1dea1d(0x1d5)+_0x1dea1d(0x658)+_0x1dea1d(0x522),'CXfkL':'zZUuU','RZnwg':'AI\x20Service'+'\x20Misconfig'+'ured:\x20Inva'+_0x1dea1d(0x1e2)+'y.','dOggd':function(_0x1f6af3,_0x321c8c){return _0x1f6af3(_0x321c8c);},'ZqPfV':_0x1dea1d(0x417)+'ccurred\x20wh'+_0x1dea1d(0x4f4)+'icating\x20wi'+_0x1dea1d(0x425)+_0x1dea1d(0x34f)},{message:_0x5dbcda,user:_0x19677c,role:_0x4264db}=_0x23ca4c['body'];if(!_0x5dbcda){if(_0x1dea1d(0x41c)===_0x5cf183[_0x1dea1d(0x557)]){const _0x1bfa08={};return _0x1bfa08[_0x1dea1d(0x1fb)]=_0x1dea1d(0x5aa)+_0x1dea1d(0x55e),_0x5329c8[_0x1dea1d(0x45a)](-0x10bc+0x2*0x1e2+0x4*0x3a2)['json'](_0x1bfa08);}else{const _0x101c2b=_0x4b6be6?function(){const _0x4ec658=_0x1dea1d;if(_0x9238a2){const _0x84db40=_0xb96c5b[_0x4ec658(0x3ab)](_0x585f24,arguments);return _0x2b7697=null,_0x84db40;}}:function(){};return _0x4869e3=![],_0x101c2b;}}try{if(_0x5cf183[_0x1dea1d(0x158)](_0x5cf183[_0x1dea1d(0x621)],_0x5cf183[_0x1dea1d(0x3b6)])){_0x544e50[_0x1dea1d(0x1fb)]('[Chatbot]\x20'+_0x1dea1d(0x26a)+_0x1dea1d(0x24c)+_0x86333e[_0x1dea1d(0x4bd)]+'\x27:',_0xbe2eea);const _0x2f4c58={};return _0x2f4c58[_0x1dea1d(0x358)]=_0x1dea1d(0x37c)+'adi\x20kesala'+_0x1dea1d(0x53f)+'encoba\x20mel'+'akukan\x20tin'+_0x1dea1d(0x456)+'ebut:\x20'+_0x2a0489[_0x1dea1d(0x346)]+_0x1dea1d(0x539),_0x2dc9b1[_0x1dea1d(0x659)](_0x2f4c58);}else{const _0x3ab257=await _0x5cf183[_0x1dea1d(0x4dc)](getSettings),_0x1228ec=_0x3ab257[_0x1dea1d(0x650)]?.['apiKey'];if(!_0x1228ec){console[_0x1dea1d(0x1fb)](_0x5cf183[_0x1dea1d(0x3a7)]);const _0x159d92={};return _0x159d92['error']=_0x1dea1d(0x40d)+_0x1dea1d(0x487)+_0x1dea1d(0x435)+_0x1dea1d(0x34a)+_0x1dea1d(0x306),_0x5329c8[_0x1dea1d(0x45a)](-0x7*0x135+-0x1dfb+0x2865)[_0x1dea1d(0x659)](_0x159d92);}const _0x41d256={};_0x41d256[_0x1dea1d(0x294)]=_0x1228ec;const _0x4607e2=new GoogleGenAI(_0x41d256);let _0x1bcce4='',_0x51f416='',_0x28421b=[];if(_0x5cf183[_0x1dea1d(0x486)](_0x4264db,_0x1dea1d(0x320))&&_0x19677c?.['id']){_0x1bcce4=await _0x5cf183[_0x1dea1d(0x544)](getCustomerContext,_0x19677c['id'],_0x5dbcda);const _0x47d99a={};_0x47d99a['functionDe'+_0x1dea1d(0x16e)]=[rebootDeviceFunction,changeWifiNameFunction,changeWifiPasswordFunction,checkWifiFunction,getBillingStatusFunction],_0x28421b=[_0x47d99a],_0x51f416=_0x1dea1d(0x2f4)+_0x1dea1d(0x580)+_0x1dea1d(0x3dc)+_0x1dea1d(0x364)+'mbantu\x20unt'+_0x1dea1d(0x2dc)+_0x1dea1d(0x655)+(_0x3ab257['app'][_0x1dea1d(0x589)]||_0x1dea1d(0x254)+_0x1dea1d(0x367))+(_0x1dea1d(0x1fc)+'da\x20\x27Rizkit'+_0x1dea1d(0x3cc)+'\x27.\x0aAnda\x20ha'+'rus\x20menjaw'+'ab\x20pertany'+_0x1dea1d(0x23c)+'berdasarka'+'n\x20konteks\x20'+'yang\x20diber'+_0x1dea1d(0x371)+_0x1dea1d(0x4c4)+_0x1dea1d(0x5d4)+_0x1dea1d(0x555)+_0x1dea1d(0x623)+'tiap\x20balas'+'an\x20dengan\x20'+_0x1dea1d(0x61b)+'um\x20😊.\x0a\x0a-\x20J'+'ika\x20penggu'+'na\x20mengelu'+_0x1dea1d(0x4ba)+'internet\x20l'+_0x1dea1d(0x20d)+'alah\x20konek'+'si,\x20atau\x20g'+_0x1dea1d(0x45d)+_0x1dea1d(0x384)+_0x1dea1d(0x4b6)+_0x1dea1d(0x47e)+_0x1dea1d(0x29b)+_0x1dea1d(0x49d)+_0x1dea1d(0x5f1)+'.\x20Pertama,'+_0x1dea1d(0x508)+_0x1dea1d(0x224)+_0x1dea1d(0x552)+_0x1dea1d(0x553)+_0x1dea1d(0x1f6)+_0x1dea1d(0x574)+_0x1dea1d(0x476)+_0x1dea1d(0x578)+'_status.rx'+_0x1dea1d(0x2aa)+'i\x20konteks.'+_0x1dea1d(0x14b)+_0x1dea1d(0x5fa)+_0x1dea1d(0x2f3)+'dan\x20nilain'+_0x1dea1d(0x443)+_0x1dea1d(0x666)+_0x1dea1d(0x420)+_0x1dea1d(0x540)+_0x1dea1d(0x515)+_0x1dea1d(0x33f)+_0x1dea1d(0x626)+_0x1dea1d(0x312)+'ika\x20nilain'+_0x1dea1d(0x601)+_0x1dea1d(0x56b)+'-25,\x20beri\x20'+_0x1dea1d(0x4ae)+'a:\x20\x22Sinyal'+_0x1dea1d(0x385)+_0x1dea1d(0x27a)+'\x20')+_0x1bcce4[_0x1dea1d(0x4b5)+'tus']?.['rxPower']+(_0x1dea1d(0x533)+'arusnya\x20am'+'an\x20😊.\x22\x0a\x20\x204'+_0x1dea1d(0x18b)+'Power\x27\x20ter'+'sedia\x20dan\x20'+_0x1dea1d(0x434)+'ukan\x20\x27N/A\x27'+_0x1dea1d(0x530)+_0x1dea1d(0x483)+_0x1dea1d(0x560)+'u\x20kurang,\x20'+_0x1dea1d(0x396)+'mereka:\x20\x22S'+_0x1dea1d(0x59c)+'k\x20Anda\x20saa'+_0x1dea1d(0x4a2))+_0x1bcce4['device_sta'+_0x1dea1d(0x5c4)]?.[_0x1dea1d(0x274)]+(_0x1dea1d(0x597)+_0x1dea1d(0x3d6)+_0x1dea1d(0x66b)+_0x1dea1d(0x447)+'neksi\x20kabe'+'l\x20Anda\x20😊.\x22'+_0x1dea1d(0x217)+_0x1dea1d(0x5fa)+_0x1dea1d(0x35d)+'sedia,\x20lew'+_0x1dea1d(0x15c)+'angkah\x20ini'+_0x1dea1d(0x39d)+_0x1dea1d(0x56d)+'rikan\x20stat'+_0x1dea1d(0x16c)+_0x1dea1d(0x163)+_0x1dea1d(0x398)+_0x1dea1d(0x484)+_0x1dea1d(0x585)+_0x1dea1d(0x23a)+'anya\x20\x22Apak'+_0x1dea1d(0x2af)+_0x1dea1d(0x1ba)+'a\x20restart\x20'+_0x1dea1d(0x452)+'ari\x20sini?\x20'+_0x1dea1d(0x2c2)+_0x1dea1d(0x225)+_0x1dea1d(0x5c5)+_0x1dea1d(0x1a9)+_0x1dea1d(0x3ec)+_0x1dea1d(0x41b)+'nggil\x20fung'+'si\x20\x27reboot'+_0x1dea1d(0x391)+'\x0a-\x20Perubah'+_0x1dea1d(0x207)+'-Fi\x20(nama/'+_0x1dea1d(0x64a)+_0x1dea1d(0x314)+'/password)'+_0x1dea1d(0x605)+_0x1dea1d(0x313)+_0x1dea1d(0x416)+_0x1dea1d(0x276)+_0x1dea1d(0x250)+_0x1dea1d(0x4aa)+_0x1dea1d(0x4ab)+'5GHz).\x0a-\x20P'+_0x1dea1d(0x2fd)+'at\x20mengeks'+_0x1dea1d(0x5ed)+_0x1dea1d(0x3d2)+_0x1dea1d(0x3a0)+_0x1dea1d(0x52e)+_0x1dea1d(0x3e4)+_0x1dea1d(0x5c2)+_0x1dea1d(0x478)+'ndi\x20baru,\x20'+_0x1dea1d(0x19b)+_0x1dea1d(0x2d6)+'gubah\x20besa'+_0x1dea1d(0x31f)+_0x1dea1d(0x3be)+_0x1dea1d(0x5db)+_0x1dea1d(0x54f)+_0x1dea1d(0x596)+_0x1dea1d(0x233)+_0x1dea1d(0x61f)+_0x1dea1d(0x562)+_0x1dea1d(0x2e3)+'na\x20mengata'+'kan\x20\x22ubah\x20'+_0x1dea1d(0x48c)+_0x1dea1d(0x1c3)+'\x22,\x20argumen'+_0x1dea1d(0x3fa)+_0x1dea1d(0x240)+_0x1dea1d(0x293)+'009\x22.\x0a-\x20Ji'+_0x1dea1d(0x638)+_0x1dea1d(0x407)+_0x1dea1d(0x222)+_0x1dea1d(0x53d)+_0x1dea1d(0x2e5)+_0x1dea1d(0x2e8)+_0x1dea1d(0x449)+_0x1dea1d(0x200)+',\x20tetapi\x20s'+_0x1dea1d(0x336)+_0x1dea1d(0x5b6)+_0x1dea1d(0x2ef)+'anyaan\x20lai'+_0x1dea1d(0x2dd)+_0x1dea1d(0x4a8)+_0x1dea1d(0x517)+_0x1dea1d(0x64f)+_0x1dea1d(0x65e)+_0x1dea1d(0x36b)+('ka\x20penggun'+'a\x20bertanya'+_0x1dea1d(0x505)+_0x1dea1d(0x368)+_0x1dea1d(0x49e)+'han\x27,\x20\x27pem'+_0x1dea1d(0x2c8)+_0x1dea1d(0x670)+'ar?\x27),\x20And'+_0x1dea1d(0x600)+_0x1dea1d(0x194)+'fungsi\x20\x27ge'+_0x1dea1d(0x2c4)+_0x1dea1d(0x457)+_0x1dea1d(0x46f)+_0x1dea1d(0x3a8)+_0x1dea1d(0x494)+_0x1dea1d(0x375)+_0x1dea1d(0x504)+_0x1dea1d(0x671)+_0x1dea1d(0x5c9)+_0x1dea1d(0x1d1)+_0x1dea1d(0x1f2)+'kan\x20fungsi'+_0x1dea1d(0x3d8)+'evice\x27.\x0a-\x20'+'Jika\x20pengg'+_0x1dea1d(0x1f0)+_0x1dea1d(0x1be)+_0x1dea1d(0x4dd)+_0x1dea1d(0x24e)+_0x1dea1d(0x4eb)+_0x1dea1d(0x166)+_0x1dea1d(0x31b)+_0x1dea1d(0x548)+_0x1dea1d(0x324)+_0x1dea1d(0x603)+_0x1dea1d(0x301)+_0x1dea1d(0x42a)+_0x1dea1d(0x3f0)+_0x1dea1d(0x2d3)+',\x20gunakan\x20'+'fungsi\x20\x27ch'+'ange_wifi_'+_0x1dea1d(0x3fd)+_0x1dea1d(0x401)+_0x1dea1d(0x266)+'inta\x20untuk'+_0x1dea1d(0x4d1)+_0x1dea1d(0x2db)+_0x1dea1d(0x1d4)+_0x1dea1d(0x283)+_0x1dea1d(0x362)+'kat\x20aktif,'+'\x20\x27cek\x20wifi'+_0x1dea1d(0x3f5)+_0x1dea1d(0x5ec)+_0x1dea1d(0x48e)+_0x1dea1d(0x5cd)+_0x1dea1d(0x248)+'ai\x20wifi\x27,\x20'+_0x1dea1d(0x1a2)+_0x1dea1d(0x28c)+'k_wifi\x27.\x0a-'+_0x1dea1d(0x257)+'ngarang\x20in'+_0x1dea1d(0x55f)+_0x1dea1d(0x277)+_0x1dea1d(0x465)+_0x1dea1d(0x212)+_0x1dea1d(0x2e0)+_0x1dea1d(0x64b)+'ahasa\x20Indo'+'nesia.\x0a---'+_0x1dea1d(0x20a)))+_0x1bcce4+_0x1dea1d(0x3d1);}else{if(_0x5cf183['HocQs'](_0x4264db,'admin')){const _0x416d3b=_0x5dbcda[_0x1dea1d(0x190)](/\b([A-Z0-9]{6,12})\b/);_0x416d3b&&(_0x5cf183[_0x1dea1d(0x486)](_0x5cf183[_0x1dea1d(0x5ea)],_0x5cf183[_0x1dea1d(0x4be)])?_0x38429b=_0x5cf183[_0x1dea1d(0x32c)]:_0x1bcce4=await _0x5cf183[_0x1dea1d(0x5c1)](getCustomerContext,_0x416d3b[0x6c2+-0xc*-0x19d+-0x1a1d],_0x5dbcda));const _0x2ce2d8={};_0x2ce2d8['functionDe'+'clarations']=[adminRebootDeviceFunction,adminChangeWifiNameFunction,adminChangeWifiPasswordFunction,adminCheckWifiFunction],_0x28421b=[_0x2ce2d8],_0x51f416=_0x1dea1d(0x2f4)+_0x1dea1d(0x580)+_0x1dea1d(0x28d)+_0x1dea1d(0x67c)+_0x1dea1d(0x338)+_0x1dea1d(0x4f1)+_0x1dea1d(0x197)+_0x1dea1d(0x509)+_0x1dea1d(0x46a)+_0x1dea1d(0x587)+_0x1dea1d(0x22f)+_0x1dea1d(0x570)+_0x1dea1d(0x50a)+_0x1dea1d(0x22b)+_0x1dea1d(0x5ff)+_0x1dea1d(0x590)+'\x20balasan\x20d'+_0x1dea1d(0x660)+'i\x20senyum\x20😊'+_0x1dea1d(0x51d)+_0x1dea1d(0x3c7)+_0x1dea1d(0x54d)+_0x1dea1d(0x575)+_0x1dea1d(0x1bc)+_0x1dea1d(0x1c8)+_0x1dea1d(0x525)+_0x1dea1d(0x185)+_0x1dea1d(0x617)+'ringan\x20yan'+_0x1dea1d(0x1eb)+'\x20pada\x20pera'+_0x1dea1d(0x549)+_0x1dea1d(0x66e)+'ENTING:\x20Sa'+_0x1dea1d(0x1ff)+_0x1dea1d(0x5ed)+_0x1dea1d(0x3d2)+_0x1dea1d(0x3a0)+_0x1dea1d(0x52e)+_0x1dea1d(0x3e4)+_0x1dea1d(0x5c2)+'au\x20kata\x20sa'+_0x1dea1d(0x24f)+_0x1dea1d(0x19b)+_0x1dea1d(0x2d6)+'gubah\x20besa'+_0x1dea1d(0x31f)+_0x1dea1d(0x3be)+_0x1dea1d(0x5db)+_0x1dea1d(0x54f)+_0x1dea1d(0x596)+_0x1dea1d(0x233)+'\x20pengguna.'+_0x1dea1d(0x506)+_0x1dea1d(0x3f2)+_0x1dea1d(0x441)+'nda\x20HARUS\x20'+_0x1dea1d(0x43b)+_0x1dea1d(0x1c1)+_0x1dea1d(0x3ff)+_0x1dea1d(0x5fe)+_0x1dea1d(0x3ae)+_0x1dea1d(0x1dd)+_0x1dea1d(0x2b5)+_0x1dea1d(0x67b)+_0x1dea1d(0x42c)+_0x1dea1d(0x216)+'erikan\x20ID,'+_0x1dea1d(0x508)+_0x1dea1d(0x2d0)+'ya.\x0a-\x20Alat'+_0x1dea1d(0x664)+'a\x20adalah\x20u'+_0x1dea1d(0x286)+_0x1dea1d(0x41e)+_0x1dea1d(0x352)+'ggan.\x20Anda'+_0x1dea1d(0x37f)+_0x1dea1d(0x48b)+'em,\x20mengub'+_0x1dea1d(0x4fa)+_0x1dea1d(0x4e7)+',\x20mengubah'+_0x1dea1d(0x42a)+_0x1dea1d(0x223)+_0x1dea1d(0x1b4)+_0x1dea1d(0x4fe)+_0x1dea1d(0x1f7)+_0x1dea1d(0x5e4)+_0x1dea1d(0x394)+_0x1dea1d(0x46c)+_0x1dea1d(0x65c)+_0x1dea1d(0x466)+'stem\x20akan\x20'+_0x1dea1d(0x474)+_0x1dea1d(0x3bd)+'emberikan\x20'+'hasilnya.\x20'+_0x1dea1d(0x264)+_0x1dea1d(0x468)+(_0x1dea1d(0x4f5)+_0x1dea1d(0x408)+_0x1dea1d(0x4e2)+_0x1dea1d(0x402)+'in.\x0a-\x20Jika'+_0x1dea1d(0x4d3)+_0x1dea1d(0x22f)+_0x1dea1d(0x570)+'ntu\x20disedi'+_0x1dea1d(0x400)+'wah\x20ini,\x20g'+'unakan\x20unt'+_0x1dea1d(0x499)+_0x1dea1d(0x5cc)+_0x1dea1d(0x60b)+'langsung\x20('+_0x1dea1d(0x5b1)+_0x1dea1d(0x267)+'Wi-Fi\x20untu'+'k\x20pelangga'+'n\x20X?\x22).\x0a-\x20'+_0x1dea1d(0x4a4)+_0x1dea1d(0x319)+_0x1dea1d(0x2d7)+'\x20konteks\x20d'+_0x1dea1d(0x39a)+_0x1dea1d(0x327)+'ng\x20dapat\x20m'+_0x1dea1d(0x59e)+_0x1dea1d(0x2b2)+_0x1dea1d(0x376)+_0x1dea1d(0x3bb)+_0x1dea1d(0x65b)+'formasi\x20it'+_0x1dea1d(0x627)+_0x1dea1d(0x665)+'da\x20tetap\x20s'+'ingkat,\x20la'+_0x1dea1d(0x4da)+_0x1dea1d(0x606)+_0x1dea1d(0x5f9)+_0x1dea1d(0x1c9)+_0x1dea1d(0x2a7))+(_0x1bcce4||_0x5cf183[_0x1dea1d(0x5eb)])+'\x0a---';}}const _0x482ecd=new Promise((_0x36f42c,_0x5210c4)=>setTimeout(()=>_0x5210c4(new Error(_0x1dea1d(0x2a6)+_0x1dea1d(0x67f)+_0x1dea1d(0x1c2)+'0\x20seconds.')),0x365*-0x1f+0x1dd2+0x9989)),_0x4af391=_0x4607e2['models'][_0x1dea1d(0x647)+'ntent']({'model':'gemini-2.5'+_0x1dea1d(0x25d),'contents':_0x5dbcda,'config':{'systemInstruction':_0x51f416,'tools':_0x5cf183[_0x1dea1d(0x17e)](_0x28421b[_0x1dea1d(0x4fc)],0xba1+0x27d+-0xe1e)?_0x28421b:undefined}}),_0x39f859=await Promise['race']([_0x4af391,_0x482ecd]),_0x9d4dc7=_0x39f859['functionCa'+'lls']?.[0xda*0x2a+0xafb*-0x3+-0x3*0xf1];if(_0x9d4dc7){console[_0x1dea1d(0x20f)](_0x1dea1d(0x43f)+'Gemini\x20req'+_0x1dea1d(0x622)+_0x1dea1d(0x642)+_0x9d4dc7[_0x1dea1d(0x4bd)]+_0x1dea1d(0x3a9)+_0x4264db+'\x20'+(_0x19677c['username']||_0x19677c[_0x1dea1d(0x4bd)]));try{const _0x866a5b=JSON[_0x1dea1d(0x464)](_0x5cf183[_0x1dea1d(0x593)](_0x1bcce4,'{}')),_0x3aec91=_0x866a5b?.[_0x1dea1d(0x29d)+'paths']?.[_0x1dea1d(0x1e4)+'s'];switch(_0x9d4dc7[_0x1dea1d(0x4bd)]){case _0x5cf183[_0x1dea1d(0x5b8)]:{const [_0x29a37a]=await _0x5f3780['query']('SELECT\x20*\x20F'+_0x1dea1d(0x3cf)+'es\x20WHERE\x20c'+_0x1dea1d(0x437)+_0x1dea1d(0x1a0)+'atus\x20IN\x20(\x27'+_0x1dea1d(0x168)+_0x1dea1d(0x5dd)+'ORDER\x20BY\x20i'+_0x1dea1d(0x167)+'ESC\x20LIMIT\x20'+'1',[_0x19677c['id']]),_0xae79d8=_0x29a37a[-0xa0a+-0x1a33*0x1+0x1*0x243d];if(_0xae79d8){if(_0x5cf183[_0x1dea1d(0x591)](_0x5cf183[_0x1dea1d(0x291)],_0x5cf183[_0x1dea1d(0x3c5)])){const _0x27bb9b=_0x3ab257['app'][_0x1dea1d(0x40f)][_0x1dea1d(0x5e1)](/\/$/,'')+'/#pay/'+_0xae79d8['id'];return _0x5329c8[_0x1dea1d(0x659)]({'reply':_0x1dea1d(0x1fa)+_0x1dea1d(0x679)+'ang\x20perlu\x20'+_0x1dea1d(0x461)+_0x1dea1d(0x429)+'#'+_0xae79d8['id']+(_0x1dea1d(0x2bd)+'*')+formatRupiah(_0xae79d8[_0x1dea1d(0x237)])+(_0x1dea1d(0x238)+'mpo:\x20')+_0x5cf183[_0x1dea1d(0x477)](formatDateDisplay,_0xae79d8['dueDate'])+'\x0aPeriode:\x20'+formatBillingPeriod(_0xae79d8[_0x1dea1d(0x1c6)+'iodStart'],_0xae79d8[_0x1dea1d(0x1c6)+_0x1dea1d(0x32f)])+(_0x1dea1d(0x4ea)+_0x1dea1d(0x485)+_0x1dea1d(0x213)+_0x1dea1d(0x545)+_0x1dea1d(0x39e)+'\x0a')+_0x27bb9b+_0x1dea1d(0x2ca)});}else{const _0x131a7d={};return _0x131a7d[_0x1dea1d(0x358)]=_0x5cf183['AjVct'],_0x3cde87[_0x1dea1d(0x659)](_0x131a7d);}}else{const _0x1f3d32={};return _0x1f3d32[_0x1dea1d(0x358)]=_0x1dea1d(0x50c)+_0x1dea1d(0x625)+'udah\x20lunas'+'.\x20Terima\x20k'+_0x1dea1d(0x500),_0x5329c8[_0x1dea1d(0x659)](_0x1f3d32);}}case _0x5cf183[_0x1dea1d(0x463)]:await _0x5cf183[_0x1dea1d(0x477)](rebootCustomerDevice,_0x19677c['id']);const _0x5d5cf5={};_0x5d5cf5[_0x1dea1d(0x358)]=_0x1dea1d(0x531)+'\x20telah\x20men'+_0x1dea1d(0x516)+_0x1dea1d(0x33b)+_0x1dea1d(0x5b0)+_0x1dea1d(0x3ce)+_0x1dea1d(0x234)+_0x1dea1d(0x184)+_0x1dea1d(0x66f)+'\x20beberapa\x20'+_0x1dea1d(0x1a7);return _0x5329c8[_0x1dea1d(0x659)](_0x5d5cf5);case _0x5cf183[_0x1dea1d(0x551)]:const {new_ssid:_0x52ec86}=_0x9d4dc7[_0x1dea1d(0x433)],_0x586562={};_0x586562[_0x1dea1d(0x415)]=_0x52ec86,await _0x5cf183['oEQJC'](updateCustomerWlan,_0x19677c['id'],_0x586562);const _0x3bf274={};_0x3bf274[_0x1dea1d(0x358)]=_0x1dea1d(0x4e3)+'Wi-Fi\x20untu'+_0x1dea1d(0x1ac)+_0x1dea1d(0x20e)+_0x1dea1d(0x547)+_0x1dea1d(0x4b7)+_0x1dea1d(0x66c)+_0x52ec86+('\x22.\x20Perubah'+_0x1dea1d(0x636)+_0x1dea1d(0x535)+_0x1dea1d(0x333)+_0x1dea1d(0x556)+_0x1dea1d(0x2ca));return _0x5329c8[_0x1dea1d(0x659)](_0x3bf274);case _0x5cf183['LzlLj']:const {new_password:_0x409995}=_0x9d4dc7[_0x1dea1d(0x433)],_0x1e72c6={};_0x1e72c6[_0x1dea1d(0x595)]=_0x409995,await _0x5cf183[_0x1dea1d(0x62c)](updateCustomerWlan,_0x19677c['id'],_0x1e72c6);const _0x4cb8ca={};_0x4cb8ca[_0x1dea1d(0x358)]='Baik,\x20kata'+'\x20sandi\x20Wi-'+_0x1dea1d(0x3bf)+_0x1dea1d(0x46d)+_0x1dea1d(0x427)+_0x1dea1d(0x567)+_0x1dea1d(0x3e0)+'at\x20Anda\x20mu'+_0x1dea1d(0x5cf)+_0x1dea1d(0x3ca)+_0x1dea1d(0x677)+_0x1dea1d(0x481)+_0x1dea1d(0x421);return _0x5329c8[_0x1dea1d(0x659)](_0x4cb8ca);case _0x1dea1d(0x38d):{const _0x2a1dc6=await _0x5cf183[_0x1dea1d(0x477)](getCustomerDeviceDetails,_0x19677c['id']),_0x4b9809=_0x2a1dc6['wlanConfig'+'s']?.[-0x1a78+0x57*0x49+0x1a9],_0xe5ad72=_0x4b9809?.[_0x1dea1d(0x208)+'Devices'],_0x4393d9=_0x4b9809?.['ssid'];if(!_0x4393d9){const _0xc3676f={};return _0xc3676f[_0x1dea1d(0x358)]=_0x1dea1d(0x34d)+'\x20tidak\x20dap'+_0x1dea1d(0x3c6)+_0x1dea1d(0x16d)+_0x1dea1d(0x32d)+'nda\x20saat\x20i'+_0x1dea1d(0x1ea)+'n\x20perangka'+_0x1dea1d(0x23e)+_0x1dea1d(0x52c)+_0x1dea1d(0x30f),_0x5329c8[_0x1dea1d(0x659)](_0xc3676f);}if(!_0xe5ad72||_0x5cf183[_0x1dea1d(0x158)](_0xe5ad72[_0x1dea1d(0x4fc)],0x85f*-0x4+-0x4*-0x301+0x1578)){if(_0x5cf183[_0x1dea1d(0x486)](_0x5cf183[_0x1dea1d(0x253)],_0x1dea1d(0x3b7)))return![];else{const _0x347bcc={};return _0x347bcc['reply']=_0x1dea1d(0x15d)+_0x1dea1d(0x5e2)+_0x1dea1d(0x295)+'h\x20*'+_0x4393d9+('*.\x20Tidak\x20a'+_0x1dea1d(0x673)+_0x1dea1d(0x1f7)+'rhubung.\x20😊'),_0x5329c8[_0x1dea1d(0x659)](_0x347bcc);}}const _0x33aa7e=_0xe5ad72['map']((_0x2da13d,_0x273830)=>_0x1dea1d(0x58d)+(_0x273830+(0x1a42+-0x19b6+-0x8b*0x1))+'.\x20'+(_0x2da13d[_0x1dea1d(0x373)]||_0x1dea1d(0x4bc)+_0x1dea1d(0x310)+_0x1dea1d(0x412)))[_0x1dea1d(0x3e9)]('\x0a'),_0x5da1ec={};return _0x5da1ec[_0x1dea1d(0x358)]='Nama\x20Wi-Fi'+_0x1dea1d(0x5ee)+_0x1dea1d(0x1b2)+_0x4393d9+_0x1dea1d(0x393)+_0xe5ad72[_0x1dea1d(0x4fc)]+(_0x1dea1d(0x2db)+_0x1dea1d(0x1d4)+_0x1dea1d(0x5d7))+_0x33aa7e+_0x1dea1d(0x2ca),_0x5329c8[_0x1dea1d(0x659)](_0x5da1ec);}case _0x5cf183[_0x1dea1d(0x265)]:await _0x5cf183[_0x1dea1d(0x477)](rebootCustomerDevice,_0x9d4dc7[_0x1dea1d(0x433)][_0x1dea1d(0x2e6)]);const _0x311a33={};_0x311a33['reply']='Perintah\x20r'+_0x1dea1d(0x16f)+'h\x20dikirim\x20'+_0x1dea1d(0x5f6)+'elanggan\x20'+_0x9d4dc7[_0x1dea1d(0x433)][_0x1dea1d(0x2e6)]+_0x1dea1d(0x539);return _0x5329c8['json'](_0x311a33);case _0x1dea1d(0x1f1)+_0x1dea1d(0x3d0)+'me':await _0x5cf183[_0x1dea1d(0x426)](updateCustomerWlan,_0x9d4dc7[_0x1dea1d(0x433)][_0x1dea1d(0x2e6)],{'ssid':_0x9d4dc7['args'][_0x1dea1d(0x46b)]});const _0x448cc9={};_0x448cc9[_0x1dea1d(0x358)]=_0x1dea1d(0x15d)+_0x1dea1d(0x4a0)+_0x1dea1d(0x645)+_0x1dea1d(0x1fd)+'n\x20'+_0x9d4dc7[_0x1dea1d(0x433)]['customerId']+('\x20telah\x20diu'+_0x1dea1d(0x2b0)+_0x1dea1d(0x5f0))+_0x9d4dc7[_0x1dea1d(0x433)]['new_ssid']+_0x1dea1d(0x569);return _0x5329c8[_0x1dea1d(0x659)](_0x448cc9);case _0x5cf183[_0x1dea1d(0x637)]:await _0x5cf183[_0x1dea1d(0x43d)](updateCustomerWlan,_0x9d4dc7['args'][_0x1dea1d(0x2e6)],{'key':_0x9d4dc7[_0x1dea1d(0x433)][_0x1dea1d(0x3e3)+'rd']});const _0x5e9f64={};_0x5e9f64['reply']=_0x1dea1d(0x151)+_0x1dea1d(0x308)+_0x1dea1d(0x424)+'aringan\x20pe'+_0x1dea1d(0x201)+_0x9d4dc7[_0x1dea1d(0x433)][_0x1dea1d(0x2e6)]+(_0x1dea1d(0x292)+'bah.\x20😊');return _0x5329c8['json'](_0x5e9f64);case _0x5cf183[_0x1dea1d(0x3fb)]:{if(_0x5cf183[_0x1dea1d(0x2d8)](_0x5cf183[_0x1dea1d(0x527)],_0x5cf183[_0x1dea1d(0x45e)]))_0x2efa7c[_0x1dea1d(0x1fb)](_0x5cf183[_0x1dea1d(0x228)],_0x253a1e);else{const _0x2cc7ed=await getCustomerDeviceDetails(_0x9d4dc7[_0x1dea1d(0x433)]['customerId']),_0x5ef677=_0x2cc7ed[_0x1dea1d(0x1e4)+'s']?.[-0xe7d+0x10ac+0x2b*-0xd],_0x132ae3=_0x5ef677?.[_0x1dea1d(0x208)+_0x1dea1d(0x4c9)],_0x2b5827=_0x5ef677?.[_0x1dea1d(0x415)],_0x403d9c=_0x9d4dc7['args'][_0x1dea1d(0x2e6)];if(!_0x2b5827){const _0x5adf6b={};return _0x5adf6b['reply']=_0x1dea1d(0x271)+_0x1dea1d(0x616)+_0x1dea1d(0x2f1)+_0x1dea1d(0x214)+'tuk\x20pelang'+_0x1dea1d(0x180)+_0x403d9c+(_0x1dea1d(0x2c6)+_0x1dea1d(0x50f)+_0x1dea1d(0x63d)+_0x1dea1d(0x3b4)),_0x5329c8[_0x1dea1d(0x659)](_0x5adf6b);}if(!_0x132ae3||_0x5cf183['aAflE'](_0x132ae3['length'],0x2*0xb5+-0x228c+0x2122*0x1)){if(_0x5cf183[_0x1dea1d(0x3d4)](_0x5cf183[_0x1dea1d(0x381)],_0x1dea1d(0x48a))){const _0x5f24c6=_0xe29c65?function(){const _0x50425b=_0x1dea1d;if(_0x114138){const _0xe12d6d=_0x3932f7[_0x50425b(0x3ab)](_0x12acd5,arguments);return _0x30c1c3=null,_0xe12d6d;}}:function(){};return _0x24e04f=![],_0x5f24c6;}else{const _0x6b529={};return _0x6b529['reply']=_0x1dea1d(0x15d)+_0x1dea1d(0x2de)+'\x20'+_0x403d9c+_0x1dea1d(0x153)+_0x2b5827+(_0x1dea1d(0x164)+_0x1dea1d(0x673)+_0x1dea1d(0x1f7)+_0x1dea1d(0x3f1)),_0x5329c8['json'](_0x6b529);}}const _0x7cfc26=_0x132ae3[_0x1dea1d(0x380)]((_0x1f7e32,_0x3a9e34)=>_0x1dea1d(0x58d)+(_0x3a9e34+(0x428+0xf81*-0x1+0xb5a))+'.\x20'+(_0x1f7e32[_0x1dea1d(0x373)]||'Perangkat\x20'+'tidak\x20dike'+_0x1dea1d(0x412)))['join']('\x0a'),_0x57021d={};return _0x57021d['reply']=_0x1dea1d(0x15d)+_0x1dea1d(0x2de)+'\x20'+_0x403d9c+_0x1dea1d(0x153)+_0x2b5827+'*.\x20Ada\x20'+_0x132ae3['length']+('\x20perangkat'+'\x20terhubung'+':\x0a')+_0x7cfc26+_0x1dea1d(0x2ca),_0x5329c8[_0x1dea1d(0x659)](_0x57021d);}}}}catch(_0x3159b0){console[_0x1dea1d(0x1fb)]('[Chatbot]\x20'+_0x1dea1d(0x26a)+'execute\x20\x27'+_0x9d4dc7[_0x1dea1d(0x4bd)]+'\x27:',_0x3159b0);const _0x831697={};return _0x831697[_0x1dea1d(0x358)]=_0x1dea1d(0x37c)+_0x1dea1d(0x528)+_0x1dea1d(0x53f)+_0x1dea1d(0x4bf)+_0x1dea1d(0x502)+_0x1dea1d(0x456)+_0x1dea1d(0x1ca)+_0x3159b0[_0x1dea1d(0x346)]+_0x1dea1d(0x539),_0x5329c8['json'](_0x831697);}}else{if(_0x5cf183['uSCkZ'](_0x1dea1d(0x454),_0x5cf183[_0x1dea1d(0x351)])){const _0x553c74=_0x39f859[_0x1dea1d(0x256)];if(!_0x553c74){if(_0x5cf183[_0x1dea1d(0x591)](_0x5cf183[_0x1dea1d(0x50d)],_0x5cf183[_0x1dea1d(0x568)])){console[_0x1dea1d(0x5f7)]('[Chatbot]\x20'+_0x1dea1d(0x26e)+_0x1dea1d(0x305)+_0x1dea1d(0x24b)+_0x1dea1d(0x3f7)+'.\x20Response'+':',JSON['stringify'](_0x39f859,null,0x1067+0x3*0x84f+-0x2952));const _0x8ea66f={};_0x8ea66f[_0x1dea1d(0x358)]=_0x5cf183[_0x1dea1d(0x5d8)],_0x5329c8[_0x1dea1d(0x659)](_0x8ea66f);}else{const _0x2e0bfb=_0x119c50[_0x1dea1d(0x546)][_0x1dea1d(0x40f)][_0x1dea1d(0x5e1)](/\/$/,'')+_0x1dea1d(0x363)+_0x4d3f2a['id'];return _0xb9ef18[_0x1dea1d(0x659)]({'reply':_0x1dea1d(0x1fa)+_0x1dea1d(0x679)+_0x1dea1d(0x14d)+_0x1dea1d(0x461)+_0x1dea1d(0x429)+'#'+_0xa1ea19['id']+(_0x1dea1d(0x2bd)+'*')+_0x5cf183[_0x1dea1d(0x477)](_0x882dae,_0xdbe87c[_0x1dea1d(0x237)])+(_0x1dea1d(0x238)+_0x1dea1d(0x4df))+_0x5cf183[_0x1dea1d(0x477)](_0x7dd0f9,_0x18b205[_0x1dea1d(0x307)])+_0x1dea1d(0x3fe)+_0x5cf183[_0x1dea1d(0x62c)](_0x2828a9,_0x4c1a26[_0x1dea1d(0x1c6)+_0x1dea1d(0x16a)],_0x5d9d9e['billingPer'+_0x1dea1d(0x32f)])+(_0x1dea1d(0x4ea)+_0x1dea1d(0x485)+_0x1dea1d(0x213)+_0x1dea1d(0x545)+_0x1dea1d(0x39e)+'\x0a')+_0x2e0bfb+_0x1dea1d(0x2ca)});}}else{const _0x2282a5={};_0x2282a5['reply']=_0x553c74,_0x5329c8[_0x1dea1d(0x659)](_0x2282a5);}}else{const _0x284a49=_0x1c07d0?_0x1dea1d(0x4b4)+_0x46fd04:_0x5cf183['oYdGj'],_0x4ebef2=_0x44cf7d?'\x20('+_0x137b65+')':'';return _0x1dea1d(0x614)+_0x1dea1d(0x67d)+'t\x20'+_0x4134d2+(_0x1dea1d(0x47f)+_0x1dea1d(0x602)+_0x1dea1d(0x42f)+_0x1dea1d(0x5d5)+'kuota\x20API\x20'+_0x1dea1d(0x19f))+_0x4ebef2+(_0x1dea1d(0x66d)+_0x1dea1d(0x640))+_0x284a49+'.\x20😊';}}}}catch(_0x20b7ab){if(_0x5cf183[_0x1dea1d(0x370)](_0x5cf183[_0x1dea1d(0x538)],'ZGYEO')){if(_0x17d892){const _0x55cea0=_0x1421da[_0x1dea1d(0x3ab)](_0x5d9538,arguments);return _0x5b6a88=null,_0x55cea0;}}else{console[_0x1dea1d(0x1fb)](_0x5cf183[_0x1dea1d(0x609)],_0x20b7ab);const _0x5b9871=_0x20b7ab?.[_0x1dea1d(0x346)]||'',_0x3d1daf=_0x5b9871['includes'](_0x5cf183['tbVmg'])||_0x5b9871[_0x1dea1d(0x537)](_0x1dea1d(0x5a3)+'t\x20found'),_0xdc0b94=_0x5cf183['LiByL'](extractRetryDelayFromError,_0x20b7ab);if(_0x3d1daf){if(_0x5cf183[_0x1dea1d(0x21b)]!==_0x5cf183['jAOWd']){try{await _0x5f3780[_0x1dea1d(0x646)](_0x1dea1d(0x5e8)+'O\x20admin_no'+'tification'+_0x1dea1d(0x534)+_0x1dea1d(0x5be)+_0x1dea1d(0x60f)+'ES\x20(?,\x20?,\x20'+'?)',[_0x5cf183[_0x1dea1d(0x280)],_0x1dea1d(0x573),_0x5cf183[_0x1dea1d(0x53a)]]);}catch(_0x4e4c6d){_0x5cf183[_0x1dea1d(0x591)](_0x5cf183['CXfkL'],_0x5cf183[_0x1dea1d(0x270)])?_0x5400eb[_0x1dea1d(0x1fb)](_0x5cf183['mdStj'],_0xd45048):console[_0x1dea1d(0x1fb)]('[Chatbot]\x20'+_0x1dea1d(0x26a)+_0x1dea1d(0x1c0)+_0x1dea1d(0x251)+_0x1dea1d(0x2a5)+'n\x20to\x20datab'+'ase:',_0x4e4c6d);}const _0x13363d={};return _0x13363d[_0x1dea1d(0x1fb)]=_0x5cf183[_0x1dea1d(0x662)],_0x5329c8['status'](-0x1*0x137e+-0xb7*-0x1f+0x24*-0x5)[_0x1dea1d(0x659)](_0x13363d);}else{const _0x90bae6=_0x993dcc(_0x5cf183['qXtlU'],_0x5a5b0d),_0x54f2d3={};return _0x54f2d3[_0x1dea1d(0x1fb)]=_0x90bae6,_0x54f2d3[_0x1dea1d(0x51e)]=_0x5dfddf,_0x54cee0[_0x1dea1d(0x45a)](-0x356*0x8+0x7*-0x444+0xb*0x54b)[_0x1dea1d(0x659)](_0x54f2d3);}}if(_0x5cf183['dOggd'](isRateLimitError,_0x20b7ab)){const _0x1fc6bd=_0x5cf183[_0x1dea1d(0x544)](formatGeminiQuotaWarning,_0x5cf183[_0x1dea1d(0x40c)],_0xdc0b94),_0x28db9a={};return _0x28db9a[_0x1dea1d(0x1fb)]=_0x1fc6bd,_0x28db9a['retryDelay']=_0xdc0b94,_0x5329c8[_0x1dea1d(0x45a)](0x810+0xba4*-0x1+0x541)[_0x1dea1d(0x659)](_0x28db9a);}const _0x208ff4={};_0x208ff4[_0x1dea1d(0x1fb)]=_0x5cf183[_0x1dea1d(0x331)],_0x5329c8[_0x1dea1d(0x45a)](-0xcd8+-0xfbf+0x1e8b)[_0x1dea1d(0x659)](_0x208ff4);}}});const handleStaticCommands=async({from:_0x45786c,body:_0x42525d},_0x636664,_0x477855)=>{const _0x389313=_0x17ec91,_0x29e56f={'SFDwl':_0x389313(0x33a)+_0x389313(0x5b5)+_0x389313(0x189),'rSAJe':function(_0x242bd9,_0x328f68){return _0x242bd9(_0x328f68);},'FFDNf':function(_0x16e33b,_0x3f337a,_0xacbbed){return _0x16e33b(_0x3f337a,_0xacbbed);},'acTGY':_0x389313(0x1c5),'DBqyQ':'gantiwifi','UYnZT':_0x389313(0x472),'uqemk':_0x389313(0x48f),'CKusB':_0x389313(0x25f),'LpoFN':function(_0x40b023,_0x567fce){return _0x40b023!==_0x567fce;},'dYHHY':'FuppE','ydgcL':_0x389313(0x582),'tKGas':_0x389313(0x3c8),'Osnes':_0x389313(0x4bc)+_0x389313(0x1de)+_0x389313(0x211)+_0x389313(0x539),'UIHWg':'Gunakan\x20fo'+_0x389313(0x63f)+_0x389313(0x31a)+_0x389313(0x30e)+_0x389313(0x4d8)+_0x389313(0x15b)+_0x389313(0x4b8)+'ma\x20RumahRi'+_0x389313(0x21a),'jaOIm':_0x389313(0x607),'UzOMx':function(_0x5d50a1,_0x1e5eb3,_0x36fc77){return _0x5d50a1(_0x1e5eb3,_0x36fc77);},'xywZF':_0x389313(0x30a),'QkadT':function(_0x5e9d8e){return _0x5e9d8e();},'GKSfd':_0x389313(0x2da)+_0x389313(0x284)+_0x389313(0x260)+_0x389313(0x231)+_0x389313(0x22c),'Ynppi':'qoysM','MOSHS':_0x389313(0x24a)+_0x389313(0x348)+_0x389313(0x35b)+_0x389313(0x5e3)+_0x389313(0x428)+_0x389313(0x386)+'wifi\x20<nama'+_0x389313(0x36d)+_0x389313(0x62f)+'\x20WiFi\x0a•\x20`g'+'antisandi\x20'+_0x389313(0x649)+_0x389313(0x5d3)+_0x389313(0x179)+_0x389313(0x5af)+_0x389313(0x471)+_0x389313(0x40e)+_0x389313(0x413)+_0x389313(0x38f)+_0x389313(0x656)+'g\x20ke\x20saya\x20'+_0x389313(0x5cb)+_0x389313(0x203),'TMZHe':'mONmW','qoaeB':_0x389313(0x571)},_0x4c81f2=_0x42525d['trim']()[_0x389313(0x4f2)](/\s+/),_0x207265=_0x4c81f2[-0x11d7+0x18ea+0x713*-0x1][_0x389313(0x192)+'e'](),_0x18096f=_0x4c81f2['slice'](-0x2*-0x403+-0x1877+-0x34a*-0x5),_0x7252c5=['reboot',_0x29e56f[_0x389313(0x1ce)],_0x29e56f[_0x389313(0x619)],_0x29e56f[_0x389313(0x4e0)],_0x389313(0x30a),_0x29e56f[_0x389313(0x532)],_0x29e56f[_0x389313(0x1cb)]];if(!_0x7252c5['includes'](_0x207265)){if(_0x29e56f[_0x389313(0x3fc)](_0x29e56f[_0x389313(0x1ec)],_0x29e56f[_0x389313(0x1e5)]))return![];else{const _0x25a8a9={};_0x25a8a9['id']=_0x38901d;const _0xb9798d={};return _0xb9798d[_0x389313(0x1fb)]=_0x29e56f[_0x389313(0x285)],_0xb9798d[_0x389313(0x320)]=_0x25a8a9,_0x56f8ba[_0x389313(0x592)](_0xb9798d);}}console['log'](_0x389313(0x2bb)+_0x389313(0x4d0)+_0x389313(0x414)+_0x389313(0x4ee)+_0x207265+(_0x389313(0x4fd)+'omer\x20')+_0x636664['id']);const _0x557f7b=async()=>await getCustomerDeviceDetails(_0x636664['id']);try{switch(_0x207265){case _0x29e56f[_0x389313(0x172)]:await _0x29e56f[_0x389313(0x3e2)](rebootCustomerDevice,_0x636664['id']),await _0x24cefc['sendMessag'+'e'](_0x45786c,_0x29e56f[_0x389313(0x4c1)]);break;case _0x29e56f[_0x389313(0x1ce)]:{const _0x333c26=_0x18096f[0x26b3+-0x56*0x6f+0x1*-0x169];if(!_0x333c26||_0x333c26[_0x389313(0x4fc)]<-0xa7*-0x14+0x2*-0x653+-0x5e){if(_0x477855)return![];await _0x24cefc[_0x389313(0x382)+'e'](_0x45786c,_0x389313(0x635)+_0x389313(0x63f)+_0x389313(0x287)+'ssword_bar'+'u_minimal_'+_0x389313(0x49c)+_0x389313(0x5fd)+_0x389313(0x1c5)+_0x389313(0x317)+_0x389313(0x315));}else{const _0x412ee5={};_0x412ee5[_0x389313(0x595)]=_0x333c26,await _0x29e56f[_0x389313(0x204)](updateCustomerWlan,_0x636664['id'],_0x412ee5),await _0x24cefc[_0x389313(0x382)+'e'](_0x45786c,_0x389313(0x340)+'i\x20untuk\x20se'+_0x389313(0x2a8)+_0x389313(0x47c)+_0x389313(0x21d)+'\x20ke\x20\x22'+_0x333c26+(_0x389313(0x41f)+_0x389313(0x40b)+_0x389313(0x62d)+_0x389313(0x554)+_0x389313(0x22d)+'😊'));}break;}case _0x29e56f['DBqyQ']:case _0x389313(0x472):{const _0x34e70c=_0x18096f[0x24f7*-0x1+-0x7*-0xa7+0x2066];if(!_0x34e70c){if(_0x477855)return![];await _0x24cefc[_0x389313(0x382)+'e'](_0x45786c,_0x29e56f['UIHWg']);}else{if(_0x29e56f[_0x389313(0x3fc)](_0x389313(0x607),_0x29e56f[_0x389313(0x19a)])){if(!_0x36ddfa)return null;const _0x2887fd=_0x13d61e?.[_0x389313(0x3b1)]||_0xeafe12?.['error']?.[_0x389313(0x3b1)];if(_0x5f6847[_0x389313(0x5c0)](_0x2887fd)){const _0x3fb239=_0x2887fd[_0x389313(0x28e)](_0x561a37=>typeof _0x561a37===_0x389313(0x4ef)&&_0x561a37?.['@type']?.['includes'](_0x389313(0x318)));if(_0x3fb239?.[_0x389313(0x51e)])return _0x3fb239[_0x389313(0x51e)];}try{const _0x49f2de=_0x56a89f['stringify'](_0x5e2542),_0x294d38=_0x49f2de['match'](/"retryDelay":"([^"]+)"/i);if(_0x294d38)return _0x294d38[-0x1e25*-0x1+0x1e*-0x101+0x3*-0x2];}catch(_0x47db2e){}return null;}else{const _0x3c134c={};_0x3c134c[_0x389313(0x415)]=_0x34e70c,await _0x29e56f[_0x389313(0x653)](updateCustomerWlan,_0x636664['id'],_0x3c134c),await _0x24cefc[_0x389313(0x382)+'e'](_0x45786c,_0x389313(0x15d)+'\x20untuk\x20sem'+_0x389313(0x645)+'n\x20Anda\x20tel'+_0x389313(0x61d)+_0x389313(0x652)+_0x34e70c+(_0x389313(0x41f)+_0x389313(0x40b)+_0x389313(0x62d)+_0x389313(0x554)+_0x389313(0x22d)+'😊'));}}break;}case _0x29e56f[_0x389313(0x624)]:{const _0x3aa15f=await _0x29e56f[_0x389313(0x579)](_0x557f7b),_0x41070b=_0x3aa15f[_0x389313(0x1e4)+'s']?.[0x3*-0xa26+0x1*-0x25ab+0x35*0x149]?.[_0x389313(0x208)+'Devices'];if(!_0x41070b?.[_0x389313(0x4fc)])await _0x24cefc[_0x389313(0x382)+'e'](_0x45786c,_0x29e56f[_0x389313(0x5e6)]);else{if(_0x389313(0x355)!==_0x29e56f[_0x389313(0x418)]){const _0x2a2511=_0x5841af[_0x389313(0x546)]['baseUrl'][_0x389313(0x5e1)](/\/$/,'')+_0x389313(0x363)+_0x28e7a7['id'];_0x15a450=_0x389313(0x1fa)+'\x20tagihan\x20y'+_0x389313(0x14d)+_0x389313(0x461)+_0x389313(0x429)+'#'+_0x26ef71['id']+('*\x0aJumlah:\x20'+'*')+_0x29e56f[_0x389313(0x3e2)](_0xfff136,_0x165ddc[_0x389313(0x237)])+('*\x0aJatuh\x20Te'+_0x389313(0x4df))+_0x39ba2c(_0x4619d3['dueDate'])+_0x389313(0x3fe)+_0x29e56f[_0x389313(0x204)](_0x13c667,_0x11a22c[_0x389313(0x1c6)+'iodStart'],_0x24e0d3['billingPer'+_0x389313(0x32f)])+(_0x389313(0x4ea)+_0x389313(0x485)+_0x389313(0x213)+_0x389313(0x545)+'k\x20berikut:'+'\x0a')+_0x2a2511+_0x389313(0x2ca);}else{const _0xf2e754=_0x41070b['map']((_0x5acc5e,_0x2e7455)=>'📱\x20'+(_0x2e7455+(-0x1ae0+-0x2428+-0x3f09*-0x1))+'.\x20'+(_0x5acc5e[_0x389313(0x373)]||_0x389313(0x564))+_0x389313(0x2a9)+_0x5acc5e[_0x389313(0x3ed)]+')')['join']('\x0a');await _0x24cefc['sendMessag'+'e'](_0x45786c,_0x389313(0x4bc)+_0x389313(0x22a)+'\x0a'+_0xf2e754+_0x389313(0x2ca));}}break;}case _0x29e56f['uqemk']:case'help':await _0x24cefc['sendMessag'+'e'](_0x45786c,_0x29e56f[_0x389313(0x2ee)]);break;}}catch(_0x316c00){_0x29e56f[_0x389313(0x30b)]===_0x29e56f[_0x389313(0x57f)]?_0x43f5bf=_0x2ef193:(console[_0x389313(0x1fb)](_0x389313(0x2bb)+_0x389313(0x450)+_0x389313(0x5f5)+_0x207265+':',_0x316c00),await _0x24cefc[_0x389313(0x382)+'e'](_0x45786c,_0x389313(0x49b)+_0x389313(0x1ae)+_0x389313(0x46e)+_0x316c00[_0x389313(0x346)]+_0x389313(0x2ca)));}return!![];},handleAiChatbot=async(_0x24ec7d,_0x353487)=>{const _0x3820c2=_0x17ec91,_0x21c99d={'drCat':_0x3820c2(0x43f)+_0x3820c2(0x26a)+_0x3820c2(0x1c0)+_0x3820c2(0x251)+_0x3820c2(0x2a5)+_0x3820c2(0x22e)+_0x3820c2(0x55c),'JRpix':_0x3820c2(0x3b8)+_0x3820c2(0x2fa)+_0x3820c2(0x651)+_0x3820c2(0x25e)+_0x3820c2(0x1db)+_0x3820c2(0x1f9)+':','kRGAj':function(_0x1f9c97,_0xc75966){return _0x1f9c97(_0xc75966);},'XgKOU':function(_0x5537a2,_0x2c15e1){return _0x5537a2+_0x2c15e1;},'xYtcs':_0x3820c2(0x27e)+_0x3820c2(0x215),'SKFRQ':_0x3820c2(0x4a9)+_0x3820c2(0x518)+_0x3820c2(0x51f)+'\x20)','PifVk':_0x3820c2(0x4ac)+_0x3820c2(0x2e4),'Kwmnm':'Maaf,\x20saya'+'\x20tidak\x20dap'+'at\x20mengamb'+_0x3820c2(0x16d)+'si\x20Wi-Fi\x20A'+_0x3820c2(0x187)+'ni.\x20Mungki'+_0x3820c2(0x4d2)+_0x3820c2(0x23e)+'ang\x20offlin'+_0x3820c2(0x30f),'TFvNj':_0x3820c2(0x43f)+_0x3820c2(0x369)+_0x3820c2(0x21f)+_0x3820c2(0x4e5)+_0x3820c2(0x28f)+_0x3820c2(0x67a)+'ettings.','cQlmt':'AI\x20chatbot'+'\x20is\x20not\x20co'+_0x3820c2(0x435)+_0x3820c2(0x34a)+_0x3820c2(0x306),'aENUg':function(_0x1fd8a8,_0x5e34ad){return _0x1fd8a8!==_0x5e34ad;},'vOQuE':'rWKNt','KlTFl':function(_0x33c6ea,_0xdeaaf5){return _0x33c6ea===_0xdeaaf5;},'snaUc':_0x3820c2(0x36a),'OJXEW':_0x3820c2(0x1e0),'OwxzF':function(_0x2acbb7,_0x270b2d){return _0x2acbb7+_0x270b2d;},'nwhaD':_0x3820c2(0x247),'QvIaD':function(_0x18b691,_0xf2eda3){return _0x18b691===_0xf2eda3;},'OJbkA':_0x3820c2(0x5b3)+_0x3820c2(0x58a)+'d','jkLuE':_0x3820c2(0x654),'sTCrl':_0x3820c2(0x1e6),'QmEHY':_0x3820c2(0x5b3)+_0x3820c2(0x35f),'jDQyK':function(_0x20ee63,_0x6e9043){return _0x20ee63!==_0x6e9043;},'GMkbx':_0x3820c2(0x473),'AmXIh':function(_0x3b6165){return _0x3b6165();},'TLCIx':function(_0x422b39,_0x491cf2){return _0x422b39===_0x491cf2;},'ADWwZ':_0x3820c2(0x496),'FGKaY':'iqNgC','eEyPu':_0x3820c2(0x614)+'nan\x20chatbo'+_0x3820c2(0x25b)+'g\x20tidak\x20ak'+_0x3820c2(0x488)+_0x3820c2(0x399)+_0x3820c2(0x16b)+_0x3820c2(0x33e)+_0x3820c2(0x258),'MhZSo':function(_0x35496a,_0x47be1d,_0x4daef9){return _0x35496a(_0x47be1d,_0x4daef9);},'tgpDJ':'perusahaan'+_0x3820c2(0x367),'BlikB':_0x3820c2(0x5b4)+_0x3820c2(0x25d),'EVogg':_0x3820c2(0x23f),'MJYMD':_0x3820c2(0x2b1)+_0x3820c2(0x275),'PLBjf':_0x3820c2(0x54a),'LaIJi':function(_0x1b6a42,_0x12f52c,_0x207149){return _0x1b6a42(_0x12f52c,_0x207149);},'dkspc':_0x3820c2(0x50c)+_0x3820c2(0x625)+_0x3820c2(0x4c7)+'.\x20Terima\x20k'+_0x3820c2(0x500),'dJUiN':_0x3820c2(0x198)+_0x3820c2(0x205),'Kcdnm':'change_wif'+_0x3820c2(0x559),'OMtCC':_0x3820c2(0x289)+'\x20sandi\x20Wi-'+'Fi\x20untuk\x20s'+_0x3820c2(0x46d)+'gan\x20Anda\x20t'+'elah\x20diuba'+_0x3820c2(0x3e0)+'at\x20Anda\x20mu'+_0x3820c2(0x5cf)+_0x3820c2(0x3ca)+_0x3820c2(0x677)+_0x3820c2(0x481)+'bahan.\x20😊','xWozk':'check_wifi','FwhcL':function(_0x3a1291,_0x23cf26){return _0x3a1291===_0x23cf26;},'MrWRq':_0x3820c2(0x4c3),'Asarf':function(_0x50f1f0,_0x3c3dbe){return _0x50f1f0===_0x3c3dbe;},'nBdmT':_0x3820c2(0x35e),'jhAJh':_0x3820c2(0x1f4),'WIfOV':_0x3820c2(0x20b)+_0x3820c2(0x56f)+_0x3820c2(0x58e)+'an','DEwvX':_0x3820c2(0x177)+'\x20baru\x20yang'+_0x3820c2(0x3a6)+_0x3820c2(0x4f7),'KUaVO':_0x3820c2(0x581),'gDfLw':_0x3820c2(0x34d)+_0x3820c2(0x34e)+'at\x20mempros'+_0x3820c2(0x17c)+_0x3820c2(0x631)+_0x3820c2(0x62a)+'ilakan\x20cob'+_0x3820c2(0x615)+_0x3820c2(0x2bf)+_0x3820c2(0x3f9)+_0x3820c2(0x50e),'loEtV':'API_KEY_IN'+_0x3820c2(0x3b2),'apPFX':_0x3820c2(0x5a3)+_0x3820c2(0x5b9),'dYEvA':_0x3820c2(0x2e7),'Mqxmc':'fbfFq','JrQde':'Maaf,\x20laya'+_0x3820c2(0x67d)+_0x3820c2(0x451)+'ang\x20dalam\x20'+_0x3820c2(0x2f2)+_0x3820c2(0x191)+_0x3820c2(0x2bc)+_0x3820c2(0x377),'zslVD':'[Whatsapp\x20'+_0x3820c2(0x54b)+'RITICAL:\x20G'+_0x3820c2(0x3c4)+_0x3820c2(0x1a6)+_0x3820c2(0x152)+'pired.','peeif':'error','vRyti':_0x3820c2(0x573),'qZSHZ':_0x3820c2(0x369)+'\x20Key\x20is\x20in'+'valid\x20or\x20h'+_0x3820c2(0x513)+_0x3820c2(0x2c3)+'pdate\x20it\x20i'+'n\x20the\x20sett'+_0x3820c2(0x522),'InjDm':_0x3820c2(0x3f8),'FlVOk':'TVgly','GdlPB':_0x3820c2(0x181)+_0x3820c2(0x4b9)+'ami','fouSL':function(_0x48e31c,_0x562601){return _0x48e31c===_0x562601;},'WxaTp':'nuHBI','otTlD':_0x3820c2(0x430)+_0x3820c2(0x4ca)+_0x3820c2(0x5a1)+'otify\x20user'+_0x3820c2(0x29f)+'tbot\x20error'+':'},{from:_0x583bfa,body:_0x52de4f}=_0x24ec7d;try{if(_0x21c99d[_0x3820c2(0x3ac)](_0x3820c2(0x1f8),_0x21c99d[_0x3820c2(0x3d7)])){let _0x3d7638=null;if(_0x583bfa[_0x3820c2(0x1f5)]('62'))_0x21c99d[_0x3820c2(0x491)](_0x21c99d[_0x3820c2(0x4a3)],_0x21c99d[_0x3820c2(0x26f)])?_0x5ebaa3[_0x3820c2(0x1fb)](_0x21c99d['drCat'],_0x1c83b7):_0x3d7638=_0x21c99d[_0x3820c2(0x165)]('0',_0x583bfa['substring'](0xd17*-0x1+0x219f+-0xa43*0x2));else _0x583bfa[_0x3820c2(0x1f5)]('0')&&(_0x3d7638='62'+_0x583bfa['substring'](-0x1ab9*-0x1+-0x29*-0x48+-0x2640));const _0x5686b1=_0x21c77c[_0x3820c2(0x4db)+'ationState'](_0x583bfa);if(_0x5686b1){if(_0x21c99d[_0x3820c2(0x3ac)](_0x21c99d['nwhaD'],_0x21c99d[_0x3820c2(0x1ee)]))_0x2671db[_0x3820c2(0x1fb)](_0x21c99d[_0x3820c2(0x14c)],_0x371e76);else try{if(_0x21c99d['QvIaD'](_0x5686b1[_0x3820c2(0x3af)],_0x21c99d[_0x3820c2(0x675)])){if(_0x21c99d[_0x3820c2(0x4c5)]!==_0x21c99d[_0x3820c2(0x343)]){const _0x588130={};_0x588130[_0x3820c2(0x595)]=_0x52de4f,await updateCustomerWlan(_0x353487['id'],_0x588130),await _0x24cefc[_0x3820c2(0x382)+'e'](_0x583bfa,_0x3820c2(0x2d1)+_0x3820c2(0x5ae)+'untuk\x20semu'+_0x3820c2(0x479)+'\x20Anda\x20tela'+_0x3820c2(0x3c0)+_0x3820c2(0x3bc)+'njadi\x20`'+_0x52de4f+(_0x3820c2(0x598)+_0x3820c2(0x63c)+'ngkin\x20akan'+_0x3820c2(0x3ca)+'ntuk\x20mener'+_0x3820c2(0x481)+_0x3820c2(0x421)));}else _0x20be2a=iGgUMf[_0x3820c2(0x2d4)](_0xba16c,iGgUMf[_0x3820c2(0x63e)](iGgUMf[_0x3820c2(0x3cd)]+iGgUMf[_0x3820c2(0x459)],');'))();}else{if(_0x21c99d[_0x3820c2(0x436)](_0x5686b1['step'],_0x21c99d['QmEHY'])){if(_0x21c99d[_0x3820c2(0x2ff)](_0x3820c2(0x28a),_0x21c99d[_0x3820c2(0x2a0)])){const _0x36710e={};_0x36710e[_0x3820c2(0x415)]=_0x52de4f,await updateCustomerWlan(_0x353487['id'],_0x36710e),await _0x24cefc[_0x3820c2(0x382)+'e'](_0x583bfa,_0x3820c2(0x4e3)+'Wi-Fi\x20untu'+'k\x20semua\x20ja'+_0x3820c2(0x20e)+_0x3820c2(0x547)+'ubah\x20menja'+'di\x20\x22'+_0x52de4f+(_0x3820c2(0x41f)+_0x3820c2(0x636)+_0x3820c2(0x535)+'lukan\x20bebe'+_0x3820c2(0x3eb)+_0x3820c2(0x32b)+_0x3820c2(0x170)+_0x3820c2(0x61c)+_0x3820c2(0x613)));}else{const _0x54dbe8=_0x156923[_0x3820c2(0x28e)](_0x2d2a01=>typeof _0x2d2a01===_0x3820c2(0x4ef)&&_0x2d2a01?.[_0x3820c2(0x36e)]?.[_0x3820c2(0x537)](_0x3820c2(0x318)));if(_0x54dbe8?.[_0x3820c2(0x51e)])return _0x54dbe8['retryDelay'];}}}_0x21c77c[_0x3820c2(0x365)+_0x3820c2(0x17d)+'te'](_0x583bfa);return;}catch(_0x3b1c3d){console[_0x3820c2(0x1fb)](_0x3820c2(0x430)+_0x3820c2(0x5d2)+_0x3820c2(0x282)+'rsation\x20st'+'ep\x20\x27'+_0x5686b1[_0x3820c2(0x3af)]+'\x27:',_0x3b1c3d),await _0x24cefc[_0x3820c2(0x382)+'e'](_0x583bfa,'Maaf,\x20terj'+'adi\x20kesala'+_0x3820c2(0x3e7)+_0x3b1c3d[_0x3820c2(0x346)]+_0x3820c2(0x2ca)),_0x21c77c[_0x3820c2(0x365)+_0x3820c2(0x17d)+'te'](_0x583bfa);return;}}const _0x129316=await _0x21c99d[_0x3820c2(0x541)](getSettings),_0x55ec1c=_0x129316[_0x3820c2(0x650)]?.[_0x3820c2(0x294)];if(!_0x55ec1c){if(_0x21c99d[_0x3820c2(0x244)](_0x21c99d[_0x3820c2(0x4f6)],_0x21c99d[_0x3820c2(0x584)])){const _0xdfddbf={};_0xdfddbf[_0x3820c2(0x1e4)]=_0x3d5110?.[0x1ca5+-0x15d3+-0x6d2],_0x5a63ed[_0x3820c2(0x383)+'ationState'](_0x17c71e,_0x3820c2(0x5b3)+_0x3820c2(0x35f),_0xdfddbf);}else{await _0x24cefc[_0x3820c2(0x382)+'e'](_0x583bfa,_0x21c99d[_0x3820c2(0x634)]);return;}}const _0x3b9642={};_0x3b9642[_0x3820c2(0x294)]=_0x55ec1c;const _0x407d7a=new GoogleGenAI(_0x3b9642),_0x2599c1=await _0x21c99d['MhZSo'](getCustomerContext,_0x353487['id'],_0x52de4f),_0x5f079b=_0x3820c2(0x2f4)+_0x3820c2(0x580)+_0x3820c2(0x3dc)+_0x3820c2(0x364)+_0x3820c2(0x3f3)+_0x3820c2(0x2dc)+_0x3820c2(0x655)+(_0x129316['app'][_0x3820c2(0x589)]||_0x21c99d[_0x3820c2(0x669)])+(_0x3820c2(0x4ec)+_0x3820c2(0x329)+_0x3820c2(0x19e)+_0x3820c2(0x59a)+_0x3820c2(0x52d)+_0x3820c2(0x65d)+_0x3820c2(0x162)+_0x3820c2(0x2a3)+_0x3820c2(0x2fb)+_0x3820c2(0x157)+_0x3820c2(0x63a)+_0x3820c2(0x542)+_0x3820c2(0x38e)+_0x3820c2(0x508)+_0x3820c2(0x281)+_0x3820c2(0x4b1)+'setiap\x20bal'+_0x3820c2(0x354)+_0x3820c2(0x5a5)+'nyum\x20😊.\x0a\x0a\x20'+_0x3820c2(0x195)+_0x3820c2(0x56e)+_0x3820c2(0x489)+_0x3820c2(0x5da)+_0x3820c2(0x4a7)+_0x3820c2(0x61a)+_0x3820c2(0x1d2)+'atau\x20gangg'+_0x3820c2(0x2e1)+'an\x20(\x27lamba'+_0x3820c2(0x5ca)+_0x3820c2(0x374)+'an\x27,\x20\x27kone'+'ksi\x20jelek\x27'+'):\x0a\x20\x20\x20\x20\x20\x201'+_0x3820c2(0x1cf)+_0x3820c2(0x508)+_0x3820c2(0x224)+_0x3820c2(0x552)+_0x3820c2(0x553)+_0x3820c2(0x1f6)+_0x3820c2(0x1da)+_0x3820c2(0x442)+_0x3820c2(0x648)+_0x3820c2(0x422)+_0x3820c2(0x5e7)+_0x3820c2(0x199)+_0x3820c2(0x1a8)+_0x3820c2(0x519)+'rxPower\x27\x20t'+_0x3820c2(0x503)+_0x3820c2(0x61e)+'\x20bukan\x20\x27N/'+_0x3820c2(0x39b)+_0x3820c2(0x45c)+_0x3820c2(0x2e9)+'sal\x20dari\x20\x22'+_0x3820c2(0x342)+_0x3820c2(0x47a)+'22.5).\x20Jik'+_0x3820c2(0x52b)+_0x3820c2(0x43e)+'ar\x20dari\x20-2'+_0x3820c2(0x302)+_0x3820c2(0x1fe)+_0x3820c2(0x261)+_0x3820c2(0x5e5)+_0x3820c2(0x3d5))+JSON[_0x3820c2(0x464)](_0x2599c1)[_0x3820c2(0x4b5)+_0x3820c2(0x5c4)]?.[_0x3820c2(0x274)]+(_0x3820c2(0x533)+_0x3820c2(0x4d6)+'an\x20😊.\x22\x0a\x20\x20\x20'+_0x3820c2(0x440)+_0x3820c2(0x5fa)+_0x3820c2(0x2f3)+_0x3820c2(0x3dd)+'ya\x20bukan\x20\x27'+_0x3820c2(0x3d9)+'angka\x20nume'+'riknya\x20-25'+_0x3820c2(0x1e3)+_0x3820c2(0x63b)+_0x3820c2(0x1a4)+_0x3820c2(0x38b)+_0x3820c2(0x332)+_0x3820c2(0x3a3))+JSON['parse'](_0x2599c1)[_0x3820c2(0x4b5)+_0x3820c2(0x5c4)]?.['rxPower']+(',\x20sepertin'+_0x3820c2(0x3d6)+_0x3820c2(0x66b)+_0x3820c2(0x447)+'neksi\x20kabe'+'l\x20Anda\x20😊.\x22'+_0x3820c2(0x390)+_0x3820c2(0x5fb)+_0x3820c2(0x2ab)+_0x3820c2(0x1d8)+'\x20lewati\x20sa'+_0x3820c2(0x558)+_0x3820c2(0x1d6)+'\x20\x206.\x20Setel'+_0x3820c2(0x27f)+_0x3820c2(0x221)+_0x3820c2(0x27b)+'ELALU\x20sara'+'nkan\x20untuk'+'\x20me-reboot'+_0x3820c2(0x220)+_0x3820c2(0x44f)+_0x3820c2(0x2eb)+_0x3820c2(0x3c2)+_0x3820c2(0x460)+_0x3820c2(0x524)+_0x3820c2(0x2a4)+_0x3820c2(0x1cc)+_0x3820c2(0x52a)+_0x3820c2(0x565)+_0x3820c2(0x667)+_0x3820c2(0x504)+_0x3820c2(0x3f6)+_0x3820c2(0x600)+_0x3820c2(0x268)+_0x3820c2(0x1ed)+_0x3820c2(0x5d6)+_0x3820c2(0x3b9)+'erubahan\x20p'+'ada\x20Wi-Fi\x20'+_0x3820c2(0x65f)+'\x20atau\x20kata'+_0x3820c2(0x48d)+_0x3820c2(0x397)+'n\x20diterapk'+_0x3820c2(0x1d3)+'a\x20jaringan'+'\x20yang\x20ters'+_0x3820c2(0x1af)+_0x3820c2(0x183)+'z\x20dan\x205GHz'+_0x3820c2(0x5c7)+'ENTING:\x20Sa'+'at\x20mengeks'+_0x3820c2(0x5ed)+_0x3820c2(0x3d2)+'ungsi,\x20sep'+_0x3820c2(0x52e)+_0x3820c2(0x3e4)+_0x3820c2(0x5c2)+'au\x20kata\x20sa'+'ndi\x20baru,\x20'+_0x3820c2(0x19b)+_0x3820c2(0x2d6)+_0x3820c2(0x405)+_0x3820c2(0x31f)+_0x3820c2(0x3be)+_0x3820c2(0x5db)+_0x3820c2(0x54f)+_0x3820c2(0x596)+_0x3820c2(0x233)+_0x3820c2(0x61f)+_0x3820c2(0x562)+_0x3820c2(0x2e3)+_0x3820c2(0x5a2)+_0x3820c2(0x4b0)+_0x3820c2(0x48c)+_0x3820c2(0x1c3)+_0x3820c2(0x262)+_0x3820c2(0x3fa)+_0x3820c2(0x240)+_0x3820c2(0x293)+_0x3820c2(0x3ad)+'-\x20Jika\x20pen'+_0x3820c2(0x1b6)+'anya\x20tenta'+_0x3820c2(0x1ad)+_0x3820c2(0x42e)+'tagihan\x27,\x20'+'\x27pembayara'+'n\x27,\x20\x27sudah'+_0x3820c2(0x17b)+_0x3820c2(0x508)+_0x3820c2(0x5a8)+_0x3820c2(0x41a)+'\x20\x27get_bill'+_0x3820c2(0x678)+'\x27.\x0a\x20\x20\x20\x20-\x20J'+'ika\x20penggu'+_0x3820c2(0x49f)+(_0x3820c2(0x299)+_0x3820c2(0x20c)+_0x3820c2(0x4c8)+_0x3820c2(0x64c)+_0x3820c2(0x379)+_0x3820c2(0x482)+'\x20baru,\x20And'+_0x3820c2(0x600)+'nanyakanny'+_0x3820c2(0x445)+_0x3820c2(0x512)+'A\x20boleh\x20\x22T'+_0x3820c2(0x5ab)+_0x3820c2(0x337)+'password\x20b'+'aru\x20yang\x20A'+'nda\x20ingink'+_0x3820c2(0x18a)+_0x3820c2(0x5bf)+'engguna\x20me'+_0x3820c2(0x357)+_0x3820c2(0x25c)+'\x20nama\x20wifi'+_0x3820c2(0x2f6)+_0x3820c2(0x242)+_0x3820c2(0x18c)+'nama\x20baru,'+'\x20Anda\x20HARU'+_0x3820c2(0x1b0)+'annya.\x20Bal'+_0x3820c2(0x40a)+_0x3820c2(0x1c7)+_0x3820c2(0x335)+'Silakan\x20ke'+_0x3820c2(0x3ef)+_0x3820c2(0x672)+_0x3820c2(0x561)+_0x3820c2(0x467)+_0x3820c2(0x507)+'Untuk\x20semu'+_0x3820c2(0x344)+_0x3820c2(0x2f7)+_0x3820c2(0x259)+_0x3820c2(0x350)+_0x3820c2(0x230)+_0x3820c2(0x2b7)+_0x3820c2(0x2c0)+_0x3820c2(0x366)+'lai\x20baru,\x20'+_0x3820c2(0x252)+_0x3820c2(0x288)+_0x3820c2(0x58c)+'g\x20sesuai.\x0a'+_0x3820c2(0x4e8)+'\x20pengguna\x20'+'secara\x20eks'+_0x3820c2(0x1b5)+'inta\x20untuk'+'\x20me-restar'+'t\x20atau\x20me-'+'reboot\x20mod'+_0x3820c2(0x2a2)+_0x3820c2(0x495)+_0x3820c2(0x536)+_0x3820c2(0x219)+'\x27.\x0a\x20\x20\x20\x20-\x20J'+_0x3820c2(0x2e3)+_0x3820c2(0x49f)+_0x3820c2(0x4b3)+_0x3820c2(0x2ad)+'angkat\x20yan'+_0x3820c2(0x57e)+_0x3820c2(0x30c)+_0x3820c2(0x284)+_0x3820c2(0x2cf)+_0x3820c2(0x4f9)+_0x3820c2(0x175)+'ifi\x20saya\x27,'+_0x3820c2(0x1d0)+_0x3820c2(0x202)+_0x3820c2(0x173)+_0x3820c2(0x33d)+'kan\x20fungsi'+_0x3820c2(0x644)+_0x3820c2(0x599)+_0x3820c2(0x263)+_0x3820c2(0x359)))+_0x2599c1+_0x3820c2(0x4d9),_0x5a4dec=new Promise((_0x2300b3,_0x101ef7)=>setTimeout(()=>_0x101ef7(new Error('AI\x20assista'+_0x3820c2(0x67f)+'ut\x20after\x202'+_0x3820c2(0x5f4))),0x6f*-0x67+-0x8cf*-0x1+0x71fa)),_0x22b1cd={};_0x22b1cd[_0x3820c2(0x1cd)+_0x3820c2(0x16e)]=[rebootDeviceFunction,changeWifiNameFunction,changeWifiPasswordFunction,checkWifiFunction,getBillingStatusFunction];const _0x202933={};_0x202933[_0x3820c2(0x57c)+_0x3820c2(0x5d1)]=_0x5f079b,_0x202933[_0x3820c2(0x446)]=[_0x22b1cd];const _0x165895={};_0x165895['model']=_0x21c99d[_0x3820c2(0x45f)],_0x165895['contents']=_0x52de4f,_0x165895['config']=_0x202933;const _0x2dd2a6=_0x407d7a[_0x3820c2(0x3df)][_0x3820c2(0x647)+_0x3820c2(0x583)](_0x165895),_0x4b3651=await Promise[_0x3820c2(0x4c2)]([_0x2dd2a6,_0x5a4dec]),_0x3fd7c0=_0x4b3651[_0x3820c2(0x588)+'lls']?.[-0x1*-0x1fcd+-0x2453+0x182*0x3],_0x524ce8=_0x4b3651[_0x3820c2(0x256)];if(_0x3fd7c0){if(_0x21c99d[_0x3820c2(0x3ac)](_0x21c99d[_0x3820c2(0x2a1)],'YqnXU')){console[_0x3820c2(0x20f)](_0x3820c2(0x430)+_0x3820c2(0x5b7)+_0x3820c2(0x278)+_0x3820c2(0x493)+'\x20\x27'+_0x3fd7c0['name']+(_0x3820c2(0x37b)+_0x3820c2(0x182))+_0x353487['id']);try{const _0x30b460=JSON[_0x3820c2(0x464)](_0x2599c1),_0x5485df=_0x30b460?.[_0x3820c2(0x29d)+_0x3820c2(0x206)]?.[_0x3820c2(0x1e4)+'s'];let _0x2ab71e='';switch(_0x3fd7c0[_0x3820c2(0x4bd)]){case _0x21c99d['MJYMD']:{if(_0x21c99d[_0x3820c2(0x491)](_0x21c99d['PLBjf'],_0x21c99d[_0x3820c2(0x5dc)])){const [_0x4acd9c]=await _0x5f3780[_0x3820c2(0x646)](_0x3820c2(0x641)+_0x3820c2(0x3cf)+_0x3820c2(0x4fb)+_0x3820c2(0x437)+_0x3820c2(0x1a0)+_0x3820c2(0x52f)+'Unpaid\x27,\x20\x27'+_0x3820c2(0x5dd)+'ORDER\x20BY\x20i'+_0x3820c2(0x167)+_0x3820c2(0x388)+'1',[_0x353487['id']]),_0x22d5fa=_0x4acd9c[0x1fa*-0x5+0xf12*-0x1+0x18f4];if(_0x22d5fa){const _0x3fa6b7=_0x129316[_0x3820c2(0x546)]['baseUrl'][_0x3820c2(0x5e1)](/\/$/,'')+_0x3820c2(0x363)+_0x22d5fa['id'];_0x2ab71e=_0x3820c2(0x1fa)+_0x3820c2(0x679)+_0x3820c2(0x14d)+_0x3820c2(0x461)+_0x3820c2(0x429)+'#'+_0x22d5fa['id']+('*\x0aJumlah:\x20'+'*')+_0x21c99d[_0x3820c2(0x2d4)](formatRupiah,_0x22d5fa[_0x3820c2(0x237)])+(_0x3820c2(0x238)+_0x3820c2(0x4df))+_0x21c99d[_0x3820c2(0x2d4)](formatDateDisplay,_0x22d5fa[_0x3820c2(0x307)])+_0x3820c2(0x3fe)+_0x21c99d[_0x3820c2(0x676)](formatBillingPeriod,_0x22d5fa[_0x3820c2(0x1c6)+_0x3820c2(0x16a)],_0x22d5fa['billingPer'+_0x3820c2(0x32f)])+(_0x3820c2(0x4ea)+_0x3820c2(0x485)+_0x3820c2(0x213)+'elalui\x20lin'+_0x3820c2(0x39e)+'\x0a')+_0x3fa6b7+_0x3820c2(0x2ca);}else _0x2ab71e=_0x21c99d[_0x3820c2(0x15f)];break;}else{const _0x30e93a={};_0x30e93a['reply']=_0x16e18b,_0x3632dc[_0x3820c2(0x659)](_0x30e93a);}}case _0x3820c2(0x419)+_0x3820c2(0x2f8):await rebootCustomerDevice(_0x353487['id']),_0x2ab71e=_0x3820c2(0x511)+_0x3820c2(0x156)+_0x3820c2(0x2c7)+'\x20modem\x20And'+_0x3820c2(0x51a)+_0x3820c2(0x2d5)+_0x3820c2(0x349)+_0x3820c2(0x334)+'\x20offline\x20s'+'elama\x20bebe'+_0x3820c2(0x58b)+_0x3820c2(0x4e9)+_0x3820c2(0x1bb);break;case _0x21c99d['dJUiN']:const {new_ssid:_0x54ad45}=_0x3fd7c0[_0x3820c2(0x433)],_0x45c689={};_0x45c689[_0x3820c2(0x415)]=_0x54ad45,await updateCustomerWlan(_0x353487['id'],_0x45c689),_0x2ab71e=_0x3820c2(0x4e3)+'Wi-Fi\x20untu'+_0x3820c2(0x1ac)+_0x3820c2(0x20e)+_0x3820c2(0x547)+'ubah\x20menja'+_0x3820c2(0x66c)+_0x54ad45+(_0x3820c2(0x41f)+_0x3820c2(0x636)+_0x3820c2(0x535)+_0x3820c2(0x333)+_0x3820c2(0x556)+_0x3820c2(0x2ca));break;case _0x21c99d[_0x3820c2(0x462)]:const {new_password:_0x4e9088}=_0x3fd7c0[_0x3820c2(0x433)],_0x21d0e3={};_0x21d0e3[_0x3820c2(0x595)]=_0x4e9088,await updateCustomerWlan(_0x353487['id'],_0x21d0e3),_0x2ab71e=_0x21c99d[_0x3820c2(0x298)];break;case _0x21c99d[_0x3820c2(0x392)]:{const _0x44834c=await _0x21c99d[_0x3820c2(0x2d4)](getCustomerDeviceDetails,_0x353487['id']),_0x1c2c08=_0x44834c[_0x3820c2(0x1e4)+'s']?.[-0x240+-0x7*0x295+0x1453]?.[_0x3820c2(0x208)+_0x3820c2(0x4c9)],_0x32dd51=_0x44834c[_0x3820c2(0x1e4)+'s']?.[0x25b*-0xc+0x160e+0x35*0x1e]?.[_0x3820c2(0x415)];if(!_0x32dd51)_0x2ab71e=_0x21c99d[_0x3820c2(0x1d7)];else{if(!_0x1c2c08||_0x1c2c08['length']===-0x1ae2+-0x1*-0x1530+0x5b2){if(_0x21c99d['FwhcL'](_0x3820c2(0x23b),_0x21c99d[_0x3820c2(0x423)])){const _0x1f23b6=_0x37d076[_0x3820c2(0x380)]((_0x541ee0,_0x23211f)=>_0x3820c2(0x58d)+(_0x23211f+(-0x25ea+-0x189*-0xd+0x11f6))+'.\x20'+(_0x541ee0[_0x3820c2(0x373)]||_0x3820c2(0x4bc)+_0x3820c2(0x310)+_0x3820c2(0x412)))['join']('\x0a');_0x1f19a4=_0x3820c2(0x668)+_0x413972[_0x3820c2(0x4fc)]+(_0x3820c2(0x2db)+_0x3820c2(0x1d4)+_0x3820c2(0x521)+_0x3820c2(0x2ce)+_0x3820c2(0x21c))+_0x1f23b6+_0x3820c2(0x2ca);}else _0x2ab71e=_0x3820c2(0x15d)+_0x3820c2(0x5e2)+_0x3820c2(0x295)+_0x3820c2(0x411)+_0x32dd51+(_0x3820c2(0x164)+'da\x20perangk'+_0x3820c2(0x1f7)+_0x3820c2(0x3f1));}else{if(_0x21c99d[_0x3820c2(0x21e)](_0x21c99d[_0x3820c2(0x44b)],_0x21c99d['jhAJh'])){let _0x2da6dd;try{_0x2da6dd=iGgUMf['kRGAj'](_0x3cba5e,iGgUMf['XgKOU'](iGgUMf[_0x3820c2(0x63e)](_0x3820c2(0x27e)+'nction()\x20',iGgUMf[_0x3820c2(0x459)]),');'))();}catch(_0x2be98c){_0x2da6dd=_0xe5e364;}return _0x2da6dd;}else{const _0x4c6b78=_0x1c2c08[_0x3820c2(0x380)]((_0x5b82fb,_0x477193)=>'📱\x20'+(_0x477193+(-0x2*-0x79d+0x784+-0x16bd))+'.\x20'+(_0x5b82fb[_0x3820c2(0x373)]||'Perangkat\x20'+_0x3820c2(0x310)+_0x3820c2(0x412)))[_0x3820c2(0x3e9)]('\x0a');_0x2ab71e=_0x3820c2(0x668)+_0x1c2c08[_0x3820c2(0x4fc)]+(_0x3820c2(0x2db)+_0x3820c2(0x1d4)+'ubung\x20ke\x20S'+_0x3820c2(0x2ce)+'Anda:\x0a')+_0x4c6b78+_0x3820c2(0x2ca);}}}break;}}await _0x24cefc[_0x3820c2(0x382)+'e'](_0x583bfa,_0x2ab71e);}catch(_0x115b17){console[_0x3820c2(0x1fb)](_0x3820c2(0x430)+_0x3820c2(0x53c)+_0x3820c2(0x563)+_0x3820c2(0x226)+_0x3fd7c0[_0x3820c2(0x4bd)]+('\x27\x20for\x20cust'+_0x3820c2(0x182))+_0x353487['id']+':',_0x115b17),await _0x24cefc['sendMessag'+'e'](_0x583bfa,_0x3820c2(0x37c)+_0x3820c2(0x528)+'han\x20saat\x20m'+_0x3820c2(0x4bf)+_0x3820c2(0x502)+_0x3820c2(0x232)+_0x115b17[_0x3820c2(0x346)]+'.\x20😊');}}else{const _0x1e3993=_0x564c18[_0x3820c2(0x592)](_0x31e22d);return _0x482c83[_0x3820c2(0x160)](_0x32d111=>_0x32d111[_0x3820c2(0x60a)](_0x1e3993));}}else{if(_0x524ce8){const _0xd5b144=JSON[_0x3820c2(0x464)](_0x2599c1),_0x54e9eb=_0xd5b144?.[_0x3820c2(0x29d)+_0x3820c2(0x206)]?.[_0x3820c2(0x1e4)+'s'];if(_0x524ce8[_0x3820c2(0x537)](_0x21c99d[_0x3820c2(0x227)])){const _0x3cb8eb={};_0x3cb8eb[_0x3820c2(0x1e4)]=_0x54e9eb?.[-0x1b9f+0x1bb*-0xc+0x3063],_0x21c77c['setConvers'+_0x3820c2(0x15e)](_0x583bfa,_0x21c99d[_0x3820c2(0x675)],_0x3cb8eb);}else{if(_0x524ce8[_0x3820c2(0x537)](_0x21c99d[_0x3820c2(0x300)])){if(_0x21c99d[_0x3820c2(0x1bd)]!==_0x3820c2(0x581)){const _0x20355e=_0x42cb23?_0x3820c2(0x4ac)+_0x3820c2(0x2b8)+_0x442674+'.':_0x21c99d['PifVk'];return'Maaf,\x20laya'+'nan\x20chatbo'+'t\x20'+_0x3786d1+(_0x3820c2(0x64e)+'nuh\x20sement'+'ara\x20karena'+'\x20kuota\x20Gem'+_0x3820c2(0x325)+'\x20')+_0x20355e+'\x20ðŸ˜Š';}else{const _0x57ae19={};_0x57ae19[_0x3820c2(0x1e4)]=_0x54e9eb?.[0x1b46+-0x51b*-0x1+-0x2061],_0x21c77c[_0x3820c2(0x383)+'ationState'](_0x583bfa,_0x21c99d[_0x3820c2(0x235)],_0x57ae19);}}}await _0x24cefc[_0x3820c2(0x382)+'e'](_0x583bfa,_0x524ce8);}else console[_0x3820c2(0x5f7)](_0x3820c2(0x430)+_0x3820c2(0x5b7)+_0x3820c2(0x67e)+_0x3820c2(0x3a1)+_0x3820c2(0x1aa)+_0x3820c2(0x1e1)+_0x3820c2(0x4ad)+_0x353487['id']+('.\x20Response'+':'),JSON['stringify'](_0x4b3651,null,-0x213f+0x818*-0x1+0x91*0x49)),await _0x24cefc[_0x3820c2(0x382)+'e'](_0x583bfa,_0x21c99d['gDfLw']);}}else{const _0x4a528e={};return _0x4a528e['reply']=_0x21c99d['Kwmnm'],_0x2962a3['json'](_0x4a528e);}}catch(_0x5b5f74){console[_0x3820c2(0x1fb)](_0x3820c2(0x430)+_0x3820c2(0x3da)+'rror\x20proce'+'ssing\x20mess'+_0x3820c2(0x497)+_0x583bfa+':',_0x5b5f74);const _0x12bc0b=_0x5b5f74?.['message']||'',_0x3d6a29=_0x12bc0b[_0x3820c2(0x537)](_0x21c99d['loEtV'])||_0x12bc0b['includes'](_0x21c99d['apPFX']),_0xe4eeec=_0x21c99d[_0x3820c2(0x2d4)](extractRetryDelayFromError,_0x5b5f74);let _0x4c019d;if(_0x3d6a29){if(_0x21c99d['aENUg'](_0x21c99d[_0x3820c2(0x3de)],_0x21c99d[_0x3820c2(0x3b3)])){_0x4c019d=_0x21c99d[_0x3820c2(0x45b)],console[_0x3820c2(0x1fb)](_0x21c99d[_0x3820c2(0x2be)]);try{await _0x5f3780[_0x3820c2(0x646)](_0x3820c2(0x5e8)+'O\x20admin_no'+_0x3820c2(0x29c)+_0x3820c2(0x534)+'ource,\x20mes'+_0x3820c2(0x60f)+_0x3820c2(0x65a)+'?)',[_0x21c99d[_0x3820c2(0x361)],_0x21c99d['vRyti'],_0x21c99d[_0x3820c2(0x316)]]);}catch(_0x226d0b){console['error'](_0x21c99d[_0x3820c2(0x236)],_0x226d0b);}}else return;}else{if(_0x21c99d[_0x3820c2(0x2d4)](isRateLimitError,_0x5b5f74)){if(_0x21c99d[_0x3820c2(0x5f2)]!==_0x21c99d[_0x3820c2(0x43a)])_0x4c019d=_0x21c99d[_0x3820c2(0x676)](formatGeminiQuotaWarning,_0x21c99d['GdlPB'],_0xe4eeec);else{_0x573c09[_0x3820c2(0x1fb)](_0x21c99d[_0x3820c2(0x3ee)]);const _0x17e739={};return _0x17e739[_0x3820c2(0x1fb)]=_0x21c99d['cQlmt'],_0x28d17a[_0x3820c2(0x45a)](0x1bb5+0x5*0x2ac+-0x302*0xd)['json'](_0x17e739);}}else _0x4c019d='Maaf,\x20laya'+_0x3820c2(0x67d)+_0x3820c2(0x60c)+'engalami\x20g'+'angguan.\x20S'+_0x3820c2(0x255)+_0x3820c2(0x610)+'ti.\x20😊';}try{if(_0x21c99d[_0x3820c2(0x3a2)](_0x21c99d[_0x3820c2(0x36c)],_0x21c99d[_0x3820c2(0x36c)]))await _0x24cefc[_0x3820c2(0x382)+'e'](_0x583bfa,_0x4c019d);else{const _0x5f27e9={};return _0x5f27e9[_0x3820c2(0x358)]='Nama\x20Wi-Fi'+_0x3820c2(0x5e2)+'\x20ini\x20adala'+_0x3820c2(0x411)+_0xe500b1+('*.\x20Tidak\x20a'+_0x3820c2(0x673)+_0x3820c2(0x1f7)+'rhubung.\x20😊'),_0x534249['json'](_0x5f27e9);}}catch(_0x24a676){console[_0x3820c2(0x1fb)](_0x21c99d['otTlD'],_0x24a676);}}};export const handleWhatsappMessage=async _0x509d83=>{const _0x279c96=_0x17ec91,_0x4fc367={'ivXqj':function(_0x13c079,_0x9fabb1){return _0x13c079+_0x9fabb1;},'CumOI':'(((.+)+)+)'+'+$','HkCNt':_0x279c96(0x24d),'LvZIA':function(_0x1d7385,_0x53a25a){return _0x1d7385===_0x53a25a;},'ucump':_0x279c96(0x469),'zQoWG':function(_0x1f4e9d){return _0x1f4e9d();},'UTFNe':function(_0x34a53f,_0x4908c3){return _0x34a53f+_0x4908c3;},'tcJdy':_0x279c96(0x641)+_0x279c96(0x490)+_0x279c96(0x62e)+_0x279c96(0x2b3)+_0x279c96(0x403),'XanXj':function(_0x5b9d8f,_0x23bc3b){return _0x5b9d8f!==_0x23bc3b;},'dHiyF':'IJVAT','dmfmY':'BhMYr','mIzIP':_0x279c96(0x2c9)+_0x279c96(0x31d)+_0x279c96(0x3cb)+_0x279c96(0x5e9)+'em\x20kami.\x20S'+_0x279c96(0x44d)+'ungi\x20dari\x20'+_0x279c96(0x612)+'\x20Anda\x20daft'+_0x279c96(0x480),'DRNra':function(_0x358103,_0x248cd9,_0xa36f5,_0x49e9d2){return _0x358103(_0x248cd9,_0xa36f5,_0x49e9d2);},'tLXTG':function(_0x5a8829,_0x90a519,_0x3663f3){return _0x5a8829(_0x90a519,_0x3663f3);},'mPTDA':_0x279c96(0x620)+'bot\x20AI\x20sed'+_0x279c96(0x1b9)+_0x279c96(0x492)+_0x279c96(0x458)+_0x279c96(0x43c)+_0x279c96(0x618)+_0x279c96(0x661)+_0x279c96(0x453)+_0x279c96(0x14e),'wMNkx':function(_0x2160b1,_0x367f4e){return _0x2160b1===_0x367f4e;},'qGlpz':'pfyMt','aSerh':'dAEuL','WXHbP':function(_0x4bd230,_0x151743){return _0x4bd230===_0x151743;},'TNrsv':_0x279c96(0x209),'nVXkq':_0x279c96(0x37c)+_0x279c96(0x528)+'han\x20di\x20pih'+_0x279c96(0x249)+'saat\x20mempr'+_0x279c96(0x15a)+_0x279c96(0x2d2)+_0x279c96(0x66d)+_0x279c96(0x409)+_0x279c96(0x155),'ZCxWA':'[Unified\x20M'+_0x279c96(0x2fa)+_0x279c96(0x651)+_0x279c96(0x25e)+_0x279c96(0x1db)+_0x279c96(0x1f9)+':'},{from:_0x530c08,body:_0x281b2f}=_0x509d83;try{if(_0x4fc367['LvZIA'](_0x4fc367[_0x279c96(0x470)],_0x4fc367[_0x279c96(0x470)])){const _0x55c0e0=await _0x4fc367[_0x279c96(0x53b)](getSettings),_0x1d1e57=_0x55c0e0[_0x279c96(0x196)]?.['chatbotEna'+_0x279c96(0x410)]||![];let _0xf47e1f=null;if(_0x530c08[_0x279c96(0x1f5)]('62'))_0xf47e1f=_0x4fc367[_0x279c96(0x395)]('0',_0x530c08['substring'](-0x1*-0x84d+0x22a9*-0x1+-0x19*-0x10e));else{if(_0x530c08['startsWith']('0'))_0xf47e1f=_0x4fc367['ivXqj']('62',_0x530c08[_0x279c96(0x3f4)](0xb*0x18c+0x3*-0x1f7+0x58f*-0x2));}const [[_0x3ce7d0]]=await _0x5f3780[_0x279c96(0x646)](_0x4fc367[_0x279c96(0x55a)],[_0x530c08,_0xf47e1f]);if(!_0x3ce7d0){if(_0x4fc367[_0x279c96(0x5a9)](_0x4fc367[_0x279c96(0x14f)],_0x4fc367['dmfmY'])){await _0x24cefc[_0x279c96(0x382)+'e'](_0x530c08,_0x4fc367[_0x279c96(0x297)]);return;}else _0x1e9ea1=_0x4fc367['ivXqj']('0',_0x2c1a8d[_0x279c96(0x3f4)](-0x161*0x1+0x1433+-0x4b4*0x4));}const _0x312d1e=await _0x4fc367[_0x279c96(0x26c)](handleStaticCommands,_0x509d83,_0x3ce7d0,_0x1d1e57);if(_0x312d1e)return;_0x1d1e57?await _0x4fc367[_0x279c96(0x4d5)](handleAiChatbot,_0x509d83,_0x3ce7d0):await _0x24cefc[_0x279c96(0x382)+'e'](_0x530c08,_0x4fc367['mPTDA']);}else return _0x2918e0[_0x279c96(0x510)]()[_0x279c96(0x49a)](_0x279c96(0x604)+'+$')['toString']()[_0x279c96(0x4cc)+'r'](_0xdd387)[_0x279c96(0x49a)](HAqaVV[_0x279c96(0x572)]);}catch(_0x3474e0){if(_0x4fc367[_0x279c96(0x51c)](_0x4fc367[_0x279c96(0x4e6)],_0x4fc367['aSerh'])){const _0x52c5d1=_0x9b4401[_0x279c96(0x592)](_0x2a6c5a),_0x1d65e2=_0x52c5d1[_0x279c96(0x190)](/"retryDelay":"([^"]+)"/i);if(_0x1d65e2)return _0x1d65e2[0x14ac+-0x2604*0x1+0x1*0x1159];}else{console['error'](_0x279c96(0x3b8)+'essage\x20Han'+'dler]\x20ERRO'+_0x279c96(0x3a5)+_0x279c96(0x657)+_0x279c96(0x18f)+_0x530c08+':',_0x3474e0);try{if(_0x4fc367[_0x279c96(0x188)](_0x4fc367[_0x279c96(0x1a1)],_0x4fc367[_0x279c96(0x1a1)]))await _0x24cefc[_0x279c96(0x382)+'e'](_0x530c08,_0x4fc367['nVXkq']);else{const _0x17190a={};_0x17190a[_0x279c96(0x64d)]=_0x6dab85[_0x279c96(0x64d)],_0x17190a['model']=_0xe1cd26[_0x279c96(0x1dc)],_0x17190a[_0x279c96(0x274)]=_0x1dd95f['rxPower'],_0x17190a[_0x279c96(0x58f)+_0x279c96(0x56c)]=_0x319f0b[_0x279c96(0x1e4)+'s']?.[-0x1*0x2231+-0x3c7*0x1+0x2d*0xd8]?.[_0x279c96(0x415)]||_0x4fc367[_0x279c96(0x341)];const _0x4b0fdd={};_0x4b0fdd[_0x279c96(0x1e4)+'s']=_0x62c431['wlanConfig'+'s'];const _0x23246e={};_0x23246e[_0x279c96(0x4b5)+'tus']=_0x17190a,_0x23246e[_0x279c96(0x29d)+_0x279c96(0x206)]=_0x4b0fdd,_0x3323cf=_0x23246e;}}catch(_0x5f08f3){console[_0x279c96(0x1fb)](_0x4fc367[_0x279c96(0x3b0)],_0x5f08f3);}}}};export default router;function _0x2354(){const _0x2739a6=['mZy5nte2CeXzq2nJ','DxmGCgvYC2LZia','A0TRzeW','qvLuBxq','BwfHzIbHDgfZia','A2v0AwrHA255yq','ywXHBsbIzwjLCG','u0vmquXvig1LBG','CMfWysbZywf0lG','tMzmwfK','AMeGBgfUz2THAa','Av9WyxnZD29Yza','DgnkzhK','BMDPBMTHBIbWzq','yxnLoG','CKLKid0GpYbpuG','ihjLCxvPCMvKlG','zM9YBwfZAs4GsG','EweGlti1igf0yq','EwfUzYbbBMrHia','ienVBNrVAdOGAG','zwqGDg8GzxHLyW','ugvYyw5NA2f0','iePPA2eGBwvYzq','D2LMAq','zwXHAcbKAxvIyq','uMDUAKG','iI4G8j+yIG','A193AwzP','zxnHCIbKyxjPia','zMLFBMfTzq','zwXHAcbTzw1Izq','CgvUz2D1BMeGBq','yxj1ihLHBMCGqq','z2DHBIb0zxj0zq','yMnOEKi','q3vTt0K','r2vTAw5Piefj','icaYlIblzw11za','ys9tu0Leigf0yq','igT1B3rHieDLBq','t0TpwxO','C2eGj2rLDMLJzq','uwTHzfq','C3n3B3jK','ihDPzMKGC2f5yq','C3LZDgvTsw5ZDa','yMLUza','zYb0zxjODwj1BG','Cw9Hzui','AcbHC2LZDgvUia','D2fAyLG','u05NvK0','BNrLBNq','rKDlyvK','B3qGBw9Kzw0Gza','CMfUz2THDcbxAq','BweGywrTAw4GDq','zNvUy3rPB25dyq','yxbWtMfTzq','zxDFCgfZC3DVCG','CMfWysbTzw5PDa','zNvUz3nPihLHBG','8j+tSsa','BMrHigLUz2LUAW','y3vYCMvUDf93Aq','AxjPihnLDgLHCa','D0P5uhq','C3rYAw5NAwz5','zLj1qvu','ifDPluzPigjHCG','A2v5','C2vWzxj0Asb5yq','lcbZzxbLCNrPBG','yc4GugvYyw5NAW','zMKNlGOGicaGlq','BcbbssCUcIaGia','iIWGiNnPyxbHia','Aw55ywWGB3b0Aq','qwrXyuq','zw5Nyw1IAwXUEq','zLDVB2O','zYbKAw11yxqUia','ywLSzwqGDg8GBG','BMeGBwvUz2f0yq','qvbjieTLEsbUBW','CgfKysbZzxj2zq','BIbLBw9QAsbZzq','Aw50zxjUzxq','yw1HigPHCMLUzW','uYbTzw5Nz3vUyq','wgfUwgO','twvZC2fNzsbPCW','zw50Ds4Gu2LSyq','AMfYAw5Nyw4','BweGv2KTrMKTBG','D29YzcbxAuzPia','ifDPrMKk4OcIigbJ','C3rHCNqGA2uGBq','BwLZywXUEweSia','Dsb5yw5NigrPAq','yxDHAxrPBMDFBG','z2vTAw5PltiUnq','yxrHig5VDcbMBW','BwvTyMfUDhuGza','q2HHDf0Gr2vTAq','tfLcAvK','DcbMB3vUza','CLHnuNm','tMnIt0C','BIb0zxj0zw50Dq','rKLPtfy','B3vYy2uSig1LCW','icaTiePPA2eGCa','AxnbCNjHEq','q0vOz1a','rcKGyMfYDsbHDa','wMrRywi','DhvZ','ihnLDhvQDsb1BG','CgfRywKGD2LMAq','ks4kicaGic0Gua','zxiGrLjptsbJDq','DsbTzs1YzwjVBW','DcCSicDSzw1VDa','AMLRysbbssbHAW','yIbWzxj0yw55yq','j3nPyxbHihnHAG','igjHCNuGEwfUzW','BMDRAw4GywTHBG','tvLWvwq','CNvJDgLVBG','q2HHDf0GrxjYBW','Dt5GidOGr2fUDa','BMrHieHbuLvtia','zw5HigjHDgfZia','B3rFzgv2AwnLjW','Dwj1BMC6cG','wwT2B1K','ywn0AxzLrgf0zq','BNrHBMCGAw50zq','BgfPBNLHigHHCG','ueXcAMy','t3zLCMr1zsCPia','AuLSB0u','u1njrcKGBwLSAq','twvUz3vIywGGBG','CMvWBgfJzq','iefUzgeGC2fHDa','yM9VDgaGoIbszq','CMH1yNvUzY4klq','ChrPAYbbBMrHia','r0TtzMq','CY5YEfbVD2vYjW','su5trvjuieLova','yxiGzgKGC2LZDa','twfgtK8','u0zZreO','BweGD2LMAsbZyq','DhjHAYbHCMD1Bq','iefUzgeGywrHBa','u3zfuhy','AsaI','BgvRjYK6cIaGmq','sw5Qrg0','Dwj1BMCGA2uGAG','mcbZzwnVBMrZlG','CL0G','A2uGBw9Kzw0GCa','D2fYBG','yw1P','AgfZysbjBMrVBG','icDYEfbVD2vYjW','sMLRysaNCNHqBW','zurHDguSigfJCW','pGPdB250B2G6ia','CM1PBNrHyw4Gyq','tfuGBwvUz2fRAa','ysbiqvjvuYbTzq','EweGBgvIAwGGyG','BMDHBgfTAsbNyq','z2D1BMeGAw5NAq','kcGOlISPkYKRkq','igfRyw4GzgL0zq','BIbKywXHBsbcyq','EeTkrLC','BIbjrcbqzwXHBG','CLnfEuy','DgvZDa','yw4GC2vJyxjHia','DcbZzwrHBMCGBq','u2vYAwfStNvTyG','yw1IAwWGzgf0yq','C2fNzsKGvKfmvq','ysbSywDPig5HBG','As1gAs1UEweGyq','BM9TB3iGEwfUzW','DcbbBMrHlIdWN5Ik','twfHzIWGBgf5yq','ysb1BgfUz2KGza','DcbTzw5Nyw1IAq','zsbZzw11ysbQyq','Agf0igrHzNrHCG','rejXEve','DcWGBwfZywXHAa','zw1VAMKGC2vUEq','ysbWzxjHBMDRyq','ywGGzgL1yMfOia','BIbUAwXHAw55yq','ihbLBMDNDw5HlG','twfHzIWGy2HHDa','s0HPtuS','DwvZDgvKihrVia','z2fRAgLYAsbZzq','EhL3wKy','AgfUiefUzgeGCW','BsiGBwvUAMfKAq','Ds4klsbkywDHia','lIbszxnWB25Zzq','r2fNywWGBwvUzW','ywf0igLUAs4GuW','u0vmrunuihaUBG','yw1xDNi','DgvYyxbRyw4Gza','zxjZifDirvjfia','r2fUDgKGBMfTyq','luzPlw55ysbHAW','ywfUiefUzgeGCW','ysb0ywDPAgfUia','zxr0Aw5NCY4','zuv5uhu','r3vUywTHBIbMBW','yw4GAw5Pig11BG','AKj1tvG','A2eGAw5MB3jTyq','svPdqLi','BMCGzgLIzxjPAW','BMCSigjLCMKGDa','yxqGqw5KysbTDq','C2vKyw5Nig9MzG','wgDlt1u','CM1HDdOGz2fUDa','y29IysbSywDP','u0vmrunuicOGrG','y2fSBcaN','ievYCM9YoG','icDJAgvJA193Aq','DweGAMfYAw5Nyq','CxvLCNK','z2vUzxjHDgvdBW','zxjPA3nHicDKzq','phnHBMrPx2jHCG','u1njrcbHDgf1ia','yw4GzgfSyw0GqG','DgfWAsbusurbsW','AxnpBMXPBMu','ihnLzgfUzYbWzq','D2LMAsWGz2fUDa','z2vTAw5P','zgXLCL0GrKfjta','A2uGiG','vxPptxG','C3bWwve','BMfTysaN','yw4GBgfUz3n1BG','BMCGBwvZC2fNzq','BIb0AguGC2v0Da','ANnVBG','rvmGkd8Sid8Sia','zw1PBgLRAsbPBG','AwWGC2vIDwfOia','CYbTzw5QyxDHyG','AxnHBMrPihDPzG','kg5HBweVu1njra','zw5Nyw4Gzw1VAG','ihbLCMLUDgfOia','uLPUD2C','BNLvqum','ihv0yw1HiefUza','AMf3ywjHBIbbBG','tI9bjYWGyw1IAq','A2eGC2v0DwP1ia','qwrHia','DgDWreO','B3rFzgv2AwnL','AwTPDcbRzw5Kyq','zgKGiG','lIbtAwXHA2fUia','BMDNyw4UcI0Gua','ywTHBIb3ywT0Dq','j3n1zgfOigjHEq','zxn0yxj0igf0yq','As1gAsbIyxj1ia','zgeGCgvYyw5NAW','yw4GAMLRysbHza','t0PIA0e','tgfjsMK','BNr1AYbTzw5LCG','Aw5Nx3n0yxr1CW','ihrHz2LOyw4GEq','zgf0ywjHC2uGCW','DxmGCgvSyw5NzW','DhvRigfKBwLUAq','BMfUignOyxrIBW','BMKGCMv0DxjUzq','BNqGDgLTzwqGBW','A2fNzuLKifDirq','cIaGmY4GsMLRyq','sLjWAxG','yw5NihbLCMX1ia','zgLHlIdWN5Ik','zeHPEuy','CKPOC2m','s2f0ysbZyw5KAq','ywXPzcbVCIbLEa','igfKywXHAcaQ','AYbWzw1IyxLHCG','BMfUDgKUipcFMiO','BNrHAcb1BNr1AW','A29UDgvRCYb5yq','yufMBeu','uKuGy3vZDg9Tzq','B3nLCYbWzxjTAq','yxnPpGPdB250BW','yxrPihnHAMeGBa','tMfTysbxAs1gAq','yxrPB25tDgf0zq','zgTZCgm','C29Tzq','ELbWsxa','ihbLCNrHBNLHyq','ifnftefmvsbZyq','kI4GvgLKywSGyq','t3D4EKy','yw4GzNvUz3nPia','C3n1zurHDguGra','vw5WywLKjYWGjW','BgvTB3q','Aw9Ku3rHCNq','zxnHBgfOyw4Gza','DxmGC2LUEwfSla','AwWGAw5MB3jTyq','y2XHCMf0Aw9UCW','zwjVB3qGDgvSyq','CMfWA2fUihbHza','DwveyxrLierfuW','DeThyxm','BMCGCgfRywKGDW','Bejkzem','yxbHig5HBweGDW','DhuU','BMfTysbxAs1gAq','C3rVBwvYCYbxsa','AsbWyxnZD29Yza','AfPXq0O','igjHEwfYpYCPla','zxmGCgvYBwLUDa','CNnHDgLVBLn0yq','q0TxAvG','txvSywKGDwXHBG','z2fUia','zgKGC2vYDMvYia','B21LCIa','Bg55ysaYlJrhsa','AsbHA2fUig1LBq','DgvYyxbRyw4GAW','AsbPBMKGAMLRyq','BMrHihnHyxqGAq','v1HiyLa','Dw5KlG','yw4UipcFMiOIlGOGia','lIbkAwTHicDYEa','zw1IzxjPA2fUia','twvUz3vIywGGAW','yMvYDgfUEweGiG','igzYB20G','Bwf0y2G','ifnPBgfRyw4GyW','Dg9mB3DLCKnHCW','uKuGyY5Pzca9ia','BMDNDw5HA2fUia','icaGlsbkAwTHia','D2HHDhnHCha','Cgf0ig1LBgfRDq','y2HHBMDLx3DPzG','igrHCMKGA29UDa','AMfpsw0','qw5KysbusurbsW','B2rLBsbTAwXPAW','zg5hz1a','EMTPDgvJAejPBa','DgvYBgfTCgf1Aq','psa/ieforcbZDa','ve5YC3y','z3vUywTHBIbMDq','D09dueS','ywH1ig1LCMvRyq','DgeGC2fUzgKGvW','s2v5igLZigLUDG','BwvUAxqUipcFMiO','zwTZlGOGicaGia','DhvRig1LlxjLyG','B3iGzNvUy3rPBW','icjHCgeGBMfTyq','AYbZzw11ysbQyq','BMCGDgfNAwHHBG','CM9ZzxmGCgvYAq','zwrPysaOBwLZyq','uYbTzw5HBNLHAW','yM9VDc4','ywGGkG','zxjHBMDRyxqGCW','yw4GBwvTzxjPAW','CgXPC2L0ig1LBq','z2D1BMeGyMvYDa','t0jkrunu','z0Dkwgq','yw5NihrPzgfRia','DsbZyxLHignVyG','DhvUz2D1lIdWN5Ik','DsbRyxrHihnHBG','s1vHvK8','BwvUz3vIywGGBG','AwqGpsbJlNbHyW','C2f2zsbbueKGAW','rcbWzwXHBMDNyq','DxqGywz0zxiGmG','ywrPifLcmtaWoq','C3rHDhvZq29Kzq','z2fUDgLZyw5KAq','yMLSBgLUz1bLCG','sefowueGyM9Szq','zgKVCgfZC3DVCG','zxnPys4kls0TcG','zwj1DdOG','q0T1C0i','AsbZAw5PpYdWN5IkiG','zNvUy3rPB25ezq','ywnur1K','lIbqzxj0yw1Hla','igf0yxuGj3nPyq','DcbTB2rLBsbTzq','igTVBMvRC2KSia','yw4GA2uGC2vTDq','ihLHBMCGDgvYAa','CgrHDguGAxqGAq','igLUAs4kicaGia','s3DTBM0','ihrLCNnLzgLHla','l3jLyM9VDcKGCa','icaGicaGmI4GsW','iezjtKfmievsuG','Bw9KzwW','CMf0A2fUihrPBG','qw5KysbZzwrHBG','yw55ysbZzwnHCG','weT6veS','BIbJywXSigzVCG','BgLKiefqssblzq','igf0yxuGA3vYyq','D2XHBKnVBMzPzW','EwrNy0W','D0HOt2i','CM9TChqGzgvUzW','AYbWzwXHBMDNyq','DgjVDcbLCNjVCG','BMKUie11BMDRAq','zYb0zxjZzwrPyq','zfLisfK','BMDZAsaNCMvIBW','BNDOyuq','q0zwB3G','Dw5HigLUz2LUia','ywrTAw5Fy2HHBG','CMvRysWGz3vUyq','DxfYwMW','z0Lkr3y','C3rHCNrZv2L0Aa','BwfUyw5UEweUcG','yxqGEwfUzYb0zq','CgTtD2u','t1iGtuvtu0fhrq','vgvUDhuSigfKyq','zxjYB3i','jY4ktMfTysbbBG','BIbWzwXHBMDNyq','AhuGBwvYzwTHoG','yxqGBwvUz2vRCW','B3jTyxnPigL0Dq','BgfUz2DHBIa','CgeGC2fQysb5yq','DgLMisdWN5Ik','rKzetMy','Av9Uyw1L','Cgf0Ahm','yw4GCgfKysbxAq','yxnZB2nPyxrLza','AgTpDfm','cKTptLrfs1m6cG','CgfZC3DVCMqGyG','z3vIywGGCgfZCW','yw1IyxqSig1HCW','CMLUz2fUiefUza','Bg9N','yxjPBMDHBIbxAq','zYbKAxjLyM9VDa','yxaGC2LUz2THDa','BwjHEwfYyw4GBq','AsbxAs1gAsb1BG','BMn0Aw9UkcKG','DgLKywSGBwvTyG','cIaGns4GsMLRyq','z2DHBIbZywf0ia','B290x2rLDMLJzq','EMTPipcFMiO','BLLbv3G','qw5KytOk','BgfOigrPDwjHAa','qxnHCMy','igTLEsbPCYbUBW','ig1VzgvTigrLBG','A2fUihn0yxr1CW','zgeGzgfSyw0GAW','AsbxAs1gAsWGza','uYbTzw1PBNrHia','AwTHig1LCMvRyq','DxrLicC','v0LMt1y','y3nVzw8','Asb1DgfTysbTAq','DgvYAhvIDw5NoG','sefsvvmGu0vmqq','Aw5PlIdWN5Ik','yxbHihnHyxqUia','BIb0BYbKyxrHyG','BNr1AYbWzwXHBG','zcbHDgf1ifntsq','yNvUzYbZywf0ia','zgfRyw46ia','BMCGzgLRzxrPAW','ifbYB3nLCYbPBG','uw1fsfK','zhjdyxq','yw1VDw50','kGPkyxr1Acbuzq','DKPou0y','zw5Nyw4GyMvYDa','ELb3wum','ywfUieHbtLLbia','BgfUz2DHBIbZCa','DcbbBMrHihnLza','thPjr1O','iLLcmtaWosiSia','shfpCxu','CgKGveLequSGBq','imoWXBJlNmwG','veXdsxG','igX1BMfZlG','yw4Gv2KTrMKGBq','zhzsB1u','ysb5yw5NihbHAW','ywSGC2vYDMvYia','ugvYAw50ywGGEq','zxH0ig9Yigz1BG','zxHLy3v0zsaN','tI9b','kfntsuqPig1LCG','BMrPigjHCNuSia','DgvYC2vKAweGka','zxKGzxjYB3iGBG','z3vUywTHBIbWzq','q0LeveG','CgvYDxnHAgfHBG','AwXHA2fUignVyG','Dgv4Da','iePHBMDHBIbTzq','yw1PlIdWN5Ik','DhvRig1LBMD1yG','Bw9Kzw0','DcbbssbZzwrHBG','AYbTzw5NDwjHAa','lwzSyxnO','ruqGve8Gu0vora','AgvSCa','EwfUzYb0zxjODq','icjtAw55ywWGBW','iIWGyxjNDw1LBG','ls0kicaGieTptG','vhvNyxmGqw5Kyq','CgvUAKW','BMDNDw5Hig1LBq','iKfWysbUyw1Hia','BwfUz2DPBcbMDq','C3vRigP1BwXHAa','rMfPBgvKihrVia','zwTHig1LBwLUDa','rfjoCMe','C2fUzgK','r2vTAw5PihjLDa','t0PyrvC','q1HMA0W','vgLKywSGzgfWyq','mJeXodqWmhDntuLXta','CMvXDwLYzwq','CNHqB3DLCG','z19ZDgf0Dxm','BMDHBIb5yw5Nia','ywDHigPHD2fIyq','BMKGCMvXDwvZDa','BYWGzgfUigXPBG','ysbZywf0igLUAq','ihnPBNLHBcWGuW','yw4GEwfUzYbWzq','uMPgsgO','CMv0DxjUicHMDq','ywGGBwvTyMvYAq','Ee9Hwem','uYbtruXbtfuGBq','CIbPBIbJB252zq','Dwj1BMCSigP1Bq','CgvYyw5NA2f0ia','u0zeD2W','BNr1AYbTzw5Nzq','AxnHBMrPidXWyq','BwfUz2DPBgfUia','qMfPAYWGA2f0yq','vNrhvvy','mLfizLncDa','BMDZAsaNy2HLyW','quKGywHSAsb1BG','zMLUza','zwqGAw4GDgHLia','DMLjvg0','Cxn4rgi','ihrLBgfOigrPDq','yNvRyw4GiNLImq','yxbPs2v5','igLUAsbHzgfSyq','BIbQAwTHig1LCG','BuL6sva','t010q0m','ihvUDhvRig1LBG','z2DHBI4','BMDNDwfUjYWGjW','DgLMAwnHDgLVBG','x2LUDgvYBMfSxW','BMfTysb3AwzP','igfIB3v0ignOyq','r01RyNG','rvzVz2C','zw0GBwvYzwTHla','BIbiqu5zqsbIzq','zgvTBNLHigrHCG','B3rPzMLJyxrPBW','quKGyxnZAxn0yq','s09ovevluZOk','BxvHigPHCMLUzW','icHtAw55ywW6ia','ug93zxiNigrHCG','D2vYjYb0AwrHAW','C2rlyNy','zxjPA3nHihbLCG','ChjVCgvYDgLLCW','ywGGqw5KysbTyq','yMfOig1LBMPHza','z2v0x2jPBgXPBG','ysWGC2vIDxrRyq','CgHVBMuGsu4Gka','AunbC3C','zgfRyw4GA2H1CW','sKTMAue','rcbKAsbTyw5Hia','zgfSyw0G','twvTzxjPA3nHia','ihnHEweIlcbHDa','w1n0yxrPyYbdBW','B2jHigXHz2KGBG','kGPkDw1SywG6ia','ENnSvKq','zw5Nyw4GA2fSAq','BwvYzwTHig1LBq','CNmGyYbptIbWlG','8j+yIIiUcIaGnY4GsG','lIbqBgvHC2uGDq','Df9IAwXSAw5NxW','nJKWntaXmhLjD1PnzW','lIbqzxjHBMDRyq','ig1LlxjLyM9VDa','yMf5yxjHBICSia','twfHzIWGBM9TBW','ipcFMiO','u1rssu5h','A3vVDgeGqvbjia','Dw1Izxi','u0Leihv0yw1Hia','ywT0AwySicDJzq','uYbTzw1PBNrHBG','u2LHCc4GugfZCW','BNrHyw4Gqw5Kyq','luzPig1LCMvRyq','A1jhqwO','CMHHC2LSigrPAW','iejpteviig1LBG','igfKysbKywXHBq','BMHACxG','DNvjsvu','vgLKywSGywrHia','ihbLCMfUz2THDa','DwSGsvnqigjLCG','BIWGBwLZywXUEq','ihbLBgfUz2DHBG','mJmWmJeXow9UvLj1sW','lcbQzwXHCYWGza','DwfUigPHCMLUzW','BgLRihbLBgfUzW','AwTHihbLBMDNDq','BMfUDgKU','DgfRyw4GiLnHEq','y3vZDg9Tzxjjza','B1fQtKO','ysb0AwrHAYbTzq','CMLRBNLHicHTAq','EwHTzwS','EweGiKfWywTHAa','A29UDgvRCYbWzq','Axnoyu4','tu9tsfm','zw5Nyw4GCgvYDa','t294whi','BcbPBMzVCM1HCW','CgvYyMfPA2fUlG','ihrLCNnLzgLHia','qw5KysbHzgfSyq','EfnWAfm','icHtu0Leksb0yq','yw4GBgfPBIb1BG','AwnL','ChjVDg90ExbL','zxnZywDLieHHBG','CMrHC2fYA2fUia','t1r2rvu','ru5usu5hoIbtyq','Aw5Plcb0zxjTyq','AKrrEuS','rev3DLG','BIbTzw5NDwjHAa','nsWGyMvYAsb0yq','BhrJweS','Dgf0DxmSigr1zq','DxjUzwqGBM8GDa','BMLZDhjHDg9YlG','zhvLrgf0zq','ifDPluzPihvUDa','ruHpAgq','y2vRD2LMAq','ve1Asgu','zYWGANvTBgfOia','CIbRyw1P','yv93AwzPx2jHCG','zs4G8j+yIG','DgLKywSGzgLRzq','EwfUzYbIzwX1Bq','ic0YmI41ks4GsG','CMfWA2fUigTLia','A2f0ysbZyw5KAq','mYdWN5Ik','CvPtsfO','ifj1BwfOA3uXmG','uMv0CNLjBMzV','BwfZAsb0AwrHAW','Aw5HBweGpg5HBq','j2nOyw5Nzv93Aq','A3HnufO','CIbbBMrHihrPza','vLPvD3G','CIbRzwnPBg55yq','y3vZDg9Tzxi','A29UzwTZAq','lcb0yw5Nz2fSia','wvPiq3m','lsbkAwTHihbLBG','Aw5PigHHyMLZlG','A2fUigrHzNrHCG','zgeGywXHDcb5yq','AwXPAYbWzwXHBG','ysbbBMrHicDsAq','BgfTyMf0','Dw50DwSGzgL0zq','qwPwy3q','C2KGv2KTrMKGqq','A2fNzxmGCcbktW','Aw9Krw5K','mZm0nZDmzuvuEwO','wNfqzLy','B3b0AwSGqw5Kyq','BhvRyw4GyMvIzq','BMDRyxqGywTHBG','AcaIvgvUDhuUia','yxLHigrHCgf0ia','A2fUigTLDgLRia','C3rYyxrVCIbjuW','DNLzyKm','q3vZDg9TzxiGza','zxjPBNrHAcbYzq','yxrHDsbWyxnZDW','AwzPjYWGz3vUyq','AsbZzxj2zxiGAW','iciTmJiUnsbKqG','u2fUzgKGv2KTrG','sgTdtNq','ltiYlJuGzejTiG','C1rdCMW','ysbWzxjTAw50yq','ywfUihnLCNvWyq','BwvZC2fNzq','sxviCgG','yw5NihrLCNnLza','AxjPBs4GugvYyq','Esb0AguGywrTAq','ywrTAw5FCMvIBW','z2P1seK','twfHzIWGC2f5yq','ihrPzgfRigrHCa','yxnZAxn0yw50lG','ywGGCgfZC3DVCG','A3PMrvy','z2THDcbWzwXHBG','l2nOyxq','yxnHBIbKzw5Nyq','Cw95C00','CgfZC3DVCMq','BwLUDgeGDw50Dq','CMvWBhK','vevluZOkicaGia','lIbuzxjPBweGAW','Awe6cGRIGkiGyhjL','EKDIzfq','ihrPzgfRihrLCG','rwP2uxa','zxDFC3nPza','odyYnJq4DMX6z3HO','CgvLAwy','BgfOihbLCMfUzW','lYnWyxKV','BwfOigrHBIbTzq','y2XLyxjdB252zq','yMvYAwTHBIbUAq','igTHBwK','ywDPAgfUig1LCG','r2vTAw5Piefqsq','wuvZvuq','AsdWN5IklIiklsbkAq','v3HHvha','x2jHCNu+yca6ia','qhr5Cgu','x19WCM90B19F','BLPJque','AwTHBIbKAsbIyq','A2fUigrPDwjHAa','Ag9ZDg5HBwu','jYWGj2DHBMDNDq','DcbTzw1PBNrHia','BIbIywH3ysbbBG','yw50As4G8j+yIG','AwHHBIbWzwXHBG','ig1LBwjLCMLRyq','DgfYDcWGyMLSBa','jYbMB3iGy3vZDa','twfHzIWGDgvYAG','zxjHBMDRyxqGBq','igXLBMDRyxaU','igrHCgf0ig1Llq','BwfW','BKTZrLO','C2vUze1LC3nHzW','C2v0q29UDMvYCW','CMLUz2fUicGNBa','ig9WDgLRiefUza','BqRIGkiGygDHBNrP','vLPWqMq','rvndieXjtuLuia','yw4GEwfUzYbUyq','ig5HBNrP','oIaIu2LUEwfSia','DgfIBgu','y2HLy2TFD2LMAq','AcbPBMKUcIaGia','Dgf1ihrHBNLHAW','cIaGicaGiduUia','x2rLDMLJzsCUcG','EfDVEMS','kI4GqwrHia','ieTLDgLRysbbBG','vvrgtMu','yMvYAsb0ywH1ia','C3DVCMqPigfRyq','CMfUA2fUihvUDa','ihrLCMPHzgKGAW','yw4GDgLKywSGyq','qsCSigfTyMLSia','Aw5NugvYAw9Krq','lGOGidyUifnLDa','AYbIzxjPA3v0oG','zgvZy3jPChrPBW','Dw5NC2KSihnLCa','zcbUBYb0zxH0ia','zM91u0W','ihnHyxqGAw5Pia','uw12ugC','uIbWCM9JzxnZAq','iefUzgeGAw5NAq','u3jZBMe','z3vUysbZzwnHCG','jYbIEsa','B2Pxy0S','yxbWBhK','yuvovwC','mda5iI4kicaGia','zg1PBIbTzw55Aq','C3rLCa','wKn4v0e','zgv0ywLSCW','vKfmsuq','txf4Bwm','BgLUzs4G8j+yIG','CgfYyw1LDgvYCW','surNrui','rKnvEvq','w1vUAwzPzwqGtq','lGOkicaGic0Gua','ANvTBgfOihbLCG','zgeGDgLKywSGBq','igrPDwjHAcbTzq','BM55ysbKyw4GBq','igH1CNvMlIboAq','rMKGDw50DwSGCW','AcbIzxjOyxnPBa','C3H3sfu','iefUzgeGBwf1ia','C2eU','zw1PBMKGqvbjia','vu9lwuC','yxqGBwvUz2fTyG','ywHHBIbWywrHia','CMvIB290','y2r6Cu0','ihjLC3rHCNqGDq','ywSGDgvYzgfMDa','zwnOqMLSBcbbsq','EfL0y3m','B2rLBsbbBMrHlG','uK9nigLUDM9PyW','z2vFD2LMAv9Uyq','cI0Tlq','zw4GDw50DwSGzG','DMfSAwqGB3iGAa','q05Pu2G','C2fHDcbPBMKG','EweGywrHihnLza','DK9rDuu','icDYzwjVB3rFza','tI9bjYWGzgfUia','quKGq2HHDf0Grq','Cg9ZDa','quKGEwfUzYbYyq','zgfUig5PBgfPBG','zfLfDKe','Bw9KzwXZ','Ac4GugvYyw5NAW','ExvJq0K','CLnbsMu','BMv3x3bHC3n3BW','v2KTrMKGkfntsq','zYaOCMvZDgfYDa','u0vmrunuigLKla','AgfUoIa','zwqSihaUChjPyW','AM9PBG','C2fUzgKGD2LMAq','CMfWysbZywf0ia','B290lcbbBMrHia','C2LNBMfS','vez2tMO','DgLRig5HBweGvW','As9Zyw5KAsbxAq','CMH1yNvUzY4G8j+yIG','zwXHA3vRyw4GDa','BwjHBNr1ihvUDa','C3vIC3rYAw5N','jYWGj2fWysbUyq','zwjVB3qSiefUza','y3rPB24Gy2fSBa','ywP6sM8','Bwf0ihLHBMCGyG','BNLHigHHCNvZia','A1vmrgi','thbVrK4','CgfZC3DVCMqNlG','cLbLCMLVzgu6ia','BI4GsMLRysbWzq','ywTHBIbKAsbIyq','cI0GsMLRysbWzq','A2vWywrHigfKBq','pYWGpYK','mtvxwfn1DgC','z3vIywGGyMvZyq','yNHtq2K','C2KGDgLKywSGyq','Asb0Aw5KywTHBG','y29IysbSywDPia','yxnHBIbbBMrHia','yw4GywTHBIbKAq','CvH0Bfu','quKGy2HHDgjVDa','q2vRihbLBMDNDq','yMfZzvvYBa','yMXLza','AcaQ','BMfS','BMeGv2LgAqOkqq','y2vZC2LUzYbJBW','C3nPza','C2vTDweGAMfYAq','qw4GzxjYB3iGBW','ww5WCgK','CMvIB290x2rLDG','A2fUigz1BMDZAq','sefsvvmGBwvTyq','EfLxv2S','yw4GsuqGCgvSyq','Bg9SysbWzxjHBG','iI4GugvYDwjHAa','BcbHBMDRysbUDq','yMfOyw4UipcFMiO','DMLJzv9ZDgf0Dq','txjxuNe','DwSGC2vTDweGAG','DgGGDgHLiefjia','C1Hhte0','z2fUiefUzgeGDa','C3rHCNqGBw9Kzq','sw52B2LJztOGkG','igTHDgeGC2fUza','t3zKvhO','yw4GDgv0yxbPia','Bhzuq3m','ig1LCMvRysaOjW','BMDNDwfUigTHCG','w1DOyxrZyxbWia','n0vOthDWEa','DhvZlcbHy3rPDG','yxjNCW','BMLSywLUEweGyG','BMzPz3vYzwqGyG','uxzjyuq','Dxn0B21LCKLKia','twvUDw5Nz3uGCa','revsiejzigLZCW','rMXwt2S','BwvTAwXPA2KGsq','Dw50DwSGBwvSAq','B0vrsKm','igXLyMLOigjLCW','w0nOyxrIB3rDia','icaGnc4GsMLRyq','Aw5KywTHBIWGqq','zw11zgLHBIWGCa','EweGyNvRyw4GjW','qxrvEfm','ys4GqMfSyxnHBG','Dg9VBhm','BgeGCgfKysbRBW','qvbjx0Tfwv9jtG','BwLSAwTPigLUzG','mty0mJmYovrHq1LfyG','BKjKBvq','BMDNyw4U','AwXHA2fUigH1yG','tK9IBxy','z2fUigjLCNrHBG','Bw1HBMqGrxjYBW','DcbRyw1PihnLza','Bw9Kzw1UEweGza','EwfUzYb0zxjZzq','EKvpEuS','v1LMDxK','zgfRyw4GDgvYCW','C3rHDhvZjY4klq','AwSGyg1LBNvGia','u0TguLe','C3rHDhvZ','sNjrzgu','yw5NA2eGBNvTzq','yw5Nz3vHBIbQyq','ufbiy0i','qMXPA0i','C2f5ysbJB2jHia','zgLIyxLHCI4kcG','s2nKBM0','EvzjtvK','CgfYC2u','BIbbBMrHihrLDa','zNvUz3nPlcbZAq','Aw5NAw5Ryw4Uia','igfKywXHAcbTzq','Berdrg8','yw4GyxrHCYbUyq','BMv3x3nZAwq','zgeGBwvTyw5NzW','zw11ysbQyxjPBG','BNrHAdOG','iePPA2eGCgvUzW','Dwn1Bxa','zwT3AwzPyca6ia','z2fUDgLUyw1H','vgroA0O','BwvUAMfSyw5Ryq','B2rLBsbHDgf1ia','AwfUlcbWzxjPAW','r3H6rem','yxuGA2f0ysbZyq','ysbQyxjPBMDHBG','ig1LBMPHzgKGlq','luzPihv0yw1Hia','yw4Gqw5Kysb0zq','yw4Gv2KTrMKGka','zw1VDcCSicDNyq','ihnLzgfUzYbTzq','yxjRyw4UipcFMiO','yxbRyw4GCgvYDq','BIbWyxnZD29Yza','ysbUDw1LCMLRBG','DwSGBwuTCMvIBW','BgfRDwTHBIbWzq','sg9Juxm','igLZig5VDcbJBW','DgLMigTHCMvUyq','zw5NzwX1Acb0zq','uw1NELK','CMvIB290ig1Vza','C2fUzgKGBwvUAG','ihnHBMrPl3bHCW','EweNlcbHDgf1ia','BwvUDq','uK9nign1C3rVBq','s2XurMW','ywT0AwyUieTLDa','zwqGDg8Gy2fSBa','ysbLA3nWBgLZAq','igD1BMfRyw4GzG','zxD5yMy','ywDLigzYB20G','BNvOihnLBwvUDa','DwSGBwvUAMf3yq','C2vHCMnO','r2fNywWGBwvTCa','of9RyxjHA3rLCG','A29UzwTZAsbQzq','zwTHicGNDgfNAq','BMeGBwvTAw50yq','ihvUDhvRihnLBq','reHHsNy','DcbPBMKG','C25Hvwm','sMLRysbPBMzVCG','Aw5MBW','ywrTAw5Fy2HLyW','CM5LDcbSyw1Iyq','ysbJzwT3AwzPla','E30Uy29UC3rYDq','BwLZywXUEweGmG','lJrhshOGzgfUia','q29IysbSywDPia','ign1C3rVBwvYia','DgfODsbTzxjLAW','y29UC29Szq','A2fUicj1yMfOia','zw5NywTOAxjPia','ieTLEsbPCYbPBG','ihvUDhvRig1LBq','igrHBgfTia','zgv2AwnLx3n0yq','yw1IyxqNlcaNBa','DwjHAcbTzw5Qyq','AdOGz2fUDgLUyq','v2HHDhnbChaGAW','Acb0zw50yw5Nia','z2fUihrLCNrLBG','ugvYyw5NA2f0ia','BMfTzq','B0TKswq','zw5JB2jHig1LBa','ywTHBIbMDw5NCW','t3nUzxm','CMfJzq','sxj6r2W','D2fOigLUAs4kqq','AMTmDuu','BgfUz2DHBI4','DwrHAcbSDw5HCW','D29Yzcb3AwzPia','rgv2AwnLCW','quKGq2HHDf0GrG','DfbLEMS','y29UC3rYDwn0BW','yw4GzgLWzxjPAW','zxnPzMLRihLHBG','C2fQysb5yw5Nia','Bw1HBMrDifbYBW','ig1LBwvYAwTZyq','BIbWzxjHBMDRyq','igTVBNrLA3mGDq','rvjfigLKid0GpW','DeXyveC','yxj1C255ysbHBq','A3P1qxq','Dv90yw5Wyv9ZCa','cIaGicaTls0','BMDZDw5NlcbKyq','z2v0q29UDMvYCW','ywvcr1C','yw1HifDPluzPia','z2fUz2D1yw4','BxbVoIa','vvLUwLq','s1z3zhO','ihrLCNnLyNv0ia','t2TLlcbUyw1Hia','z3nzu2y','DcbJB25MAwD1CG','CuDSChO','luzPicHtu0Lekq','icaGic0GsMLRyq','lIbnB2HVBIbKAq','cGPtAwXHA2fUia','zwTHlcbNDw5HAW','jY4kicaGie5HBq','DhLWzq','Bw1HBMqGiG','B2jQzwn0','igrPAw5NAw5Ryq','uc4kqw5KysbKyq','C3bSAxq','B3jKigPHCMLUzW','AwXLignVBw11BG','BMDVBMzPCM1HCW','qurxD1O','BMTHBG','yxqGBwvTChjVCW','AYb3AwzPjYWGjW','ywGGBMfTysbxAq','zxmGv0HfuKuGyW','BgvUz3rO','iIbMB3iGy3vZDa','C2eGCgvYyw5NAW','tNjzEKS','yxnPAceG8j+yIG','ywjJtNu','ywT1A2fUihrPBG','zxjZzwrPysbKyq','Dw50DwSGBwuTCG','ihrLBNrHBMCGDa','cI0Gvw50DwSGBq','8j+yIIiUcIaGicaTia','iefUzgeGsefsvq','A2fUihrPBMrHAW','BNr1lGPbBMrHia','DwjHAc4','u2vTDweGDgfNAq','ALD2D0y','zxjIzwrHlIdWN5Ik','DcbTDw5NA2LUia','Dg9tDhjPBMC','qMfPAYWGCgvYAq','iefUzgeGsefowq','yxmGzxHWAxjLza','rgf0zsWGyMLSBa','BwLZywWGzgfYAq','z2LYAw1Ryw4GCa','igDHBNrPBMfTyq','y3rVCIGICMv0Dq','idmUiePPA2eGjW','ysb0zwXHAcbIzq','z2vFD2LMAv9Wyq','D01oA3G','lGOklsbqzxj1yG','CMv0CNLezwXHEq','CM4GDgHPCYiPka','DLLWD3q','Dwj1BMCGA2uGuW','Aw5NCY4','igfRyw4GzgLYzq','CMvZDgfYDcbTBW','zcKGywTHBIbKAq','u2zbywO','C2D6zhe','ywrPigTLC2fSyq','qKPcEfK','lGOGicaGica3lG','ysbUAwXHAw55yq','yw5Nig9MzMXPBG','iefUzgeGAgfYDq','zxj0AsbUyw1Hia','yxr1CYbjtIaOjW','lcbKyw4Gyw5NAW','qMfPAYWGC2f5yq','DxfLBwS','lcb5yw5NihnLAa','CYaODhLWzsWGCW','z2TPBIbTzw1LCG','Dw5NC2KGj3jLyG','Aw5JBhvKzxm','vKL3tLu','lIdWN5Ik','vwf4DxO','ELfVv0C','q2HHDf0GrMfPBa','B250zwTZlcbRyq','BIbKywz0yxiGCa','AgfUihnHyxqGBq','BwvYAwTUEweGka','qw1yswG','yw4GzgKGyMf3yq','sw1nuKe','ywvwsvi','zwXHBhvPigXPBG','yxbW','ysb0zwXHAcbKAq','zMLFBMfTzsCUcG','BMDRyxqGCgvSyq','rfrwBuq','quKGq2HHDf0GqW','suqGugvSyw5NzW','v2KTrMKGkg5HBq'];_0x2354=function(){return _0x2739a6;};return _0x2354();}
+
+import express from 'express';
+import { GoogleGenAI, Type } from '@google/genai';
+import { getSettings, formatRupiah, formatDateDisplay, formatBillingPeriod } from '../utils.js';
+import pool from '../db.js';
+import { getCustomerDeviceDetails, rebootCustomerDevice, updateCustomerWlan } from '../services.js';
+import conversationManager from '../whatsappConversationManager.js';
+import whatsappService from '../whatsappService.js';
+import { Boom } from '@hapi/boom';
+
+const router = express.Router();
+
+const RATE_LIMIT_INDICATORS = [/too many requests/i, /quota exceeded/i, /resource_exhausted/i, /429/];
+
+const formatGeminiQuotaWarning = (contextDescription, retryDelay) => {
+  const waitMessage = retryDelay ? `Coba lagi dalam ${retryDelay}.` : 'Coba lagi nanti.';
+  return `Maaf, layanan chatbot ${contextDescription} sedang penuh sementara karena kuota Gemini habis. ${waitMessage} ðŸ˜Š`;
+};
+
+const extractRetryDelayFromError = (error) => {
+  if (!error) return null;
+  const details = error?.details || error?.error?.details;
+  if (Array.isArray(details)) {
+    const retryInfo = details.find(detail => typeof detail === 'object' && detail?.['@type']?.includes('RetryInfo'));
+    if (retryInfo?.retryDelay) return retryInfo.retryDelay;
+  }
+
+  try {
+    const payload = JSON.stringify(error);
+    const match = payload.match(/"retryDelay":"([^"]+)"/i);
+    if (match) return match[1];
+  } catch (e) {
+    // Ignored; fallback to null.
+  }
+
+  return null;
+};
+
+const isRateLimitError = (error) => {
+  if (!error) return false;
+  const statusCode = Number(error.status || error.statusCode || error.code);
+  if (!Number.isNaN(statusCode) && statusCode === 429) return true;
+
+  const message = String(error?.message || error?.error?.message || '');
+  if (RATE_LIMIT_INDICATORS.some(regex => regex.test(message))) return true;
+
+  try {
+    const serialized = JSON.stringify(error);
+    return RATE_LIMIT_INDICATORS.some(regex => regex.test(serialized));
+  } catch (e) {
+    return false;
+  }
+};
+
+const formatRateLimitWarning = (contextDescription, retryDelay, detail) => {
+  const waitMessage = retryDelay ? ` dalam ${retryDelay}` : ' nanti';
+  const detailSuffix = detail ? ` (${detail})` : '';
+  return `Maaf, layanan chatbot ${contextDescription} sedang mengalami gangguan karena batas kuota API terlampaui${detailSuffix}. Silakan coba lagi${waitMessage}. 😊`;
+};
+
+// --- Function Declarations for Customer-Facing Chatbot ---
+const rebootDeviceFunction = {
+  name: 'reboot_device',
+  description: 'Mulai ulang (restart/reboot) perangkat modem atau router internet milik pelanggan jika mereka memintanya secara eksplisit.',
+  parameters: { type: Type.OBJECT, properties: {} } // No parameters needed
+};
+
+const changeWifiNameFunction = {
+    name: 'change_wifi_name',
+    description: 'Mengubah nama jaringan Wi-Fi (SSID) milik pelanggan.',
+    parameters: {
+        type: Type.OBJECT,
+        properties: {
+            new_ssid: {
+                type: Type.STRING,
+                description: 'Nama Wi-Fi baru yang diinginkan pelanggan.'
+            }
+        },
+        required: ['new_ssid']
+    }
+};
+
+const changeWifiPasswordFunction = {
+    name: 'change_wifi_password',
+    description: 'Mengubah kata sandi atau password jaringan Wi-Fi milik pelanggan.',
+    parameters: {
+        type: Type.OBJECT,
+        properties: {
+            new_password: {
+                type: Type.STRING,
+                description: 'Kata sandi Wi-Fi baru yang diinginkan pelanggan.'
+            }
+        },
+        required: ['new_password']
+    }
+};
+
+const checkWifiFunction = {
+  name: 'check_wifi',
+  description: 'Memeriksa nama Wi-Fi (SSID) dan menampilkan daftar perangkat yang terhubung ke jaringan Wi-Fi utama milik pelanggan. Gunakan fungsi ini jika pengguna bertanya "cek wifi", "apa nama wifi saya", "siapa saja yang pakai wifi saya", atau pertanyaan serupa.',
+  parameters: { type: Type.OBJECT, properties: {} } // No parameters needed
+};
+
+const getBillingStatusFunction = {
+    name: 'get_billing_status',
+    description: 'Memeriksa status tagihan pelanggan saat ini, termasuk jumlah, tanggal jatuh tempo, dan link pembayaran jika ada tagihan yang belum lunas.',
+    parameters: { type: Type.OBJECT, properties: {} } // No parameters needed
+};
+
+// --- Function Declarations for Admin-Facing Chatbot ---
+const adminRebootDeviceFunction = {
+    name: 'admin_reboot_device',
+    description: 'Mulai ulang (restart/reboot) perangkat modem milik pelanggan tertentu berdasarkan ID Pelanggan.',
+    parameters: {
+        type: Type.OBJECT,
+        properties: { customerId: { type: Type.STRING, description: 'ID Pelanggan yang perangkatnya akan direboot.' } },
+        required: ['customerId']
+    }
+};
+
+const adminChangeWifiNameFunction = {
+    name: 'admin_change_wifi_name',
+    description: 'Mengubah nama jaringan Wi-Fi (SSID) milik pelanggan tertentu.',
+    parameters: {
+        type: Type.OBJECT,
+        properties: {
+            customerId: { type: Type.STRING, description: 'ID Pelanggan yang nama Wi-Fi-nya akan diubah.' },
+            new_ssid: { type: Type.STRING, description: 'Nama Wi-Fi baru yang diinginkan.' }
+        },
+        required: ['customerId', 'new_ssid']
+    }
+};
+
+const adminChangeWifiPasswordFunction = {
+    name: 'admin_change_wifi_password',
+    description: 'Mengubah kata sandi atau password jaringan Wi-Fi milik pelanggan tertentu.',
+    parameters: {
+        type: Type.OBJECT,
+        properties: {
+            customerId: { type: Type.STRING, description: 'ID Pelanggan yang kata sandi Wi-Fi-nya akan diubah.' },
+            new_password: { type: Type.STRING, description: 'Kata sandi Wi-Fi baru yang diinginkan.' }
+        },
+        required: ['customerId', 'new_password']
+    }
+};
+
+const adminCheckWifiFunction = {
+    name: 'admin_check_wifi',
+    description: 'Memeriksa nama Wi-Fi (SSID) dan daftar perangkat yang terhubung ke jaringan Wi-Fi utama milik pelanggan tertentu.',
+    parameters: {
+        type: Type.OBJECT,
+        properties: { customerId: { type: Type.STRING, description: 'ID Pelanggan yang perangkat Wi-Fi-nya akan diperiksa.' } },
+        required: ['customerId']
+    }
+};
+
+
+/**
+ * Mengambil konteks yang relevan untuk pengguna, dengan grounding cerdas.
+ * @param {string} customerId - ID pelanggan.
+ * @param {string} message - Pesan dari pengguna untuk mendeteksi niat.
+ * @returns {Promise<string>} Konteks dalam format JSON string.
+ */
+const getCustomerContext = async (customerId, message) => {
+    let customer = null;
+    try {
+        const [[customerResult]] = await pool.query('SELECT id, name, status, activeDate, acsSerialNumber FROM customers WHERE id = ?', [customerId]);
+        if (!customerResult) {
+            return JSON.stringify({ error: 'Customer data not found.', customer: { id: customerId } });
+        }
+        customer = customerResult;
+
+        const [invoices] = await pool.query('SELECT id, amount, status, dueDate, billingPeriodStart, billingPeriodEnd FROM invoices WHERE customerId = ? ORDER BY issueDate DESC LIMIT 5', [customerId]);
+        const [[pkg]] = await pool.query('SELECT p.name, p.speed, p.price FROM packages p JOIN customers c ON p.id = c.packageId WHERE c.id = ?', [customerId]);
+
+        const baseContext = {
+            customer: { id: customer.id, name: customer.name, status: customer.status, activeDate: customer.activeDate },
+            package: pkg || 'N/A',
+            recent_invoices: invoices,
+        };
+
+        let deviceContext = {};
+        const lowerCaseMessage = message.toLowerCase();
+        const troubleshootingKeywords = ['internet', 'lambat', 'lemot', 'koneksi', 'jaringan', 'modem', 'router', 'restart', 'reboot', 'sinyal', 'wifi', 'ssid', 'password', 'sandi', 'nama wifi', 'sandi wifi', 'cek wifi', 'gangguan', 'jumlah perangkat'];
+
+        if (customer.acsSerialNumber && troubleshootingKeywords.some(kw => lowerCaseMessage.includes(kw))) {
+           // console.log(`[Chatbot] Detected troubleshooting/action intent for customer ${customerId}. Fetching device status...`);
+            try {
+                const deviceDetails = await getCustomerDeviceDetails(customerId);
+                if (deviceDetails) {
+                    deviceContext = { 
+                        device_status: {
+                            isOnline: deviceDetails.isOnline,
+                            model: deviceDetails.model,
+                            rxPower: deviceDetails.rxPower,
+                            current_wifi_name: deviceDetails.wlanConfigs?.[0]?.ssid || 'N/A',
+                        },
+                        _internal_paths: {
+                            wlanConfigs: deviceDetails.wlanConfigs
+                        }
+                    };
+                }
+            } catch (e) {
+                //console.error(`[Chatbot] Error fetching device context for customer ${customerId}:`, e);
+                // Tambahkan galat ke konteks alih-alih menggagalkan seluruhnya
+                deviceContext = { device_status_error: 'Tidak dapat mengambil detail perangkat saat ini.' };
+            }
+        }
+        
+        return JSON.stringify({ ...baseContext, ...deviceContext }, null, 2);
+
+    } catch (error) {
+        //console.error(`Error fetching context for customer ${customerId}:`, error);
+        // FIX: Selalu kembalikan string JSON yang valid, bahkan saat terjadi galat, untuk mencegah crash pada JSON.parse().
+        return JSON.stringify({
+            error: 'Gagal mengambil data pelanggan lengkap.',
+            customer: { id: customerId, name: customer?.name || 'Unknown' } // Berikan info dasar jika tersedia
+        });
+    }
+};
+
+router.post('/chat', async (req, res) => {
+    const { message, user, role } = req.body;
+    
+    if (!message) {
+        return res.status(400).json({ error: 'Message is required.' });
+    }
+    
+    try {
+        const settings = await getSettings();
+        const apiKey = settings.gemini?.apiKey;
+
+        if (!apiKey) {
+            console.error('[Chatbot] Gemini API key is not configured in the database settings.');
+            return res.status(503).json({ error: 'AI chatbot is not configured by the administrator.' });
+        }
+        
+        const genAI = new GoogleGenAI({apiKey});
+
+        let context = '';
+        let systemInstruction = '';
+        let toolsConfig = [];
+
+        if (role === 'customer' && user?.id) {
+            context = await getCustomerContext(user.id, message);
+            toolsConfig = [{ functionDeclarations: [rebootDeviceFunction, changeWifiNameFunction, changeWifiPasswordFunction, checkWifiFunction, getBillingStatusFunction] }];
+            systemInstruction = `Anda adalah asisten AI yang ramah dan membantu untuk ISP bernama '${settings.app.appName || 'perusahaan kami'}'.
+Nama Anda 'RizkitechBill AI'.
+Anda harus menjawab pertanyaan HANYA berdasarkan konteks yang diberikan di bawah ini.
+Anda HARUS SELALU mengakhiri setiap balasan dengan emoji senyum 😊.
+
+- Jika pengguna mengeluh tentang internet lambat, masalah koneksi, atau gangguan jaringan ('lambat', 'lemot', 'gangguan', 'koneksi jelek'):
+  1. Pertama, Anda HARUS meminta maaf atas ketidaknyamanannya.
+  2. Kemudian, periksa 'device_status.rxPower' dari konteks.
+  3. Jika 'rxPower' tersedia dan nilainya bukan 'N/A', ambil angka numeriknya (misal dari "-22.5 dBm" menjadi -22.5). Jika nilainya lebih besar dari -25, beri tahu mereka: "Sinyal optik Anda saat ini ${context.device_status?.rxPower}, yang seharusnya aman 😊."
+  4. Jika 'rxPower' tersedia dan nilainya bukan 'N/A', dan angka numeriknya -25 atau kurang, beri tahu mereka: "Sinyal optik Anda saat ini ${context.device_status?.rxPower}, sepertinya ada sedikit kendala pada koneksi kabel Anda 😊."
+  5. Jika 'rxPower' tidak tersedia, lewati saja langkah ini.
+  6. Setelah memberikan status sinyal, SELALU sarankan untuk me-reboot modem dengan bertanya "Apakah Anda mau saya coba restart modemnya dari sini? 😊".
+  7. Jika mereka setuju untuk me-reboot, Anda HARUS memanggil fungsi 'reboot_device'.
+
+- Perubahan pada Wi-Fi (nama/SSID atau kata sandi/password) akan diterapkan ke semua jaringan yang tersedia (misalnya 2.4GHz dan 5GHz).
+- PENTING: Saat mengekstrak argumen untuk fungsi, seperti nama Wi-Fi (SSID) baru atau kata sandi baru, Anda TIDAK BOLEH mengubah besar kecilnya huruf. Nilainya harus persis seperti yang diketik pengguna. Contoh: jika pengguna mengatakan "ubah sandi menjadi YB1009", argumennya harus "YB1009", bukan "yb1009".
+- Jika informasi tidak ada dalam konteks, katakan "Saya tidak memiliki informasi itu, tetapi saya dapat membantu dengan pertanyaan lain, misalnya cekwifi, gantinamawifi, gantisandi wifi 😊."
+- Jika pengguna bertanya tentang tagihan mereka ('tagihan', 'pembayaran', 'sudah bayar?'), Anda HARUS menggunakan fungsi 'get_billing_status'.
+- Jika pengguna secara eksplisit meminta untuk me-restart atau me-reboot modem mereka, gunakan fungsi 'reboot_device'.
+- Jika pengguna ingin mengubah nama Wi-Fi (SSID) mereka, gunakan fungsi 'change_wifi_name'.
+- Jika pengguna ingin mengubah kata sandi/sandi Wi-Fi mereka, gunakan fungsi 'change_wifi_password'.
+- Jika pengguna meminta untuk memeriksa perangkat yang terhubung, jumlah perangkat aktif, 'cek wifi', 'apa nama wifi saya', atau 'siapa saja yang pakai wifi', gunakan fungsi 'check_wifi'.
+- Jangan mengarang informasi. Jaga jawaban Anda tetap singkat, jelas, dan dalam Bahasa Indonesia.
+---
+KONTEKS:
+${context}
+---`;
+        } else if (role === 'admin') {
+            const customerIdMatch = message.match(/\b([A-Z0-9]{6,12})\b/);
+            if (customerIdMatch) {
+                context = await getCustomerContext(customerIdMatch[1], message);
+            }
+            toolsConfig = [{ functionDeclarations: [adminRebootDeviceFunction, adminChangeWifiNameFunction, adminChangeWifiPasswordFunction, adminCheckWifiFunction] }];
+            systemInstruction = `Anda adalah asisten AI ahli untuk administrator ISP.
+Anda dapat melakukan tindakan atas nama admin untuk pelanggan tertentu.
+Anda HARUS SELALU mengakhiri setiap balasan dengan emoji senyum 😊.
+
+- Perubahan pada Wi-Fi (nama/SSID atau kata sandi/password) akan diterapkan ke semua jaringan yang tersedia pada perangkat pelanggan.
+- PENTING: Saat mengekstrak argumen untuk fungsi, seperti nama Wi-Fi (SSID) baru atau kata sandi baru, Anda TIDAK BOLEH mengubah besar kecilnya huruf. Nilainya harus persis seperti yang diketik pengguna.
+- Untuk melakukan tindakan, Anda HARUS memiliki ID pelanggan. Jika permintaan admin menyiratkan tindakan khusus pelanggan tetapi tidak memberikan ID, Anda HARUS memintanya.
+- Alat utama Anda adalah untuk mengelola perangkat pelanggan. Anda dapat me-reboot modem, mengubah nama Wi-Fi (SSID), mengubah kata sandi Wi-Fi, dan memeriksa perangkat yang terhubung.
+- Ketika Anda memanggil sebuah fungsi, sistem akan menjalankannya dan memberikan hasilnya. Tugas Anda adalah mengonfirmasi tindakan tersebut kepada admin.
+- Jika konteks untuk pelanggan tertentu disediakan di bawah ini, gunakan untuk menjawab pertanyaan secara langsung (misalnya, "Apa nama Wi-Fi untuk pelanggan X?").
+- Jika informasi tidak ada dalam konteks dan tidak ada alat yang dapat mengambilnya, sebutkan bahwa Anda tidak memiliki informasi itu.
+- Jaga jawaban Anda tetap singkat, langsung, dan dalam Bahasa Indonesia.
+---
+KONTEKS:
+${context || 'Tidak ada konteks pelanggan spesifik yang dimuat. Menunggu prompt dengan ID pelanggan.'}
+---`;
+        }
+        
+        const timeoutPromise = new Promise((_, reject) => 
+            setTimeout(() => reject(new Error('AI assistant timed out after 20 seconds.')), 20000)
+        );
+
+        const generateContentPromise = genAI.models.generateContent({
+            model: "gemini-2.5-flash",
+            contents: message,
+            config: {
+                systemInstruction: systemInstruction,
+                tools: toolsConfig.length > 0 ? toolsConfig : undefined,
+            },
+        });
+
+        const response = await Promise.race([
+            generateContentPromise,
+            timeoutPromise
+        ]);
+        
+        const functionCall = response.functionCalls?.[0];
+
+        if (functionCall) {
+            console.log(`[Chatbot] Gemini requested to call '${functionCall.name}' by ${role} ${user.username || user.name}`);
+            try {
+                const contextObject = JSON.parse(context || '{}');
+                const wlanConfigs = contextObject?._internal_paths?.wlanConfigs;
+
+                switch (functionCall.name) {
+                    // --- CUSTOMER FUNCTIONS ---
+                    case 'get_billing_status': {
+                        const [invoices] = await pool.query("SELECT * FROM invoices WHERE customerId = ? AND status IN ('Unpaid', 'Overdue') ORDER BY issueDate DESC LIMIT 1", [user.id]);
+                        const unpaidInvoice = invoices[0];
+                        if (unpaidInvoice) {
+                            const paymentLink = `${settings.app.baseUrl.replace(/\/$/, '')}/#pay/${unpaidInvoice.id}`;
+                            return res.json({ reply: `Tentu, ada tagihan yang perlu dibayar.\n\nInvoice: *#${unpaidInvoice.id}*\nJumlah: *${formatRupiah(unpaidInvoice.amount)}*\nJatuh Tempo: ${formatDateDisplay(unpaidInvoice.dueDate)}\nPeriode: ${formatBillingPeriod(unpaidInvoice.billingPeriodStart, unpaidInvoice.billingPeriodEnd)}\n\nSilakan lakukan pembayaran melalui link berikut:\n${paymentLink} 😊` });
+                        } else {
+                            return res.json({ reply: 'Semua tagihan Anda sudah lunas. Terima kasih! 😊' });
+                        }
+                    }
+                    case 'reboot_device':
+                        await rebootCustomerDevice(user.id);
+                        return res.json({ reply: 'Baik, saya telah mengirimkan perintah restart ke modem Anda. Proses ini akan memakan waktu beberapa menit. 😊' });
+                    case 'change_wifi_name':
+                        const { new_ssid } = functionCall.args;
+                        await updateCustomerWlan(user.id, { ssid: new_ssid });
+                        return res.json({ reply: `Oke, nama Wi-Fi untuk semua jaringan Anda telah diubah menjadi "${new_ssid}". Perubahan ini mungkin memerlukan beberapa saat. 😊` });
+                    case 'change_wifi_password':
+                        const { new_password } = functionCall.args;
+                        await updateCustomerWlan(user.id, { key: new_password });
+                        return res.json({ reply: `Baik, kata sandi Wi-Fi untuk semua jaringan Anda telah diubah. Perangkat Anda mungkin akan restart untuk menerapkan perubahan. 😊` });
+                    case 'check_wifi': {
+                        const deviceDetails = await getCustomerDeviceDetails(user.id);
+                        const wlanConfig = deviceDetails.wlanConfigs?.[0];
+                        const devices = wlanConfig?.associatedDevices;
+                        const ssid = wlanConfig?.ssid;
+
+                        if (!ssid) {
+                            return res.json({ reply: "Maaf, saya tidak dapat mengambil informasi Wi-Fi Anda saat ini. Mungkin perangkat Anda sedang offline. 😊" });
+                        }
+
+                        if (!devices || devices.length === 0) {
+                            return res.json({ reply: `Nama Wi-Fi Anda saat ini adalah *${ssid}*. Tidak ada perangkat yang terhubung. 😊` });
+                        }
+                        const deviceList = devices.map((dev, i) => `📱 ${i + 1}. ${dev.hostname || 'Perangkat tidak dikenal'}`).join('\n');
+                        return res.json({ reply: `Nama Wi-Fi Anda adalah *${ssid}*. Ada ${devices.length} perangkat yang terhubung:\n${deviceList} 😊` });
+                    }
+                    
+                    // --- ADMIN FUNCTIONS ---
+                    case 'admin_reboot_device':
+                        await rebootCustomerDevice(functionCall.args.customerId);
+                        return res.json({ reply: `Perintah reboot telah dikirim ke modem pelanggan ${functionCall.args.customerId}. 😊` });
+                    case 'admin_change_wifi_name':
+                        await updateCustomerWlan(functionCall.args.customerId, { ssid: functionCall.args.new_ssid });
+                        return res.json({ reply: `Nama Wi-Fi untuk semua jaringan pelanggan ${functionCall.args.customerId} telah diubah menjadi "${functionCall.args.new_ssid}". 😊` });
+                    case 'admin_change_wifi_password':
+                        await updateCustomerWlan(functionCall.args.customerId, { key: functionCall.args.new_password });
+                        return res.json({ reply: `Kata sandi Wi-Fi untuk semua jaringan pelanggan ${functionCall.args.customerId} telah diubah. 😊` });
+                    case 'admin_check_wifi': {
+                        const checkDetails = await getCustomerDeviceDetails(functionCall.args.customerId);
+                        const wlanConfigAdmin = checkDetails.wlanConfigs?.[0];
+                        const connectedDevices = wlanConfigAdmin?.associatedDevices;
+                        const ssidAdmin = wlanConfigAdmin?.ssid;
+                        const customerId = functionCall.args.customerId;
+
+                        if (!ssidAdmin) {
+                            return res.json({ reply: `Tidak dapat mengambil informasi Wi-Fi untuk pelanggan ${customerId}. Perangkat mungkin sedang offline. 😊` });
+                        }
+
+                        if (!connectedDevices || connectedDevices.length === 0) {
+                            return res.json({ reply: `Nama Wi-Fi pelanggan ${customerId} adalah *${ssidAdmin}*. Tidak ada perangkat yang terhubung. 😊` });
+                        }
+                        const checkedDeviceList = connectedDevices.map((dev, i) => `📱 ${i + 1}. ${dev.hostname || 'Perangkat tidak dikenal'}`).join('\n');
+                        return res.json({ reply: `Nama Wi-Fi pelanggan ${customerId} adalah *${ssidAdmin}*. Ada ${connectedDevices.length} perangkat terhubung:\n${checkedDeviceList} 😊` });
+                    }
+                }
+            } catch (actionError) {
+                 console.error(`[Chatbot] Failed to execute '${functionCall.name}':`, actionError);
+                 return res.json({ reply: `Maaf, terjadi kesalahan saat mencoba melakukan tindakan tersebut: ${actionError.message}. 😊` });
+            }
+        } else {
+            const textReply = response.text;
+            if (!textReply) {
+                console.warn(`[Chatbot] Gemini returned no text or function call. Response:`, JSON.stringify(response, null, 2));
+                res.json({ reply: 'Maaf, saya tidak dapat memproses permintaan Anda saat ini. Silakan coba ulangi dengan kalimat yang berbeda. 😊' });
+            } else {
+                res.json({ reply: textReply });
+            }
+        }
+
+    } catch (error) {
+        console.error('Gemini API Error:', error);
+
+        const errorMessage = error?.message || '';
+        const isApiKeyError = errorMessage.includes('API_KEY_INVALID') || errorMessage.includes('API Key not found');
+        const retryDelay = extractRetryDelayFromError(error);
+
+        if (isApiKeyError) {
+            try {
+                await pool.query(
+                    `INSERT INTO admin_notifications (type, source, message) VALUES (?, ?, ?)`,
+                    ['error', 'Gemini AI', 'Gemini API Key is invalid or has expired. Please update it in the settings.']
+                );
+            } catch (dbError) {
+                console.error('[Chatbot] Failed to save API key error notification to database:', dbError);
+            }
+            return res.status(503).json({ error: 'AI Service Misconfigured: Invalid API Key.' });
+        }
+        
+        if (isRateLimitError(error)) {
+            const friendlyMessage = formatGeminiQuotaWarning('pada server kami', retryDelay);
+            return res.status(429).json({ error: friendlyMessage, retryDelay });
+        }
+
+        res.status(500).json({ error: 'An error occurred while communicating with the AI assistant.' });
+    }
+});
+
+// ** START OF MOVED/NEW FUNCTIONS for WhatsApp handling **
+
+/**
+ * Handles static (non-AI) commands from WhatsApp.
+ * Returns TRUE if the message was handled as a command (executed or replied with help), FALSE otherwise.
+ * @param {{from: string, body: string}} message - The message object.
+ * @param {boolean} isChatbotEnabled - Whether the AI Chatbot is enabled.
+ * @returns {Promise<boolean>}
+ */
+const handleStaticCommands = async ({ from, body }, customer, isChatbotEnabled) => {
+  // Parse command and args. We convert command to lowercase, but KEEP args as is (case-sensitive for passwords).
+  const parts = body.trim().split(/\s+/);
+  const command = parts[0].toLowerCase();
+  const args = parts.slice(1); // Arguments remain case-sensitive
+  
+  // List of known static commands to intercept
+  const knownCommands = ['reboot', 'gantisandi', 'gantiwifi', 'gantinama', 'cekwifi', 'menu', 'help'];
+
+  if (!knownCommands.includes(command)) {
+      return false;
+  }
+
+  // Customer object is now passed directly. If it's null, the unified handler already dealt with it.
+  // This function now only runs for registered customers.
+  console.log(`[Static Command] Processing command "${command}" for customer ${customer.id}`);
+  
+  const getDeviceDetails = async () => await getCustomerDeviceDetails(customer.id);
+
+  try {
+      switch (command) {
+        case 'reboot':
+          await rebootCustomerDevice(customer.id);
+          await whatsappService.sendMessage(from, 'Perangkat Anda sedang direboot. 😊');
+          break;
+        case 'gantisandi': {
+          const newPass = args[0]; // Preserves case sensitivity
+          if (!newPass || newPass.length < 8) {
+              // If AI is enabled, let the AI handle the natural language response.
+              if (isChatbotEnabled) return false; 
+              await whatsappService.sendMessage(from, 'Gunakan format: gantisandi <password_baru_minimal_8_karakter>\nContoh: gantisandi Rumahku123 😊');
+          } else {
+              await updateCustomerWlan(customer.id, { key: newPass });
+              await whatsappService.sendMessage(from, `Sandi Wi-Fi untuk semua jaringan Anda telah diubah ke "${newPass}". Perubahan akan diterapkan dalam beberapa saat. 😊`);
+          }
+          break;
+        }
+        case 'gantiwifi': // Alias for gantinama
+        case 'gantinama': {
+          const newSsid = args[0]; // Preserves case sensitivity
+          if (!newSsid) {
+              // If AI is enabled, let the AI handle the natural language response.
+              if (isChatbotEnabled) return false; 
+              await whatsappService.sendMessage(from, 'Gunakan format: gantinama <nama_wifi_baru_tanpa_spasi>\nContoh: gantinama RumahRizki 😊');
+          } else {
+              await updateCustomerWlan(customer.id, { ssid: newSsid });
+              await whatsappService.sendMessage(from, `Nama Wi-Fi untuk semua jaringan Anda telah diubah ke "${newSsid}". Perubahan akan diterapkan dalam beberapa saat. 😊`);
+          }
+          break;
+        }
+        case 'cekwifi': {
+          const checkDetails = await getDeviceDetails();
+          const devs = checkDetails.wlanConfigs?.[0]?.associatedDevices;
+          if (!devs?.length) {
+            await whatsappService.sendMessage(from, 'Tidak ada perangkat yang terhubung saat ini. 😊');
+          } else {
+            const list = devs.map((d, i) => `📱 ${i + 1}. ${d.hostname || 'Perangkat'} (Sinyal: ${d.signal})`).join('\n');
+            await whatsappService.sendMessage(from, `Perangkat terhubung:\n${list} 😊`);
+          }
+          break;
+        }
+        case 'menu':
+        case 'help':
+            await whatsappService.sendMessage(from, 'Perintah yang tersedia:\n\n• `reboot` : Restart modem\n• `gantiwifi <nama_baru>` : Ganti nama WiFi\n• `gantisandi <sandi_baru>` : Ganti password WiFi\n• `cekwifi` : Cek pengguna WiFi\n\nAtau tanyakan langsung ke saya jika AI aktif! 😊');
+            break;
+      }
+  } catch (err) {
+      console.error(`[Static Command Error] ${command}:`, err);
+      await whatsappService.sendMessage(from, `Gagal memproses perintah: ${err.message} 😊`);
+  } 
+
+  return true; // Command handled (successfully or with error feedback)
+};
+
+
+/**
+ * Handles incoming WhatsApp messages using the Gemini AI chatbot.
+ * @param {{from: string, body: string}} message - The message object.
+ */
+const handleAiChatbot = async (message, customer) => {
+    const { from, body } = message;
+    try {
+    
+    // Normalize phone number to check for '0' vs '62' formats
+    let otherFormatPhone = null;
+    if (from.startsWith('62')) {
+        otherFormatPhone = '0' + from.substring(2);
+    } else if (from.startsWith('0')) {
+        otherFormatPhone = '62' + from.substring(1);
+    }
+
+    // First, check if we're in the middle of a conversation
+    const currentState = conversationManager.getConversationState(from);
+    if (currentState) {
+        // This block needs its own try-catch as it's a distinct flow
+        try { // Customer is guaranteed to exist here
+            if (currentState.step === 'awaiting_new_password') {
+                await updateCustomerWlan(customer.id, { key: body });
+                await whatsappService.sendMessage(from, `Siap. Password WiFi untuk semua jaringan Anda telah berhasil diubah menjadi \`${body}\`. Perangkat Anda mungkin akan restart untuk menerapkan perubahan. 😊`);
+            } else if (currentState.step === 'awaiting_new_ssid') {
+                await updateCustomerWlan(customer.id, { ssid: body });
+                await whatsappService.sendMessage(from, `Oke, nama Wi-Fi untuk semua jaringan Anda telah diubah menjadi "${body}". Perubahan ini mungkin memerlukan beberapa saat untuk diterapkan pada perangkat Anda. 😊`);
+            }
+            conversationManager.clearConversationState(from);
+            return;
+        } catch (e) {
+            console.error(`[Whatsapp Chat] Error in conversation step '${currentState.step}':`, e);
+            await whatsappService.sendMessage(from, `Maaf, terjadi kesalahan: ${e.message} 😊`);
+            conversationManager.clearConversationState(from);
+            return;
+        }
+    }
+
+    // If not in a conversation, proceed with Gemini. Errors here will bubble up.
+    const settings = await getSettings();
+    const apiKey = settings.gemini?.apiKey;
+    if (!apiKey) {
+        await whatsappService.sendMessage(from, 'Maaf, layanan chatbot AI sedang tidak aktif karena terjadi kesalahan di server kami. 😊');
+        return;
+    }
+
+    const genAI = new GoogleGenAI({apiKey});
+    const context = await getCustomerContext(customer.id, body);
+    const systemInstruction = `Anda adalah asisten AI yang ramah dan membantu untuk ISP bernama '${settings.app.appName || 'perusahaan kami'}'.
+    Nama Anda 'RizkitechBill AI'.
+    Anda harus menjawab pertanyaan HANYA berdasarkan konteks yang diberikan di bawah ini.
+    Anda HARUS SELALU mengakhiri setiap balasan dengan emoji senyum 😊.
+
+    - Jika pengguna mengeluh tentang internet lambat, masalah koneksi, atau gangguan jaringan ('lambat', 'lemot', 'gangguan', 'koneksi jelek'):
+      1. Pertama, Anda HARUS meminta maaf atas ketidaknyamanannya.
+      2. Kemudian, periksa 'device_status.rxPower' dari konteks.
+      3. Jika 'rxPower' tersedia dan nilainya bukan 'N/A', ambil angka numeriknya (misal dari "-22.5 dBm" menjadi -22.5). Jika nilainya lebih besar dari -25, beri tahu mereka: "Sinyal optik Anda saat ini ${JSON.parse(context).device_status?.rxPower}, yang seharusnya aman 😊."
+      4. Jika 'rxPower' tersedia dan nilainya bukan 'N/A', dan angka numeriknya -25 atau kurang, beri tahu mereka: "Sinyal optik Anda saat ini ${JSON.parse(context).device_status?.rxPower}, sepertinya ada sedikit kendala pada koneksi kabel Anda 😊."
+      5. Jika 'rxPower' tidak tersedia, lewati saja langkah ini.
+      6. Setelah memberikan status sinyal, SELALU sarankan untuk me-reboot modem dengan bertanya "Apakah Anda mau saya coba restart modemnya dari sini? 😊".
+      7. Jika mereka setuju untuk me-reboot, Anda HARUS memanggil fungsi 'reboot_device'.
+
+    - Perubahan pada Wi-Fi (nama/SSID atau kata sandi/password) akan diterapkan ke semua jaringan yang tersedia (misalnya 2.4GHz dan 5GHz).
+    - PENTING: Saat mengekstrak argumen untuk fungsi, seperti nama Wi-Fi (SSID) baru atau kata sandi baru, Anda TIDAK BOLEH mengubah besar kecilnya huruf. Nilainya harus persis seperti yang diketik pengguna. Contoh: jika pengguna mengatakan "ubah sandi menjadi YB1009", argumennya harus "YB1009", bukan "yb1009".
+    - Jika pengguna bertanya tentang tagihan mereka ('tagihan', 'pembayaran', 'sudah bayar?'), Anda HARUS menggunakan fungsi 'get_billing_status'.
+    - Jika pengguna meminta untuk mengubah password wifi tapi TIDAK memberikan password baru, Anda HARUS menanyakannya. Balasan Anda HANYA boleh "Tentu. Silakan ketik password baru yang Anda inginkan. 😊".
+    - Jika pengguna meminta untuk mengubah nama wifi (SSID) tapi TIDAK memberikan nama baru, Anda HARUS menanyakannya. Balasan Anda HANYA boleh "Tentu. Silakan ketik nama Wi-Fi baru yang Anda inginkan. 😊".
+    - Untuk semua permintaan lain untuk mengubah password atau SSID di mana mereka memberikan nilai baru, gunakan pemanggilan fungsi yang sesuai.
+    - Jika pengguna secara eksplisit meminta untuk me-restart atau me-reboot modem mereka, gunakan fungsi 'reboot_device'.
+    - Jika pengguna meminta untuk memeriksa perangkat yang terhubung, jumlah perangkat aktif, 'cek wifi', 'apa nama wifi saya', atau 'siapa saja yang pakai wifi', gunakan fungsi 'check_wifi'.
+    ---
+    KONTEKS:
+    ${context}
+    ---`;
+    
+    const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('AI assistant timed out after 20 seconds.')), 20000)
+    );
+
+    const generateContentPromise = genAI.models.generateContent({
+        model: "gemini-2.5-flash",
+        contents: body,
+        config: {
+            systemInstruction,
+            tools: [{ functionDeclarations: [rebootDeviceFunction, changeWifiNameFunction, changeWifiPasswordFunction, checkWifiFunction, getBillingStatusFunction] }]
+        }
+    });
+
+    const response = await Promise.race([
+        generateContentPromise,
+        timeoutPromise
+    ]);
+
+    const functionCall = response.functionCalls?.[0];
+    const textResponse = response.text;
+
+    // FIX: Tambahkan blok try...catch khusus untuk eksekusi fungsi agar galat lebih spesifik.
+    if (functionCall) {
+        console.log(`[Whatsapp Chat] Gemini requested to call '${functionCall.name}' for customer ${customer.id}`);
+        try {
+            const contextObject = JSON.parse(context);
+            const wlanConfigs = contextObject?._internal_paths?.wlanConfigs;
+            let replyMessage = '';
+
+            switch (functionCall.name) {
+                case 'get_billing_status': {
+                    const [invoices] = await pool.query("SELECT * FROM invoices WHERE customerId = ? AND status IN ('Unpaid', 'Overdue') ORDER BY issueDate DESC LIMIT 1", [customer.id]);
+                    const unpaidInvoice = invoices[0];
+                    if (unpaidInvoice) {
+                        const paymentLink = `${settings.app.baseUrl.replace(/\/$/, '')}/#pay/${unpaidInvoice.id}`;
+                        replyMessage = `Tentu, ada tagihan yang perlu dibayar.\n\nInvoice: *#${unpaidInvoice.id}*\nJumlah: *${formatRupiah(unpaidInvoice.amount)}*\nJatuh Tempo: ${formatDateDisplay(unpaidInvoice.dueDate)}\nPeriode: ${formatBillingPeriod(unpaidInvoice.billingPeriodStart, unpaidInvoice.billingPeriodEnd)}\n\nSilakan lakukan pembayaran melalui link berikut:\n${paymentLink} 😊`;
+                    } else {
+                        replyMessage = 'Semua tagihan Anda sudah lunas. Terima kasih! 😊';
+                    }
+                    break;
+                }
+                case 'reboot_device':
+                    await rebootCustomerDevice(customer.id);
+                    replyMessage = 'Baik, perintah untuk me-reboot modem Anda telah berhasil dikirim. Perangkat akan offline selama beberapa menit. Mohon ditunggu. 😊';
+                    break;
+                case 'change_wifi_name':
+                    const { new_ssid } = functionCall.args;
+                    await updateCustomerWlan(customer.id, { ssid: new_ssid });
+                    replyMessage = `Oke, nama Wi-Fi untuk semua jaringan Anda telah diubah menjadi "${new_ssid}". Perubahan ini mungkin memerlukan beberapa saat. 😊`;
+                    break;
+                case 'change_wifi_password':
+                    const { new_password } = functionCall.args;
+                    await updateCustomerWlan(customer.id, { key: new_password });
+                    replyMessage = 'Baik, kata sandi Wi-Fi untuk semua jaringan Anda telah diubah. Perangkat Anda mungkin akan restart untuk menerapkan perubahan. 😊';
+                    break;
+                case 'check_wifi': {
+                    const deviceDetails = await getCustomerDeviceDetails(customer.id);
+                    const devices = deviceDetails.wlanConfigs?.[0]?.associatedDevices;
+                    const ssid = deviceDetails.wlanConfigs?.[0]?.ssid;
+
+                    if (!ssid) {
+                        replyMessage = "Maaf, saya tidak dapat mengambil informasi Wi-Fi Anda saat ini. Mungkin perangkat Anda sedang offline. 😊";
+                    } else if (!devices || devices.length === 0) {
+                        replyMessage = `Nama Wi-Fi Anda saat ini adalah *${ssid}*. Tidak ada perangkat yang terhubung. 😊`;
+                    } else {
+                        const deviceList = devices.map((dev, i) => `📱 ${i + 1}. ${dev.hostname || 'Perangkat tidak dikenal'}`).join('\n');
+                        replyMessage = `Ada ${devices.length} perangkat yang terhubung ke SSID utama Anda:\n${deviceList} 😊`;
+                    }
+                    break;
+                }
+            }
+            await whatsappService.sendMessage(from, replyMessage);
+        } catch (actionError) {
+            console.error(`[Whatsapp Chat] Failed to execute '${functionCall.name}' for customer ${customer.id}:`, actionError);
+            await whatsappService.sendMessage(from, `Maaf, terjadi kesalahan saat mencoba melakukan tindakan: ${actionError.message}. 😊`);
+        }
+    } else if (textResponse) {
+        // Handle conversational follow-ups
+        const contextObject = JSON.parse(context);
+        const wlanConfigs = contextObject?._internal_paths?.wlanConfigs;
+
+        if (textResponse.includes('password baru yang Anda inginkan')) {
+            conversationManager.setConversationState(from, 'awaiting_new_password', { wlanConfig: wlanConfigs?.[0] });
+        } else if (textResponse.includes('nama Wi-Fi baru yang Anda inginkan')) {
+            conversationManager.setConversationState(from, 'awaiting_new_ssid', { wlanConfig: wlanConfigs?.[0] });
+        }
+        await whatsappService.sendMessage(from, textResponse);
+    } else {
+        // NEW: Handle cases where Gemini returns nothing (e.g., blocked prompt)
+        console.warn(`[Whatsapp Chat] Gemini returned no text or function call for customer ${customer.id}. Response:`, JSON.stringify(response, null, 2));
+        await whatsappService.sendMessage(from, 'Maaf, saya tidak dapat memproses permintaan Anda saat ini. Silakan coba ulangi dengan kalimat yang berbeda. 😊');
+    }
+    } catch (error) {
+        console.error(`[Whatsapp AI Chat] Error processing message from ${from}:`, error);
+
+        const errorMessage = error?.message || '';
+        const isApiKeyError = errorMessage.includes('API_KEY_INVALID') || errorMessage.includes('API Key not found');
+        const retryDelay = extractRetryDelayFromError(error);
+
+        let replyMessage;
+
+        if (isApiKeyError) {
+            replyMessage = 'Maaf, layanan chatbot kami sedang dalam perbaikan. Silakan coba lagi nanti. 😊';
+            console.error('[Whatsapp AI Chat] CRITICAL: Gemini API Key is invalid or expired.');
+             // Save notification to database
+            try {
+                await pool.query(
+                    `INSERT INTO admin_notifications (type, source, message) VALUES (?, ?, ?)`,
+                    ['error', 'Gemini AI', 'Gemini API Key is invalid or has expired. Please update it in the settings.']
+                );
+            } catch (dbError) {
+                console.error('[Chatbot] Failed to save API key error notification to database:', dbError);
+            }
+        } else if (isRateLimitError(error)) {
+            replyMessage = formatGeminiQuotaWarning('di server WhatsApp kami', retryDelay);
+        } else {
+            replyMessage = `Maaf, layanan chatbot sedang mengalami gangguan. Silakan coba lagi nanti. 😊`;
+        }
+
+        try {
+            await whatsappService.sendMessage(from, replyMessage);
+        } catch (sendError) {
+            console.error('[Whatsapp AI Chat] Failed to notify user about chatbot error:', sendError);
+        }
+    }
+};
+
+
+/**
+ * Unified handler for all incoming WhatsApp messages.
+ * Decides whether to use the AI chatbot or the static command handler based on settings.
+ * This function is exported and passed to the whatsappService during initialization.
+ * @param {{from: string, body: string}} message - The message object.
+ */
+export const handleWhatsappMessage = async (message) => {
+    const { from, body } = message;
+
+    try {
+        // 1. Retrieve settings and find customer in parallel for efficiency
+        const settings = await getSettings();
+        const isAiEnabled = settings.whatsapp?.chatbotEnabled || false;
+
+        // Normalize phone number to check for '0' vs '62' formats
+        let otherFormatPhone = null;
+        if (from.startsWith('62')) otherFormatPhone = '0' + from.substring(2);
+        else if (from.startsWith('0')) otherFormatPhone = '62' + from.substring(1);
+
+        const [[customer]] = await pool.query('SELECT * FROM customers WHERE phone IN (?, ?)', [from, otherFormatPhone]);
+
+        // 2. Handle non-customers immediately
+        if (!customer) {
+           // console.log(`[Unified Handler] Message from non-customer ${from}. Sending default reply.`);
+            await whatsappService.sendMessage(from, 'Maaf, nomor Anda tidak terdaftar di sistem kami. Silakan hubungi dari nomor yang Anda daftarkan. 😊');
+            return;
+        }
+
+        // 3. For customers, try static commands first (fast, robust, strict syntax)
+        const staticHandled = await handleStaticCommands(message, customer, isAiEnabled);
+        if (staticHandled) {
+           // console.log(`[Unified Handler] Message from ${from} was handled by static command processor.`);
+            return;
+        }
+
+        // 4. If not a static command, and AI is enabled, route to the AI chatbot
+        if (isAiEnabled) {
+           // console.log(`[Unified Handler] Routing message from ${from} to AI handler.`);
+            await handleAiChatbot(message, customer);
+        } else {
+            // 5. If AI is disabled and it wasn't a static command, send a default message.
+          //  console.log(`[Unified Handler] AI is disabled. Sending default reply to ${from}.`);
+            await whatsappService.sendMessage(from, 'Maaf, chatbot AI sedang tidak aktif. Ketik `menu` untuk melihat daftar perintah yang tersedia. 😊');
+        }
+    } catch (error) {
+        console.error(`[Unified Message Handler] ERROR processing message from ${from}:`, error);
+        try {
+            await whatsappService.sendMessage(from, "Maaf, terjadi kesalahan di pihak server saat memproses permintaan Anda. Silakan coba lagi nanti. 😊");
+        } catch (sendError) {
+            console.error('[Unified Message Handler] FAILED TO SEND FINAL ERROR MESSAGE:', sendError);
+        }
+    }
+};
+
+export default router;

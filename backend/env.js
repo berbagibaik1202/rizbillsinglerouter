@@ -2,96 +2,65 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-const STATE_KEY = '__rizkiTechbillEnvLoaderState';
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
 const envCandidates = [
+  path.join(__dirname, '..', 'docker.env'),
+  path.join(__dirname, 'docker.env'),
   path.join(__dirname, '.env'),
   path.join(__dirname, '..', '.env'),
-  path.join(__dirname, '.env.local'),
-  path.join(__dirname, '..', '.env.local'),
-  path.join(process.cwd(), '.env'),
-  path.join(process.cwd(), 'docker.env'),
+  path.join(__dirname, '..', '.env.docker'),
 ];
 
 const parseEnvValue = (rawValue) => {
-  const value = String(rawValue || '').trim();
+  const value = rawValue.trim();
   if (!value) return '';
-
-  const quoted =
-    (value.startsWith('"') && value.endsWith('"')) ||
-    (value.startsWith("'") && value.endsWith("'"));
-
-  if (!quoted) {
-    return value;
+  if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
+    const inner = value.slice(1, -1);
+    return inner.replace(/\\n/g, '\n').replace(/\\r/g, '\r').replace(/\\t/g, '\t');
   }
-
-  return value
-    .slice(1, -1)
-    .replace(/\\n/g, '\n')
-    .replace(/\\r/g, '\r')
-    .replace(/\\t/g, '\t');
+  return value;
 };
 
 const loadEnvFile = (filePath) => {
+  if (!fs.existsSync(filePath)) {
+    return { loaded: false, keys: [] };
+  }
+
   const content = fs.readFileSync(filePath, 'utf8').replace(/^\uFEFF/, '');
   const keys = [];
 
-  for (const line of content.split(/\r?\n/)) {
-    const trimmed = line.replace(/^\uFEFF/, '').trim();
-    if (!trimmed || trimmed.startsWith('#')) {
-      continue;
-    }
+  for (const rawLine of content.split(/\r?\n/)) {
+    const line = rawLine.replace(/^\uFEFF/, '').trim();
+    if (!line || line.startsWith('#')) continue;
 
-    const eqIndex = trimmed.indexOf('=');
-    if (eqIndex === -1) {
-      continue;
-    }
+    const cleanLine = line.startsWith('export ') ? line.slice(7).trim() : line;
+    const equalsIndex = cleanLine.indexOf('=');
+    if (equalsIndex === -1) continue;
 
-    const key = trimmed.slice(0, eqIndex).trim();
-    if (!key) {
-      continue;
-    }
+    const key = cleanLine.slice(0, equalsIndex).trim();
+    if (!key) continue;
 
-    const value = parseEnvValue(trimmed.slice(eqIndex + 1));
-    if (process.env[key] === undefined || process.env[key] === '') {
+    const value = parseEnvValue(cleanLine.slice(equalsIndex + 1));
+    const existingValue = process.env[key];
+    if (existingValue === undefined || existingValue === '') {
       process.env[key] = value;
     }
     keys.push(key);
   }
 
-  return {
-    loaded: true,
-    keys,
-  };
+  return { loaded: true, keys };
 };
 
-const findEnvPath = () => {
-  for (const candidate of envCandidates) {
-    if (fs.existsSync(candidate)) {
-      return candidate;
-    }
-  }
-  return null;
-};
-
-if (!globalThis[STATE_KEY]) {
-  const selectedEnvPath = findEnvPath();
-  const envState = selectedEnvPath
-    ? loadEnvFile(selectedEnvPath)
-    : { loaded: false, keys: [] };
-
-  globalThis[STATE_KEY] = {
+if (!globalThis.__rizkiTechbillEnvLoaded) {
+  globalThis.__rizkiTechbillEnvLoaded = true;
+  const selectedEnvPath = envCandidates.find((candidate) => fs.existsSync(candidate)) || null;
+  const envState = selectedEnvPath ? loadEnvFile(selectedEnvPath) : { loaded: false, keys: [] };
+  globalThis.__rizkiTechbillEnvState = {
     ...envState,
     path: selectedEnvPath,
   };
 }
 
-export const envPath = globalThis[STATE_KEY]?.path || null;
-export const envState = globalThis[STATE_KEY] || {
-  loaded: false,
-  keys: [],
-  path: null,
-};
+export const envPath = globalThis.__rizkiTechbillEnvState?.path || null;
+export const envState = globalThis.__rizkiTechbillEnvState || { loaded: false, keys: [], path: null };

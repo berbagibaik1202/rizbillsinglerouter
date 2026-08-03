@@ -33,12 +33,6 @@ const resolveInvoiceStatus = (status, dueDate, timezone) => {
     return dateToYMD(dueDateObj, timezone) < dateToYMD(new Date(), timezone) ? 'Overdue' : normalizedStatus;
 };
 
-const toDateOnlyString = (value, fallback, timezone) => {
-    const parsed = parseLocalDateString(value) || parseLocalDateString(fallback);
-    if (!parsed) return null;
-    return dateToYMD(parsed, timezone);
-};
-
 const isValidFixedCycleStart = (customer, targetBillingPeriodStart, timezone) => {
     const targetDate = parseLocalDateString(targetBillingPeriodStart);
     const activeDate = parseLocalDateString(customer?.activeDate);
@@ -75,6 +69,104 @@ const getFixedCycleStart = (customer, referenceDate, timezone, requestedTargetPe
     }
 
     return getCurrentFixedCycleStart(customer, referenceDate, timezone);
+};
+
+const buildInvoiceNotificationPayload = (settings, invoice, customer, packageName = 'N/A') => {
+    const billingPeriod = formatBillingPeriod(invoice.billingPeriodStart, invoice.billingPeriodEnd);
+    const paymentLink = settings?.app?.baseUrl
+        ? `${settings.app.baseUrl.replace(/\/$/, '')}/#pay/${invoice.id}`
+        : '';
+
+    return {
+        paymentLink,
+        billingPeriod,
+        message: replacePlaceholders(settings.whatsapp.invoiceCreated, {
+            customerName: customer.name,
+            customerId: customer.id,
+            invoiceId: invoice.id,
+            amount: formatRupiah(invoice.amount),
+            paymentLink,
+            dueDate: formatDateDisplay(invoice.dueDate),
+            packageName: packageName || 'N/A',
+            billingPeriod,
+        }),
+    };
+};
+
+const sendInvoiceWhatsappNotification = async ({
+    settings,
+    invoice,
+    customer,
+    packageName,
+    logType = 'Manual Invoice Notification',
+}) => {
+    const payload = buildInvoiceNotificationPayload(settings, invoice, customer, packageName);
+
+    if (!customer.phone) {
+        return { success: false, skipped: true, reason: 'Customer does not have a registered phone number.' };
+    }
+    if (!settings?.billing?.whatsappNotificationsEnabled || !settings?.whatsapp?.invoiceCreated) {
+        return { success: false, skipped: true, reason: 'WhatsApp invoice notification is disabled or the template is empty.' };
+    }
+    if (!payload.paymentLink && settings?.whatsapp?.invoiceCreated?.includes('{{paymentLink}}')) {
+        return { success: false, skipped: true, reason: 'Base URL is not configured in App Settings.' };
+    }
+
+    whatsappService.applySettings(settings);
+    const waResult = await whatsappService.sendMessage(customer.phone, payload.message);
+
+    await pool.query('INSERT INTO whatsapp_logs SET ?', {
+        recipient_number: customer.phone,
+        customer_id: customer.id,
+        message_body: payload.message,
+        status: waResult.success ? 'sent' : 'failed',
+        type: logType,
+        error_message: waResult.error || null,
+    });
+
+    return {
+        success: Boolean(waResult.success),
+        skipped: false,
+        reason: waResult.error || null,
+        message: waResult.success ? 'WhatsApp notification sent.' : (waResult.error || 'Failed to send WhatsApp notification.'),
+    };
+};
+
+const sendInvoiceEmailNotificationOnly = async ({
+    settings,
+    invoice,
+    customer,
+    packageName,
+}) => {
+    if (!customer.email) {
+        return { success: false, skipped: true, reason: 'Customer does not have a registered email address.' };
+    }
+
+    try {
+        const emailResult = await sendInvoiceEmailNotification({
+            settings,
+            customer,
+            invoice,
+            packageName: packageName || 'N/A',
+            type: 'created',
+        });
+
+        if (emailResult?.success) {
+            return { success: true, skipped: false, reason: null, message: 'Email notification sent.' };
+        }
+
+        return {
+            success: false,
+            skipped: Boolean(emailResult?.skipped),
+            reason: emailResult?.reason || 'Email notification failed.',
+        };
+    } catch (emailError) {
+        return {
+            success: false,
+            skipped: false,
+            reason: emailError.message || 'Email notification failed.',
+        };
+    }
 };
 
 // --- Payments ---
@@ -454,45 +546,11 @@ router.put('/invoices/:id', async (req, res) => {
             return res.status(404).json({ message: 'Invoice not found.' });
         }
 
-        const customerId = String(invoiceData.customerId || originalInvoice.customerId || '').trim();
-        if (!customerId) {
-            return res.status(400).json({ message: 'Customer ID is required.' });
-        }
-
-        const hasManualPayment = Boolean(paymentMethod);
-        const amountSource = invoiceData.amount ?? originalInvoice.amount;
-        let amount = Number(amountSource);
-        if (hasManualPayment && (!Number.isFinite(amount) || amount <= 0)) {
-            amount = Number(originalInvoice.amount);
-        }
-        if (!Number.isFinite(amount) || amount <= 0) {
-            return res.status(400).json({ message: 'Invoice amount must be a positive number.' });
-        }
-
-        const issueDate = toDateOnlyString(invoiceData.issueDate, originalInvoice.issueDate, timezone);
-        const dueDate = toDateOnlyString(invoiceData.dueDate, originalInvoice.dueDate, timezone);
-        const billingPeriodStart = toDateOnlyString(invoiceData.billingPeriodStart, originalInvoice.billingPeriodStart, timezone);
-        const billingPeriodEnd = toDateOnlyString(invoiceData.billingPeriodEnd, originalInvoice.billingPeriodEnd, timezone);
-
-        if (!issueDate || !dueDate) {
-            return res.status(400).json({ message: 'Issue date and due date are required.' });
-        }
-
-        const normalizedInvoiceData = {
-            customerId,
-            amount,
-            issueDate,
-            dueDate,
-            billingPeriodStart,
-            billingPeriodEnd,
-            status: invoiceData.status || originalInvoice.status,
-            notes: invoiceData.notes ?? originalInvoice.notes ?? null,
-        };
-
+        const normalizedInvoiceData = { ...invoiceData };
         if (normalizedInvoiceData.status !== 'Paid') {
             normalizedInvoiceData.status = resolveInvoiceStatus(
                 normalizedInvoiceData.status,
-                normalizedInvoiceData.dueDate,
+                normalizedInvoiceData.dueDate || originalInvoice.dueDate,
                 timezone
             );
         }
@@ -832,47 +890,62 @@ router.post('/invoices/:id/send-whatsapp', async (req, res) => {
 
         const [[customer]] = await pool.query('SELECT c.*, p.name as packageName FROM customers c LEFT JOIN packages p ON c.packageId = p.id WHERE c.id = ?', [invoice.customerId]);
         if (!customer) return res.status(404).json({ message: 'Customer not found.' });
-        if (!customer.phone) return res.status(400).json({ message: 'Customer does not have a registered phone number.' });
         
         const settings = await getSettings();
-        if (!settings.billing.whatsappNotificationsEnabled) return res.status(400).json({ message: 'WhatsApp notifications are disabled in settings.' });
-        if (whatsappService.getStatus().status !== 'connected') return res.status(400).json({ message: 'WhatsApp is not connected.' });
-        const template = settings.whatsapp.invoiceCreated;
-        if (!template) return res.status(400).json({ message: 'The "Invoice Created" WhatsApp template is empty in settings.' });
-        if (!settings.app.baseUrl) return res.status(400).json({ message: 'Base URL is not configured in App Settings.' });
-
-        // Generate the public payment link to our application
-        const paymentLink = `${settings.app.baseUrl.replace(/\/$/, '')}/#pay/${invoice.id}`;
-        
-        const billingPeriod = formatBillingPeriod(invoice.billingPeriodStart, invoice.billingPeriodEnd);
-        const message = replacePlaceholders(template, {
-            customerName: customer.name,
-            customerId: customer.id,
-            invoiceId: invoice.id,
-            amount: formatRupiah(invoice.amount),
-            paymentLink: paymentLink,
-            dueDate: formatDateDisplay(invoice.dueDate),
+        const notificationResult = await sendInvoiceWhatsappNotification({
+            settings,
+            invoice,
+            customer,
             packageName: customer.packageName || 'N/A',
-            billingPeriod,
+            logType: 'Manual Invoice Notification',
         });
 
-        const waResult = await whatsappService.sendMessage(customer.phone, message);
+        if (!notificationResult.success) {
+            if (notificationResult.skipped) {
+                throw new Error(notificationResult.reason || 'Failed to send WhatsApp notification.');
+            }
+            throw new Error(notificationResult.reason || notificationResult.message || 'Failed to send WhatsApp notification.');
+        }
 
-        await pool.query('INSERT INTO whatsapp_logs SET ?', {
-            recipient_number: customer.phone,
-            customer_id: customer.id,
-            message_body: message,
-            status: waResult.success ? 'sent' : 'failed',
-            type: 'Manual Invoice Notification',
-            error_message: waResult.error || null,
+        res.json({
+            success: true,
+            message: notificationResult.message || 'WhatsApp notification sent.',
         });
-
-        if (!waResult.success) throw new Error(waResult.error || 'Failed to send message via WhatsApp service.');
-
-        res.json({ success: true, message: `Notification for invoice ${id} sent to ${customer.name}.` });
 
     } catch (error) {
-        console.error(`[Send WA] Error sending notification for invoice ${id}:`, error);
+        console.error(`[Send Invoice] Error sending notification for invoice ${id}:`, error);
+        res.status(500).json({ message: error.message || 'An internal server error occurred.' });
+    }
+});
+
+router.post('/invoices/:id/send-email', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const [[invoice]] = await pool.query('SELECT * FROM invoices WHERE id = ?', [id]);
+        if (!invoice) return res.status(404).json({ message: 'Invoice not found.' });
+
+        const [[customer]] = await pool.query('SELECT c.*, p.name as packageName FROM customers c LEFT JOIN packages p ON c.packageId = p.id WHERE c.id = ?', [invoice.customerId]);
+        if (!customer) return res.status(404).json({ message: 'Customer not found.' });
+
+        const settings = await getSettings();
+        const notificationResult = await sendInvoiceEmailNotificationOnly({
+            settings,
+            invoice,
+            customer,
+            packageName: customer.packageName || 'N/A',
+        });
+
+        if (!notificationResult.success) {
+            throw new Error(notificationResult.reason || 'Failed to send email notification.');
+        }
+
+        res.json({
+            success: true,
+            message: notificationResult.message || 'Email notification sent.',
+        });
+    } catch (error) {
+        console.error(`[Send Invoice Email] Error sending notification for invoice ${id}:`, error);
         res.status(500).json({ message: error.message || 'An internal server error occurred.' });
     }
 });
@@ -985,12 +1058,9 @@ router.post('/invoices/bulk-send-whatsapp', async (req, res) => {
     }
     try {
         const settings = await getSettings();
-        if (!settings.billing.whatsappNotificationsEnabled || !settings.whatsapp.invoiceCreated) {
-            return res.status(400).json({ message: 'WhatsApp invoice creation notifications are disabled or the template is not set.' });
-        }
 
         const [invoices] = await pool.query(`
-            SELECT i.*, c.name, c.phone, p.name as packageName 
+            SELECT i.*, c.name, c.phone, c.email, p.name as packageName 
             FROM invoices i 
             JOIN customers c ON i.customerId = c.id
             LEFT JOIN packages p ON c.packageId = p.id
@@ -999,36 +1069,75 @@ router.post('/invoices/bulk-send-whatsapp', async (req, res) => {
         
         let sentCount = 0;
         for (const invoice of invoices) {
-            if (invoice.phone) {
-                const paymentLink = `${settings.app.baseUrl.replace(/\/$/, '')}/#pay/${invoice.id}`;
-                const billingPeriod = formatBillingPeriod(invoice.billingPeriodStart, invoice.billingPeriodEnd);
-                const message = replacePlaceholders(settings.whatsapp.invoiceCreated, {
-                    customerName: invoice.name,
-                    customerId: invoice.customerId,
-                    invoiceId: invoice.id,
-                    amount: formatRupiah(invoice.amount),
-                    paymentLink: paymentLink,
-                    dueDate: formatDateDisplay(invoice.dueDate),
-                    packageName: invoice.packageName || 'N/A',
-                    billingPeriod,
-                });
-                const waResult = await whatsappService.sendMessage(invoice.phone, message);
-                await pool.query('INSERT INTO whatsapp_logs SET ?', {
-                    recipient_number: invoice.phone,
-                    customer_id: invoice.customerId,
-                    message_body: message,
-                    status: waResult.success ? 'sent' : 'failed',
-                    type: 'Bulk Invoice Notification',
-                    error_message: waResult.error || null,
-                });
-                if (waResult.success) sentCount++;
-                await new Promise(resolve => setTimeout(resolve, 1000)); // Delay between messages
-            }
+            const customerPayload = {
+                id: invoice.customerId,
+                name: invoice.name,
+                phone: invoice.phone,
+                email: invoice.email || null,
+            };
+            const notificationResult = await sendInvoiceWhatsappNotification({
+                settings,
+                invoice,
+                customer: customerPayload,
+                packageName: invoice.packageName || 'N/A',
+                logType: 'Bulk Invoice Notification',
+            });
+
+            if (notificationResult.success) sentCount++;
+            await new Promise(resolve => setTimeout(resolve, 1000)); // Delay between messages
         }
-        res.json({ success: true, message: `Sent invoice notifications for ${sentCount} of ${invoices.length} selected invoices.` });
+        res.json({
+            success: true,
+            message: `Sent invoice notifications for ${sentCount} of ${invoices.length} selected invoices.`,
+        });
     } catch (error) {
-        console.error("Bulk Send WA Error:", error);
+        console.error("Bulk Send Invoice Error:", error);
         res.status(500).json({ message: 'An error occurred while sending notifications.' });
+    }
+});
+
+router.post('/invoices/bulk-send-email', async (req, res) => {
+    const { ids } = req.body;
+    if (!Array.isArray(ids) || ids.length === 0) {
+        return res.status(400).json({ message: 'An array of invoice IDs is required.' });
+    }
+    try {
+        const settings = await getSettings();
+
+        const [invoices] = await pool.query(`
+            SELECT i.*, c.name, c.phone, c.email, p.name as packageName 
+            FROM invoices i 
+            JOIN customers c ON i.customerId = c.id
+            LEFT JOIN packages p ON c.packageId = p.id
+            WHERE i.id IN (?)
+        `, [ids]);
+
+        let sentCount = 0;
+        for (const invoice of invoices) {
+            const customerPayload = {
+                id: invoice.customerId,
+                name: invoice.name,
+                phone: invoice.phone || null,
+                email: invoice.email || null,
+            };
+            const notificationResult = await sendInvoiceEmailNotificationOnly({
+                settings,
+                invoice,
+                customer: customerPayload,
+                packageName: invoice.packageName || 'N/A',
+            });
+
+            if (notificationResult.success) sentCount++;
+            await new Promise(resolve => setTimeout(resolve, 1000));
+        }
+
+        res.json({
+            success: true,
+            message: `Sent email notifications for ${sentCount} of ${invoices.length} selected invoices.`,
+        });
+    } catch (error) {
+        console.error("Bulk Send Invoice Email Error:", error);
+        res.status(500).json({ message: 'An error occurred while sending email notifications.' });
     }
 });
 

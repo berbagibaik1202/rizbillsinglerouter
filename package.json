@@ -91,7 +91,7 @@
     "numbersToExpressions": true,
     "renameGlobals": false,
     "rotateStringArray": true,
-    "selfDefending": true,
+    "selfDefending": false,
     "shuffleStringArray": true,
     "splitStrings": true,
     "splitStringsChunkLength": 10,

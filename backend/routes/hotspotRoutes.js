@@ -785,15 +785,6 @@ router.post('/webhook', async (req, res) => {
 
     try {
         const settings = await getSettings();
-        const configuredApiKey = String(settings?.app?.apiKey || '').trim();
-        if (configuredApiKey) {
-            const receivedApiKey = String(req.query.apiKey || req.headers['x-api-key'] || '').trim();
-            if (!receivedApiKey || receivedApiKey !== configuredApiKey) {
-                console.warn('[Hotspot Webhook] Invalid API key received.');
-                return res.status(200).send('Webhook rejected (invalid api key).');
-            }
-        }
-
         const timezone = settings.app.timezone;
         const [[voucher]] = await pool.query("SELECT * FROM hotspot_vouchers WHERE username = ?", [username]);
 

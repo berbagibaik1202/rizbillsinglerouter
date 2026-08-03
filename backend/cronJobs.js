@@ -718,12 +718,26 @@ export const startBackgroundServices = () => {
 
     initWhatsApp();
 
-    runBillingMaintenance().catch(err => {
-        console.error("[Startup] Initial billing maintenance failed:", err);
-    });
-    runHotspotMaintenance().catch(err => {
-        console.error("[Startup] Initial hotspot maintenance failed:", err);
-    });
+    const startupMaintenanceDelayMs = Math.max(
+        0,
+        Number(process.env.STARTUP_MAINTENANCE_DELAY_MS || 60000)
+    );
+
+    const runStartupMaintenance = () => {
+        runBillingMaintenance().catch(err => {
+            console.error("[Startup] Initial billing maintenance failed:", err);
+        });
+        runHotspotMaintenance().catch(err => {
+            console.error("[Startup] Initial hotspot maintenance failed:", err);
+        });
+    };
+
+    if (startupMaintenanceDelayMs === 0) {
+        runStartupMaintenance();
+    } else {
+        console.log(`[Startup] Deferring initial maintenance for ${startupMaintenanceDelayMs}ms.`);
+        setTimeout(runStartupMaintenance, startupMaintenanceDelayMs);
+    }
 
     // Changed interval to every 30 minutes for better responsiveness to daily changes
     setInterval(runBillingMaintenance, 30 * 60 * 1000); 

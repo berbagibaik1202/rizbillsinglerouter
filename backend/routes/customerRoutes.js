@@ -1,1 +1,1868 @@
-const _0xe9c38=_0x5d62;(function(_0x3a6e32,_0x1f9350){const _0x4be65c=_0x5d62,_0x2c2fcc=_0x3a6e32();while(!![]){try{const _0xf173b7=-parseInt(_0x4be65c(0x58e))/(-0xa9b+0x1*0x125f+-0x7c3)+-parseInt(_0x4be65c(0x42a))/(-0xc9+-0x5a5+0x670)*(parseInt(_0x4be65c(0x48d))/(-0x1d4+-0x1a3b+0x1c12))+-parseInt(_0x4be65c(0x519))/(0x1e7b+-0xf93+-0xee4)*(-parseInt(_0x4be65c(0x67e))/(0x1c8b*0x1+0x21aa+-0x3e30))+-parseInt(_0x4be65c(0x45a))/(0x6e9+0x25d9+0xb2f*-0x4)*(parseInt(_0x4be65c(0x300))/(-0x1708+-0x73*-0x45+0xfe*-0x8))+parseInt(_0x4be65c(0x296))/(0xcb+-0x20b3*-0x1+-0x2176)+-parseInt(_0x4be65c(0x5f6))/(-0x1a92*0x1+-0x647+0x7a*0x45)+parseInt(_0x4be65c(0x400))/(0x2*0x749+0x1*-0x189a+0xa12)*(-parseInt(_0x4be65c(0x2ae))/(-0x26f9*0x1+-0x7*0x24f+0x372d));if(_0xf173b7===_0x1f9350)break;else _0x2c2fcc['push'](_0x2c2fcc['shift']());}catch(_0x160195){_0x2c2fcc['push'](_0x2c2fcc['shift']());}}}(_0x81fa,0x1*-0x127232+0x70fcd+0x1934a9));const _0x3dea5c=(function(){const _0x49e46d=_0x5d62,_0x2f19e6={};_0x2f19e6[_0x49e46d(0x4fa)]=_0x49e46d(0x812),_0x2f19e6['spmPm']=_0x49e46d(0x4b3)+'f\x20customer'+_0x49e46d(0x262)+_0x49e46d(0x83a),_0x2f19e6['mFZVM']=_0x49e46d(0x595)+_0x49e46d(0x7fa)+'?',_0x2f19e6[_0x49e46d(0x759)]=function(_0x1f7969,_0x21df25){return _0x1f7969===_0x21df25;},_0x2f19e6[_0x49e46d(0x691)]=_0x49e46d(0x586),_0x2f19e6['JalKw']=_0x49e46d(0x7c9);const _0x301cae=_0x2f19e6;let _0x4a95fd=!![];return function(_0x58306e,_0x47ceec){const _0x409ca9=_0x49e46d,_0x251ac3={};_0x251ac3[_0x409ca9(0x47c)]=_0x301cae[_0x409ca9(0x70a)],_0x251ac3[_0x409ca9(0x2b6)]=_0x301cae['mFZVM'];const _0x3e8e51=_0x251ac3;if(_0x301cae[_0x409ca9(0x759)](_0x301cae[_0x409ca9(0x691)],_0x301cae[_0x409ca9(0x266)])){const _0x451731={};return _0x451731[_0x409ca9(0x6c3)]=_0x3e8e51['buVoD'],_0x5571e9[_0x409ca9(0x2c4)](0x1*-0x1d03+-0x8e7+0x277a)[_0x409ca9(0x78a)](_0x451731);}else{const _0x452b42=_0x4a95fd?function(){const _0x5c2669=_0x409ca9;if(_0x5c2669(0x730)===_0x301cae[_0x5c2669(0x4fa)])_0x48be8e+=_0x3e8e51[_0x5c2669(0x2b6)],_0x2916a0[_0x5c2669(0x2d5)](_0x5c3101);else{if(_0x47ceec){const _0x5b6f89=_0x47ceec[_0x5c2669(0x3b4)](_0x58306e,arguments);return _0x47ceec=null,_0x5b6f89;}}}:function(){};return _0x4a95fd=![],_0x452b42;}};}()),_0x46bafc=_0x3dea5c(this,function(){const _0x3148e0=_0x5d62,_0x4c80b0={};_0x4c80b0[_0x3148e0(0x3dc)]='(((.+)+)+)'+'+$';const _0x16d467=_0x4c80b0;return _0x46bafc[_0x3148e0(0x727)]()[_0x3148e0(0x302)]('(((.+)+)+)'+'+$')[_0x3148e0(0x727)]()[_0x3148e0(0x818)+'r'](_0x46bafc)[_0x3148e0(0x302)](_0x16d467[_0x3148e0(0x3dc)]);});_0x46bafc();const _0x188cee=(function(){const _0x202451=_0x5d62,_0x33bc67={};_0x33bc67['TmTnJ']=function(_0x263c43,_0x3d65ea){return _0x263c43!==_0x3d65ea;},_0x33bc67['GuxOx']=_0x202451(0x2f7),_0x33bc67[_0x202451(0x61d)]=_0x202451(0x70d)+_0x202451(0x21f)+_0x202451(0x321)+_0x202451(0x292)+_0x202451(0x6d2)+_0x202451(0x82f);const _0x4332cd=_0x33bc67;let _0x24d667=!![];return function(_0x5b1458,_0x2a27aa){const _0x18b43d=_0x202451,_0x169107={};_0x169107[_0x18b43d(0x756)]=_0x4332cd[_0x18b43d(0x61d)];const _0x2c559d=_0x169107,_0x4ff001=_0x24d667?function(){const _0x32bdb5=_0x18b43d;if(_0x4332cd[_0x32bdb5(0x21a)]('BMCni',_0x4332cd['GuxOx'])){if(_0x2a27aa){const _0xda7d9f=_0x2a27aa[_0x32bdb5(0x3b4)](_0x5b1458,arguments);return _0x2a27aa=null,_0xda7d9f;}}else{const _0x2da9c7={};return _0x2da9c7[_0x32bdb5(0x6c3)]=_0x2c559d['gvrhG'],_0x3870dc['status'](-0x261+0x385*0x9+-0x1bbc)[_0x32bdb5(0x78a)](_0x2da9c7);}}:function(){};return _0x24d667=![],_0x4ff001;};}()),_0x8690f5=_0x188cee(this,function(){const _0x2b391d=_0x5d62,_0x2ece0a={'bEeNS':'Failed\x20to\x20'+_0x2b391d(0x52a)+'s\x20voucher\x20'+_0x2b391d(0x205)+'r.','fBiwt':_0x2b391d(0x350),'TyxVU':function(_0xa4a0a9,_0x413157){return _0xa4a0a9(_0x413157);},'KfIof':function(_0x2eae57,_0xdf7a0e){return _0x2eae57+_0xdf7a0e;},'DFNWx':_0x2b391d(0x6b2)+_0x2b391d(0x72a),'sOQfM':_0x2b391d(0x5c5)+_0x2b391d(0x588)+_0x2b391d(0x3c1)+'\x20)','pbHFj':function(_0x3cfc85){return _0x3cfc85();},'lwVDV':'warn','EpdUC':_0x2b391d(0x846),'GPjxq':_0x2b391d(0x364),'JXmnS':_0x2b391d(0x21c)};let _0x745401;try{if(_0x2b391d(0x350)===_0x2ece0a[_0x2b391d(0x5d8)]){const _0x21c7d8=_0x2ece0a[_0x2b391d(0x659)](Function,_0x2ece0a[_0x2b391d(0x363)](_0x2ece0a[_0x2b391d(0x2a6)]+_0x2ece0a[_0x2b391d(0x79a)],');'));_0x745401=_0x2ece0a['pbHFj'](_0x21c7d8);}else{_0x2a7e4f[_0x2b391d(0x846)](_0x2b391d(0x403)+_0x2b391d(0x298)+_0x2b391d(0x3c0)+_0x2b391d(0x531)+'r\x20'+_0x5c8fb4+':',_0x4f7c43);const _0x166a81={};_0x166a81[_0x2b391d(0x6c3)]=_0x3bb392[_0x2b391d(0x6c3)]||_0x2ece0a[_0x2b391d(0x54d)],_0x1faeb3['status'](-0xf4a+0xd8*0x1+0x1066)[_0x2b391d(0x78a)](_0x166a81);}}catch(_0x18a330){_0x745401=window;}const _0x24f6e1=_0x745401['console']=_0x745401[_0x2b391d(0x3ac)]||{},_0x360ff2=['log',_0x2ece0a[_0x2b391d(0x66d)],_0x2b391d(0x20c),_0x2ece0a[_0x2b391d(0x33a)],'exception',_0x2ece0a['GPjxq'],_0x2ece0a[_0x2b391d(0x464)]];for(let _0x462318=-0x1*0x1920+0x214*0x4+0x10d0;_0x462318<_0x360ff2[_0x2b391d(0x438)];_0x462318++){const _0x19de3c=_0x188cee[_0x2b391d(0x818)+'r'][_0x2b391d(0x791)]['bind'](_0x188cee),_0xe167dd=_0x360ff2[_0x462318],_0x34b584=_0x24f6e1[_0xe167dd]||_0x19de3c;_0x19de3c[_0x2b391d(0x736)]=_0x188cee[_0x2b391d(0x46a)](_0x188cee),_0x19de3c[_0x2b391d(0x727)]=_0x34b584[_0x2b391d(0x727)][_0x2b391d(0x46a)](_0x34b584),_0x24f6e1[_0xe167dd]=_0x19de3c;}});_0x8690f5();import _0x2c51e5 from'express';import _0x4a9162 from'../db.js';import{getSettings,replacePlaceholders,generateNewCustomerId,dbDateTimeToLocalISO,formatRupiah,formatBillingPeriod,formatDateDisplay,dbDateToISO,toMySQLDatetime,dateToYMD}from'../utils.js';import _0x2a5b26 from'../mikrotik-api.js';import _0x1adb7c from'../whatsappService.js';import _0x41ad42 from'multer';import _0x54d35d from'path';import{fileURLToPath}from'url';import _0x41ef8b from'fs';import _0x556a4 from'jsonwebtoken';import _0x3debdd from'../tripayService.js';import{recordCashMutation}from'../cashMutationService.js';import{pushCustomerPppoeToAcs}from'../services.js';const router=_0x2c51e5[_0xe9c38(0x416)](),__filename=fileURLToPath(import.meta['url']),__dirname=_0x54d35d['dirname'](__filename),UPLOADS_DIR=_0x54d35d['join'](__dirname,'..',_0xe9c38(0x580)),storage=_0x41ad42[_0xe9c38(0x253)+'e']({'destination':function(_0x1923c7,_0x21c529,_0x32f5ad){const _0x58fba7=_0xe9c38,_0x633bc2={'HhLSx':'URL\x20playli'+_0x58fba7(0x496)+_0x58fba7(0x664),'ouIKi':function(_0x4f712f,_0x20d744){return _0x4f712f!==_0x20d744;},'BBpdp':_0x58fba7(0x562),'WYLMt':function(_0x1b8205,_0x15fc70,_0x5e3c82){return _0x1b8205(_0x15fc70,_0x5e3c82);}};if(!_0x41ef8b[_0x58fba7(0x68b)](UPLOADS_DIR)){if(_0x633bc2[_0x58fba7(0x1ea)](_0x58fba7(0x53d),_0x633bc2[_0x58fba7(0x3cd)])){const _0x114cc5={};_0x114cc5[_0x58fba7(0x2da)]=!![],_0x41ef8b[_0x58fba7(0x3e6)](UPLOADS_DIR,_0x114cc5);}else{const _0x292e6e={};return _0x292e6e[_0x58fba7(0x6c3)]=_0x633bc2['HhLSx'],_0x5794f8['status'](-0x699+-0xce3*-0x3+-0x3d0*0x8)[_0x58fba7(0x78a)](_0x292e6e);}}_0x633bc2[_0x58fba7(0x2c1)](_0x32f5ad,null,UPLOADS_DIR);},'filename':function(_0xcc5cc3,_0x15468f,_0x400659){const _0x442b03=_0xe9c38,_0x5a3ca8={'vjXeA':function(_0x25f06b,_0x4a6488){return _0x25f06b+_0x4a6488;},'niNFI':function(_0x597129,_0x1d3ee6){return _0x597129+_0x1d3ee6;},'NTYdi':function(_0xc3cd42,_0x52d165,_0x57b832){return _0xc3cd42(_0x52d165,_0x57b832);},'ufeqQ':function(_0x4ad00b,_0x1a80a3){return _0x4ad00b+_0x1a80a3;},'prMtk':function(_0x569c10,_0x1295ca){return _0x569c10+_0x1295ca;}},_0x1708a9=_0x5a3ca8['vjXeA'](_0x5a3ca8[_0x442b03(0x765)](Date['now'](),'-'),Math[_0x442b03(0x750)](Math[_0x442b03(0x2d0)]()*(-0x4380b97c+0x539f*0x3cd+0x7dddb029)));_0x5a3ca8[_0x442b03(0x25c)](_0x400659,null,_0x5a3ca8['vjXeA'](_0x5a3ca8[_0x442b03(0x6f2)](_0x5a3ca8[_0x442b03(0x5ca)](_0x15468f[_0x442b03(0x815)],'-'),_0x1708a9),_0x54d35d[_0x442b03(0x3a5)](_0x15468f['originalna'+'me'])));}}),_0x47da60={};_0x47da60[_0xe9c38(0x2bd)]=storage;const upload=_0x41ad42(_0x47da60);router['get']('/me',async(_0x435ebc,_0x4b700c)=>{const _0x4cf5a2=_0xe9c38,_0x37a5f0={};_0x37a5f0[_0x4cf5a2(0x746)]='TEHlA',_0x37a5f0[_0x4cf5a2(0x2b3)]=_0x4cf5a2(0x51c)+_0x4cf5a2(0x366),_0x37a5f0[_0x4cf5a2(0x259)]=_0x4cf5a2(0x403)+_0x4cf5a2(0x42f)+_0x4cf5a2(0x33e)+_0x4cf5a2(0x84c);const _0x2ee3b4=_0x37a5f0,_0x38521c=_0x435ebc['user']['id'];try{if(_0x4cf5a2(0x6d5)===_0x2ee3b4[_0x4cf5a2(0x746)]){const _0x2debc6=_0x2c485e[_0x4cf5a2(0x3b4)](_0x1aa147,arguments);return _0x4e666c=null,_0x2debc6;}else{const [[_0x4027f5]]=await _0x4a9162[_0x4cf5a2(0x583)](_0x4cf5a2(0x2d6)+_0x4cf5a2(0x1f4)+_0x4cf5a2(0x232)+_0x4cf5a2(0x7ae),[_0x38521c]);if(!_0x4027f5){const _0x51a1e7={};return _0x51a1e7['message']=_0x2ee3b4[_0x4cf5a2(0x2b3)],_0x4b700c['status'](0x1fcf+-0x92f+-0x150c)[_0x4cf5a2(0x78a)](_0x51a1e7);}_0x4b700c['json'](_0x4027f5);}}catch(_0x2ef8b3){console[_0x4cf5a2(0x846)](_0x2ee3b4[_0x4cf5a2(0x259)],_0x2ef8b3);const _0x1c6144={};_0x1c6144[_0x4cf5a2(0x6c3)]=_0x4cf5a2(0x68c)+_0x4cf5a2(0x73a)+_0x4cf5a2(0x7b5),_0x4b700c[_0x4cf5a2(0x2c4)](-0x355*-0x1+-0x62*0x2c+0xf77)[_0x4cf5a2(0x78a)](_0x1c6144);}});function _0x81fa(){const _0x391136=['uhjPy2uGqvnd','CgjrEKG','BMLorKK','y3rPDMf0zwq','DhjPzxzLigL0ia','DgLVBIWGyNv0ia','A2nkvg8','yY5JCMvHDgvKxW','zvH1ve8','wxjnvKK','Cgjxwfa','sMvvtfu','zwqU','yNvSAYbZDgf0Dq','ugvHD3m','y0XoC2y','y2PrzeG','tgHLCMS','zxrLlIbdCMvHDa','D2HHDhnHChboBW','q0vqvum','igrLBgv0zwqU','qwn0AxzL','Bxrtrwy','uvvhAhm','ihrVia','zsbLBgLNAwjSzq','teLMBgG','qwn0AxzLjW','ig5LD19WywnRyq','yw1Lq291BNq','qvrUChO','vwDzD1i','zsWkicaGicaGia','BhPXvhm','ig5VDcbLEgLZDa','CgXHEwXPC3rvCG','vvbeqvrfigLUDG','z2vZihaGt04GCa','ANnVBG','tKjksgi','t00Gy3vZDg9Tzq','Aw5Zzxj0swq','rKDZDMK','r3LjrwW','sw5Hy3rPDMu','ChjVDg90ExbL','sevRqMu','Bg9VCa','BMLR','s0vlqum','yw1IAwWGCgXHEq','mc44','tM5kwMC','Cu5iDe4','C09rzK0','zwXSAw5NihbHyW','BgWGy29UDgLUDq','AgTdD1O','re9MEgG','B3rvC2vYCW','C2LNBG','w05VDgLMAwnHDa','DgLTzxPVBMu','zca9id8','ENLPseK','reXPy0K','vgXszLC','ChbWB2vqyxnZDW','u25ozMW','rsbSAw5RCZO','zMLSzsWGCgfJAW','BMv3qMfSyw5Jzq','C2TdrwS','yw1LlcbJlNbOBW','AwqGpsa/','Dg9Rzw4','zgLZywjSzuHVDa','BeXysgK','vLb2z2O','ihaUAwqGv0HfuG','zwf0zwrFyxqSia','B21LCIbKyxrHlG','BwvY','lZPPzc9WywnRyq','s2L0lZuZnY4ZnG','ugf5BwvUDcbTzq','x3bHy2THz2vFAq','uhjLzML4','qsb2ywXPzcbWBW','ihDOAwXLihrYEq','u0vmrunuihjLCa','B0r2wxq','DxjPBMCGyNvSAW','igj5igfKBwLUoG','AgHcuhm','ALvyvNy','t2nKA1C','wxjgtMq','ywz0zxiGy3jLyq','ChjVzMLSzq','tsbWywnRywDLxW','tM5Svey','y2THz2vFAwqSia','qMjkyw4','EenND1m','DxnLCM5HBwu','tujzz0K','Cufdy2S','DxrLCIbVCIbJBW','BMT2twu','uhjVzMLSzsb1Ca','u2juvg0','vejJww8','lMn1C3rVBwvYxW','C0vUywjSzwq','zxnLvKO','zxiGsuqGy2fUBG','wensq1O','l2j1BgSTC3rHDa','yw1L','ChbVzvvZzxi','Du1UDLy','igzYB20GCM91Da','De5tA0e','qLKGC2vSBgLUzW','AwqGpsa/iezpuG','rMnuEvG','yKD6vhm','rM9YyMLKzgvU','zcbHCMuGCMvXDq','rvqGy29TBwvUDa','DLfHwhK','ignVBw1LBNqGpq','C2vUze1LC3nHzW','z2vUzxjHDguGBq','yK9vy2O','vca/ifDirvjfia','CMvXDwLYzwqU','yxbhrNG','C3bSAxq','wuzPzxu','ALLJu2e','C21XuxG','rwv1sei','lZPPzc9IB251CW','q2TjAe4','zg8GywzMAwXPyq','sMzQAvO','igfZihbHy2THzW','icaGicbUzxH0qG','Dg9Tzxjjzca9ia','ig51BwjLCI4','zhvLrgf0zq','C2jZEKi','zhrfsxG','Dg90ywXsB3v0zq','ig1LC3nHz2LUzW','Cc11CcbHBw91BG','yLzRyMe','vxnLCG','C2TRz28','rNzMzuC','vg9WihvWihnHBa','ig5VDcbMB3vUza','Cg90ifbYB2zPBa','qsb2ywXPzcbZDa','C2nVCgu','zKjqBva','zKHtvNq','CgfYC2uGCMvWBa','C2vUza','psa/ifDirvjfia','zM9YBsb0AgLZia','C2L0AxzLigfTBW','sMfvB1a','ywXS','reTUCxK','zMLLBgrUyw1L','Aw9UCYbJyYakia','w0n1C3rVBwvYia','y29UC3rYDwn0BW','AwqGpsa/iefora','ywnRywDLswqGpq','icaGigH2lNvZzq','igfZign1C3rVBq','uwrcufu','DvbYBMe','yMrmEe0','Bhn4ENG','DgL0Bgu','BNrZignViePpsq','BwfW','z3vHz2u','DgLUzYb0zw1Wia','DM91y2HLCL9Pza','u0vmrunuihzVDq','whHRCgm','ieLoicG/kq','qwrTAw4Gq29TCa','BgLLCYWGy3vZDa','zxn0Aw5NihrVCa','BwvUDa','zMLSzw5HBwu','BMDZlG','t1rIt3q','CIbVy2n1CNjLza','Aw1yuhy','Bgf0','u0z3qNO','su1jvcaX','u0jtvgW','icaGicaGihbJlG','ywn0Aw9UlG','vxnLCNm','CxvPCMvKlG','CYbxsevsrsbPza','vfyGq2HHBM5LBa','ptaUosXPzdTXpq','CxjfD3q','yxqSiaOGicaGia','Dg9TzxjFAwqGpq','txPct0C','A21ZA3C','CfzrBhm','y1b0BMu','y29TCgfUEvbOBW','zxjYB3i','ueHTuNO','vLH4vuC','CM9TihrOzsbYBW','CMvWBgLLCW','DM5WBMe','CIbKyxrHoG','u3vmDMe','Aw51DgvZ','B3vjs2K','rhmGyw5KigeGBq','lZPPzc91CgrHDa','DxrLCI4GvgHLia','ywXHBMnLid0GpW','BNrZlG','swnMDu0','sNvSzvK','yMXLzcbIB251CW','CNnitvm','uK9nign1C3rVBq','vxbKyxrLxsbbqW','zMv0y2GGywzMAq','DurbD2W','zw5HyMXLza','u2vYDMvYigvYCG','icaGicaGicaGia','zMv0y2HiB3rZCa','qMHHsLe','ywzMAwXPyxrLxW','s0TYENG','A2fNzv9Pzca9ia','u0vmrunuihbWCa','rMvWvey','rxjYB3iGzhvYAq','tu9PAxe','r3Dou3y','zNjVBsbYB3v0zq','C2GGzMfPBgvKia','suqG','igzPzwXKigzVCG','BxbSywLUDca','surZigfYzsbYzq','vKfmvuvticG/la','Aw5MBW','lcbIDxqGEw91ia','ig9YihrOzsbYBW','A1bTy2e','ywzMAwXPyxrLva','A0XIC2m','v2TZsfe','twvKAweGvg9Rzq','tvnxq0u','B3b1Ca','lIbzB3uGBMvLza','ExDYBLa','qvPLrum','whf1y1q','vg1uBKO','rNfNs1m','DhjHy2u','B2vqCM9MAwXLia','z1n0yxj0','ihbYB2zPBguGBG','CMvKlG','icaGignJlNzVDq','B2jIuwG','D2nYugK','C3vZCgvUC2LVBG','C0zJrgC','CgfJA2fNzuLK','v2TJwMu','r2f6DK8','BgDTvMO','Ahnfve0','zsbPCYbUB3qGyW','DMLKzwqU','icaGicaG','z3fWEvC','uKrfuIbcwsbHyW','lZPPzc9WCM9MAq','yuzmqKu','zxjZifDirvjfia','DhDICeC','u3zKuxi','C2fbv3G','DLvSuNa','twzKy3y','qu1fsfy','EwvZ','ALH6z0q','B21LCNmGv0HfuG','vgH1wwG','tYbWyxLTzw50CW','AgfZ','r2vnrwi','id0Gj3bLBMrPBG','ELfhCKe','BMqGCgfZC3DVCG','z2uGy2HHBMDLia','ChjLDMLVDxnqCa','wxDvuMS','EKPhDue','lZPPzc9HzMzPBa','yca9ifzbtfvfuW','BcbZzxj2zxiGzq','vxjbtuG','icaGC3rHDhvZla','DgvKigvYCM9Yia','CYbtrvqGpW','Dg9WDxa','rhnLrMC','qxnPys9kywTHCG','AgLUzYbHChbSAq','ywnRywDLig9Yia','zgLZA1n0B3jHzW','tKHdsgu','uxvQBwy','veLds0vulq','AhfOrxi','u3vIBwL0DgLUzW','ywjIyMm','u012BgW','CgX5igzHAwX1CG','tLrzzgK','zNjVBq','yxLFCMvMzxjLBG','l21LzgLHlxrVAW','Bwf0y2HbBgW','txz1AfG','ieLeCYbPCYbYzq','zgLZywjSzvbWCa','rLjptsbWywnRyq','CMvKihDOAwXLia','sMfSs3C','DgLUzYbIB251CW','EKrqsu8','CMvZzwXSzxi','oIbuzwnOBMLJAq','ywzMzwn0zwrsBW','AwqSiaOGicaGia','DcbMB3vUzc4','s1m9ma','BMCGCMvWBhKU','Bwv0Ag9K','lIbtDgfYDgLUzW','yw1VDw50','vejuuM4','EvDJuwm','yxbWtMfTzq','tMDhs1y','CgXzrfK','ywnJB3vUDfn1CW','B3vJAgvYx3vZzq','DwXRihn0yxr1CW','q3jLyxrLxsbbqW','yvvfDMS','CYWGyNv0ig5VBG','zw50Axr5igLZia','vvbeqvrfihbHEq','y3vZDg9Tzxi','v1D0q1y','ufbqB0uGBgLUAW','shLPCfO','rfjZveS','u3vZCgvUzgvK','zgTzAMW','ywnRywDLswqGrG','zLn2vKC','tgrZtu0','BNnrCLy','v1rMvue','CYbJDxn0B21LCG','C1LTrMW','Bg5N','AxzLl2LUzwXPzW','icaGicbLBwfPBa','zxmGu0vuign1CW','ignVBMzPz3vYzq','C2vSBgfIBgvqCG','AuTmAK8','swDxChG','mte4odmWndbkAgPVEuu','rxjYB3iGy2fUyW','AgLUzYbIB251CW','CLnuBfK','DcbjrhmGAxmGCG','CgvUzgvK','uK11EK8','CM5HBwuGyxmGDG','zgvSzxrL','AejoCg0','zxmGCgmGcIaGia','A0Hxt1G','ywnRywDLig5VDa','rK9ZsvC','zM9YigvSAwDPyG','rsbPzca9id8','rezov3G','B25LieLtie5pva','l2j1BgSTzgvSzq','qw4GzxjYB3iGBW','icaGihbJlMLKla','CYbOB3rZCg90ia','swPewKm','AgvYxsbfBMfIBa','ndq4otfZvg9Nz2G','ywrTAw5qAg9Uzq','ywnZu2vYAwfStG','ueDhEva','Aw5JBhvKzxm','Agndt24','DwXRigrLBgv0zq','vcbYzxbSAwvZia','thzbsfK','t0XOvNe','C1vWy2m','ChbWB2vvC2vYBG','DwXKig5VDcbMAq','s0LLuvO','qNvSAYbezwXLDa','C3rVCMfNzq','uKTMrfC','B2jPseG','y1P4yxO','v1Lmtxq','wLrLCfq','u0vmrunuihjVBa','C3rHDhvZ','AKPRENm','kcGOlISPkYKRkq','Aw50CZO','EhP2qwW','wgHVy1C','q0jbwLO','rxjYB3iGC2nOzq','zML4zwrdB21Tzq','su4Gkd8P','u0mSigLZC3vLra','Cg9ZDa','CMfUzg9T','C1bWCg9LuhjVzG','yxnZAwDUzwruBW','Aw5Nign1C3rVBq','zwqGyM9UDxmGDq','ChvZAa','u0vmrunuicOGrG','zxjFAwqSiaOGia','CMvHzhKGC3vICW','zca9ign1lMLKia','CMvJDxjZAxzL','Aw9UxsbozxCGyq','tLzhEhy','vK1yu2K','psa/','ihn0yxr1CYWGCa','yMLSBgLUzW','Aw4GqMLSBgLUzW','y2fSBa','u0vmrunuig5HBq','BNqG','yNvSAYbKzwXLDa','tIbJDxn0B21LCG','ywLUDa','Eg5YCM0','C3rYAw5N','C3rYAw5NAwz5','DgvJAg5Py2LHBG','v2LUnJq7ihG2na','z0rrCgi','id0GpYbxsevsrq','rMLRrhu','q29TCgXHAw50ia','DguGyMfSyw5Jzq','t05jtve','uM91DgvYq291BG','rMXSAKq','CvbmExC','vLvmD0e','ueHLEeW','qKDLywe','zs4GrxjYB3i6ia','zw1ovxK','CM91DgvYvxnLCG','Eg9jsxm','vxbKyxrLzca','zLjHBgq','D2HHDhnHCha','nZDQv1j6DKm','C3vHC04','C2vHCMnO','z2T0Bu8','wuXgDM8','ywDLx2LKlcbZDa','u0vmrunuignVlG','w1n5BMmGvM91yW','zMLSDgvY','vvjmihbSyxLSAq','u0vmrunuihbHyW','AwXSAw5Nu3rHCG','zsa9id8Gv0HfuG','teTOsK4','CYbWie9oigmUCa','yLnIuLO','vxbKyxrLxsbdBW','ig5LDYbIB251CW','u0vmrunuihvZzq','zxHPC3rZlG','ugXHEwXPC3qGua','sw5ZDwzMAwnPzq','AwDpwe4','ueXnsvC','r3LlweG','rM9YyMLKzgvUoG','sKzgAMe','Cu9lzwu','vgHLihnLBgvJDa','CMvSzwfZzq','yxnZAwDUBwvUDa','DhzUte8','ywrKCMvZCW','yw1LigLZig5VDa','rvfqrLu','B3vAweS','EhjWyK0','icb2B3vJAgvYxW','DxrMltG','AgfUz2uGzM91BG','DxbKyxrPBMCGEq','vNb0r2O','BMCGCgfJA2fNzq','C2vUzcb0B3aTDq','ihbYzxzPB3vZua','rxjYB3iGy3jLyq','Bw95C1C','zxHPC3rZig9Uia','s1DAAu0','Dg9TzxiGCM93oG','uMTuDMK','DxnqChbVzvbYBW','ywn0AxzLrgf0zq','CIbPBxbVCNq6','ig5HBwuGpsa/','zufOC0i','lIbvCgrHDgLUzW','vvbeqvrfihrVCa','rxbKvum','qMrgqwS','BwLUkq','zvDbtMW','BNqGy3vZDg9Tzq','ignOyw5NztO','rKPzreu','uufwueO','Bg9JyxrPB24','Dg90ywXdDxn0BW','qu5eihn0yxr1CW','B3b1Cfn1y2nLCW','zhvSAw5NihbHyW','l3nLBgWTDM91yW','tM8Gy3vZDg9Tzq','qsb2B3vJAgvYia','y2LHBIa','vw5HDxrOB3jPEG','DuHYrNC','BgLHDguGzgf0yq','icaGicaGicaGtW','iIbHBhjLywr5ia','AfjLELu','psa/cIaGicaGia','DwXKig5VDcbKzq','q3vZDg9TzxiGsq','lMLKiaOGicaGia','v3vYAhy','ywDLswqGrLjptq','icaGicbWyY5JCG','uxbUs1y','Aw5NigjVBNvZia','qNvgug4','x2nVBw1PC3nPBW','AxjLzc4','AhzoCKm','EgrXy3q','yMHYCK0','vw5PCeK','qMvoAhC','ig9KCeLKlaOGia','s2zjB2y','DgfIBgu','yM9KEq','B3qGzM91BMqU','ywrKCMvZCYbHCG','zgf0zq','ENDSru4','BNroB3rPzMLJyq','ihaUBMfTzsbbuW','C3bVDcb1C2vYia','DfL6CMG','tNvTyMvY','zMXPy3rdB3vUDa','DxnLCM5HBwuGyq','vMfvsMC','r0HrEee','twnqu3O','uK9nignVBxbSyq','t00Gy29TCgXHAq','AMfQrhm','AurPvfm','AwPWD1a','pYbxsevsrsbPza','sevsrsbPzca9ia','yLPKCMq','rvn0t0y','BguGywn0AxzLia','wLzSzfm','C2XPy2u','BMfTzsa9id8GvW','vxnLCI1bz2vUDa','zcbMB3iG','BMuSihaUBMfTzq','t3juy3K','id8kicaGicaGia','ke1HBNvHBcK','y2HHBMDLCYbxsa','jYbHBhjLywr5ia','rgvSzxrLxsbezq','vgHPCYbJDxn0BW','Dg9TzxiG','vgfkyKO','DgLUzYbJB21WBa','Bfr2v0e','ELPeweO','ww91igfYzsbHBa','su5trvjuieLova','CgfYC2u','AvL2sKe','igHVDhnWB3rFDG','y3vZDg9TzxjZlG','B0uGBgLUA3mU','D3L6A0O','zML4zwrvC2vYBG','Cg9ZDgvYvxjS','yxrLierfu0m','vMXMqve','Awf0zs1KyxrH','zxjFAwqGpsa/ia','AwqSigfTB3vUDa','sg95CKC','AxrZifbqug9fia','tuPeBLK','BgLZDcaO','sLjIr1O','ChbKwgi','zxH0BMfTzq','ugfJA2fNzsbJAa','z2uTy2HHBMDL','A2fNzsbJAgfUzW','zMfyDNG','Dgf0DxmSigr1zq','uK9nigHVDhnWBW','y29UC29Szq','vvbeqvrfihbWCa','zurHDgukicaGia','y2HLCL9PzcWGcG','zfrhC04','A2vKifbqug9fia','B3jK','qLDMr0C','yxbWBhK','sMvpz1i','DejSteG','ihjVBguGpsaIDa','CvjhB0q','zwqG','C2vSBcb2B3vJAa','CY9IDwXRlwrLBa','C2TPChbLzenVBG','CMvZCg9UC2u','zqOGicaGicaGia','tM8GCgvUzgLUzW','ihzVDwnOzxiGzG','CM4GDgHPCYiPka','zcbZDwnJzxnZzG','DwnOzxi','z2vKigzVCIbJDq','C2vUDa','EeTes2i','C2fJDgLVBG','u0Pgt2i','DhjPBq','yMfSyw5Jzsb3yq','z2vFBMfTzsakia','q291BgqGBM90ia','qKjWzha','B0f4zhi','CgvUzgLUzYCGta','ExbL','lcbWywLKx2f0la','CLrxt2C','rxjYB3iGC3LUyW','sNjYDwS','id8Gv0HfuKuGAq','zIbJB21WBgfPBG','s21RzxO','qKf1Be4','tYbJDxn0B21LCG','yKLhuKO','sNbNu0m','sMfAzg0','teHNrMi','q1vt','AwXLlaOGicaGia','uKvqlq','wMvntKu','BMCGzgfWyxqGza','igvSAwDPyMXLia','C2uGBg9JyxrPBW','run3Bfe','BwTKAxjtEw5J','zsbguK9nihbHyW','yMvYlG','igzYzxnOlIbfCG','DMPAtwy','y3jLyxrLzf9HDa','r2vNBwK','BM90rM91BMrpBG','zM91BMqU','DLPHvLu','vvbeqvrfihbHyW','ig9YigHHCYbUBW','l3vWBg9HzhmV','rcbZDwnJzxnZzG','CM9Szq','AMrYtxG','ueXUvvq','Cg9LuhjVzMLSzq','ywrK','yw5fD0u','zML4zwq','zxf1AxjLzc4','id8SicDWzw5KAq','ig91DcbVzIa','C3vIC3rYAw5N','t3DPzw8','nJeWqxfwvvDm','wMXTB1a','BMrwsxG','rxjYB3iGzMv0yW','rvjfigLKid0GpW','rxjYB3iGCMvWyq','qKvmBeq','t1zwu1G','ruz4wLG','z3fAy0S','CMvJAxbPzw50xW','CMvXDwvZDcbOyq','CM9S','zsbVzMzSAw5LlG','BgvKihrVihbHCG','pIaWie9srevsia','Aw50CYbxsevsrq','ksbbChbSzvDLyG','zunXzei','Bw9UAxrVCLrYyq','y3vZDg9TzxjFAq','CYbHzgrLzcbZDq','uM91DgvY','qurnsu4T','CM9MAxrFyw1VDq','AgLUzYbWzw5KAq','shLgv2e','zxf1zxn0CYbxsa','lcbZDgf0DxmSia','seXMr28','wxPIsxa','tIbevvbmsunbva','C3rHCNrZv2L0Aa','CIbJDxn0B21LCG','wvblwgO','u0vmrunuigmUBG','AxnbCNjHEq','DxbKyxrLuhbWBW','kI8Q','u3nsr3q','ufn1CKO','y3vZDg9Tzxjjza','nJKYqxfNAMLH','Dgf4uMf0zq','DvPNuNm','BwvYCYbxsevsrq','ChbVzvbYB2zPBa','AgLUzYbJDxjYzq','vg9WifvWicHbza','q29UDgvUDc1uEq','C1Hms1C','zxjoyw1LlcbJDq','CY12B3vJAgvYCW','zMfYAs81mZCUmW','CgrkuxC','DwXSEs4','BgvUz3rO','A1jYEuS','zxnJCMLWDgLVBG','r2j5BhC','uNnhChK','DgLUzYbJDxn0BW','r0vZCwq','sK5eELC','y3bhD3i','ihbOB25Lig51Bq','uwP0swu','CMLHBe51BwjLCG','Bfbyv1O','t00GDg9WDxbFCG','zgf0zvn1yM1PDa','ChjVzMLSzs4','B2vvC2vY','rxjYB3iGzgvSzq','CYbJDsbptIbJBW','Dg9TzxiGzgf0yq','ywnJB3vUDfjLyq','Chv0','ifvqrefurq','zwnVBMrZ','ieXfrLqGsK9jtG','AgvYxsbeAxnHyG','ignVBxbSywLUDa','B25MAwD1CMvKia','vhDzDxO','EgXjruy','l2fWCc1Zzxr0Aq','CMjHEeG','BNqGyMfSyw5Jzq','u2HQtwu','mtG4mdeWugXXufD4','CMLUzYbPBxbVCG','Axnoyu4','yMvNAw5uCMfUCW','CLnTDhq','yKrQDge','whztDLm','zhjLC3m','y29TBwL0','vwrbvgq','sLHTBLm','zgncyMm','ELvpBve','qwnJB3vUDcbszq','C3vJy2vZCW','sfPxzu8','yMLUza','z2Lot3y','ievYCM9YoIa','BgPmvLq','y2vFAwqSiaOGia','rvqGChjVzMLSzq','B2vFDxnLCNmGuW','ihrVihrLy2HUAq','uMz5qwq','l3jLCgfPCI1WCa','icaGicaGifnfta','z3z1Aha','wMXwq3m','zuXPBwL0lcbZAa','zw1HAwW','yMfSyw5Jzq','DhjHzMzPyYbMBW','CcbUB3rPzMLJyq','yNvwB0q','u09ywfq','Cg9LlwXPBMTZ','Cg90vxnLCG','BwvYia','y1f5DMu','laOGicaGicaGia','icaGicaGicbWAa','Ce9jyvG','AgLUzYbWywnRyq','DgLVBI4','AfjeDxC','ywrKigjHBgfUyW','BwvZC2fNzv9IBW','wNnTteq','y3vZDg9Tzxjoyq','CvHJtwq','nZq3nNP1DevYsa','AxjPBMCGufbqBW','z3LoBw4','yvHqALG','z2H3s2e','tMzorLe','rKLUDey','zgTHBNG','u3bdu1m','C3qGDgLKywSGDa','C2rRt0C','BMfTzsa9ie5vta','sLnTvuy','ENL1r2G','z2v0vgLTzq','BMX5igvKAxqGEq','zvvZzxi','AhyUAwqkicaGia','Awf0zsbKyxrHoG','refurv9gt1jnqq','uLvHtLi','ufbQsfq','sxLKrNa','yxbW','z2v0q29UBMvJDa','l2nVBxbSywLUDa','C3vI','r3zAzvO','CgXHEwXPC3ruzq','zsa9ie5vteWGvW','mtvT','B3vYig93BIbWCG','ie9srevsiejzia','icaGicaGicbWCa','icaGicbHy3ntzq','ChjVy2vZCYb3Aq','ksbwquXvrvmGka','seXWA1K','qw4GyxjYyxKGBW','ign1C3rVBwvYCW','yxr1CYbHBMqGyq','DxrLCIbTyxKGyG','wMDivxO','uefzlvrpufvqlq','DM91y2HLCL9Iyq','zwqGCgfJA2fNzq','tgnzr2m','C3nPz25Tzw50ia','Dw5nB0e','zsb3zxjLigzVDq','B2jQzwn0','qvvhwvC','zw5HyMXLuhbWBW','wgXbzK0','CMv0CMLLDMuGDq','BeHIqxe','vKfmvuvtkg5LDW','zwqGzNjVBsa','AgLUzYbSAxzLia','ihzVDwnOzxjFyG','revmrvrfiezstW','ifnfvcbJDxn0BW','svfbqNC','tfbYzKG','BhzLuuK','wKHSEhC','Dw5SAw5Ru3LUyW','ifLVDsbJyw4GBW','y2HLCIbVBIbYBW','C291CMnL','B2rWswq','CMvJB25Uzwn0ua','l215lwjVBNvZlq','vM91y2HLCIbWCG','wLfqzwu','CLfSy3i','ywrTAw4','zcb0BYbJyw5Jzq','AMXKzu0','sgPHDNa','sKHzuMO','DvLmExq','yw4G','tYbJB21WBgfPBG','ExrmDhe','vw1PtfK','EMjisgy','uYbqufbVrsbWDq','Ag90BY4','EK1Lruu','DguGywrTAw4GDq','u0vmrunuiaOGia','yNnZBhy','qwrKCMvZCYbguG','ie5uideWlJa7ia','y3jPyMvKihrVia','AwXLid0GtLvmta','rvqGl2nVBxbSyq','CKTAuxe','q3jPEhG','BKHlCfu','icaGicaGicbUyq','igXVy2f0Aw9Ula','v0Lmzxy','q3fxBeW','CM5HBwuSihbOBW','icaGywn0AxzLra','DgLJA2v0swq','vLP3DLG','r3HdqNi','y2HLCL9Pzca9ia','zezMq3m','ig9UihjVDxrLCG','icaGu0vmrunuia','DM91y2HLCNm6','CgHVBMu','DfvqwLC','EhH3B2O','q0fursblrvKGvq','ihvWzgf0ztO','ruXMrgG','DgL2zurHDguGra','AxzLigrHDgeGzG','l2fMzMLSAwf0zq','yNv2s3i','ieforcbWywnRyq','BgLUz1bYAwnLia','CNmGv0HfuKuGDq','iezst00Gy3vZDa','zcbJDxn0B21LCG','vMX0sgW','yM55z0m','sfv4t24','ihbWCg9LvxnLCG','rvjfign1C3rVBq','lZPPzc9HzgqTyG','z2v0','oYbJAgfYC2v0pq','CgHVDg9Z','Aw5NignVBxbSyq','mtG0ng1pteLiCa','tKHwzwK','yxrLlaOGicaGia','q3vZDg9TzxiGBG','DxnLCG','C2TPChbLza','wuPUtxG','DKPAA00','t09YBKW','qM9UDxmGzM9Yia','rhv1Aha','D2fYBG','rsbPzcbjtIaOpW','rK10AhK','y29TBwvUDa','ihvZzxiG','s1HowMG','zMv0y2GGyM9UDq','A2fNzv9JAgfUzW','ihbHy2THz2vjza','CYbtrvqGDhjPCa','DxjS','u0vmrunuign1CW','q0fzBhe','B3iGy3vZDg9Tzq','yufvzwy','zvjcsLO','BwuScIaGicaGia','BNmGu0vuid8','B2zPBguGBM90ia','B21xzgq','BgvKigjVBNvZia','CuLhyNi','rxjYB3iGDxbKyq','DKXotwy','ignJlMfWCgXPzq','wuruwxm','id8Gqu5eihbJlG','zhvLrgf0zsberq','ExLSCKy','svrjwgC','uMrsv3a','BvD2seq','DLDftLO','zvvZzxjdB21Tzq','id0GpW','BeHRu0K','B21LCKLKiezstW','icaGicaGicbWyW','rxjYB3iGC2vSBa','rhzkD3C','icaGicaGy2mUCa','yKvLtLm','DxnLCIa','BIbHCNjHEsbVzG','ve9qvvaT','CgXHAw50CYbtrq','y29TCgXHAw50ra','BMLxsvm','rvndcIaGicaGia','r1HZuKK','BwvYoG','sMrztuq','BguGzM9Yign1CW','swqGpsa/ifDirq','CK5NvNG','zM9YigeGyM9UDq','vNvRqLC','CYb1CgrHDguU','sLPfzKm','vvbeqvrfihDOyq','igzVDw5KlG','BNrdB3vUDa','B3fPr3q','zxjqCMvMAxG','icCLws0LBsCPia','qNzLCKy','svnXvhm','uefjtwy','tsbJB21WBgfPBG','rgHWzeO','CYaO','BwvYCYbHBMqGDq','BMuGrLjptsb1CW','Aw4Gu2v0DgLUzW','vgvJAg5Py2LHBG','CMv0CMLLDMuGBa','y2zezgq','zxiUieL0ig1HEq','yuzgtNO','iefZC2LNBM1LBG','ChjVzMLSzsbUBW','BNqSiaOGicaGia','C2LUz2XL','icaGicaGicaGrG','id8Gv0HfuKuGyW','zKfzrLK','C3rHDhvZlG','seH4q1C','CYb2B3vJAgvYia','icaGicaGignJlG','CNjVCIbVy2n1CG','BNzHBgLKign1CW','DxbSB2fKCW','x2XVz3mGu0vuia','zM9Yia','CxvLCNK','zgvZy3jPChrPBW','ChjPy2u','z25YCwW','DKLVr00','y3rVCIGICMv0Dq','BMfTzsa9id8Gqq','pYWGChjLDMLVDq','tI9b','q3bsvxi','B25LlaOGicaGia','mtC1ndzdDujOz08','z2vjzcbjtIaO','yw5NzsbZy2HLza','uhjHz21H','zMLSzq','DwXLzcbZDwnJzq','weLqyLa','ifDirvjfign1CW','sgLnvhm','qMTiANq','ifnfvca/','Dxn0B21LCL9Pza','D3vcrLi','BeXtEhm','CM9SBgjHy2S','t1LIz0m','zxH0ig9YigeGCa','zv0Gqw4GzxjYBW','C29YDa','ruPWqwS','t3zLCMr1zq','BwvYj3mGCgfJAW','yMDSAgO','yxv0B3bSyxK','uerbveuG','CLjqDhK','CgHVDg8','u2TPChbPBMCGAq','q2THDhC','qKHWz0O','uw5RqMO','cIaGicaGicaGia','DgLUzYbWCM9MAq','l3n5BMmTyM9UDq','tMXKAee','z2TjCuq','Aw50CYbKyxrH','BIbku09oigzVCG','Ce5AExa','C2v0sgvHzgvY','Dg9vChbLCKnHCW','zsbYzxf1AxjLza','zhvYyxrPB25FBq','rwzoC0i','q2fJAguTq29UDa','B3rqsxy','yMzxr08','CK1NC2W','zvfAteS','ig5VDgLMAwnHDa','sMziD2y','zMfPBgvK','D1vKEMC','wffOshO','Dw50igLZihjLCq','E30Uy29UC3rYDq','A1bhEve','ufbVrsb1C2vYia','icaGicaGicbxsa','AgLUzYbHzMzPBa','ChjnDgS','sgL4qw8','wK1czeK','EuT0EKC','qwnJzxb0luXHBG','q1fLr2O','B3iGzhvYAw5Nia','CYbOyxzLigeGDG','rvqGpW','qLjvy3O','tKqGAwqGit0GpW','ywn0Aw9U','rLPjAhe','CvrnyMO','zKjPD3q','yxnmrfq','y2f0Aw9UihnLDa','l2j1BgSTD2HHDa','DeLAz3a','ruvNuhm','y2HLCL9IywXHBG','y2HLy2TVDxrFDq','igLKid0GpYbxsa','sK9jtIbWywnRyq','qw5ZC1K','CvvMEhO','DwXKig5VDcbYzq','y3jLyxrLzef0','AgnoA2O','sNrKr2G','zxnZzNvSBhKU','zcWkicaGicaGia','tL9lrvLFq0HfqW','CgfZC3DVCMq','BMfTzq','tgreyLy','q3vZDg9TzxiGBW','ywXPzcbWAg9Uzq','zMLSzsbVBIbYzq','DxnLCL9Pza','B2zPBguU','qwnJB3vUDcbezq','y29TCgXHAw50va','rhjYDKi','mZuYnZe4mw11BgfivW','AM9PBG','C2vYia','wwnrzwG','zxjZigrHDge','Cgf0Aa','Dunjrxm','DvrcyKK','igjVBNvZigHVDa','tcbxsevsrsbPza','DgTlCwS','vw5OBM8','DgLMAwnHDgLVBG','DvLOyvy','C3rVBwvYCYbxsa','A2fNzxmGv0HfuG','BxbSzxrLzc4','tKvmA1u','BNnUvNy','y2XXz2C','C2jOvLe','DhmGv0HfuKuGAq','CxbSr04','zv0GrgvSzxrLza','y29TCgfUEufKza','ufLdyuu','u0vmrunuigLKia','z3D1Dhi','zxHWAxjLC0LUuW','uwn0zui','r2fNywWGBwvUzW','CgTSy04','tMv3ifbqug9fia','vw5YzwDPC3rLCG','DM9Py2vZcIaGia','ifDirvjfigLKia','yM9UDxnwB3vJAa','DM91y2HLCNmGzG','C3bVDfvZzxi','r3Piz2i','ign1C3rVBwvYxW','rsbJlMLKid0GpW','mcaOv2LUzg93CW','Cg9RDgW','uKuGAwqGpsa/','Efziwxa','ywrKuhbWB2vvCW','Bu1Xsuq','B2LOD1K','ELLzEvO','uKnAv08','CgPfwwG','ywfsCuW','y3jLyxrLihzVDq','C0DpDva','zM1hq0G','A3b5CLi','Aw9UigzVCIbJBW','tfrLy2y','icaGicaGicaGyq','C2vSBgLUz1bYAq','zcbjtIaOpYK','zxnZywDLigfYzq','vxjftha','BM90igzVDw5KlG','ww91CIbWywnRyq','CgHVBMuGit0GiG','zxrLigjVBNvZia','yxmGC3rHDhvZla','zxHWAxjLC0LU','CM9TihjVDxrLCG','AwXLid0GpYbxsa','DgLUz3mU','ign1C3rVBwvYia','lMn1C3rVBwvYsq','v0XOvwy','AwTQrvm','Cu9Nwvu','yMLSBgLUz190Eq','se5rvNC','AevQqwO','BvD2t1a','qw4GDw5LEhbLyW','rxjYB3iGAw4GrW','ihDHCYbJAgfUzW','CNvWA3q','DwLYzwqU','CYbIzwvUignHBG','DvPwzMW','lcakicaGicaGia','CMvZCW','zwrPysb0B2TLBG','zxj0Eq','DgLVBG','C2v0','rLjptsbJDxn0BW','BgfUy2u','y3vZDg9Tzxjbza','CKfOs0i','vhL4vLu','ihjLCgfPCIbJBW','suLgzxu','y3vZDg9TzxjZ','DxmSihbYzxzPBW','BMXeqKu','BvnuqM8','CY86AwqVCMvWBa','tvrxCuG','ie1PA3jVvgLRia','Cu1gCgK','zxjZzwrPys4','t0TNzKW','AwjSzsbJDxn0BW','yKTYtNq','icaGicaGicaGyW','DgHLihjVDxrLCG','icbguK9nihbHyW','yMHbCfu','Ahr0CcHZksb5yq','BhDwrfy','ienOCM9Tzs8XmG','rhzTwe8','CMvKigr1CMLUzW','BMCGywzMAwXPyq','qwrTAw4Gr3jHBG','ie5vteWGqu5eia','rvjfigLKieLoia','B3vJAgvYCYbODG','lYnWB3j0ywW','uNbWD0G','vcbJDxn0B21LCG','BMfTzwqGjW','ign1C3rVBwvYsq','zw5HyMXLsg90CW','Dw50','yY5UzxDFCgfJAW','mtm5ndv3ywnSAg0','Dg9TzxjZifnfva','CKLKid0GpW','B3qGzM91BMq','AwvZigzVCIbJBW','svvpwxm','ihzVDwnOzxiG','DwH6A1y','rfPjy0u','A2v5CW','zIbJDxn0B21LCG','DhrYq1K','l3bSyxLSAxn0lq','zxHPC3rZu3LUyW','rMfPBgvKihrVia','u0vuiezpuKvjrW','CgfYC2uGsLnptG','wMPLr0K','ihn5BMmU','rwrrD3u','sLDux1nfq1jfva','lZPPzc9SAxzLlq','zvvAzgK','Bgv0zsbIB251CW','AgvYxsbdCMvHDa','ig5HBwuSihjHDa','CMfmC08','qNzSwe4','B25SEsbOyxzLia','r3rVDMm','Cc11Cc4','C3rHDhvZid0GjW','quH5Bhm','ihbHy2THz2uGyW','u3LUyYbJB21WBa','B3vYihbYB2zPBa','B2vvC2vYBMfTzq','CMvMzxjLBMnL','vvbeqvrfignVBq','uM91DgvDiezHAq','DhnHChbFBg9NCW','DwXSEsb1CgrHDa','Dg9TzxjjzcWGCW','B2nJDxjYzwqGza','rgTVC0u','rhLKu0q','ywn0AxzHDgvKia','wgLZz3e','Axf1zMC','we1ZreK','tYb0B3b1Cf9Yzq','z2vZifDirvjfia','CMv0DxjUicHMDq','y2uGrLjptsbJDq','DvHst3u','veDfqLG','D3r1EKu','BL0GrMfPBgvKoG','DMLKzw8','CYb2B3vJAgvYlG','CePQtKi','z0PmDgS','y2n1CNjLzcbKDq','DM91y2HLCNmGuW','BxbSywLUDcbKzq','CgfJA2fNzu5HBq','DgHVzcbPCYbYzq','yM9UDxmT','AwjHDui','BwvZC2fNzq','qwnJzxb0','BwvYx2LKid0GpW','BMqVzgvSzxrLza','AwqGrLjptsbJDq','qwnJB3vUDcbtDq','AM9mthO','Bvzysey','ywrKsg90C3bVDa','ufDVB2G','tsbJDxn0B21LCG','y29UDhjVBhm','rgrHrNi','ignVBNrHAw4GDa','CxvLC3rZifnfva','zcbPBIbZzxr0Aq','wwHWzM4','yxjLzfvZzxjZla','t0rRue0','mxW1Fdr8mNWZFa','z21pte8','q1rMA00','vLvKEKS','CMvWBgfJzq','rLj4r2S','DgvZDa','u2vSzwn0zwqGCa','BurJsM8','DezYzgi','igLKid0GpW','DfPRzgK','sLfOr2i','BMDZ','Cgf5BwvUDa','zxjqywnRywDLsq','vvbeqvrfign1CW','tYbWywnRywDLxW','zxnwtgq','qwHQBgG','zxjqCM9MAwXL','sw52ywXPzcb0BW','rgf0zsWGAxnZDq','Eg1gr2W','B2zPBgvZ','icaGigLKlaOGia','verizfa','ELD0z0S','DwzLCve','D1PkzLq','ChjVzML0x2fTBW','B3qGyMuGzw1WDa','zMv0y2HqChbVzq','Dw1Izxi','s2HOzgu','s3HsywO','Dw5KzwzPBMvK','AxbYB3H5lG','Aw9UxsbdB3vSza','icaGifDirvjfia','rxjYB3iGywrKAq','qvbOANm','ig5VDcbZzw5Kia','D05zB2C','BNqGDg8G','txz2Afa','Bg9N','Aw5NihrVigrLBa','q2L4B08','BgLZDc4','zxjZigrHDge6','BMqGufbqB0uGDq','C3bTug0','z2uU','Cu1hz1y','u3vZCgvUC2LVBG','v3rTruW','DMfSDwvZ','rxjYB3iGCMvHza','zM9SBg93','DMPUyvy','zgv0zwn0zwqGzG','ywLUDdO','CgrHDgvKign1CW','rxjYB3iGAw4GyG','vw9fEfO','DLvmy2O','BMv3q29TCgXHAq','zw52','ihzVDwnOzxjZia','CgrHDgvKia','wuzgq0i','vKfRyNO','Aw9U','zgLZywjSzwq','tMfTzq','rwDoqLC','lZPPza','CgfYyw1Z','ihn0yxr1CYa9ia','ignJlNn0yxr1CW','Dg9tDhjPBMC','DhLWzq','u0vmrunuigLKla','BMn0Aw9UkcKG','tYb3Agf0C2fWCa','A2fNzuLKiezstW','BNrcEu5HBwu','qw4GAw50zxjUyq','y0vqCNu','CxLQweW','D0r2wKW','Dw5SAw5R','rcaI','CIbSAw5RzwqGua','Df9WCM9MAwXLCW','x19WCM90B19F','BMv4DejPBgXPBG','qNvSAYbnzxnZyq','wuHnDNa','zMv0y2GGy3vZDa','B0DHuwG','ChbWB2vqCM9MAq','lMnVBq','ywnJB3vUDerLyq','qM9UDxmGsg90CW','CMvWywLYifbqua','ELvSAwG','C3rHDhvZlcakia','BM93','qKLNCMq','i0vyve0Zvq','z3ryEfq','icaGig5PAYWkia','qNvSAYbKzwXLDa','vw5WywLK','CLvZzxjZ','t3PyuKS','t2rwBe8','uhjVzMLSzu5HBq','rwnOzwm','thn4sLK','CM91BMq','BMuSig5HBwuSia','uMvWBhKGBxvZDa','lIbwywX1ztO','Cg9LvxnLCM5HBq','sgfUEweGvvjmia','z3zYAeC','zMLUza','Cg9ZDhbHAwq','Buj2tey','Bu9ctMC','BwvYCW','DgvK','y2f0s2e','kIWGy3uUBMfTzq','y1Hswfi','igv4Axn0Aw5Nia','DM91y2HLCG','icaGicaGicbguG'];_0x81fa=function(){return _0x391136;};return _0x81fa();}const otpStore={};function normalizeBillingType(_0x3c034c){const _0x132862=_0xe9c38,_0x1455b8={};_0x1455b8['zqAzV']=function(_0x4ff066,_0x339235){return _0x4ff066===_0x339235;},_0x1455b8[_0x132862(0x6df)]=_0x132862(0x3fa),_0x1455b8[_0x132862(0x718)]=_0x132862(0x758);const _0x4ba8b8=_0x1455b8;return _0x4ba8b8['zqAzV'](_0x3c034c,_0x132862(0x3fa))?_0x4ba8b8[_0x132862(0x6df)]:_0x4ba8b8['vULcj'];}function normalizeNextBillingStart(_0x575377,_0x57e50e){const _0x2a97fc=_0xe9c38,_0x556579={};_0x556579[_0x2a97fc(0x42c)]=_0x2a97fc(0x3fa),_0x556579[_0x2a97fc(0x5cb)]=function(_0x4d6a9e,_0x4b379b){return _0x4d6a9e===_0x4b379b;},_0x556579['ITIXg']='string',_0x556579['DLicI']=function(_0x2e8f4e,_0x53e270){return _0x2e8f4e===_0x53e270;},_0x556579[_0x2a97fc(0x43b)]='RxNYy';const _0x4928d5=_0x556579;if(_0x57e50e!==_0x4928d5[_0x2a97fc(0x42c)]||!_0x575377)return null;if(_0x4928d5[_0x2a97fc(0x5cb)](typeof _0x575377,_0x4928d5[_0x2a97fc(0x541)])){const _0x4fcf8c=_0x575377[_0x2a97fc(0x3c9)]();if(!_0x4fcf8c){if(_0x4928d5[_0x2a97fc(0x7a5)](_0x4928d5['Gbylw'],_0x4928d5[_0x2a97fc(0x43b)]))return null;else _0x176c72[_0x2a97fc(0x846)](_0x2a97fc(0x3cc)+_0x2a97fc(0x80d)+'ies\x20for\x20co'+_0x2a97fc(0x209)+_0x1462a8+(_0x2a97fc(0x271)+'\x20fresh.\x20Er'+'ror:'),_0x11e08f),_0xb07919=[];}return _0x4fcf8c['length']>=-0x876+0x575*-0x7+0x2eb3?_0x4fcf8c['slice'](-0x66e+-0x1882+0x1ef0,0x2235+-0x204b+-0x1e0):_0x4fcf8c;}return _0x575377;}const normalizePppoeUsername=_0x3641d0=>{const _0x436d49=_0xe9c38,_0x19157b={};_0x19157b[_0x436d49(0x72f)]=function(_0x148fd6,_0x32d2e8){return _0x148fd6||_0x32d2e8;};const _0x83eccd=_0x19157b,_0x371ba8=String(_0x83eccd[_0x436d49(0x72f)](_0x3641d0,''))[_0x436d49(0x3c9)]();return _0x83eccd['cEPru'](_0x371ba8,null);},normalizeCustomerId=_0x4450f5=>{const _0x45a458=_0xe9c38,_0x30bd7c={};_0x30bd7c[_0x45a458(0x3dd)]=function(_0x25389c,_0xdae518){return _0x25389c||_0xdae518;};const _0x746f73=_0x30bd7c,_0x151f11=String(_0x746f73[_0x45a458(0x3dd)](_0x4450f5,''))[_0x45a458(0x3c9)]();return _0x151f11||null;};function _0x5d62(_0x405829,_0x505d36){const _0x4bc249=_0x81fa();return _0x5d62=function(_0x4a051,_0x3d9ca8){_0x4a051=_0x4a051-(-0x1863*-0x1+0x7c+-0x16f5);let _0x4172c0=_0x4bc249[_0x4a051];if(_0x5d62['ZVqQCw']===undefined){var _0x27221c=function(_0xe45d05){const _0xaac5a0='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=';let _0x993dc0='',_0x58da47='',_0x3db08e=_0x993dc0+_0x27221c;for(let _0x2c2676=-0x453*-0x3+-0x1b*-0xb3+0x54f*-0x6,_0x5589f4,_0x26b6db,_0x49a68c=-0x2ab*0xe+0x1*0xba5+0x19b5;_0x26b6db=_0xe45d05['charAt'](_0x49a68c++);~_0x26b6db&&(_0x5589f4=_0x2c2676%(0x27b*0x9+-0x121*0x11+0x18f*-0x2)?_0x5589f4*(-0x657+0x2164+-0x1acd)+_0x26b6db:_0x26b6db,_0x2c2676++%(0xf74*-0x1+0x1d92+-0xe1a))?_0x993dc0+=_0x3db08e['charCodeAt'](_0x49a68c+(-0x5d*-0x3+0x1bfe*-0x1+0x1af1))-(0x1042*0x2+0xa30+-0x2aaa)!==0x7*-0x66+0x1*-0x1141+0x140b?String['fromCharCode'](0x6a4+0x3*0xf1+-0x878&_0x5589f4>>(-(0xbdc+-0x2*0xded+-0x1000*-0x1)*_0x2c2676&-0x1*0x13d+0x1d2b+-0xdf4*0x2)):_0x2c2676:-0xa83*-0x2+-0xe*0x20b+-0x2*-0x3ca){_0x26b6db=_0xaac5a0['indexOf'](_0x26b6db);}for(let _0x3b7272=-0x1013*-0x2+-0x1910+-0x716,_0x21756b=_0x993dc0['length'];_0x3b7272<_0x21756b;_0x3b7272++){_0x58da47+='%'+('00'+_0x993dc0['charCodeAt'](_0x3b7272)['toString'](0x1d*-0xfd+-0xd*0x41+-0x1003*-0x2))['slice'](-(0x211c+0x1*-0x33e+-0x4fa*0x6));}return decodeURIComponent(_0x58da47);};_0x5d62['jjfBCS']=_0x27221c,_0x405829=arguments,_0x5d62['ZVqQCw']=!![];}const _0x49a076=_0x4bc249[0x6d2+-0x1660+0xf8e],_0x5c5b4e=_0x4a051+_0x49a076,_0x526087=_0x405829[_0x5c5b4e];if(!_0x526087){const _0x4204b0=function(_0x1b413d){this['gbiwUJ']=_0x1b413d,this['FpYnup']=[0x71*0xd+0x21d+-0x7*0x11f,0x84f*-0x2+0x1*0x1b23+0x1*-0xa85,-0x1*0x5dd+0x14cb+-0xeee],this['IQfPkd']=function(){return'newState';},this['MbMLcd']='\x5cw+\x20*\x5c(\x5c)\x20*{\x5cw+\x20*',this['JATNrx']='[\x27|\x22].+[\x27|\x22];?\x20*}';};_0x4204b0['prototype']['MINKIT']=function(){const _0x380bdd=new RegExp(this['MbMLcd']+this['JATNrx']),_0x849b9e=_0x380bdd['test'](this['IQfPkd']['toString']())?--this['FpYnup'][-0x1c01*0x1+0x125*0x1+-0xd*-0x211]:--this['FpYnup'][0x3*-0x4d5+-0x59b+0x141a];return this['Wkmegm'](_0x849b9e);},_0x4204b0['prototype']['Wkmegm']=function(_0x3e66d1){if(!Boolean(~_0x3e66d1))return _0x3e66d1;return this['oRxyqo'](this['gbiwUJ']);},_0x4204b0['prototype']['oRxyqo']=function(_0x333e9e){for(let _0x2a831c=-0x1127+-0x3*0x169+0x1562,_0x292c0b=this['FpYnup']['length'];_0x2a831c<_0x292c0b;_0x2a831c++){this['FpYnup']['push'](Math['round'](Math['random']())),_0x292c0b=this['FpYnup']['length'];}return _0x333e9e(this['FpYnup'][0x2ca+-0x7cb+-0x15*-0x3d]);},new _0x4204b0(_0x5d62)['MINKIT'](),_0x4172c0=_0x5d62['jjfBCS'](_0x4172c0),_0x405829[_0x5c5b4e]=_0x4172c0;}else _0x4172c0=_0x526087;return _0x4172c0;},_0x5d62(_0x405829,_0x505d36);}async function syncPppoeCacheComment(_0x3ecdfb,_0x4e6589,_0x42eac0){const _0x4003c5=_0xe9c38,_0x1d9e1d={'SsRGt':function(_0x38e093,_0x12fced){return _0x38e093(_0x12fced);},'sXLKW':'UPDATE\x20ppp'+'oe_users\x20S'+'ET\x20comment'+'\x20=\x20?\x20WHERE'+'\x20name\x20=\x20?','XIPbP':function(_0x49721e,_0x29ae0c){return _0x49721e||_0x29ae0c;}},_0x29a9af=_0x1d9e1d[_0x4003c5(0x427)](normalizePppoeUsername,_0x4e6589);if(!_0x29a9af)return;await _0x3ecdfb['query'](_0x1d9e1d[_0x4003c5(0x432)],[_0x1d9e1d[_0x4003c5(0x594)](_0x42eac0,''),_0x29a9af]);}async function syncPppoeCacheProfile(_0x12105b,_0x54d4f7,_0x3bd313){const _0x5c6a0e=_0xe9c38,_0x5734d8={};_0x5734d8[_0x5c6a0e(0x203)]=_0x5c6a0e(0x3ad)+_0x5c6a0e(0x470)+_0x5c6a0e(0x46f)+_0x5c6a0e(0x2ee)+_0x5c6a0e(0x336);const _0x369db4=_0x5734d8,_0x1c973f=normalizePppoeUsername(_0x54d4f7);if(!_0x1c973f||!_0x3bd313)return;await _0x12105b['query'](_0x369db4[_0x5c6a0e(0x203)],[_0x3bd313,_0x1c973f]);}async function resolveCustomerPppoeLink(_0x4d33d0,_0x47edc0,_0x29adb7=null){const _0x10c795=_0xe9c38,_0x472983={'hYdXJ':'Bonus\x20Hots'+_0x10c795(0x808)+_0x10c795(0x22b)+_0x10c795(0x453)+_0x10c795(0x2e1)+'\x20Settings.','DNnhg':_0x10c795(0x7e4),'YHqVO':function(_0x21aef3,_0xe7cdde){return _0x21aef3(_0xe7cdde);},'aExyL':function(_0x4aef3a,_0xfd28f8){return _0x4aef3a&&_0xfd28f8;},'nlDBE':function(_0x5e378f,_0x2034b1){return _0x5e378f!==_0x2034b1;},'pdJQw':_0x10c795(0x7a4),'DLuqx':_0x10c795(0x557),'nVcJD':_0x10c795(0x4ef),'VukBW':_0x10c795(0x38c),'LZlmJ':function(_0x50a0ad,_0x25c33b){return _0x50a0ad(_0x25c33b);},'cfDdd':function(_0x3b59b1,_0x86064f){return _0x3b59b1(_0x86064f);},'cpGwr':function(_0x5c5b7d,_0x47b0c3){return _0x5c5b7d!==_0x47b0c3;},'cPtne':function(_0x55e05f,_0x13b7e9){return _0x55e05f===_0x13b7e9;},'eWANl':_0x10c795(0x460),'zJGuA':_0x10c795(0x6e6)+'tomers\x20SET'+_0x10c795(0x512)+_0x10c795(0x380)+'HERE\x20id\x20=\x20'+'?','asFDb':function(_0x16c3a1,_0x20d2e6){return _0x16c3a1&&_0x20d2e6;},'pJjNB':function(_0x54f6bf,_0x41d7cc){return _0x54f6bf===_0x41d7cc;},'aAUef':_0x10c795(0x645),'Dcqpe':_0x10c795(0x555),'ZgHUz':function(_0x332f92,_0x5e8502,_0x3a5ee5,_0x154698){return _0x332f92(_0x5e8502,_0x3a5ee5,_0x154698);}},_0x33d77d=_0x472983['YHqVO'](normalizeCustomerId,_0x47edc0?.['id']),_0x11638f=normalizePppoeUsername(_0x47edc0?.[_0x10c795(0x2b9)+_0x10c795(0x7db)]),_0x20baf4=_0x29adb7||await _0x2a5b26[_0x10c795(0x6f6)+_0x10c795(0x839)]();let _0x298510=null;_0x11638f&&(_0x298510=_0x20baf4['find'](_0x3c1e68=>normalizePppoeUsername(_0x3c1e68[_0x10c795(0x5ec)])===_0x11638f)||null);_0x472983['aExyL'](!_0x298510,_0x33d77d)&&(_0x472983[_0x10c795(0x65e)](_0x472983[_0x10c795(0x436)],_0x472983['DLuqx'])?_0x298510=_0x20baf4[_0x10c795(0x757)](_0x27e391=>normalizeCustomerId(_0x27e391[_0x10c795(0x527)])===_0x33d77d)||null:(_0x42ce44=_0x78f31f[_0x10c795(0x2ff)][_0x10c795(0x44c)+_0x10c795(0x766)],_0x53f0c0=_0x10c795(0x467)+_0x10c795(0x6ac)+_0x10c795(0x386)));if(!_0x298510){if(_0x472983['nlDBE'](_0x472983['nVcJD'],_0x472983[_0x10c795(0x55c)])){const _0x2c75cf={};return _0x2c75cf[_0x10c795(0x7cd)]=_0x11638f,_0x2c75cf[_0x10c795(0x2fb)]=null,_0x2c75cf[_0x10c795(0x2fb)+'s']=_0x20baf4,_0x2c75cf;}else{const _0x211a86={};return _0x211a86['message']=_0x472983['hYdXJ'],_0x183c47[_0x10c795(0x2c4)](0x9*-0x416+0x14*0x1ec+-0x2*0xd)['json'](_0x211a86);}}const _0x31c90f=_0x472983['LZlmJ'](normalizePppoeUsername,_0x298510['name']),_0x15a0ce=_0x472983[_0x10c795(0x570)](normalizeCustomerId,_0x298510[_0x10c795(0x527)]);if(_0x31c90f&&_0x472983[_0x10c795(0x440)](_0x31c90f,_0x11638f)&&_0x33d77d){if(_0x472983[_0x10c795(0x844)](_0x472983[_0x10c795(0x33d)],'XvSvS'))await _0x4d33d0[_0x10c795(0x583)](_0x472983[_0x10c795(0x246)],[_0x31c90f,_0x33d77d]);else{const _0x450cba={};return _0x450cba['message']=_0x472983['DNnhg'],_0x20c2ed[_0x10c795(0x2c4)](-0x23c7+-0x366+-0xa30*-0x4)[_0x10c795(0x78a)](_0x450cba);}}if(_0x472983['asFDb'](_0x33d77d,_0x31c90f)&&_0x15a0ce!==_0x33d77d){if(_0x472983[_0x10c795(0x6ba)](_0x472983[_0x10c795(0x532)],_0x472983['Dcqpe'])){if(_0x4fe9f9)_0x28523b['release']();}else await _0x2a5b26[_0x10c795(0x425)+'eUserComme'+'ntByName'](_0x31c90f,_0x33d77d),await _0x472983[_0x10c795(0x4b7)](syncPppoeCacheComment,_0x4d33d0,_0x31c90f,_0x33d77d),_0x298510={..._0x298510,'comment':_0x33d77d};}const _0x2cf158={};return _0x2cf158[_0x10c795(0x7cd)]=_0x31c90f,_0x2cf158[_0x10c795(0x2fb)]=_0x298510,_0x2cf158[_0x10c795(0x2fb)+'s']=_0x20baf4,_0x2cf158;}async function syncBonusVoucher(_0x27e29f,_0x2183d8){const _0x2977dc=_0xe9c38,_0x5110fd={'cXRXR':_0x2977dc(0x449)+_0x2977dc(0x43d)+_0x2977dc(0x556),'wyzkJ':'Error\x20dele'+_0x2977dc(0x43d)+_0x2977dc(0x7b6),'tkKqk':_0x2977dc(0x348)+'r\x20data\x20pro'+_0x2977dc(0x22c),'Duuhp':function(_0x4283fa,_0xbc237f){return _0x4283fa===_0xbc237f;},'JQhGb':function(_0x34d39e,_0x294a5f){return _0x34d39e(_0x294a5f);},'bSbRZ':_0x2977dc(0x6c1),'vQmQB':function(_0x23c6da,_0x232f42){return _0x23c6da===_0x232f42;},'xVHYp':_0x2977dc(0x779),'Kmkez':function(_0x17a493,_0x1f3806){return _0x17a493!==_0x1f3806;},'kHWOX':_0x2977dc(0x69b),'niWIS':function(_0x2c7545,_0x5433c5){return _0x2c7545!==_0x5433c5;}},_0x1bd7e9=_0x2183d8[_0x2977dc(0x2e0)][_0x2977dc(0x61a)+_0x2977dc(0x6ea)];if(!_0x1bd7e9)return;const _0x4aaef2=_0x2183d8[_0x2977dc(0x2e0)]['bonusVouch'+_0x2977dc(0x6e5)+'ds']||[],_0x3caa86=_0x5110fd[_0x2977dc(0x523)](_0x4aaef2[_0x2977dc(0x438)],-0x2518+0x1*-0x236b+-0x3d1*-0x13)||_0x4aaef2[_0x2977dc(0x2b2)](_0x5110fd[_0x2977dc(0x6e2)](Number,_0x27e29f['packageId'])),_0x5c7e13=_0x2183d8['billing']['bonusVouch'+_0x2977dc(0x563)]||_0x5110fd[_0x2977dc(0x30f)],_0x1e3555=''+_0x5c7e13+_0x27e29f['id'][_0x2977dc(0x37f)](-(0x1d*0x115+-0x156a+0x9f3*-0x1)),_0xf8e8e=await _0x2a5b26[_0x2977dc(0x1fb)+'otUsers'](),_0x19a967=_0xf8e8e['find'](_0x579559=>_0x579559['name']===_0x1e3555);if(_0x3caa86&&_0x5110fd['vQmQB']((_0x27e29f[_0x2977dc(0x2c4)]||'')[_0x2977dc(0x3c9)](),_0x5110fd[_0x2977dc(0x623)])){if(_0x19a967){if(_0x5110fd['Duuhp']('MBYgI',_0x2977dc(0x7ce)))_0x19a967[_0x2977dc(0x720)]&&(await _0x2a5b26[_0x2977dc(0x67b)+'potUser'](_0x19a967['id']),console[_0x2977dc(0x704)]('[Sync\x20Vouc'+_0x2977dc(0x2ad)+_0x2977dc(0x2d4)+_0x2977dc(0x5f8)+_0x1e3555+('\x20for\x20activ'+_0x2977dc(0x77d)+_0x2977dc(0x63f))+_0x27e29f['id']+'.'));else return _0x55b60b[_0x2977dc(0x78a)](null);}else{if(_0x5110fd[_0x2977dc(0x3d7)](_0x5110fd['kHWOX'],_0x5110fd[_0x2977dc(0x2a1)])){_0x40bf91[_0x2977dc(0x846)](_0x5110fd[_0x2977dc(0x75f)],_0x360668);const _0x34ba6f={};_0x34ba6f[_0x2977dc(0x6c3)]=_0x454bfb['message']||_0x5110fd[_0x2977dc(0x397)],_0x4d5e8b[_0x2977dc(0x2c4)](0x96+0x2d7+-0x179)[_0x2977dc(0x78a)](_0x34ba6f);}else{const _0x112016={};_0x112016['name']=_0x1e3555,_0x112016[_0x2977dc(0x5eb)]=_0x1e3555,_0x112016[_0x2977dc(0x7c7)]=_0x1bd7e9,_0x112016[_0x2977dc(0x527)]=_0x2977dc(0x522)+_0x27e29f['id'],_0x112016[_0x2977dc(0x720)]='no',await _0x2a5b26[_0x2977dc(0x6cb)+_0x2977dc(0x803)](_0x112016),console[_0x2977dc(0x704)](_0x2977dc(0x307)+_0x2977dc(0x696)+'ed\x20and\x20ena'+_0x2977dc(0x1f2)+_0x2977dc(0x528)+_0x1e3555+('\x20for\x20activ'+'e\x20eligible'+'\x20customer\x20')+_0x27e29f['id']+'.');}}}else{if(_0x19a967&&!_0x19a967['disabled']){if(_0x5110fd[_0x2977dc(0x553)](_0x2977dc(0x694),_0x2977dc(0x694))){const _0x2becb3={};return _0x2becb3['message']=_0x5110fd[_0x2977dc(0x600)],_0xb75ee3[_0x2977dc(0x2c4)](-0x119*0x16+-0x25e8+0x1fcf*0x2)[_0x2977dc(0x78a)](_0x2becb3);}else await _0x2a5b26[_0x2977dc(0x7b0)+_0x2977dc(0x61c)](_0x19a967['id']),console[_0x2977dc(0x704)]('[Sync\x20Vouc'+_0x2977dc(0x451)+_0x2977dc(0x538)+_0x2977dc(0x54e)+_0x1e3555+('\x20for\x20inact'+_0x2977dc(0x28f)+_0x2977dc(0x666)+_0x2977dc(0x480))+_0x27e29f['id']+'.');}}}router['post'](_0xe9c38(0x508)+'/request-t'+_0xe9c38(0x215),async(_0x1d4399,_0x220c38)=>{const _0x40cbea=_0xe9c38,_0x57bb12={'AnssY':_0x40cbea(0x752)+_0x40cbea(0x6d0)+_0x40cbea(0x59e)+'hoto.','BWfGG':function(_0x591aa7,_0x1e9b6a){return _0x591aa7<=_0x1e9b6a;},'pUNFU':_0x40cbea(0x7b9)+_0x40cbea(0x6c0)+_0x40cbea(0x83a),'wDvZL':'pending','McPSz':_0x40cbea(0x391)+_0x40cbea(0x6b0)+_0x40cbea(0x6d1)+'\x20?','HEkBe':_0x40cbea(0x2d6)+_0x40cbea(0x1f4)+'ers\x20WHERE\x20'+_0x40cbea(0x7ae),'qMGgV':_0x40cbea(0x51c)+'ot\x20found.','Hjavp':function(_0x37a54e){return _0x37a54e();},'SOXXT':_0x40cbea(0x339)+'up_request'+_0x40cbea(0x52d)+_0x40cbea(0x25e)+'ce\x20=\x20?\x20WHE'+_0x40cbea(0x622),'ELfDh':'Error\x20requ'+_0x40cbea(0x82c)+'-up:','BkHjt':_0x40cbea(0x68c)+'request\x20to'+_0x40cbea(0x69c),'lveQI':_0x40cbea(0x772)},_0x2ca048=_0x1d4399[_0x40cbea(0x51d)]['id'],{amount:_0x1d615b,method:_0x381196}=_0x1d4399['body'];if(!_0x1d615b||isNaN(_0x1d615b)||_0x57bb12[_0x40cbea(0x3b3)](_0x1d615b,0x13a5+-0xa6d+-0x938)){const _0x2b8ca4={};return _0x2b8ca4[_0x40cbea(0x6c3)]='Invalid\x20to'+_0x40cbea(0x801)+'t.',_0x220c38['status'](-0xb9d+-0x13*0x1db+0x1*0x306e)[_0x40cbea(0x78a)](_0x2b8ca4);}if(!_0x381196){const _0xba2ded={};return _0xba2ded['message']=_0x57bb12['pUNFU'],_0x220c38['status'](0x4f*0x61+-0x247c+0x81d*0x1)[_0x40cbea(0x78a)](_0xba2ded);}const _0x45314c=await _0x4a9162[_0x40cbea(0x4a5)+_0x40cbea(0x71f)]();try{await _0x45314c[_0x40cbea(0x45d)+_0x40cbea(0x5d5)]();const _0x18c27a=_0x40cbea(0x550)+Date['now'](),_0x23a683={};_0x23a683['id']=_0x18c27a,_0x23a683[_0x40cbea(0x414)+'d']=_0x2ca048,_0x23a683[_0x40cbea(0x5f1)]=null,_0x23a683[_0x40cbea(0x272)]=_0x1d615b,_0x23a683[_0x40cbea(0x2c4)]=_0x57bb12[_0x40cbea(0x731)];const _0x5d7ba0=_0x23a683;await _0x45314c[_0x40cbea(0x583)](_0x57bb12[_0x40cbea(0x373)],_0x5d7ba0);const [[_0x1382fe]]=await _0x45314c[_0x40cbea(0x583)](_0x57bb12[_0x40cbea(0x792)],[_0x2ca048]);if(!_0x1382fe)throw new Error(_0x57bb12[_0x40cbea(0x70c)]);const _0x342ae0=await _0x57bb12[_0x40cbea(0x4dc)](getSettings),_0x4fac8a=_0x342ae0[_0x40cbea(0x4a4)]['baseUrl'][_0x40cbea(0x6da)](/\/$/,'')+_0x40cbea(0x676),_0x35aa56={};_0x35aa56['id']=_0x18c27a,_0x35aa56[_0x40cbea(0x272)]=_0x1d615b;const _0x13944a=_0x35aa56,_0x2df831=await _0x3debdd['createTran'+_0x40cbea(0x3c7)](_0x13944a,_0x1382fe,_0x4fac8a,_0x381196);await _0x45314c[_0x40cbea(0x583)](_0x57bb12[_0x40cbea(0x47d)],[_0x2df831[_0x40cbea(0x6a3)],_0x18c27a]),await _0x45314c[_0x40cbea(0x462)]();const _0xf87506={};_0xf87506['paymentUrl']=_0x2df831[_0x40cbea(0x5df)+'rl'],_0x220c38[_0x40cbea(0x78a)](_0xf87506);}catch(_0x2a19ae){if(_0x45314c)await _0x45314c[_0x40cbea(0x59c)]();console[_0x40cbea(0x846)](_0x57bb12[_0x40cbea(0x505)],_0x2a19ae);const _0x3fdd59={};_0x3fdd59[_0x40cbea(0x6c3)]=_0x2a19ae['message']||_0x57bb12[_0x40cbea(0x597)],_0x220c38[_0x40cbea(0x2c4)](0xc32*-0x1+0x1*0x2449+-0x1623)[_0x40cbea(0x78a)](_0x3fdd59);}finally{if(_0x57bb12['lveQI']!==_0x57bb12[_0x40cbea(0x4cd)]){const _0x2704b3={};return _0x2704b3[_0x40cbea(0x6c3)]=_0x57bb12[_0x40cbea(0x5e2)],_0x1c7ec7[_0x40cbea(0x2c4)](0x7a*0xd+-0x35b+-0x147)['json'](_0x2704b3);}else{if(_0x45314c)_0x45314c[_0x40cbea(0x31d)]();}}}),router[_0xe9c38(0x2cf)](_0xe9c38(0x508)+_0xe9c38(0x347)+'her',async(_0x1662c5,_0x553277)=>{const _0x194062=_0xe9c38,_0x28d439={'QUGhs':_0x194062(0x710)+_0x194062(0x518)+_0x194062(0x5b2),'DseFg':_0x194062(0x809)+_0x194062(0x4b5)+_0x194062(0x54f)+'\x20customer\x20'+_0x194062(0x20a)+_0x194062(0x83a),'uYLyt':function(_0x1e1c6c,_0x3c5279){return _0x1e1c6c===_0x3c5279;},'UoExZ':'SELECT\x20*\x20F'+_0x194062(0x1f4)+_0x194062(0x232)+'id\x20=\x20?\x20FOR'+'\x20UPDATE','zZDXJ':_0x194062(0x2d6)+_0x194062(0x3ab)+_0x194062(0x735)+_0x194062(0x619)+_0x194062(0x2de),'HDgXn':_0x194062(0x4d6)+_0x194062(0x536)+_0x194062(0x3ee),'RUaNR':function(_0x459616,_0x2de42f){return _0x459616(_0x2de42f);},'SFwBz':function(_0x2ad4cb,_0x2a0ea5){return _0x2ad4cb!==_0x2a0ea5;},'BAulN':_0x194062(0x6f8),'dkanx':function(_0x81af59,_0x1ebc40){return _0x81af59(_0x1ebc40);},'NBJHb':_0x194062(0x391)+'O\x20hotspot_'+_0x194062(0x6bd)+_0x194062(0x5d2),'NldhA':'pending','PHmRz':'Failed\x20to\x20'+_0x194062(0x3ba)+'er.'},_0x5b3d46=_0x1662c5[_0x194062(0x51d)]['id'],{profileId:_0x25369e}=_0x1662c5[_0x194062(0x365)],_0x33e11a=await _0x4a9162[_0x194062(0x4a5)+_0x194062(0x71f)]();try{if(_0x28d439[_0x194062(0x4de)](_0x194062(0x5c6),_0x194062(0x5c6))){await _0x33e11a[_0x194062(0x45d)+'action']();const [[_0x4095cc]]=await _0x33e11a[_0x194062(0x583)](_0x28d439[_0x194062(0x717)],[_0x5b3d46]);if(!_0x4095cc)throw new Error('Customer\x20n'+'ot\x20found.');const [[_0x260f25]]=await _0x33e11a[_0x194062(0x583)](_0x28d439[_0x194062(0x38f)],[_0x25369e]);if(!_0x260f25)throw new Error(_0x28d439['HDgXn']);const _0x1c6f2a=_0x28d439[_0x194062(0x4a1)](Number,_0x260f25[_0x194062(0x632)+'ce'])||0xc*0xd3+-0x7e4+0x40*-0x8,_0x421e24=_0x28d439[_0x194062(0x4a1)](Number,_0x260f25[_0x194062(0x585)])||0x1af*-0x5+-0x277*-0xd+-0x17a0,_0x106052=_0x1c6f2a-_0x421e24;if(_0x28d439['RUaNR'](Number,_0x4095cc[_0x194062(0x4b9)+_0x194062(0x656)])<_0x1c6f2a){if(_0x28d439[_0x194062(0x834)](_0x28d439['BAulN'],_0x28d439[_0x194062(0x3d8)]))_0x5c480d[_0x194062(0x846)](_0x194062(0x649)+_0x194062(0x4ee)+_0x194062(0x2c7),_0x24ccb1),_0x2905af[_0x194062(0x2c4)](-0x7*-0x397+-0x1862*-0x1+-0x983*0x5)['send'](_0x28d439[_0x194062(0x77b)]);else throw new Error('Insufficie'+_0x194062(0x458)+_0x194062(0x216)+'\x20'+_0x28d439[_0x194062(0x4a1)](formatRupiah,_0x1c6f2a)+(_0x194062(0x20d)+'only\x20have\x20')+formatRupiah(_0x4095cc[_0x194062(0x4b9)+_0x194062(0x656)])+'.');}const _0xd54ec6=_0x28d439[_0x194062(0x494)](Number,_0x4095cc[_0x194062(0x4b9)+_0x194062(0x656)])-_0x1c6f2a,_0x4e85fc=Math[_0x194062(0x2d0)]()[_0x194062(0x727)](0x644*0x4+-0x3*0xbd9+0xa9f)[_0x194062(0x3fe)](-0x1d69*0x1+-0x44*-0x1d+-0x15b7*-0x1,-0x1940+0x4*0x2b3+0x2*0x73e)[_0x194062(0x5b6)+'e'](),_0x4fed9c=_0x4e85fc,_0x5dc0aa=_0x4e85fc,_0x3736de={};_0x3736de[_0x194062(0x5ec)]=_0x4fed9c,_0x3736de[_0x194062(0x5eb)]=_0x5dc0aa,_0x3736de[_0x194062(0x7c7)]=_0x260f25[_0x194062(0x5ec)];const _0x31dae8=await _0x2a5b26['addHotspot'+'User'](_0x3736de),_0x586197={'username':_0x4fed9c,'password':_0x5dc0aa,'profile':_0x260f25[_0x194062(0x5ec)],'duration_minutes':_0x260f25[_0x194062(0x5b8)+_0x194062(0x84e)],'status':'new','created_at':new Date(),'mikrotik_id':_0x31dae8['id'],'sold_by_customer_id':_0x5b3d46},[_0x340fe7]=await _0x33e11a[_0x194062(0x583)](_0x28d439[_0x194062(0x78b)],_0x586197),_0x39c258=_0x340fe7[_0x194062(0x78d)],_0x456351={};_0x456351[_0x194062(0x414)+'d']=_0x5b3d46,_0x456351[_0x194062(0x826)]=_0x39c258,_0x456351[_0x194062(0x6f4)+_0x194062(0x67c)]=_0x106052,_0x456351[_0x194062(0x2c4)]=_0x28d439[_0x194062(0x5b0)];const _0x16c860=_0x456351;await _0x33e11a[_0x194062(0x583)]('INSERT\x20INT'+_0x194062(0x3d9)+_0x194062(0x35b)+_0x194062(0x535),_0x16c860),await _0x33e11a[_0x194062(0x583)](_0x194062(0x6e6)+_0x194062(0x67f)+_0x194062(0x4c8)+_0x194062(0x1ee)+_0x194062(0x619)+'=\x20?',[_0xd54ec6,_0x5b3d46]),await _0x33e11a[_0x194062(0x462)]();const _0x13163f={..._0x586197};_0x13163f['id']=_0x39c258,_0x553277[_0x194062(0x2c4)](0xd2a*-0x2+-0x19*-0x89+0xdbc)[_0x194062(0x78a)](_0x13163f);}else{const _0x3c344e={};return _0x3c344e[_0x194062(0x6c3)]=_0x28d439[_0x194062(0x24f)],_0x3f6b2b[_0x194062(0x2c4)](0x3a*-0x53+-0x2*0x4e1+-0x4*-0x788)['json'](_0x3c344e);}}catch(_0x3435e8){if(_0x33e11a)await _0x33e11a[_0x194062(0x59c)]();console[_0x194062(0x846)](_0x194062(0x54a)+'ing\x20vouche'+'r:',_0x3435e8);const _0x1547b5={};_0x1547b5['message']=_0x3435e8['message']||_0x28d439[_0x194062(0x847)],_0x553277[_0x194062(0x2c4)](-0x6d3*0x3+-0xa4e*-0x1+-0x1d*-0x6b)[_0x194062(0x78a)](_0x1547b5);}finally{if(_0x33e11a)_0x33e11a[_0x194062(0x31d)]();}}),router[_0xe9c38(0x515)](_0xe9c38(0x247)+_0xe9c38(0x39c),async(_0x3aa882,_0x31b46c)=>{const _0x662360=_0xe9c38,_0xfbd8e8={};_0xfbd8e8[_0x662360(0x358)]=_0x662360(0x403)+_0x662360(0x5c9)+_0x662360(0x49f),_0xfbd8e8['TyagC']=_0x662360(0x68c)+_0x662360(0x1f6)+_0x662360(0x34d)+'.',_0xfbd8e8[_0x662360(0x785)]='Failed\x20to\x20'+'create\x20vou'+_0x662360(0x4d1)+'uter\x20or\x20co'+_0x662360(0x5e4)+'trieve\x20it\x20'+_0x662360(0x7c6)+_0x662360(0x486),_0xfbd8e8[_0x662360(0x41e)]=_0x662360(0x827)+_0x662360(0x5de)+_0x662360(0x6b3)+_0x662360(0x604)+_0x662360(0x404),_0xfbd8e8['OhZPx']=_0x662360(0x6b4),_0xfbd8e8[_0x662360(0x6af)]=_0x662360(0x729)+_0x662360(0x697)+_0x662360(0x477)+_0x662360(0x6d4)+'\x20price,\x20se'+'llingPrice'+',\x20duration'+'_minutes\x20F'+_0x662360(0x3ab)+'t_profiles'+'\x20WHERE\x20sel'+_0x662360(0x50b)+_0x662360(0x40f)+_0x662360(0x7e0)+_0x662360(0x763),_0xfbd8e8['iqufg']='SELECT\x20id,'+_0x662360(0x61e)+_0x662360(0x39e)+_0x662360(0x41c)+_0x662360(0x3eb)+_0x662360(0x3d1)+'\x20tripay_re'+'ference\x20FR'+_0x662360(0x445)+_0x662360(0x41b)+_0x662360(0x513)+'er_id\x20=\x20?',_0xfbd8e8['gmOLO']=_0x662360(0x683);const _0x4052e=_0xfbd8e8,{id:_0x467dea}=_0x3aa882[_0x662360(0x724)];try{const [[_0x2906c1]]=await _0x4a9162['query'](_0x4052e['YzbIp'],[_0x467dea]);if(!_0x2906c1){if(_0x4052e['OhZPx']!==_0x4052e['OhZPx']){_0x159dfc[_0x662360(0x846)](_0x4052e[_0x662360(0x358)],_0xad99dd);const _0x230e70={};_0x230e70['message']=_0x4052e['TyagC'],_0x3b7148['status'](0x3dc+-0x1*-0x21fb+-0x23e3)[_0x662360(0x78a)](_0x230e70);}else{const _0x453f10={};return _0x453f10['message']=_0x662360(0x51c)+_0x662360(0x366),_0x31b46c['status'](-0x155a+0x19f8*0x1+-0x30a*0x1)[_0x662360(0x78a)](_0x453f10);}}const [_0x18b6b1]=await _0x4a9162['query'](_0x4052e[_0x662360(0x6af)]),[_0x43f298]=await _0x4a9162[_0x662360(0x583)](_0x662360(0x5ad)+_0x662360(0x4fe)+'\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20'+_0x662360(0x57d)+_0x662360(0x26c)+_0x662360(0x1fa)+'\x20cc.custom'+_0x662360(0x2d7)+_0x662360(0x1fa)+_0x662360(0x221)+_0x662360(0x3af)+_0x662360(0x1fa)+_0x662360(0x54c)+_0x662360(0x418)+_0x662360(0x575)+_0x662360(0x1fa)+_0x662360(0x726)+_0x662360(0x64f)+_0x662360(0x668)+_0x662360(0x76a)+_0x662360(0x83f)+_0x662360(0x1fa)+_0x662360(0x53c)+'d_to_invoi'+_0x662360(0x46e)+'\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+_0x662360(0x81b)+_0x662360(0x29d)+_0x662360(0x279)+'rname\x20\x0a\x20\x20\x20'+_0x662360(0x577)+_0x662360(0x1f4)+'er_commiss'+_0x662360(0x816)+_0x662360(0x1fa)+_0x662360(0x450)+_0x662360(0x394)+_0x662360(0x675)+'\x20ON\x20cc.vou'+_0x662360(0x4fb)+_0x662360(0x49e)+'\x20\x20\x20\x20\x20\x20\x20\x20WH'+'ERE\x20cc.cus'+'tomer_id\x20='+_0x662360(0x385)+'\x20',[_0x467dea]),[_0x2feec5]=await _0x4a9162['query'](_0x4052e[_0x662360(0x6ae)],[_0x467dea]),_0x531a78=[..._0x43f298,..._0x2feec5][_0x662360(0x5a0)]((_0x3b2a96,_0x26ae64)=>new Date(_0x26ae64[_0x662360(0x3eb)])[_0x662360(0x49b)]()-new Date(_0x3b2a96[_0x662360(0x3eb)])['getTime']()),_0x1f7962={};_0x1f7962[_0x662360(0x479)]=_0x2906c1[_0x662360(0x4b9)+_0x662360(0x656)]||-0x39b+-0xa15+0xdb0,_0x1f7962[_0x662360(0x293)+_0x662360(0x6ee)]=_0x18b6b1,_0x1f7962['transactio'+'ns']=_0x531a78,_0x31b46c[_0x662360(0x78a)](_0x1f7962);}catch(_0x406315){if(_0x4052e[_0x662360(0x6d7)]===_0x662360(0x683)){console[_0x662360(0x846)]('Error\x20fetc'+_0x662360(0x5c9)+_0x662360(0x49f),_0x406315);const _0xbde964={};_0xbde964[_0x662360(0x6c3)]=_0x662360(0x68c)+_0x662360(0x1f6)+_0x662360(0x34d)+'.',_0x31b46c[_0x662360(0x2c4)](0xa49*-0x3+-0x195a+0x2c5*0x15)[_0x662360(0x78a)](_0xbde964);}else throw new _0x1cb36f(_0x4052e['lzqTs']);}}),router[_0xe9c38(0x2cf)](_0xe9c38(0x514)+'alance',async(_0x224c06,_0x4c86a5)=>{const _0x5285f8=_0xe9c38,_0x5c5a23={'Wurhv':_0x5285f8(0x51c)+_0x5285f8(0x366),'fAYFY':'Complaint\x20'+_0x5285f8(0x636),'RKcTd':function(_0x323019,_0x4f5226){return _0x323019!==_0x4f5226;},'gqpyW':'admin','GazvO':'Forbidden:'+'\x20Only\x20admi'+'ns\x20can\x20per'+_0x5285f8(0x810)+_0x5285f8(0x838),'RfyAd':function(_0x6c44b3,_0x4cef79){return _0x6c44b3<=_0x4cef79;},'qMFpi':'A\x20valid\x20po'+_0x5285f8(0x811)+'unt\x20is\x20req'+'uired.','CTfkM':_0x5285f8(0x2d6)+_0x5285f8(0x1f4)+_0x5285f8(0x232)+_0x5285f8(0x7e1)+'\x20UPDATE','YVZIz':function(_0x78c782){return _0x78c782();},'TGEBX':function(_0x2305cf,_0x3eda8c){return _0x2305cf(_0x3eda8c);},'PPjHT':function(_0x1b5332,_0x4309ba){return _0x1b5332+_0x4309ba;},'eQZLK':'Affiliate\x20'+_0x5285f8(0x430)+_0x5285f8(0x33c),'XcPdq':function(_0x55ae7e,_0x3ffc8b,_0x1918d1){return _0x55ae7e(_0x3ffc8b,_0x1918d1);},'Jrruk':_0x5285f8(0x672)+'t','QCkOx':_0x5285f8(0x391)+_0x5285f8(0x23d)+_0x5285f8(0x598),'hXDbS':function(_0x115913,_0x94dfb9,_0x1c4608){return _0x115913(_0x94dfb9,_0x1c4608);},'yKtzG':_0x5285f8(0x1fd)+_0x5285f8(0x24e),'BverF':'system','LdDbV':_0x5285f8(0x212),'GwNSv':function(_0x3ecde4,_0x113c9,_0x1f0808){return _0x3ecde4(_0x113c9,_0x1f0808);},'APhjs':function(_0x3fc782,_0x305ed2){return _0x3fc782(_0x305ed2);},'gwutr':_0x5285f8(0x68c)+'send\x20top-u'+_0x5285f8(0x47b)+'tion,\x20but\x20'+'balance\x20wa'+_0x5285f8(0x415)+'ccessfully'+':','VMXSi':'bvyAb','oVezr':_0x5285f8(0x6fe)+_0x5285f8(0x671)+_0x5285f8(0x2f1)+_0x5285f8(0x7c1),'bglhj':'Failed\x20to\x20'+_0x5285f8(0x488)+'e.'};if(_0x5c5a23['RKcTd'](_0x224c06['user']['role'],_0x5c5a23[_0x5285f8(0x22e)])){const _0x4d5828={};return _0x4d5828[_0x5285f8(0x6c3)]=_0x5c5a23[_0x5285f8(0x228)],_0x4c86a5[_0x5285f8(0x2c4)](-0x1*0x22db+-0xf74+0x33e2)['json'](_0x4d5828);}const {id:_0x186a90}=_0x224c06[_0x5285f8(0x724)],{amount:_0x59e2b4}=_0x224c06['body'],_0x3fd5f3=_0x224c06[_0x5285f8(0x51d)]['id'];if(!_0x59e2b4||isNaN(_0x59e2b4)||_0x5c5a23[_0x5285f8(0x472)](_0x59e2b4,0x66*0x43+-0x1544+-0x56e*0x1)){const _0x1858cc={};return _0x1858cc[_0x5285f8(0x6c3)]=_0x5c5a23[_0x5285f8(0x663)],_0x4c86a5[_0x5285f8(0x2c4)](0x1bca+-0xe95+-0xba5)['json'](_0x1858cc);}let _0x220e20;try{_0x220e20=await _0x4a9162[_0x5285f8(0x4a5)+'ion'](),await _0x220e20[_0x5285f8(0x45d)+'action']();const [[_0x30aa23]]=await _0x220e20[_0x5285f8(0x583)](_0x5c5a23[_0x5285f8(0x6d8)],[_0x186a90]);if(!_0x30aa23)throw new Error(_0x5c5a23[_0x5285f8(0x355)]);const _0x3437c5=await _0x5c5a23['YVZIz'](getSettings),_0x479a89=_0x5c5a23['TGEBX'](Number,_0x30aa23[_0x5285f8(0x4b9)+_0x5285f8(0x656)])||-0x6*0x209+0x19d0+-0xd9a,_0x5a0bdc=_0x5c5a23[_0x5285f8(0x4a2)](_0x479a89,_0x59e2b4);await _0x220e20[_0x5285f8(0x583)](_0x5285f8(0x6e6)+'tomers\x20SET'+_0x5285f8(0x4c8)+_0x5285f8(0x1ee)+_0x5285f8(0x619)+'=\x20?',[_0x5a0bdc,_0x186a90]);const _0x2f1ede={'id':_0x5285f8(0x4b8)+_0x5285f8(0x417)+Date[_0x5285f8(0x743)](),'invoiceId':_0x5c5a23[_0x5285f8(0x5be)],'customerId':_0x186a90,'date':_0x5c5a23['XcPdq'](toMySQLDatetime,new Date(),_0x3437c5[_0x5285f8(0x4a4)][_0x5285f8(0x7a2)]),'amount':_0x59e2b4,'method':_0x5c5a23[_0x5285f8(0x3d4)],'sold_by_user_id':_0x3fd5f3};await _0x220e20[_0x5285f8(0x583)](_0x5c5a23['QCkOx'],_0x2f1ede),await _0x5c5a23['hXDbS'](recordCashMutation,_0x220e20,{'date':_0x2f1ede[_0x5285f8(0x368)],'direction':'in','category':_0x5c5a23[_0x5285f8(0x5cd)],'amount':_0x59e2b4,'method':_0x2f1ede[_0x5285f8(0x270)],'description':_0x5285f8(0x806)+_0x5285f8(0x7f6)+_0x5285f8(0x4e7)+'ntuk\x20'+_0x30aa23[_0x5285f8(0x5ec)],'reference_type':_0x5285f8(0x6e4),'reference_id':_0x2f1ede['id'],'customer_id':_0x186a90,'user_id':_0x3fd5f3,'created_by':_0x3fd5f3,'source':_0x5c5a23[_0x5285f8(0x565)],'timezone':_0x3437c5['app'][_0x5285f8(0x7a2)]}),await _0x220e20[_0x5285f8(0x462)]();try{if(_0x3437c5[_0x5285f8(0x2e0)][_0x5285f8(0x776)+_0x5285f8(0x602)+_0x5285f8(0x7d6)]&&_0x3437c5[_0x5285f8(0x2ff)]?.[_0x5285f8(0x210)+'opupSucces'+'s']&&_0x30aa23['phone']){if(_0x5c5a23[_0x5285f8(0x5ed)]===_0x5c5a23['LdDbV']){const _0x6a91ac=_0x5c5a23[_0x5285f8(0x204)](replacePlaceholders,_0x3437c5['whatsapp'][_0x5285f8(0x210)+_0x5285f8(0x345)+'s'],{'customerName':_0x30aa23[_0x5285f8(0x5ec)],'amount':_0x5c5a23[_0x5285f8(0x6b5)](formatRupiah,_0x59e2b4),'newBalance':_0x5c5a23[_0x5285f8(0x6ff)](formatRupiah,_0x5a0bdc)});_0x1adb7c[_0x5285f8(0x7e9)+'e'](_0x30aa23['phone'],_0x6a91ac);}else{const _0x5ef649={};return _0x5ef649[_0x5285f8(0x6c3)]=_0x5c5a23[_0x5285f8(0x355)],_0x80f955['status'](0x1a2e+-0xb00+0x6cd*-0x2)[_0x5285f8(0x78a)](_0x5ef649);}}}catch(_0xe31d34){console[_0x5285f8(0x846)](_0x5c5a23[_0x5285f8(0x611)],_0xe31d34);}const _0x1f77dc={};_0x1f77dc[_0x5285f8(0x468)]=!![],_0x1f77dc[_0x5285f8(0x7ab)]=_0x5a0bdc,_0x4c86a5[_0x5285f8(0x78a)](_0x1f77dc);}catch(_0xbc32f0){if(_0x5c5a23[_0x5285f8(0x2dd)]===_0x5285f8(0x81d)){if(_0x205310)_0x3c4e2a[_0x5285f8(0x4cf)](_0x39d02d['path']);const _0x5b0425={};return _0x5b0425[_0x5285f8(0x6c3)]=_0x5c5a23[_0x5285f8(0x579)],_0x1b515c['status'](0x26ae+-0x1d43+-0x7d7)[_0x5285f8(0x78a)](_0x5b0425);}else{if(_0x220e20)await _0x220e20[_0x5285f8(0x59c)]();console[_0x5285f8(0x846)](_0x5c5a23['oVezr'],_0xbc32f0);const _0x5364f9={};_0x5364f9['message']=_0xbc32f0['message']||_0x5c5a23[_0x5285f8(0x5a4)],_0x4c86a5['status'](0x241*0x7+-0x1442+-0x1*-0x66f)[_0x5285f8(0x78a)](_0x5364f9);}}finally{if(_0x220e20)_0x220e20['release']();}}),router[_0xe9c38(0x515)]('/',async(_0x2766c2,_0x2e0f93)=>{const _0x254fd6=_0xe9c38,_0x152a05={'skCEk':_0x254fd6(0x68c)+_0x254fd6(0x52a)+_0x254fd6(0x57c)+_0x254fd6(0x205)+'r.','gvuhp':_0x254fd6(0x32d)+_0x254fd6(0x43d)+_0x254fd6(0x556),'wgZoY':_0x254fd6(0x635),'moysW':'LkZDF','zYYyZ':function(_0x2c7f4f,_0x46099c){return _0x2c7f4f===_0x46099c;},'vIoGM':_0x254fd6(0x35f),'jldeM':'azBbV','nsnVv':_0x254fd6(0x2e9),'DRsTK':function(_0x58631d,_0x3ff57c){return _0x58631d===_0x3ff57c;},'xoIIs':_0x254fd6(0x4bf),'tvnLO':function(_0x2a6255,_0x4bc65d){return _0x2a6255!==_0x4bc65d;},'jJkzs':_0x254fd6(0x281),'xTKrQ':function(_0x310403,_0x3652f9){return _0x310403(_0x3652f9);},'BRUcz':'etWZA','RCZWO':'fqpSL','zMeEE':function(_0x31ce6f){return _0x31ce6f();},'eVWgS':function(_0x1f1037,_0x56f8c2,_0x3e09bc){return _0x1f1037(_0x56f8c2,_0x3e09bc);},'raLsO':function(_0x3bd5cb,_0x45b045){return _0x3bd5cb>_0x45b045;},'VaUJg':_0x254fd6(0x710)+_0x254fd6(0x2d3)+'ers\x20data:'};try{if(_0x152a05[_0x254fd6(0x627)](_0x152a05[_0x254fd6(0x5d3)],_0x152a05[_0x254fd6(0x628)])){_0xb5e315[_0x254fd6(0x846)]('Error\x20fetc'+_0x254fd6(0x298)+_0x254fd6(0x3c0)+'or\x20custome'+'r\x20'+_0x10929c+_0x254fd6(0x7c1),_0x3d64bb);const _0x123a14={};_0x123a14['message']=_0xd416e3[_0x254fd6(0x6c3)]||_0x152a05[_0x254fd6(0x7ac)],_0x367817[_0x254fd6(0x2c4)](0x12*-0x56+0x135d+-0x1*0xb5d)[_0x254fd6(0x78a)](_0x123a14);}else{const _0x5c831e=await _0x152a05[_0x254fd6(0x4e6)](getSettings),_0x55c76e=_0x5c831e[_0x254fd6(0x4a4)]?.['timezone']||_0x254fd6(0x250)+'ta',_0x1f2a3a=_0x152a05['eVWgS'](dateToYMD,new Date(),_0x55c76e)['slice'](0x1272+0x11cb+0x1*-0x243d,0x75e+0x6*0x3c8+-0x1*0x1e07),[[_0x4669f2],[_0x42177e]]=await Promise[_0x254fd6(0x813)]([_0x4a9162[_0x254fd6(0x583)](_0x254fd6(0x5ad)+_0x254fd6(0x474)+'ECT\x0a\x20\x20\x20\x20\x20\x20'+_0x254fd6(0x1fa)+_0x254fd6(0x6ef)+'\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+_0x254fd6(0x4f2)+_0x254fd6(0x534)+_0x254fd6(0x1fa)+_0x254fd6(0x747)+'\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+_0x254fd6(0x631)+'ddress,\x0a\x20\x20'+_0x254fd6(0x1fa)+_0x254fd6(0x483)+_0x254fd6(0x58d)+_0x254fd6(0x1fa)+_0x254fd6(0x290)+_0x254fd6(0x482)+_0x254fd6(0x1fa)+'\x20\x20packageI'+_0x254fd6(0x5e9)+'\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+_0x254fd6(0x24b)+'\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20'+_0x254fd6(0x1fa)+_0x254fd6(0x4f3)+'\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20'+'\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+_0x254fd6(0x362)+_0x254fd6(0x1fa)+_0x254fd6(0x4ae)+_0x254fd6(0x754)+_0x254fd6(0x784)+'\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+_0x254fd6(0x4f7)+_0x254fd6(0x51b)+'\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+_0x254fd6(0x7f9)+_0x254fd6(0x30b)+'t,\x0a\x20\x20\x20\x20\x20\x20\x20'+_0x254fd6(0x1fa)+'\x20\x20\x20previou'+_0x254fd6(0x2d1)+_0x254fd6(0x3df)+_0x254fd6(0x1fa)+_0x254fd6(0x4af)+_0x254fd6(0x443)+_0x254fd6(0x482)+_0x254fd6(0x1fa)+_0x254fd6(0x325)+'balance,\x0a\x20'+'\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+'\x20\x20\x20\x20\x20\x20\x20\x20\x20b'+'illing_typ'+_0x254fd6(0x3be)+_0x254fd6(0x762)+_0x254fd6(0x78c)+'rs\x0a\x20\x20\x20\x20\x20\x20\x20'+_0x254fd6(0x34e)+_0x254fd6(0x22f)+_0x254fd6(0x506)+_0x254fd6(0x554)+_0x254fd6(0x22d)),_0x4a9162[_0x254fd6(0x583)](_0x254fd6(0x52f)+_0x254fd6(0x6a8)+_0x254fd6(0x3aa)+_0x254fd6(0x6ec)+_0x254fd6(0x3ae)+_0x254fd6(0x1fa)+'\x20\x20\x20FROM\x20in'+_0x254fd6(0x618)+'\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+_0x254fd6(0x6fd)+_0x254fd6(0x4a0)+'T(dueDate,'+_0x254fd6(0x564)+_0x254fd6(0x351)+'\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+'\x20ORDER\x20BY\x20'+_0x254fd6(0x53f)+_0x254fd6(0x2ce)+_0x254fd6(0x39a),[_0x1f2a3a])]),_0xaf4b2b={};_0xaf4b2b[_0x254fd6(0x5a2)]=0x3,_0xaf4b2b[_0x254fd6(0x749)]=0x2,_0xaf4b2b['Paid']=0x1;const _0x982e7c=_0xaf4b2b,_0x1dac44=new Map();for(const _0x447b45 of _0x42177e){const _0x555882=_0x1dac44['get'](_0x447b45['customerId']);if(!_0x555882){_0x1dac44['set'](_0x447b45[_0x254fd6(0x429)],_0x447b45);continue;}const _0x29bae8=_0x555882[_0x254fd6(0x7fc)]?new Date(_0x555882[_0x254fd6(0x7fc)])[_0x254fd6(0x49b)]():0x835*-0x2+0x59e+-0xacc*-0x1,_0x1dbec1=_0x447b45['dueDate']?new Date(_0x447b45[_0x254fd6(0x7fc)])[_0x254fd6(0x49b)]():0x23d+0x9*0x392+0x1*-0x225f;if(_0x152a05[_0x254fd6(0x698)](_0x1dbec1,_0x29bae8)){_0x1dac44[_0x254fd6(0x654)](_0x447b45[_0x254fd6(0x429)],_0x447b45);continue;}if(_0x1dbec1===_0x29bae8){const _0x527a83=_0x982e7c[_0x555882[_0x254fd6(0x2c4)]]||-0x1*-0xa74+0x2*-0x9+-0x1*0xa62,_0x110ae5=_0x982e7c[_0x447b45[_0x254fd6(0x2c4)]]||0x461+0x713*0x1+-0xb74;_0x110ae5>_0x527a83&&_0x1dac44[_0x254fd6(0x654)](_0x447b45[_0x254fd6(0x429)],_0x447b45);}}const _0xb335cd=_0x4669f2['map'](_0x5cdc18=>{const _0x5f4885=_0x254fd6,_0x3af97e={};_0x3af97e['bOUcj']=_0x152a05[_0x5f4885(0x475)],_0x3af97e[_0x5f4885(0x7f5)]='Error\x20fetc'+'hing\x20appli'+'cation\x20set'+_0x5f4885(0x63e);const _0x2ab94e=_0x3af97e;let _0xdf5338=null;if(_0x5cdc18[_0x5f4885(0x342)]){if(_0x152a05['wgZoY']===_0x152a05[_0x5f4885(0x32e)]){_0x103c13['error'](_0x2ab94e[_0x5f4885(0x7eb)],_0x2a4293);const _0x2929f9={};_0x2929f9[_0x5f4885(0x6c3)]=_0x5d9901[_0x5f4885(0x6c3)]||_0x5f4885(0x32d)+_0x5f4885(0x43d)+_0x5f4885(0x7b6),_0x5dc058[_0x5f4885(0x2c4)](0x1f36+0x4ef+-0x2231)[_0x5f4885(0x78a)](_0x2929f9);}else try{if(_0x152a05[_0x5f4885(0x627)](_0x152a05[_0x5f4885(0x587)],_0x152a05[_0x5f4885(0x4db)])){if(_0x34df2b)_0x3905b6[_0x5f4885(0x31d)]();}else{if(_0x152a05[_0x5f4885(0x627)](typeof _0x5cdc18[_0x5f4885(0x342)],_0x152a05[_0x5f4885(0x608)])&&_0x5cdc18[_0x5f4885(0x342)][_0x5f4885(0x3c9)]()[_0x5f4885(0x420)]('{'))_0xdf5338=JSON[_0x5f4885(0x392)](_0x5cdc18['location']);else{if(_0x152a05[_0x5f4885(0x284)](typeof _0x5cdc18['location'],_0x152a05[_0x5f4885(0x2fc)])&&_0x152a05[_0x5f4885(0x31f)](_0x5cdc18[_0x5f4885(0x342)],null)){if(_0x152a05[_0x5f4885(0x2c5)]===_0x152a05[_0x5f4885(0x2c5)])_0xdf5338=_0x5cdc18[_0x5f4885(0x342)];else{const _0x12d7e9={};_0x12d7e9[_0x5f4885(0x6c3)]=_0x2ab94e['CkIhN'],_0x143083[_0x5f4885(0x2c4)](-0x593*-0x1+-0xf73+0xbd4)['json'](_0x12d7e9);}}}}}catch(_0x4625da){console[_0x5f4885(0x846)](_0x5f4885(0x817)+_0x5f4885(0x6a5)+_0x5f4885(0x40e)+'se\x20locatio'+'n\x20JSON\x20for'+'\x20customer\x20'+_0x5f4885(0x207)+_0x5cdc18['id']+_0x5f4885(0x753),_0x5cdc18[_0x5f4885(0x342)],_0x4625da);}}return{..._0x5cdc18,'currentMonthInvoiceStatus':_0x1dac44[_0x5f4885(0x515)](_0x5cdc18['id'])?.['status']||null,'location':_0xdf5338,'activeDate':_0x152a05['xTKrQ'](dbDateTimeToLocalISO,_0x5cdc18[_0x5f4885(0x334)])};});_0x2e0f93['json'](_0xb335cd);}}catch(_0x36d6cc){console['error'](_0x152a05[_0x254fd6(0x371)],_0x36d6cc);const _0x52a86f={};_0x52a86f[_0x254fd6(0x6c3)]=_0x254fd6(0x710)+_0x254fd6(0x2d3)+_0x254fd6(0x5fa),_0x2e0f93[_0x254fd6(0x2c4)](0x16*-0x125+-0x25f7*0x1+-0xb*-0x5eb)[_0x254fd6(0x78a)](_0x52a86f);}}),router[_0xe9c38(0x2cf)]('/',async(_0x47efdd,_0x2276b5)=>{const _0x5d7894=_0xe9c38,_0x148260={'CBAZZ':_0x5d7894(0x72e)+_0x5d7894(0x249)+_0x5d7894(0x57e)+_0x5d7894(0x220),'QjtIe':function(_0x5c197a,_0x464e96,_0x239665){return _0x5c197a(_0x464e96,_0x239665);},'ppdXb':function(_0x122a49){return _0x122a49();},'EfNsB':_0x5d7894(0x3de),'lLXHi':function(_0x30ffa1,_0x2065bb){return _0x30ffa1(_0x2065bb);},'FJYDE':function(_0x4ef3d8,_0x162066){return _0x4ef3d8(_0x162066);},'MJDnY':function(_0x5af5ae,_0x321296){return _0x5af5ae===_0x321296;},'zQGrA':_0x5d7894(0x5c2),'VAkbz':_0x5d7894(0x782),'FOsIW':function(_0x3d9c25,_0x235638){return _0x3d9c25||_0x235638;},'UgYwR':'New\x20PPPoE\x20'+'username\x20a'+_0x5d7894(0x242)+_0x5d7894(0x7e5)+'ired.','hcNkj':_0x5d7894(0x200)+'oeProfile\x20'+_0x5d7894(0x264)+'ges\x20WHERE\x20'+_0x5d7894(0x7ae),'IiPXo':_0x5d7894(0x31c)+_0x5d7894(0x4ba)+'\x20does\x20not\x20'+'have\x20a\x20lin'+_0x5d7894(0x3b1)+_0x5d7894(0x447),'bhApU':function(_0x529fd9,_0x1606f0,_0x2f82cd,_0x4a8c71){return _0x529fd9(_0x1606f0,_0x2f82cd,_0x4a8c71);},'FIntF':function(_0x3f9c50,_0x31a820,_0x5c7bf8,_0x12c5d9){return _0x3f9c50(_0x31a820,_0x5c7bf8,_0x12c5d9);},'CAYlq':_0x5d7894(0x610)+'FROM\x20custo'+_0x5d7894(0x42d)+_0x5d7894(0x512)+'name\x20=\x20?','CgvcS':_0x5d7894(0x3e1),'YFieu':function(_0x7ad48c,_0x4e78dc,_0x534891){return _0x7ad48c(_0x4e78dc,_0x534891);},'TDHdP':function(_0x33a520,_0x418b48,_0x15966e){return _0x33a520(_0x418b48,_0x15966e);},'mWvOP':function(_0x194095,_0x116dc9){return _0x194095===_0x116dc9;},'anEwE':_0x5d7894(0x428),'OKrAV':function(_0x2041d6,_0xe75b6b){return _0x2041d6(_0xe75b6b);},'mtSEf':_0x5d7894(0x1f7),'MEoRv':_0x5d7894(0x32d)+_0x5d7894(0x43d)+'mer:','YPKXj':'Error\x20crea'+_0x5d7894(0x43d)+_0x5d7894(0x7b6)};try{const {createNewPppoe:_0x5766bd,newPppoeUsername:_0x3f4d6d,newPppoePassword:_0x35b0ac,..._0x2b4508}=_0x47efdd[_0x5d7894(0x365)],_0x2128c3=await _0x148260[_0x5d7894(0x3a4)](getSettings),_0xed6244=_0x2128c3[_0x5d7894(0x4a4)]['customerId'+_0x5d7894(0x7bb)]||_0x148260[_0x5d7894(0x5b9)],_0x35c1cd=_0x148260[_0x5d7894(0x7b1)](generateNewCustomerId,_0xed6244);let _0x3597ee=_0x148260[_0x5d7894(0x340)](normalizePppoeUsername,_0x2b4508[_0x5d7894(0x2b9)+_0x5d7894(0x7db)]);if(_0x5766bd){if(_0x148260[_0x5d7894(0x3a1)](_0x148260[_0x5d7894(0x241)],_0x148260[_0x5d7894(0x71e)])){_0x533564[_0x5d7894(0x846)]('Error\x20crea'+'ting\x20bonus'+'\x20voucher\x20f'+_0x5d7894(0x531)+'r\x20'+_0x2e5e26+':',_0x485d75);const _0x256b26={};_0x256b26[_0x5d7894(0x6c3)]=_0x1552cc['message']||_0x148260[_0x5d7894(0x2ca)],_0x1e82bc[_0x5d7894(0x2c4)](0xf53+-0xf97+-0x238*-0x1)[_0x5d7894(0x78a)](_0x256b26);}else{if(_0x148260[_0x5d7894(0x2a3)](!_0x3f4d6d,!_0x35b0ac)){const _0x707e4c={};return _0x707e4c[_0x5d7894(0x6c3)]=_0x148260[_0x5d7894(0x783)],_0x2276b5[_0x5d7894(0x2c4)](0x1*0x384+0x1ed9+-0x1*0x20cd)[_0x5d7894(0x78a)](_0x707e4c);}const [[_0x1069f0]]=await _0x4a9162[_0x5d7894(0x583)](_0x148260[_0x5d7894(0x5e6)],[_0x2b4508[_0x5d7894(0x226)]]),_0x7fcfca={};_0x7fcfca['message']=_0x5d7894(0x6dd)+_0x5d7894(0x2a2)+_0x5d7894(0x560);if(!_0x1069f0)return _0x2276b5[_0x5d7894(0x2c4)](0x6d*0xd+0xd*-0xc3+-0xfd*-0x6)['json'](_0x7fcfca);const _0x1c045e={};_0x1c045e[_0x5d7894(0x6c3)]=_0x148260['IiPXo'];if(!_0x1069f0[_0x5d7894(0x73c)+'le'])return _0x2276b5[_0x5d7894(0x2c4)](0x302*-0x3+-0x12e*-0x9+0x1*-0x8)['json'](_0x1c045e);const _0x4723e5=_0x148260[_0x5d7894(0x7b1)](normalizePppoeUsername,_0x3f4d6d),_0xbc3334={};_0xbc3334[_0x5d7894(0x5ec)]=_0x3f4d6d,_0xbc3334[_0x5d7894(0x5eb)]=_0x35b0ac,_0xbc3334['profile']=_0x1069f0['pppoeProfi'+'le'],_0xbc3334['comment']=_0x35c1cd,await _0x2a5b26['addPppoeUs'+'er'](_0xbc3334),_0x3597ee=_0x4723e5,await _0x148260[_0x5d7894(0x66b)](syncPppoeCacheComment,_0x4a9162,_0x3597ee,_0x35c1cd),await _0x148260[_0x5d7894(0x493)](syncPppoeCacheProfile,_0x4a9162,_0x3597ee,_0x1069f0['pppoeProfi'+'le']);}}else _0x3597ee&&(await _0x2a5b26[_0x5d7894(0x425)+_0x5d7894(0x545)+_0x5d7894(0x72d)](_0x3597ee,_0x35c1cd),await syncPppoeCacheComment(_0x4a9162,_0x3597ee,_0x35c1cd));if(_0x3597ee){const [[_0x3972ce]]=await _0x4a9162[_0x5d7894(0x583)](_0x148260[_0x5d7894(0x530)],[_0x3597ee]);if(_0x3972ce){if(_0x148260['CgvcS']!==_0x148260['CgvcS']){if(!_0x27221c[_0x5d7894(0x68b)](_0x49a076)){const _0x338fe4={};_0x338fe4['recursive']=!![],_0x993dc0[_0x5d7894(0x3e6)](_0x58da47,_0x338fe4);}_0x148260[_0x5d7894(0x442)](_0xe45d05,null,_0xaac5a0);}else await _0x4a9162[_0x5d7894(0x583)]('UPDATE\x20cus'+_0x5d7894(0x67f)+_0x5d7894(0x512)+'name\x20=\x20NUL'+_0x5d7894(0x5ff)+'\x20=\x20?',[_0x3972ce['id']]);}}const _0x2cb2e1={'id':_0x35c1cd,'name':_0x2b4508[_0x5d7894(0x5ec)],'nik':_0x2b4508[_0x5d7894(0x794)]||null,'address':_0x2b4508['address'],'phone':_0x2b4508[_0x5d7894(0x500)],'email':_0x2b4508[_0x5d7894(0x478)],'packageId':_0x2b4508[_0x5d7894(0x226)],'status':_0x2b4508[_0x5d7894(0x2c4)],'location':_0x2b4508['location']?JSON[_0x5d7894(0x2ea)](_0x2b4508[_0x5d7894(0x342)]):null,'odpId':_0x2b4508[_0x5d7894(0x4d3)]||null,'activeDate':_0x2b4508[_0x5d7894(0x334)]?_0x2b4508[_0x5d7894(0x334)][_0x5d7894(0x6da)]('T','\x20'):new Date(),'pppoeUsername':_0x3597ee,'acsSerialNumber':_0x2b4508[_0x5d7894(0x2b0)+'umber']||null,'billing_type':normalizeBillingType(_0x2b4508['billing_ty'+'pe']),'nextBillingStart':_0x148260[_0x5d7894(0x7f0)](normalizeNextBillingStart,_0x2b4508['nextBillin'+_0x5d7894(0x21e)],normalizeBillingType(_0x2b4508[_0x5d7894(0x644)+'pe']))};await _0x4a9162[_0x5d7894(0x583)]('INSERT\x20INT'+_0x5d7894(0x3d9)+_0x5d7894(0x24d),_0x2cb2e1);const _0xeb8c45={..._0x2cb2e1};_0xeb8c45['id']=_0x35c1cd,await _0x148260[_0x5d7894(0x6f0)](syncBonusVoucher,_0xeb8c45,_0x2128c3);let _0x5eeb9f=null;if(_0x5766bd){if(_0x148260[_0x5d7894(0x647)](_0x148260[_0x5d7894(0x3f9)],_0x148260['anEwE'])){const _0x34af87={};_0x34af87['customerId']=_0x35c1cd,_0x34af87[_0x5d7894(0x2b9)+_0x5d7894(0x7db)]=_0x3f4d6d,_0x34af87[_0x5d7894(0x7a7)+_0x5d7894(0x3b2)]=_0x35b0ac,_0x5eeb9f=await _0x148260['OKrAV'](pushCustomerPppoeToAcs,_0x34af87),!_0x5eeb9f[_0x5d7894(0x468)]&&!_0x5eeb9f[_0x5d7894(0x51e)]&&console[_0x5d7894(0x524)]('[Customer\x20'+_0x5d7894(0x27b)+'S\x20PPPoE\x20pu'+'sh\x20failed\x20'+_0x5d7894(0x582)+_0x35c1cd+':',_0x5eeb9f);}else _0x46c5c5[_0x5d7894(0x524)]('[Customer\x20'+_0x5d7894(0x1f5)+_0x5d7894(0x4e4)+_0x5d7894(0x206)+_0x5d7894(0x582)+_0x3727cb+':',_0x5a46e6);}const _0x2910ca={..._0x2cb2e1};_0x2910ca['acsPppoeSy'+'nc']=_0x5eeb9f,_0x2276b5[_0x5d7894(0x2c4)](0x377*0x4+0x1511+-0x6d4*0x5)['json'](_0x2910ca);}catch(_0x5023bd){if(_0x5d7894(0x603)!==_0x148260[_0x5d7894(0x77a)]){console[_0x5d7894(0x846)](_0x148260['MEoRv'],_0x5023bd);const _0x4d7d5c={};_0x4d7d5c[_0x5d7894(0x6c3)]=_0x5023bd[_0x5d7894(0x6c3)]||_0x148260[_0x5d7894(0x422)],_0x2276b5['status'](0x1dc5*0x1+0x1160+-0x2d31*0x1)[_0x5d7894(0x78a)](_0x4d7d5c);}else{const _0xb3063f={};return _0xb3063f[_0x5d7894(0x6c3)]=_0x5d7894(0x38a)+_0x5d7894(0x5a3)+'age\x20is\x20not'+_0x5d7894(0x3e3)+_0x5d7894(0x55b)+_0x5d7894(0x6b9),_0x8491d6[_0x5d7894(0x2c4)](0xbb6*0x2+-0x26*0xb3+0x4b9)[_0x5d7894(0x78a)](_0xb3063f);}}}),router[_0xe9c38(0x44d)](_0xe9c38(0x723),async(_0x1ae26c,_0xfbb6d8)=>{const _0x1c9088=_0xe9c38,_0x59e42b={'CMRVX':_0x1c9088(0x449)+_0x1c9088(0x825)+_0x1c9088(0x5f0)+_0x1c9088(0x25b)+'e:','zWtgK':_0x1c9088(0x51c)+_0x1c9088(0x366),'VkHzb':'Error\x20in\x20b'+'ulk\x20status'+_0x1c9088(0x504),'zUOmQ':'Server\x20err'+_0x1c9088(0x5d0)+'bulk\x20statu'+'s\x20update.','DOfxh':_0x1c9088(0x51c)+_0x1c9088(0x681),'DvJww':'Failed\x20to\x20'+_0x1c9088(0x56f)+'ive\x20data\x20f'+'rom\x20router'+'.','bZdrd':'Error\x20fetc'+_0x1c9088(0x485)+_0x1c9088(0x243)+_0x1c9088(0x57a),'Ahjlh':_0x1c9088(0x2d6)+_0x1c9088(0x1f4)+_0x1c9088(0x232)+_0x1c9088(0x7e1)+_0x1c9088(0x44e),'cZxaz':function(_0x38acd2,_0x2bf5fa){return _0x38acd2(_0x2bf5fa);},'Qujmf':function(_0xa3a5e7,_0x42b6ff){return _0xa3a5e7||_0x42b6ff;},'mWvHD':'SELECT\x20ppp'+_0x1c9088(0x21d)+'FROM\x20packa'+_0x1c9088(0x6b1)+_0x1c9088(0x7ae),'xrpbM':_0x1c9088(0x6dd)+_0x1c9088(0x252)+_0x1c9088(0x3a0)+_0x1c9088(0x574)+_0x1c9088(0x26d),'VULwA':function(_0x273956,_0xa4d182){return _0x273956(_0xa4d182);},'fmGCH':function(_0x2bf3ba,_0x1d8d9f,_0x30aeb1,_0x5ef4b2){return _0x2bf3ba(_0x1d8d9f,_0x30aeb1,_0x5ef4b2);},'kswqa':function(_0x158173,_0x4e12bc){return _0x158173!==_0x4e12bc;},'JFFja':function(_0x4ee474,_0x8f945){return _0x4ee474!==_0x8f945;},'PcrpR':'vWErR','bGzTs':function(_0x25bb4b,_0xd20a7d,_0x19268e,_0x338195){return _0x25bb4b(_0xd20a7d,_0x19268e,_0x338195);},'dkYjl':function(_0x5848bb,_0x4517f6){return _0x5848bb===_0x4517f6;},'jHZLm':_0x1c9088(0x33b),'NnJZg':_0x1c9088(0x610)+_0x1c9088(0x655)+_0x1c9088(0x42d)+'\x20pppoeUser'+_0x1c9088(0x589)+_0x1c9088(0x5d4),'mMqID':_0x1c9088(0x6e6)+'tomers\x20SET'+_0x1c9088(0x512)+_0x1c9088(0x498)+_0x1c9088(0x5ff)+_0x1c9088(0x546),'fSvVG':function(_0x349d16,_0x4c7e96){return _0x349d16!==_0x4c7e96;},'SMvll':function(_0x2ae345,_0x3ac3ca){return _0x2ae345&&_0x3ac3ca;},'LTecf':function(_0x8b435d,_0x43f4b1){return _0x8b435d!==_0x43f4b1;},'mVXHF':_0x1c9088(0x4e1),'zBqNK':function(_0x48d9e4,_0x16dbe0,_0x24fc47,_0x3a4257){return _0x48d9e4(_0x16dbe0,_0x24fc47,_0x3a4257);},'oKRCC':_0x1c9088(0x6e6)+'tomers\x20SET'+_0x1c9088(0x3d5)+_0x1c9088(0x7a3),'PlPSi':function(_0x8b9e94){return _0x8b9e94();},'clqgg':function(_0x3bdef4,_0x4aa909,_0x35dab4){return _0x3bdef4(_0x4aa909,_0x35dab4);},'zyuGh':function(_0x60e736,_0x5bdcc2){return _0x60e736!==_0x5bdcc2;},'kPmca':function(_0x4b80f9,_0x44ec2d){return _0x4b80f9===_0x44ec2d;},'wZJfT':_0x1c9088(0x790),'RMuzO':_0x1c9088(0x6e6)+'tomers\x20SET'+_0x1c9088(0x32c)+_0x1c9088(0x42e)+_0x1c9088(0x30c)+_0x1c9088(0x2a5),'qplGN':function(_0x5c6171,_0x2c637c){return _0x5c6171===_0x2c637c;},'oAxdr':_0x1c9088(0x285),'OpDbR':function(_0x24b5a9,_0x3eb36d){return _0x24b5a9===_0x3eb36d;},'KxRaj':_0x1c9088(0x27c),'KKrzx':_0x1c9088(0x76b),'FikDu':_0x1c9088(0x6d6)+'0','GWjWZ':_0x1c9088(0x70d)+_0x1c9088(0x21f)+_0x1c9088(0x321)+_0x1c9088(0x292)+_0x1c9088(0x6d2)+_0x1c9088(0x82f),'rsHMS':function(_0x493f05,_0x5a1a5c,_0x5d161a,_0x17563c){return _0x493f05(_0x5a1a5c,_0x5d161a,_0x17563c);},'rQlcr':_0x1c9088(0x779),'bVkba':_0x1c9088(0x31b),'vnpna':function(_0x5808ae,_0xae6f43){return _0x5808ae(_0xae6f43);},'YditC':function(_0x495e97,_0x411493){return _0x495e97(_0x411493);},'ONIMQ':_0x1c9088(0x6e6)+'tomers\x20SET'+_0x1c9088(0x32c)+_0x1c9088(0x42e)+_0x1c9088(0x4aa)+_0x1c9088(0x37a)+'?','SBSTl':function(_0x328e48,_0x3ce463){return _0x328e48===_0x3ce463;},'XqucT':_0x1c9088(0x59b),'BuFPn':function(_0x165eb7,_0x135dd3){return _0x165eb7(_0x135dd3);},'DdaFr':function(_0x3685e7,_0x13f349){return _0x3685e7!==_0x13f349;},'ZsmLD':_0x1c9088(0x4b2),'ThuYh':function(_0x4e487f,_0x1df481){return _0x4e487f===_0x1df481;},'DvmXO':function(_0xd73913,_0x1c2642){return _0xd73913===_0x1c2642;},'DKnqy':'Account\x20Re'+_0x1c9088(0x6ac)+_0x1c9088(0x386),'hvNrC':function(_0x316cf6,_0x135b0d){return _0x316cf6!==_0x135b0d;},'EEgPs':_0x1c9088(0x218),'tBlLH':_0x1c9088(0x245),'PWooh':_0x1c9088(0x6c8)+'spended\x20(M'+'anual)','CQeGj':_0x1c9088(0x5f3)+_0x1c9088(0x6ac)+_0x1c9088(0x386),'JCDeW':_0x1c9088(0x2e3)+_0x1c9088(0x3e7)+_0x1c9088(0x605)+_0x1c9088(0x2a5),'FcTyX':function(_0xc2577,_0x50560b,_0x448915){return _0xc2577(_0x50560b,_0x448915);},'rEyXJ':_0x1c9088(0x391)+_0x1c9088(0x72b)+_0x1c9088(0x581)+'?','Xisgq':'sent','emNUy':_0x1c9088(0x5c1),'BvlXN':_0x1c9088(0x53a)+_0x1c9088(0x43d)+_0x1c9088(0x556),'LsxJY':_0x1c9088(0x53a)+_0x1c9088(0x43d)+_0x1c9088(0x7b6)},{id:_0x5b2087}=_0x1ae26c['params'];let _0x49a4dc,_0x1d576e=null;try{_0x49a4dc=await _0x4a9162[_0x1c9088(0x4a5)+_0x1c9088(0x71f)](),await _0x49a4dc['beginTrans'+_0x1c9088(0x5d5)]();const {createNewPppoe:_0x3cdfa3,newPppoeUsername:_0x34ab8c,newPppoePassword:_0x1ecb4c,..._0x1eefea}=_0x1ae26c['body'],[[_0xfc0613]]=await _0x49a4dc[_0x1c9088(0x583)](_0x59e42b[_0x1c9088(0x6e9)],[_0x5b2087]);if(!_0xfc0613)throw new Error(_0x1c9088(0x51c)+_0x1c9088(0x681));let _0x52b1cf=_0x59e42b[_0x1c9088(0x2c0)](normalizePppoeUsername,_0x1eefea[_0x1c9088(0x2b9)+_0x1c9088(0x7db)]);if(_0x3cdfa3){if(_0x59e42b[_0x1c9088(0x255)](!_0x34ab8c,!_0x1ecb4c))throw new Error(_0x1c9088(0x616)+_0x1c9088(0x370)+_0x1c9088(0x242)+_0x1c9088(0x7e5)+_0x1c9088(0x35c));const [[_0x3ef3e4]]=await _0x49a4dc['query'](_0x59e42b[_0x1c9088(0x543)],[_0x1eefea[_0x1c9088(0x226)]]);if(!_0x3ef3e4||!_0x3ef3e4[_0x1c9088(0x73c)+'le'])throw new Error(_0x59e42b[_0x1c9088(0x324)]);const _0x3428ae=_0x59e42b[_0x1c9088(0x2f6)](normalizePppoeUsername,_0x34ab8c),_0x233d24={};_0x233d24['name']=_0x34ab8c,_0x233d24[_0x1c9088(0x5eb)]=_0x1ecb4c,_0x233d24[_0x1c9088(0x7c7)]=_0x3ef3e4[_0x1c9088(0x73c)+'le'],_0x233d24[_0x1c9088(0x527)]=_0x5b2087,await _0x2a5b26[_0x1c9088(0x624)+'er'](_0x233d24),_0x52b1cf=_0x3428ae,await syncPppoeCacheComment(_0x49a4dc,_0x52b1cf,_0x5b2087),await _0x59e42b[_0x1c9088(0x62d)](syncPppoeCacheProfile,_0x49a4dc,_0x52b1cf,_0x3ef3e4[_0x1c9088(0x73c)+'le']);}if(_0x59e42b['kswqa'](_0x52b1cf,_0xfc0613[_0x1c9088(0x2b9)+_0x1c9088(0x7db)])){if(_0xfc0613['pppoeUsern'+_0x1c9088(0x7db)]){if(_0x59e42b[_0x1c9088(0x31a)](_0x1c9088(0x646),_0x59e42b['PcrpR']))await _0x2a5b26[_0x1c9088(0x425)+_0x1c9088(0x545)+_0x1c9088(0x72d)](_0xfc0613[_0x1c9088(0x2b9)+_0x1c9088(0x7db)],''),await _0x59e42b[_0x1c9088(0x7e3)](syncPppoeCacheComment,_0x49a4dc,_0xfc0613[_0x1c9088(0x2b9)+_0x1c9088(0x7db)],'');else{const _0x3f0acf={};_0x3f0acf[_0x1c9088(0x491)]=_0x59e42b['CMRVX'];const _0x5a098e=_0x3f0acf;_0x512395[_0x1c9088(0x732)](_0x42d3bd['file'][_0x1c9088(0x5fb)],_0x138587=>{const _0x5a0e62=_0x1c9088;if(_0x138587)_0x42bea8[_0x5a0e62(0x846)](_0x5a098e[_0x5a0e62(0x491)],_0x138587);});}}if(_0x52b1cf){if(_0x59e42b[_0x1c9088(0x286)](_0x59e42b['jHZLm'],_0x1c9088(0x33b))){const [[_0x1187a7]]=await _0x49a4dc[_0x1c9088(0x583)](_0x59e42b[_0x1c9088(0x798)],[_0x52b1cf,_0x5b2087]);if(_0x1187a7)await _0x49a4dc[_0x1c9088(0x583)](_0x59e42b[_0x1c9088(0x625)],[_0x1187a7['id']]);await _0x2a5b26[_0x1c9088(0x425)+_0x1c9088(0x545)+_0x1c9088(0x72d)](_0x52b1cf,_0x5b2087),await syncPppoeCacheComment(_0x49a4dc,_0x52b1cf,_0x5b2087);}else{const _0x69a23a={};return _0x69a23a[_0x1c9088(0x6c3)]=_0x59e42b[_0x1c9088(0x6f1)],_0x505df1['status'](-0x2*-0x12cd+-0xf6*0x1+-0x2310)[_0x1c9088(0x78a)](_0x69a23a);}}}else _0x52b1cf&&(await _0x2a5b26[_0x1c9088(0x425)+_0x1c9088(0x545)+_0x1c9088(0x72d)](_0x52b1cf,_0x5b2087),await syncPppoeCacheComment(_0x49a4dc,_0x52b1cf,_0x5b2087));const _0x1b2487=_0x1eefea[_0x1c9088(0x226)]&&_0x59e42b[_0x1c9088(0x288)](_0x1eefea[_0x1c9088(0x226)],_0xfc0613[_0x1c9088(0x226)]);if(_0x59e42b[_0x1c9088(0x25a)](_0x1b2487,_0x52b1cf)){if(_0x59e42b[_0x1c9088(0x630)](_0x59e42b[_0x1c9088(0x6ca)],_0x59e42b[_0x1c9088(0x6ca)])){const _0x1abda2={};return _0x1abda2[_0x1c9088(0x6c3)]=_0x1c9088(0x3cc)+_0x1c9088(0x4c3)+_0x1c9088(0x715)+'tomer\x20data'+'.',_0x4062ba['status'](0x1a89+0x1*0x190+0x1f*-0xdb)[_0x1c9088(0x78a)](_0x1abda2);}else{console['log']('[Customer\x20'+'Update]\x20Pa'+'ckage\x20chan'+_0x1c9088(0x3c4)+'stomer\x20'+_0x5b2087+(_0x1c9088(0x338)+_0x1c9088(0x662)+_0x1c9088(0x447)));const [[_0x11db1e]]=await _0x49a4dc[_0x1c9088(0x583)](_0x59e42b['mWvHD'],[_0x1eefea['packageId']]);if(_0x11db1e&&_0x11db1e[_0x1c9088(0x73c)+'le']){const _0x51d47d=await _0x2a5b26['fetchPppoe'+'Users'](),_0xe96caa=_0x51d47d[_0x1c9088(0x757)](_0x456c11=>normalizePppoeUsername(_0x456c11[_0x1c9088(0x5ec)])===_0x52b1cf);if(_0xe96caa){const _0x487ee7={};_0x487ee7['profile']=_0x11db1e['pppoeProfi'+'le'],await _0x2a5b26['updatePppo'+_0x1c9088(0x49d)](_0xe96caa['id'],_0x487ee7),await _0x59e42b['zBqNK'](syncPppoeCacheProfile,_0x49a4dc,_0x52b1cf,_0x11db1e[_0x1c9088(0x73c)+'le']),await _0x2a5b26['reconnectP'+_0x1c9088(0x7dc)](_0x52b1cf);}else console['warn'](_0x1c9088(0x817)+'Update]\x20Co'+_0x1c9088(0x2ba)+_0x1c9088(0x709)+_0x1c9088(0x5f8)+_0x52b1cf+(_0x1c9088(0x4fd)+'.'));}}}const _0x508959=_0x59e42b[_0x1c9088(0x2c0)](normalizeBillingType,_0x1eefea[_0x1c9088(0x644)+'pe']??_0xfc0613[_0x1c9088(0x644)+'pe']),_0x203fd2=Object[_0x1c9088(0x791)]['hasOwnProp'+_0x1c9088(0x652)][_0x1c9088(0x2e2)](_0x1eefea,_0x1c9088(0x737)+_0x1c9088(0x21e))?normalizeNextBillingStart(_0x1eefea[_0x1c9088(0x737)+_0x1c9088(0x21e)],_0x508959):_0xfc0613['nextBillin'+_0x1c9088(0x21e)],_0x24f2dc={'name':_0x1eefea[_0x1c9088(0x5ec)],'nik':_0x1eefea[_0x1c9088(0x794)]||null,'address':_0x1eefea['address'],'phone':_0x1eefea['phone'],'email':_0x1eefea[_0x1c9088(0x478)],'packageId':_0x1eefea[_0x1c9088(0x226)],'status':_0x1eefea[_0x1c9088(0x2c4)],'location':_0x1eefea['location']?JSON[_0x1c9088(0x2ea)](_0x1eefea[_0x1c9088(0x342)]):null,'odpId':_0x1eefea[_0x1c9088(0x4d3)]||null,'pppoeUsername':_0x52b1cf,'activeDate':_0x1eefea[_0x1c9088(0x334)]?_0x1eefea['activeDate'][_0x1c9088(0x6da)]('T','\x20'):new Date(),'acsSerialNumber':_0x1eefea[_0x1c9088(0x2b0)+_0x1c9088(0x6f7)]||null,'billing_type':_0x508959,'nextBillingStart':_0x203fd2};await _0x49a4dc[_0x1c9088(0x583)](_0x59e42b['oKRCC'],[_0x24f2dc,_0x5b2087]);const _0x5679bf=await _0x59e42b['PlPSi'](getSettings),_0x1a9b73={..._0x24f2dc};_0x1a9b73['id']=_0x5b2087,await _0x59e42b[_0x1c9088(0x609)](syncBonusVoucher,_0x1a9b73,_0x5679bf);const _0xc73291=(_0xfc0613[_0x1c9088(0x2c4)]||'')[_0x1c9088(0x3c9)](),_0x6e1be4=(_0x1eefea['status']||'')[_0x1c9088(0x3c9)]();if(_0x6e1be4&&_0x59e42b[_0x1c9088(0x49a)](_0x6e1be4,_0xc73291)){const _0x352c69=_0x5679bf[_0x1c9088(0x2e0)][_0x1c9088(0x224)+_0x1c9088(0x74d)+'e'],_0x5f3005={};_0x5f3005['id']=_0x5b2087,_0x5f3005['pppoeUsern'+'ame']=_0x52b1cf;const {username:_0x380bb3,routerUser:_0x2dc843}=await _0x59e42b[_0x1c9088(0x609)](resolveCustomerPppoeLink,_0x49a4dc,_0x5f3005);if(_0x2dc843){if(_0x59e42b[_0x1c9088(0x31a)](_0x1c9088(0x2f4),_0x1c9088(0x2f4))){const _0x4835d5={};return _0x4835d5[_0x1c9088(0x846)]=_0x1c9088(0x5ee)+_0x1c9088(0x734)+_0x1c9088(0x5c7)+_0x1c9088(0x636),_0x35710a['status'](0x511*0x5+0x99e+0x1*-0x215f)['json'](_0x4835d5);}else{if(_0x59e42b[_0x1c9088(0x20f)](_0x6e1be4,_0x59e42b[_0x1c9088(0x6f3)]))await _0x2a5b26[_0x1c9088(0x263)+_0x1c9088(0x448)](_0x2dc843['id']),await _0x49a4dc[_0x1c9088(0x583)](_0x59e42b[_0x1c9088(0x29c)],[_0x2dc843['profile'],_0x5b2087]);else{if(_0x59e42b[_0x1c9088(0x60c)](_0x6e1be4,_0x59e42b['oAxdr'])){if(_0x59e42b['OpDbR'](_0x59e42b[_0x1c9088(0x6f9)],_0x59e42b[_0x1c9088(0x1fe)]))_0x2cb0e2=_0x369951[_0x1c9088(0x392)](_0x253cb5[_0x1c9088(0x84a)]);else{const _0x5d4011=_0x59e42b[_0x1c9088(0x2ef)][_0x1c9088(0x7ef)]('|');let _0x516fae=-0x13d*0x1e+-0x1cfa*0x1+0x20*0x211;while(!![]){switch(_0x5d4011[_0x516fae++]){case'0':await _0x2a5b26[_0x1c9088(0x4d4)+_0x1c9088(0x7dc)](_0x380bb3);continue;case'1':if(!_0x352c69)throw new Error(_0x59e42b['GWjWZ']);continue;case'2':const _0x4e6737={};_0x4e6737[_0x1c9088(0x7c7)]=_0x352c69,await _0x2a5b26[_0x1c9088(0x425)+_0x1c9088(0x49d)](_0x2dc843['id'],_0x4e6737);continue;case'3':await _0x59e42b[_0x1c9088(0x1f3)](syncPppoeCacheProfile,_0x49a4dc,_0x380bb3,_0x352c69);continue;case'4':await _0x49a4dc[_0x1c9088(0x583)](_0x59e42b[_0x1c9088(0x29c)],[_0x2dc843[_0x1c9088(0x7c7)],_0x5b2087]);continue;case'5':await _0x2a5b26[_0x1c9088(0x4c1)+_0x1c9088(0x49d)](_0x2dc843['id']);continue;}break;}}}else{if(_0x59e42b[_0x1c9088(0x20f)](_0x6e1be4,_0x59e42b[_0x1c9088(0x4d8)])){if(_0x59e42b[_0x1c9088(0x802)]===_0x59e42b['bVkba']){await _0x2a5b26[_0x1c9088(0x4c1)+'eUser'](_0x2dc843['id']);let _0x5e28b0=_0x59e42b[_0x1c9088(0x84b)](String,_0xfc0613[_0x1c9088(0x244)+_0x1c9088(0x3f7)]||'')['trim']();if(!_0x5e28b0){if(_0x1c9088(0x777)===_0x1c9088(0x799)){_0x31cc18[_0x1c9088(0x846)](_0x59e42b['VkHzb'],_0x2e69e8);const _0x5a44bc={};_0x5a44bc[_0x1c9088(0x6c3)]=_0x12a1c5[_0x1c9088(0x6c3)]||_0x59e42b[_0x1c9088(0x466)],_0x11df0c['status'](0xb08+0x2*0xfe9+-0x28e6)[_0x1c9088(0x78a)](_0x5a44bc);}else{const [[_0x52d6b9]]=await _0x49a4dc[_0x1c9088(0x583)](_0x59e42b['mWvHD'],[_0x1eefea[_0x1c9088(0x226)]||_0xfc0613[_0x1c9088(0x226)]]);_0x5e28b0=_0x59e42b['YditC'](String,_0x52d6b9?.[_0x1c9088(0x73c)+'le']||'')[_0x1c9088(0x3c9)]();}}if(_0x5e28b0){const _0x4f55c7={};_0x4f55c7[_0x1c9088(0x7c7)]=_0x5e28b0,await _0x2a5b26[_0x1c9088(0x425)+'eUser'](_0x2dc843['id'],_0x4f55c7),await syncPppoeCacheProfile(_0x49a4dc,_0x380bb3,_0x5e28b0);}await _0x49a4dc[_0x1c9088(0x583)](_0x59e42b[_0x1c9088(0x2f2)],[_0x5b2087]),await _0x2a5b26['reconnectP'+_0x1c9088(0x7dc)](_0x380bb3);}else{const _0x5e7715={};return _0x5e7715[_0x1c9088(0x6c3)]=_0x59e42b[_0x1c9088(0x6f1)],_0x20a767[_0x1c9088(0x2c4)](0x262*0xa+-0x255a+-0x78d*-0x2)[_0x1c9088(0x78a)](_0x5e7715);}}}}}}}await _0x49a4dc[_0x1c9088(0x462)]();if(_0x3cdfa3){if(_0x59e42b[_0x1c9088(0x836)](_0x1c9088(0x59b),_0x59e42b[_0x1c9088(0x219)])){const _0x1112c0={};_0x1112c0[_0x1c9088(0x429)]=_0x5b2087,_0x1112c0[_0x1c9088(0x2b9)+_0x1c9088(0x7db)]=_0x34ab8c,_0x1112c0[_0x1c9088(0x7a7)+_0x1c9088(0x3b2)]=_0x1ecb4c,_0x1d576e=await _0x59e42b[_0x1c9088(0x35a)](pushCustomerPppoeToAcs,_0x1112c0),!_0x1d576e[_0x1c9088(0x468)]&&!_0x1d576e['skipped']&&console[_0x1c9088(0x524)](_0x1c9088(0x817)+_0x1c9088(0x1f5)+'S\x20PPPoE\x20pu'+_0x1c9088(0x206)+_0x1c9088(0x582)+_0x5b2087+':',_0x1d576e);}else throw new _0x5875d5(_0x59e42b[_0x1c9088(0x79e)]);}if(_0x6e1be4&&_0x59e42b[_0x1c9088(0x6cf)](_0x6e1be4,_0xc73291)){if(_0x59e42b[_0x1c9088(0x49a)](_0x59e42b[_0x1c9088(0x48a)],'Fqyhe')){if(_0x5679bf[_0x1c9088(0x2e0)][_0x1c9088(0x776)+_0x1c9088(0x602)+'sEnabled']&&_0x24f2dc[_0x1c9088(0x500)]){if(_0x59e42b[_0x1c9088(0x23c)](_0x1c9088(0x771),_0x1c9088(0x3b5))){_0x22fac3[_0x1c9088(0x846)](_0x1c9088(0x403)+_0x1c9088(0x4c7)+_0x1c9088(0x47a)+_0x1c9088(0x421)+'\x20'+_0x189265+':',_0x5b0802);const _0x538d95={};_0x538d95['error']=_0x59e42b[_0x1c9088(0x54b)],_0x538d95['rx']=0x0,_0x538d95['tx']=0x0,_0x36bc5f['json'](_0x538d95);}else{let _0x5b88d1=null,_0x5cb86c='';if(_0x59e42b[_0x1c9088(0x836)](_0x6e1be4,_0x1c9088(0x779))&&(_0x59e42b[_0x1c9088(0x66f)](_0xc73291,_0x59e42b['oAxdr'])||_0x59e42b[_0x1c9088(0x60c)](_0xc73291,_0x59e42b[_0x1c9088(0x6f3)])))_0x5b88d1=_0x5679bf['whatsapp']['accountRea'+'ctivated'],_0x5cb86c=_0x59e42b[_0x1c9088(0x814)];else{if(_0x59e42b[_0x1c9088(0x66f)](_0x6e1be4,_0x59e42b[_0x1c9088(0x3ce)])){if(_0x59e42b[_0x1c9088(0x35d)](_0x59e42b[_0x1c9088(0x5dd)],_0x59e42b[_0x1c9088(0x3b6)]))_0x5b88d1=_0x5679bf[_0x1c9088(0x2ff)][_0x1c9088(0x278)+_0x1c9088(0x29b)],_0x5cb86c=_0x59e42b[_0x1c9088(0x6cc)];else{const _0x5a707d={};return _0x5a707d[_0x1c9088(0x6c3)]=_0x1c9088(0x2f0)+_0x1c9088(0x636),_0x1aada0[_0x1c9088(0x2c4)](0x2101+0x2f*0x46+-0x2c47)[_0x1c9088(0x78a)](_0x5a707d);}}else _0x59e42b[_0x1c9088(0x66f)](_0x6e1be4,_0x59e42b[_0x1c9088(0x6f3)])&&(_0x5b88d1=_0x5679bf[_0x1c9088(0x2ff)][_0x1c9088(0x73e)+'ctivated'],_0x5cb86c=_0x59e42b[_0x1c9088(0x5cf)]);}if(_0x5b88d1){const [[_0xb943f8]]=await _0x4a9162[_0x1c9088(0x583)](_0x59e42b['JCDeW'],[_0x24f2dc[_0x1c9088(0x226)]]),_0x23ba05={};_0x23ba05[_0x1c9088(0x48b)+'me']=_0x24f2dc[_0x1c9088(0x5ec)],_0x23ba05[_0x1c9088(0x429)]=_0x5b2087,_0x23ba05[_0x1c9088(0x6bf)+'e']=_0xb943f8?.[_0x1c9088(0x5ec)]||_0x1c9088(0x58b);const _0x441d10=_0x59e42b[_0x1c9088(0x7e2)](replacePlaceholders,_0x5b88d1,_0x23ba05),_0x18aac5=await _0x1adb7c[_0x1c9088(0x7e9)+'e'](_0x24f2dc[_0x1c9088(0x500)],_0x441d10);await _0x4a9162['query'](_0x59e42b['rEyXJ'],{'recipient_number':_0x24f2dc[_0x1c9088(0x500)],'customer_id':_0x5b2087,'message_body':_0x441d10,'status':_0x18aac5[_0x1c9088(0x468)]?_0x59e42b[_0x1c9088(0x6ad)]:_0x59e42b[_0x1c9088(0x2fa)],'type':_0x5cb86c,'error_message':_0x18aac5[_0x1c9088(0x846)]||null});}}}}else{_0x4a36e4[_0x1c9088(0x846)](_0x1c9088(0x403)+_0x1c9088(0x419)+'ng\x20package'+_0x1c9088(0x33f),_0x5130f7);const _0x5c2942={};_0x5c2942[_0x1c9088(0x6c3)]=_0x59e42b[_0x1c9088(0x37b)],_0x385a7f[_0x1c9088(0x2c4)](-0x1476+0x2*0x63f+0x9ec)[_0x1c9088(0x78a)](_0x5c2942);}}const _0x5a532b={..._0x24f2dc};_0x5a532b['id']=_0x5b2087,_0x5a532b['acsPppoeSy'+'nc']=_0x1d576e,_0xfbb6d8[_0x1c9088(0x78a)](_0x5a532b);}catch(_0xdffa62){if(_0x49a4dc)await _0x49a4dc[_0x1c9088(0x59c)]();console['error'](_0x59e42b[_0x1c9088(0x699)],_0xdffa62);const _0xe42a7d={};_0xe42a7d[_0x1c9088(0x6c3)]=_0xdffa62[_0x1c9088(0x6c3)]||_0x59e42b[_0x1c9088(0x74f)],_0xfbb6d8[_0x1c9088(0x2c4)](0x439+0x458+-0x69d*0x1)[_0x1c9088(0x78a)](_0xe42a7d);}finally{if(_0x49a4dc)_0x49a4dc['release']();}}),router[_0xe9c38(0x29e)]('/:id',async(_0x3d7eb8,_0x1f5da4)=>{const _0x3e9768=_0xe9c38,_0x5d770b={'BIgrd':'No\x20selecte'+_0x3e9768(0x50e)+_0x3e9768(0x5d1)+_0x3e9768(0x5ef)+_0x3e9768(0x7fb),'xuTMQ':'Customer\x20I'+'Ds\x20and\x20a\x20m'+_0x3e9768(0x634)+'\x20required.','sFcDg':_0x3e9768(0x449)+_0x3e9768(0x825)+'file\x20on\x20re'+_0x3e9768(0x25b)+'e:','xdqct':_0x3e9768(0x621),'rupkt':_0x3e9768(0x200)+_0x3e9768(0x6a2)+_0x3e9768(0x50d)+_0x3e9768(0x23b)+_0x3e9768(0x2a5),'DTwGM':function(_0x469e91,_0x463e6d){return _0x469e91===_0x463e6d;},'qXcMd':function(_0x47f391,_0x209895,_0x45d97f,_0x4ab904){return _0x47f391(_0x209895,_0x45d97f,_0x4ab904);},'uCIEs':function(_0x4eac82){return _0x4eac82();},'bUxGM':_0x3e9768(0x6c1),'Jfgtq':function(_0x57f541,_0x41dee0){return _0x57f541!==_0x41dee0;},'JRbGZ':function(_0x2c6541,_0x189138){return _0x2c6541===_0x189138;},'IydFp':_0x3e9768(0x273),'AMEHV':_0x3e9768(0x4c9)+_0x3e9768(0x6cd)+_0x3e9768(0x83b)+_0x3e9768(0x546),'JfHwf':_0x3e9768(0x449)+'ting\x20custo'+_0x3e9768(0x7b6)};try{if(_0x5d770b[_0x3e9768(0x35e)]!==_0x3e9768(0x393)){const {id:_0x18cded}=_0x3d7eb8['params'],[[_0x3957ee]]=await _0x4a9162[_0x3e9768(0x583)](_0x5d770b[_0x3e9768(0x64b)],[_0x18cded]);if(_0x3957ee&&_0x3957ee['pppoeUsern'+_0x3e9768(0x7db)]){if(_0x5d770b['DTwGM'](_0x3e9768(0x59d),'slhXA')){const _0xb961f4=_0xdb1c76?function(){const _0x37ef16=_0x3e9768;if(_0x2e2cbe){const _0x48be7a=_0x139b46[_0x37ef16(0x3b4)](_0x5915eb,arguments);return _0x40909f=null,_0x48be7a;}}:function(){};return _0x218172=![],_0xb961f4;}else await _0x2a5b26[_0x3e9768(0x425)+_0x3e9768(0x545)+'ntByName'](_0x3957ee[_0x3e9768(0x2b9)+_0x3e9768(0x7db)],''),await _0x5d770b[_0x3e9768(0x48c)](syncPppoeCacheComment,_0x4a9162,_0x3957ee[_0x3e9768(0x2b9)+_0x3e9768(0x7db)],'');}const _0x47f31e=await _0x5d770b[_0x3e9768(0x5fc)](getSettings);if(_0x47f31e[_0x3e9768(0x2e0)][_0x3e9768(0x61a)+_0x3e9768(0x6ea)]){const _0x3d5c5b=_0x47f31e[_0x3e9768(0x2e0)][_0x3e9768(0x61a)+_0x3e9768(0x563)]||_0x5d770b['bUxGM'],_0x173c27=''+_0x3d5c5b+_0x18cded['slice'](-(-0xd+-0x6b9+0x6ca));try{const _0x568615=await _0x2a5b26[_0x3e9768(0x1fb)+_0x3e9768(0x79f)](),_0x4b016e=_0x568615[_0x3e9768(0x757)](_0xc7f61=>_0xc7f61['name']===_0x173c27);if(_0x4b016e){if(_0x5d770b['Jfgtq'](_0x3e9768(0x497),_0x3e9768(0x7fe)))await _0x2a5b26['deleteHots'+_0x3e9768(0x47f)](_0x4b016e['id']),console[_0x3e9768(0x704)](_0x3e9768(0x817)+_0x3e9768(0x389)+'leted\x20bonu'+_0x3e9768(0x2ab)+_0x3e9768(0x54e)+_0x173c27+'.');else{const _0x39c21c={};return _0x39c21c[_0x3e9768(0x468)]=!![],_0x39c21c['message']=_0x5d770b[_0x3e9768(0x744)],_0x12712a[_0x3e9768(0x78a)](_0x39c21c);}}}catch(_0x3be3f7){if(_0x5d770b[_0x3e9768(0x3a3)](_0x3e9768(0x273),_0x5d770b[_0x3e9768(0x4a3)]))console[_0x3e9768(0x524)](_0x3e9768(0x817)+'Delete]\x20Co'+_0x3e9768(0x352)+_0x3e9768(0x695)+_0x3e9768(0x684)+_0x173c27+('\x20from\x20rout'+_0x3e9768(0x571)+'\x20not\x20exist'+_0x3e9768(0x20e)+_0x3e9768(0x4b6)+_0x3e9768(0x40d)+_0x3e9768(0x46c))+_0x3be3f7[_0x3e9768(0x6c3)]);else{const _0x536844={};return _0x536844[_0x3e9768(0x468)]=![],_0x536844['message']=_0x5d770b['xuTMQ'],_0x5c3700['status'](-0xc9e+0x1d*0x43+0x1*0x697)['json'](_0x536844);}}}await _0x4a9162[_0x3e9768(0x583)](_0x5d770b[_0x3e9768(0x238)],[_0x18cded]),_0x1f5da4[_0x3e9768(0x2c4)](-0x1786+0x1f6d*0x1+0x1*-0x71b)[_0x3e9768(0x80e)]();}else{if(_0x5071f7)_0x85ab6c[_0x3e9768(0x846)](_0x5d770b[_0x3e9768(0x225)],_0x55fd97);}}catch(_0x171fea){console['error']('Error\x20dele'+'ting\x20custo'+_0x3e9768(0x556),_0x171fea);const _0x56aa6e={};_0x56aa6e['message']=_0x171fea['message']||_0x5d770b[_0x3e9768(0x5c0)],_0x1f5da4[_0x3e9768(0x2c4)](-0x1105*-0x1+-0x1dda+0xec9)['json'](_0x56aa6e);}}),router[_0xe9c38(0x44d)](_0xe9c38(0x1ec)+'e-id',async(_0x5329ef,_0x505b76)=>{const _0x5ac75d=_0xe9c38,_0x27f51d={'FMthy':function(_0x587081,_0x5eb381){return _0x587081(_0x5eb381);},'otPIv':_0x5ac75d(0x6eb)+_0x5ac75d(0x801)+'t.','OOrnL':'An\x20interna'+'l\x20server\x20e'+'rror\x20occur'+_0x5ac75d(0x265)+_0x5ac75d(0x328)+_0x5ac75d(0x6a1)+'e.','ZHlxw':function(_0x369dc0,_0x4de809){return _0x369dc0===_0x4de809;},'UsULT':'New\x20Custom'+_0x5ac75d(0x7d8)+_0x5ac75d(0x6f5)+'y.','qWXop':function(_0x423158,_0x405a17){return _0x423158!==_0x405a17;},'nkvMe':_0x5ac75d(0x5ac),'VPvgj':_0x5ac75d(0x832),'HLfGo':function(_0x256f27,_0x466df0){return _0x256f27!==_0x466df0;},'wtuzE':_0x5ac75d(0x4dd),'DrrvB':_0x5ac75d(0x200)+'oeUsername'+_0x5ac75d(0x50d)+_0x5ac75d(0x23b)+_0x5ac75d(0x2a5),'nBTdR':_0x5ac75d(0x788)+'oices\x20SET\x20'+_0x5ac75d(0x429)+'\x20=\x20?\x20WHERE'+_0x5ac75d(0x67a)+_0x5ac75d(0x7a3),'KIeQZ':_0x5ac75d(0x6a4)+_0x5ac75d(0x551)+_0x5ac75d(0x678)+_0x5ac75d(0x559)+'RE\x20custome'+_0x5ac75d(0x680),'wcrPi':_0x5ac75d(0x55f)+_0x5ac75d(0x6a6)+_0x5ac75d(0x4ca)+_0x5ac75d(0x6c5)+'\x20WHERE\x20cus'+_0x5ac75d(0x840)+'\x20?','EJpAk':_0x5ac75d(0x3f0)+_0x5ac75d(0x52b)+_0x5ac75d(0x291)+_0x5ac75d(0x840)+_0x5ac75d(0x578)+'ustomer_id'+'\x20=\x20?','UKvDy':_0x5ac75d(0x6e6)+_0x5ac75d(0x67f)+_0x5ac75d(0x5e0)+'ERE\x20id\x20=\x20?','hBNpm':function(_0x2ae189,_0x7fbe1a,_0x5b6cfc,_0x3cbdfc){return _0x2ae189(_0x7fbe1a,_0x5b6cfc,_0x3cbdfc);},'kLbsc':_0x5ac75d(0x68d)+_0x5ac75d(0x5ea)+'KS=1','oDvYt':_0x5ac75d(0x7f2),'xfATN':_0x5ac75d(0x53a)+_0x5ac75d(0x43d)+'mer\x20ID:','VUdzK':_0x5ac75d(0x72e)+_0x5ac75d(0x249)+'rror\x20occur'+_0x5ac75d(0x220)},{id:_0x2c94f6}=_0x5329ef[_0x5ac75d(0x724)],{newId:_0x2bab5c}=_0x5329ef[_0x5ac75d(0x365)];let _0x2091cc;if(!_0x2bab5c||_0x27f51d[_0x5ac75d(0x4ce)](_0x2bab5c['trim'](),'')){const _0x2ddb2d={};return _0x2ddb2d[_0x5ac75d(0x6c3)]=_0x27f51d['UsULT'],_0x505b76['status'](0x1*-0x2202+-0x3*0x2a9+-0x1*-0x2b8d)[_0x5ac75d(0x78a)](_0x2ddb2d);}try{if(_0x27f51d['qWXop'](_0x27f51d[_0x5ac75d(0x7d1)],_0x27f51d[_0x5ac75d(0x7b2)])){_0x2091cc=await _0x4a9162[_0x5ac75d(0x4a5)+'ion'](),await _0x2091cc[_0x5ac75d(0x45d)+_0x5ac75d(0x5d5)]();const [[_0x4e4552]]=await _0x2091cc['query'](_0x5ac75d(0x610)+_0x5ac75d(0x655)+_0x5ac75d(0x42d)+'\x20id\x20=\x20?',[_0x2bab5c]);if(_0x4e4552){if(_0x27f51d[_0x5ac75d(0x41d)](_0x27f51d[_0x5ac75d(0x6b6)],'JHYRj')){const _0xbb3b46=_0x33f551(_0x65cf4[_0x5ac75d(0x2ff)][_0x5ac75d(0x210)+_0x5ac75d(0x345)+'s'],{'customerName':_0x27d9c5[_0x5ac75d(0x5ec)],'amount':_0x27f51d[_0x5ac75d(0x526)](_0x56438a,_0x30d358),'newBalance':_0x4fe184(_0x1ecb60)});_0x44bc6b['sendMessag'+'e'](_0x326062[_0x5ac75d(0x500)],_0xbb3b46);}else throw new Error(_0x5ac75d(0x353)+_0x5ac75d(0x733)+_0x2bab5c+(_0x5ac75d(0x34f)+'exists.'));}const [[_0x1bc292]]=await _0x2091cc['query'](_0x27f51d[_0x5ac75d(0x5f5)],[_0x2c94f6]);await _0x2091cc[_0x5ac75d(0x583)](_0x5ac75d(0x68d)+_0x5ac75d(0x5ea)+_0x5ac75d(0x26e)),await _0x2091cc[_0x5ac75d(0x583)](_0x27f51d['nBTdR'],[_0x2bab5c,_0x2c94f6]),await _0x2091cc[_0x5ac75d(0x583)](_0x5ac75d(0x27f)+'ments\x20SET\x20'+_0x5ac75d(0x429)+_0x5ac75d(0x2ee)+_0x5ac75d(0x67a)+_0x5ac75d(0x7a3),[_0x2bab5c,_0x2c94f6]),await _0x2091cc['query'](_0x27f51d[_0x5ac75d(0x2bb)],[_0x2bab5c,_0x2c94f6]),await _0x2091cc[_0x5ac75d(0x583)](_0x27f51d[_0x5ac75d(0x223)],[_0x2bab5c,_0x2c94f6]),await _0x2091cc[_0x5ac75d(0x583)](_0x27f51d[_0x5ac75d(0x5a1)],[_0x2bab5c,_0x2c94f6]),await _0x2091cc[_0x5ac75d(0x583)](_0x27f51d['UKvDy'],[_0x2bab5c,_0x2c94f6]);_0x1bc292&&_0x1bc292[_0x5ac75d(0x2b9)+_0x5ac75d(0x7db)]&&(await _0x2091cc[_0x5ac75d(0x583)](_0x5ac75d(0x3ad)+_0x5ac75d(0x470)+_0x5ac75d(0x7e6)+_0x5ac75d(0x2ee)+_0x5ac75d(0x7e8)+'\x20?',[_0x2bab5c,_0x2c94f6]),await _0x2a5b26[_0x5ac75d(0x425)+_0x5ac75d(0x545)+_0x5ac75d(0x72d)](_0x1bc292[_0x5ac75d(0x2b9)+_0x5ac75d(0x7db)],_0x2bab5c),await _0x27f51d[_0x5ac75d(0x29f)](syncPppoeCacheComment,_0x2091cc,_0x1bc292['pppoeUsern'+_0x5ac75d(0x7db)],_0x2bab5c));await _0x2091cc[_0x5ac75d(0x583)](_0x27f51d[_0x5ac75d(0x211)]),await _0x2091cc[_0x5ac75d(0x462)]();const _0x396017={};_0x396017[_0x5ac75d(0x468)]=!![],_0x396017[_0x5ac75d(0x6c3)]=_0x5ac75d(0x353)+_0x5ac75d(0x3f3)+_0x5ac75d(0x6a7)+_0x5ac75d(0x4c6)+_0x2c94f6+_0x5ac75d(0x77c)+_0x2bab5c+'.',_0x505b76[_0x5ac75d(0x78a)](_0x396017);}else{const _0x391e0c={};return _0x391e0c[_0x5ac75d(0x6c3)]=_0x27f51d[_0x5ac75d(0x5bb)],_0x2b864f[_0x5ac75d(0x2c4)](0x227d+0x2481+-0x1*0x456e)[_0x5ac75d(0x78a)](_0x391e0c);}}catch(_0x412559){if(_0x2091cc){if(_0x27f51d[_0x5ac75d(0x7bf)]!==_0x5ac75d(0x254))await _0x2091cc['query'](_0x27f51d['kLbsc']),await _0x2091cc[_0x5ac75d(0x59c)]();else{_0x5ee376['error']('Error\x20upda'+_0x5ac75d(0x5ae)+_0x5ac75d(0x558)+_0x5ac75d(0x38b)+_0x203008+':',_0xfc27b3);const _0x365e98={};_0x365e98[_0x5ac75d(0x6c3)]=_0x27f51d[_0x5ac75d(0x521)],_0x3df485[_0x5ac75d(0x2c4)](-0x867+0x2*-0xc4d+0x22f5)[_0x5ac75d(0x78a)](_0x365e98);}}console['error'](_0x27f51d['xfATN'],_0x412559);const _0x5b918f={};_0x5b918f['message']=_0x412559[_0x5ac75d(0x6c3)]||_0x27f51d[_0x5ac75d(0x6d9)],_0x505b76[_0x5ac75d(0x2c4)](-0xc13+0x2502+-0x16fb)[_0x5ac75d(0x78a)](_0x5b918f);}finally{if(_0x2091cc)_0x2091cc[_0x5ac75d(0x31d)]();}}),router[_0xe9c38(0x44d)](_0xe9c38(0x230)+'le',async(_0x1f7007,_0x367707)=>{const _0x2e25a4=_0xe9c38,_0x3f7a9f={};_0x3f7a9f[_0x2e25a4(0x439)]=_0x2e25a4(0x716)+'ulk\x20delete'+':',_0x3f7a9f['TlRfW']=_0x2e25a4(0x1f9)+_0x2e25a4(0x5d0)+_0x2e25a4(0x2e5)+'e.',_0x3f7a9f[_0x2e25a4(0x38e)]=function(_0x331723,_0x1881f7){return _0x331723||_0x1881f7;},_0x3f7a9f['sbszB']=function(_0x3d4485,_0x52d8d7){return _0x3d4485===_0x52d8d7;},_0x3f7a9f[_0x2e25a4(0x658)]=_0x2e25a4(0x280),_0x3f7a9f['rMgsl']=_0x2e25a4(0x319)+_0x2e25a4(0x4d0)+'nly\x20edit\x20y'+_0x2e25a4(0x4ac)+_0x2e25a4(0x5f2),_0x3f7a9f[_0x2e25a4(0x520)]=_0x2e25a4(0x6e6)+_0x2e25a4(0x67f)+_0x2e25a4(0x3d5)+_0x2e25a4(0x7a3),_0x3f7a9f[_0x2e25a4(0x492)]=function(_0x501832,_0x1dccd4){return _0x501832!==_0x1dccd4;},_0x3f7a9f[_0x2e25a4(0x5d7)]=_0x2e25a4(0x304),_0x3f7a9f[_0x2e25a4(0x406)]=_0x2e25a4(0x51c)+'ot\x20found.',_0x3f7a9f[_0x2e25a4(0x45f)]='SELECT\x20*\x20F'+_0x2e25a4(0x1f4)+_0x2e25a4(0x232)+_0x2e25a4(0x7ae),_0x3f7a9f['sbhVQ']=_0x2e25a4(0x7d2)+'dated\x20succ'+_0x2e25a4(0x5e8),_0x3f7a9f[_0x2e25a4(0x73b)]=_0x2e25a4(0x72e)+_0x2e25a4(0x249)+'rror\x20occur'+'red\x20while\x20'+_0x2e25a4(0x328)+_0x2e25a4(0x6a1)+'e.';const _0x2baed9=_0x3f7a9f,{id:_0x8ed816}=_0x1f7007['params'],{phone:_0x4454c2,address:_0x148fbe,location:_0x1ccc85}=_0x1f7007[_0x2e25a4(0x365)];if(_0x2baed9[_0x2e25a4(0x38e)](!_0x4454c2,!_0x148fbe)){const _0x103aa8={};return _0x103aa8['message']='Phone\x20and\x20'+_0x2e25a4(0x367)+_0x2e25a4(0x5b7)+'.',_0x367707[_0x2e25a4(0x2c4)](-0x78f+0x1e2e+-0x9*0x257)['json'](_0x103aa8);}if(_0x2baed9[_0x2e25a4(0x7fd)](_0x1f7007[_0x2e25a4(0x51d)][_0x2e25a4(0x3f4)],_0x2baed9[_0x2e25a4(0x658)])&&_0x1f7007[_0x2e25a4(0x51d)]['id']!==_0x8ed816){const _0x2b7bc9={};return _0x2b7bc9['message']=_0x2baed9[_0x2e25a4(0x5bd)],_0x367707[_0x2e25a4(0x2c4)](-0x1bfa+0xbfc+0x1191)[_0x2e25a4(0x78a)](_0x2b7bc9);}try{const _0x1f17a6={'phone':_0x4454c2,'address':_0x148fbe,'location':_0x1ccc85?JSON[_0x2e25a4(0x2ea)](_0x1ccc85):null},[_0x56f28f]=await _0x4a9162[_0x2e25a4(0x583)](_0x2baed9['vJZkM'],[_0x1f17a6,_0x8ed816]);if(_0x2baed9[_0x2e25a4(0x7fd)](_0x56f28f[_0x2e25a4(0x26b)+'ws'],-0x2*0x62a+-0xdd*-0x23+-0xf1*0x13)){if(_0x2baed9[_0x2e25a4(0x492)](_0x2baed9[_0x2e25a4(0x5d7)],_0x2baed9[_0x2e25a4(0x5d7)])){_0x4b7e47[_0x2e25a4(0x846)](_0x2baed9[_0x2e25a4(0x439)],_0x4b7044);const _0x1f358b={};_0x1f358b[_0x2e25a4(0x6c3)]=_0x581daf[_0x2e25a4(0x6c3)]||_0x2baed9[_0x2e25a4(0x7a6)],_0x1b32ac[_0x2e25a4(0x2c4)](0x64*0x3+0x89*0x34+-0x1b0c)[_0x2e25a4(0x78a)](_0x1f358b);}else{const _0x13d2a5={};return _0x13d2a5['message']=_0x2baed9[_0x2e25a4(0x406)],_0x367707['status'](-0x23e0+0xf*-0x1e2+0x41b2)[_0x2e25a4(0x78a)](_0x13d2a5);}}const [[_0x594aba]]=await _0x4a9162[_0x2e25a4(0x583)](_0x2baed9[_0x2e25a4(0x45f)],[_0x8ed816]);if(!_0x594aba){const _0x3f83b9={};return _0x3f83b9['message']='Could\x20not\x20'+'retrieve\x20u'+_0x2e25a4(0x715)+_0x2e25a4(0x44b)+'.',_0x367707[_0x2e25a4(0x2c4)](0x5d9+-0x2065*-0x1+-0x24aa)[_0x2e25a4(0x78a)](_0x3f83b9);}const _0x2ccebb={};_0x2ccebb['id']=_0x594aba['id'],_0x2ccebb[_0x2e25a4(0x5ec)]=_0x594aba[_0x2e25a4(0x5ec)],_0x2ccebb[_0x2e25a4(0x320)]=_0x594aba[_0x2e25a4(0x320)],_0x2ccebb[_0x2e25a4(0x500)]=_0x594aba[_0x2e25a4(0x500)],_0x2ccebb['email']=_0x594aba['email'],_0x2ccebb[_0x2e25a4(0x226)]=_0x594aba[_0x2e25a4(0x226)],_0x2ccebb[_0x2e25a4(0x2c4)]=_0x594aba[_0x2e25a4(0x2c4)],_0x2ccebb[_0x2e25a4(0x2b9)+_0x2e25a4(0x7db)]=_0x594aba[_0x2e25a4(0x2b9)+'ame'],_0x2ccebb['acsSerialN'+_0x2e25a4(0x6f7)]=_0x594aba[_0x2e25a4(0x2b0)+_0x2e25a4(0x6f7)],_0x2ccebb[_0x2e25a4(0x3f4)]=_0x2baed9[_0x2e25a4(0x658)];const _0xf47e46=_0x2ccebb,_0x14971c={};_0x14971c['expiresIn']='7d';const _0x310fa5=_0x556a4[_0x2e25a4(0x7a0)](_0xf47e46,process[_0x2e25a4(0x71a)][_0x2e25a4(0x692)],_0x14971c),_0x528b5e={};_0x528b5e['success']=!![],_0x528b5e[_0x2e25a4(0x6c3)]=_0x2baed9[_0x2e25a4(0x60a)],_0x528b5e[_0x2e25a4(0x7af)]=_0x310fa5,_0x367707[_0x2e25a4(0x78a)](_0x528b5e);}catch(_0x345dd2){console[_0x2e25a4(0x846)]('Error\x20upda'+'ting\x20profi'+_0x2e25a4(0x558)+_0x2e25a4(0x38b)+_0x8ed816+':',_0x345dd2);const _0x2dc77a={};_0x2dc77a[_0x2e25a4(0x6c3)]=_0x2baed9[_0x2e25a4(0x73b)],_0x367707[_0x2e25a4(0x2c4)](-0x1ff9+0x2563+-0x376)[_0x2e25a4(0x78a)](_0x2dc77a);}}),router[_0xe9c38(0x515)](_0xe9c38(0x7b7)+'ge-change',async(_0x389a88,_0x46300a)=>{const _0x221b9b=_0xe9c38,_0x351f20={};_0x351f20['xmFGl']=function(_0xfbe22b,_0x5cc223){return _0xfbe22b||_0x5cc223;},_0x351f20[_0x221b9b(0x62a)]='ZvDWJ';const _0x169cc4=_0x351f20;try{const [[_0x94579d]]=await _0x4a9162[_0x221b9b(0x583)](_0x221b9b(0x4e8)+_0x221b9b(0x1fa)+_0x221b9b(0x2aa)+'\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20'+_0x221b9b(0x549)+_0x221b9b(0x7d5)+_0x221b9b(0x26c)+'\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+'\x20pc.new_pa'+_0x221b9b(0x7ca)+_0x221b9b(0x5ad)+_0x221b9b(0x837)+_0x221b9b(0x742)+_0x221b9b(0x1fa)+_0x221b9b(0x357)+_0x221b9b(0x7b4)+_0x221b9b(0x5ad)+_0x221b9b(0x837)+'processed_'+_0x221b9b(0x83f)+_0x221b9b(0x1fa)+_0x221b9b(0x36b)+_0x221b9b(0x780)+_0x221b9b(0x3cb)+_0x221b9b(0x1fa)+_0x221b9b(0x66a)+'kage_chang'+_0x221b9b(0x2a0)+_0x221b9b(0x1fa)+_0x221b9b(0x5e1)+_0x221b9b(0x789)+_0x221b9b(0x67d)+'age_id\x20=\x20p'+_0x221b9b(0x354)+_0x221b9b(0x5c8)+'ERE\x20pc.cus'+'tomer_id\x20='+_0x221b9b(0x53e)+_0x221b9b(0x69d)+_0x221b9b(0x3cf)+_0x221b9b(0x835),[_0x389a88[_0x221b9b(0x724)]['id']]);_0x46300a['json'](_0x169cc4[_0x221b9b(0x6ed)](_0x94579d,null));}catch(_0x2e9396){if(_0x169cc4[_0x221b9b(0x62a)]===_0x169cc4['aaRqL']){console['error'](_0x221b9b(0x403)+_0x221b9b(0x419)+_0x221b9b(0x32a)+'\x20change:',_0x2e9396);const _0x18c689={};_0x18c689[_0x221b9b(0x6c3)]=_0x221b9b(0x403)+_0x221b9b(0x485)+'ge\x20change\x20'+'status.',_0x46300a['status'](-0xa02+-0x532+0x1128)[_0x221b9b(0x78a)](_0x18c689);}else{const _0x222f58=_0x41fce9[_0x221b9b(0x3b4)](_0x34bd7e,arguments);return _0x18c9c9=null,_0x222f58;}}}),router[_0xe9c38(0x2cf)](_0xe9c38(0x7b7)+'ge-change',async(_0x3e5f7d,_0x484a10)=>{const _0x4ceaa5=_0xe9c38,_0x45408b={};_0x45408b[_0x4ceaa5(0x7cf)]=_0x4ceaa5(0x51c)+_0x4ceaa5(0x366),_0x45408b[_0x4ceaa5(0x547)]=function(_0x430de4,_0x1eb3d7){return _0x430de4==_0x1eb3d7;},_0x45408b[_0x4ceaa5(0x74e)]=_0x4ceaa5(0x390)+_0x4ceaa5(0x2d8)+_0x4ceaa5(0x4ec)+'this\x20packa'+_0x4ceaa5(0x70b),_0x45408b[_0x4ceaa5(0x533)]=_0x4ceaa5(0x3a6)+_0x4ceaa5(0x590)+_0x4ceaa5(0x593)+'ssfully.',_0x45408b[_0x4ceaa5(0x572)]=_0x4ceaa5(0x2cb)+_0x4ceaa5(0x346)+_0x4ceaa5(0x3a8)+'e:',_0x45408b['cWCPu']=_0x4ceaa5(0x2cb)+_0x4ceaa5(0x346)+'kage\x20chang'+'e.';const _0x82f515=_0x45408b;try{const {id:_0x26b724}=_0x3e5f7d[_0x4ceaa5(0x724)],{new_package_id:_0x2f0a25}=_0x3e5f7d[_0x4ceaa5(0x365)],[[_0x25628e]]=await _0x4a9162[_0x4ceaa5(0x583)](_0x4ceaa5(0x30a)+_0x4ceaa5(0x72c)+_0x4ceaa5(0x6cd)+_0x4ceaa5(0x83b)+_0x4ceaa5(0x546),[_0x26b724]),_0x5ab28a={};_0x5ab28a[_0x4ceaa5(0x6c3)]=_0x82f515[_0x4ceaa5(0x7cf)];if(!_0x25628e)return _0x484a10[_0x4ceaa5(0x2c4)](0x1467+0xf2c+-0x9*0x3c7)[_0x4ceaa5(0x78a)](_0x5ab28a);if(_0x82f515[_0x4ceaa5(0x547)](_0x25628e[_0x4ceaa5(0x226)],_0x2f0a25))return _0x484a10[_0x4ceaa5(0x2c4)](-0x1*-0x5f7+0x2*-0x24b+0x2f*0x1)[_0x4ceaa5(0x78a)]({'message':_0x82f515[_0x4ceaa5(0x74e)]});await _0x4a9162['query'](_0x4ceaa5(0x391)+_0x4ceaa5(0x6e7)+'changes\x20(c'+_0x4ceaa5(0x599)+',\x20new_pack'+_0x4ceaa5(0x305)+'atus)\x20\x0a\x20\x20\x20'+_0x4ceaa5(0x1fa)+_0x4ceaa5(0x20b)+_0x4ceaa5(0x3fc)+'ng\x27)\x20\x0a\x20\x20\x20\x20'+_0x4ceaa5(0x34e)+_0x4ceaa5(0x41f)+'E\x20KEY\x20UPDA'+'TE\x20new_pac'+_0x4ceaa5(0x1ff)+_0x4ceaa5(0x4c5)+_0x4ceaa5(0x7ba)+'d)',[_0x26b724,_0x2f0a25]);const _0x1fafe2={};_0x1fafe2[_0x4ceaa5(0x468)]=!![],_0x1fafe2['message']=_0x82f515[_0x4ceaa5(0x533)],_0x484a10['status'](-0x184f+0xd04*0x1+-0x305*-0x4)['json'](_0x1fafe2);}catch(_0x26778d){console[_0x4ceaa5(0x846)](_0x82f515[_0x4ceaa5(0x572)],_0x26778d);const _0x26a535={};_0x26a535['message']=_0x82f515['cWCPu'],_0x484a10[_0x4ceaa5(0x2c4)](-0x643+-0x1*-0x345+0x1*0x4f2)['json'](_0x26a535);}}),router[_0xe9c38(0x29e)](_0xe9c38(0x7b7)+_0xe9c38(0x3a7),async(_0x4b5ed0,_0x24e91b)=>{const _0xb04ef6=_0xe9c38,_0x1a2ade={};_0x1a2ade[_0xb04ef6(0x537)]=_0xb04ef6(0x4c9)+_0xb04ef6(0x7c8)+_0xb04ef6(0x387)+'ERE\x20custom'+_0xb04ef6(0x39d)+_0xb04ef6(0x344)+_0xb04ef6(0x240)+'g\x27',_0x1a2ade['Owieo']=function(_0x37351e,_0x40c8bf){return _0x37351e!==_0x40c8bf;},_0x1a2ade[_0xb04ef6(0x469)]=_0xb04ef6(0x828),_0x1a2ade[_0xb04ef6(0x5aa)]=_0xb04ef6(0x637)+_0xb04ef6(0x243)+_0xb04ef6(0x40b)+_0xb04ef6(0x64d)+'celled.',_0x1a2ade['GyIEl']=function(_0x55360c,_0x1ca5f7){return _0x55360c!==_0x1ca5f7;},_0x1a2ade[_0xb04ef6(0x3c6)]=_0xb04ef6(0x372),_0x1a2ade[_0xb04ef6(0x499)]=_0xb04ef6(0x297)+'elling\x20pac'+'kage\x20chang'+'e:';const _0xa605d0=_0x1a2ade;try{const {id:_0x15b1c7}=_0x4b5ed0[_0xb04ef6(0x724)],[_0x55cc2e]=await _0x4a9162[_0xb04ef6(0x583)](_0xa605d0['omWdd'],[_0x15b1c7]);if(_0x55cc2e['affectedRo'+'ws']===0x885+0x2115+0x429*-0xa){if(_0xa605d0[_0xb04ef6(0x3ff)](_0xa605d0[_0xb04ef6(0x469)],_0xa605d0[_0xb04ef6(0x469)]))_0xbc30fb[_0xb04ef6(0x524)](_0xb04ef6(0x817)+_0xb04ef6(0x310)+_0xb04ef6(0x2ba)+_0xb04ef6(0x709)+_0xb04ef6(0x5f8)+_0x299672+(_0xb04ef6(0x4fd)+'.'));else{const _0x3bf4f5={};return _0x3bf4f5[_0xb04ef6(0x6c3)]=_0xb04ef6(0x3bf)+_0xb04ef6(0x69f)+'hange\x20foun'+_0xb04ef6(0x4da)+'l.',_0x24e91b[_0xb04ef6(0x2c4)](-0x266a+0xd2c+-0xd69*-0x2)[_0xb04ef6(0x78a)](_0x3bf4f5);}}const _0x5d6863={};_0x5d6863[_0xb04ef6(0x468)]=!![],_0x5d6863[_0xb04ef6(0x6c3)]=_0xa605d0['Ckatw'],_0x24e91b[_0xb04ef6(0x78a)](_0x5d6863);}catch(_0x1abd30){if(_0xa605d0[_0xb04ef6(0x78f)](_0xa605d0[_0xb04ef6(0x3c6)],'TxbIs')){console[_0xb04ef6(0x846)](_0xa605d0[_0xb04ef6(0x499)],_0x1abd30);const _0x245729={};_0x245729[_0xb04ef6(0x6c3)]=_0xb04ef6(0x297)+'elling\x20pac'+'kage\x20chang'+'e.',_0x24e91b[_0xb04ef6(0x2c4)](-0x6b*-0x22+0xb0e+-0x1750)[_0xb04ef6(0x78a)](_0x245729);}else{const _0x3330a2=_0xb04ef6(0x3f2)+_0x33fc31[_0xb04ef6(0x82e)];_0x4fcbce[_0xb04ef6(0x517)][_0xb04ef6(0x2d5)](_0x3330a2);}}}),router[_0xe9c38(0x515)](_0xe9c38(0x4a6)+'s',async(_0x1a7671,_0x261d9e)=>{const _0x4ce151=_0xe9c38,_0x17e560={'yylrF':function(_0x2e18d8,_0x578574){return _0x2e18d8!==_0x578574;},'igOXN':_0x4ce151(0x39f),'ZTepT':function(_0xa94f82,_0x4f47e5){return _0xa94f82(_0x4f47e5);},'rbaxH':_0x4ce151(0x595)+'tomerId\x20=\x20'+'?','FepTF':_0x4ce151(0x4ad)+'dateSubmit'+'ted\x20DESC'};try{const {customerId:_0x2eaa6d}=_0x1a7671['query'];let _0x5cb2f9=_0x4ce151(0x2d6)+_0x4ce151(0x374)+'ints';const _0x3d7cb6=[];_0x2eaa6d&&(_0x5cb2f9+=_0x17e560[_0x4ce151(0x457)],_0x3d7cb6['push'](_0x2eaa6d));_0x5cb2f9+=_0x17e560[_0x4ce151(0x201)];const [_0x7d05b6]=await _0x4a9162[_0x4ce151(0x583)](_0x5cb2f9,_0x3d7cb6),_0x206615=_0x7d05b6[_0x4ce151(0x823)](_0x1ccced=>{const _0x24bf3a=_0x4ce151,_0x1e8993={'hTBoK':function(_0x3efa11,_0x150530){const _0x4bc890=_0x5d62;return _0x17e560[_0x4bc890(0x540)](_0x3efa11,_0x150530);},'rTWOg':_0x17e560[_0x24bf3a(0x316)],'pbWXP':function(_0x15f58e,_0x25732f){return _0x15f58e===_0x25732f;}},_0x3b485a=_0x15273d=>{const _0x56b99f=_0x24bf3a;if(!_0x15273d)return[];try{if(_0x1e8993['hTBoK'](_0x1e8993[_0x56b99f(0x3d2)],_0x1e8993['rTWOg']))_0x2fee4b[_0x56b99f(0x5eb)]=_0x17f463[_0x56b99f(0x5ec)];else{const _0x404fed=_0x1e8993[_0x56b99f(0x76d)](typeof _0x15273d,'string')?JSON[_0x56b99f(0x392)](_0x15273d):_0x15273d;return Array[_0x56b99f(0x424)](_0x404fed)?_0x404fed:[];}}catch(_0x1ae5b1){return console[_0x56b99f(0x846)](_0x56b99f(0x68c)+_0x56b99f(0x68e)+_0x56b99f(0x208)+_0x56b99f(0x452)+'\x20'+_0x1ccced['id']+':',_0x1ae5b1),[];}};return{..._0x1ccced,'dateSubmitted':dbDateToISO(_0x1ccced[_0x24bf3a(0x446)+_0x24bf3a(0x75c)]),'replies':_0x17e560[_0x24bf3a(0x2c2)](_0x3b485a,_0x1ccced[_0x24bf3a(0x84a)])[_0x24bf3a(0x823)](_0x2a2cac=>({..._0x2a2cac,'createdAt':dbDateToISO(_0x2a2cac[_0x24bf3a(0x5e5)])})),'photos':_0x17e560[_0x24bf3a(0x2c2)](_0x3b485a,_0x1ccced[_0x24bf3a(0x517)])};});_0x261d9e[_0x4ce151(0x78a)](_0x206615);}catch(_0x19b3ce){console[_0x4ce151(0x846)]('Error\x20in\x20G'+'ET\x20/compla'+_0x4ce151(0x2c7),_0x19b3ce),_0x261d9e[_0x4ce151(0x2c4)](0x2114+-0x2fb*-0x4+-0x5*0x89c)[_0x4ce151(0x80e)](_0x4ce151(0x710)+'ing\x20compla'+'ints\x20data');}}),router[_0xe9c38(0x2cf)](_0xe9c38(0x4a6)+'s',upload[_0xe9c38(0x576)](_0xe9c38(0x5a8)),async(_0x2db896,_0x678851)=>{const _0x36bd42=_0xe9c38,_0xb4289={'uTBbI':function(_0x4729ab,_0x3d22e8){return _0x4729ab!==_0x3d22e8;},'JuleY':_0x36bd42(0x463),'MTWqH':function(_0x265b48,_0x5b9496){return _0x265b48===_0x5b9496;},'nHKpU':'mdjJc','oqvsY':'Submitting'+_0x36bd42(0x63f)+_0x36bd42(0x636),'XlAfM':function(_0x17ec79){return _0x17ec79();},'VWOek':'BzvIO','YrMVI':'oHSah','BGeaa':function(_0x3f84e0,_0xf7bab6,_0x2fe2bb){return _0x3f84e0(_0xf7bab6,_0x2fe2bb);},'giNOv':'Pending','nsQrV':_0x36bd42(0x58b),'MSWCE':_0x36bd42(0x3c5),'qRGoD':'failed','NgGKV':_0x36bd42(0x82a)+'laint\x20Noti'+'fication','ocoCP':_0x36bd42(0x32d)+_0x36bd42(0x38d)+'aint:','HiMTs':_0x36bd42(0x32d)+_0x36bd42(0x38d)+'aint'};try{if(_0xb4289[_0x36bd42(0x5fd)](_0x36bd42(0x7f7),_0xb4289[_0x36bd42(0x1f1)])){const {customerId:_0x1def6,type:_0x4fa54f,description:_0x29447a}=_0x2db896['body'],_0x50a8c8=_0x2db896[_0x36bd42(0x592)],[[_0x440f0d]]=await _0x4a9162[_0x36bd42(0x583)](_0x36bd42(0x423)+_0x36bd42(0x7ad)+_0x36bd42(0x383)+_0x36bd42(0x7f8)+'eName\x20FROM'+_0x36bd42(0x4b4)+'\x20c\x20LEFT\x20JO'+'IN\x20package'+_0x36bd42(0x30e)+_0x36bd42(0x81a)+_0x36bd42(0x7b3)+_0x36bd42(0x61f),[_0x1def6]);if(!_0x440f0d){if(_0xb4289[_0x36bd42(0x661)](_0xb4289[_0x36bd42(0x4f1)],_0xb4289[_0x36bd42(0x4f1)])){if(_0x50a8c8)_0x41ef8b[_0x36bd42(0x4cf)](_0x50a8c8[_0x36bd42(0x5fb)]);const _0x37909c={};return _0x37909c[_0x36bd42(0x6c3)]=_0xb4289['oqvsY'],_0x678851['status'](-0x13f*0x1+0xcdc*-0x3+0x2967)[_0x36bd42(0x78a)](_0x37909c);}else{const _0x4ea2f4={};return _0x4ea2f4[_0x36bd42(0x6c3)]=_0x36bd42(0x614)+_0x36bd42(0x796)+_0x36bd42(0x3a2)+_0x21f540[_0x36bd42(0x2c4)]+')',_0x7cf394['status'](_0x4ff52c[_0x36bd42(0x2c4)])[_0x36bd42(0x78a)](_0x4ea2f4);}}const _0x10f021=await _0xb4289[_0x36bd42(0x4c2)](getSettings);let _0x577ed1=[];if(_0x50a8c8){if(_0xb4289[_0x36bd42(0x661)](_0xb4289['VWOek'],_0xb4289[_0x36bd42(0x76c)]))return null;else{const _0x36bd50=_0x36bd42(0x3f2)+_0x50a8c8['filename'];_0x577ed1[_0x36bd42(0x2d5)](_0x36bd50);}}const _0x36115a={'id':_0x36bd42(0x256)+Date[_0x36bd42(0x743)](),'customerId':_0x1def6,'customerName':_0x440f0d['name'],'dateSubmitted':_0xb4289[_0x36bd42(0x2f8)](toMySQLDatetime,new Date(),_0x10f021[_0x36bd42(0x4a4)][_0x36bd42(0x7a2)]),'type':_0x4fa54f,'description':_0x29447a,'status':_0xb4289[_0x36bd42(0x46b)],'replies':'[]','photos':JSON[_0x36bd42(0x2ea)](_0x577ed1)};await _0x4a9162[_0x36bd42(0x583)]('INSERT\x20INT'+_0x36bd42(0x4e0)+'ts\x20SET\x20?',_0x36115a);if(_0x10f021[_0x36bd42(0x2ff)]?.[_0x36bd42(0x2af)+_0x36bd42(0x36e)]&&_0x10f021[_0x36bd42(0x2ff)]?.['newComplai'+_0x36bd42(0x36a)+_0x36bd42(0x653)]){const _0x3361c1=_0xb4289[_0x36bd42(0x2f8)](replacePlaceholders,_0x10f021[_0x36bd42(0x2ff)][_0x36bd42(0x719)+_0x36bd42(0x36a)+_0x36bd42(0x653)],{'customerName':_0x36115a[_0x36bd42(0x48b)+'me'],'customerId':_0x36115a[_0x36bd42(0x429)],'customerPhone':_0x440f0d[_0x36bd42(0x500)],'packageName':_0x440f0d[_0x36bd42(0x6bf)+'e']||_0xb4289[_0x36bd42(0x28a)],'complaintType':_0x36115a[_0x36bd42(0x728)],'description':_0x36115a[_0x36bd42(0x584)+'n']}),_0x426e69=await _0x1adb7c[_0x36bd42(0x7e9)+'e'](_0x10f021[_0x36bd42(0x2ff)][_0x36bd42(0x2af)+_0x36bd42(0x36e)],_0x3361c1),_0x20594e={};_0x20594e[_0x36bd42(0x40a)+'number']=_0x10f021[_0x36bd42(0x2ff)][_0x36bd42(0x2af)+_0x36bd42(0x36e)],_0x20594e['customer_i'+'d']=_0x36115a['customerId'],_0x20594e[_0x36bd42(0x489)+'dy']=_0x3361c1,_0x20594e[_0x36bd42(0x2c4)]=_0x426e69[_0x36bd42(0x468)]?_0xb4289[_0x36bd42(0x214)]:_0xb4289[_0x36bd42(0x3b8)],_0x20594e[_0x36bd42(0x728)]=_0xb4289[_0x36bd42(0x276)],_0x20594e['error_mess'+'age']=_0x426e69['error']||null,await _0x4a9162[_0x36bd42(0x583)](_0x36bd42(0x391)+_0x36bd42(0x72b)+_0x36bd42(0x581)+'?',_0x20594e);}_0x678851[_0x36bd42(0x2c4)](0x67f*0x5+-0xf23+-0x108f)[_0x36bd42(0x78a)](_0x36115a);}else{const _0x81c010={};return _0x81c010[_0x36bd42(0x6c3)]=_0x36bd42(0x4b3)+'f\x20complain'+_0x36bd42(0x29a)+_0x36bd42(0x3fb),_0x438314[_0x36bd42(0x2c4)](0x17*0x173+-0xcde+0x12e7*-0x1)[_0x36bd42(0x78a)](_0x81c010);}}catch(_0x18424d){console[_0x36bd42(0x846)](_0xb4289['ocoCP'],_0x18424d);if(_0x2db896[_0x36bd42(0x592)])_0x41ef8b[_0x36bd42(0x4cf)](_0x2db896[_0x36bd42(0x592)]['path']);const _0x452c14={};_0x452c14['message']=_0xb4289[_0x36bd42(0x596)],_0x678851['status'](-0x3*0x83f+0xe86+-0xc2b*-0x1)[_0x36bd42(0x78a)](_0x452c14);}}),router[_0xe9c38(0x44d)](_0xe9c38(0x4a6)+'s/:id',async(_0x26b7fc,_0x1669fe)=>{const _0x15e851=_0xe9c38,_0x5b4137={'JpgSC':_0x15e851(0x2c6)+'+$','mOBNg':_0x15e851(0x2f0)+_0x15e851(0x636),'DhpdJ':function(_0x386452,_0x1670c3){return _0x386452!==_0x1670c3;},'nCkoh':_0x15e851(0x6fa),'TwYuz':function(_0x368e2d,_0x568eb7){return _0x368e2d||_0x568eb7;},'EimxQ':function(_0x22c3f8,_0x3e0b76){return _0x22c3f8>_0x3e0b76;},'dcBbc':function(_0x21f532,_0x373347){return _0x21f532===_0x373347;},'BqEzp':_0x15e851(0x4e2),'Yhpfn':'YjybA','BGYFi':'UPDATE\x20com'+_0x15e851(0x551)+_0x15e851(0x7ec)+_0x15e851(0x7ae),'YrFNd':function(_0x3c5717){return _0x3c5717();},'OHnHY':_0x15e851(0x312)+_0x15e851(0x4f6)+_0x15e851(0x56c)+_0x15e851(0x232)+_0x15e851(0x819)+_0x15e851(0x3b7)+'echnician\x22','zUlih':'pWHPh','qIGbr':_0x15e851(0x306)+_0x15e851(0x75e)+_0x15e851(0x81c)+_0x15e851(0x433)+'.address\x20a'+_0x15e851(0x28c)+_0x15e851(0x4ea)+_0x15e851(0x375)+_0x15e851(0x822)+_0x15e851(0x2e6)+_0x15e851(0x44a)+_0x15e851(0x640)+_0x15e851(0x2d9)+'WHERE\x20co.i'+_0x15e851(0x7a3),'pbQzH':_0x15e851(0x391)+_0x15e851(0x72b)+_0x15e851(0x581)+'?','aFLBE':_0x15e851(0x3c5),'LKhJN':_0x15e851(0x5c1),'IgWpx':_0x15e851(0x56e)+_0x15e851(0x573)+'t','CqWlL':_0x15e851(0x2d6)+_0x15e851(0x374)+_0x15e851(0x410)+_0x15e851(0x6e0),'GeMEb':'Error\x20upda'+_0x15e851(0x38d)+_0x15e851(0x714),'fPDsR':_0x15e851(0x53a)+_0x15e851(0x38d)+_0x15e851(0x2e7)},{id:_0x10e0cf}=_0x26b7fc[_0x15e851(0x724)],{status:_0x11a81f,assignedTo:_0x36b16b}=_0x26b7fc[_0x15e851(0x365)];try{const [[_0x4632ff]]=await _0x4a9162['query'](_0x15e851(0x2d6)+_0x15e851(0x374)+_0x15e851(0x410)+'\x20id\x20=\x20?',[_0x10e0cf]);if(!_0x4632ff){const _0x10b878={};return _0x10b878[_0x15e851(0x6c3)]=_0x5b4137[_0x15e851(0x75a)],_0x1669fe[_0x15e851(0x2c4)](-0x148f+-0x18e*-0x18+-0x103*0xf)[_0x15e851(0x78a)](_0x10b878);}const _0x59885f={};if(_0x11a81f)_0x59885f['status']=_0x11a81f;if(_0x5b4137['DhpdJ'](typeof _0x36b16b,_0x5b4137['nCkoh']))_0x59885f[_0x15e851(0x2d2)]=_0x5b4137[_0x15e851(0x454)](_0x36b16b,null);if(_0x5b4137['EimxQ'](Object['keys'](_0x59885f)[_0x15e851(0x438)],0x20f*0x1+0xe2*0x5+-0x1*0x679)){if(_0x5b4137[_0x15e851(0x465)](_0x5b4137['BqEzp'],_0x5b4137[_0x15e851(0x6d3)]))return _0x7df8a8[_0x15e851(0x727)]()[_0x15e851(0x302)](jciYet[_0x15e851(0x3db)])[_0x15e851(0x727)]()[_0x15e851(0x818)+'r'](_0x37cae0)[_0x15e851(0x302)](_0x15e851(0x2c6)+'+$');else await _0x4a9162[_0x15e851(0x583)](_0x5b4137['BGYFi'],[_0x59885f,_0x10e0cf]);}if(_0x36b16b&&_0x36b16b!==_0x4632ff[_0x15e851(0x2d2)]){console[_0x15e851(0x704)](_0x15e851(0x7a1)+_0x15e851(0x2db)+_0x15e851(0x4bc)+_0x15e851(0x713)+'or\x20complai'+_0x15e851(0x2e4)+_0x10e0cf+(_0x15e851(0x471)+_0x15e851(0x34a))+_0x36b16b);const _0x3c83b3=await _0x5b4137[_0x15e851(0x7c5)](getSettings);if(_0x3c83b3[_0x15e851(0x2e0)][_0x15e851(0x776)+'tification'+_0x15e851(0x7d6)]&&_0x3c83b3[_0x15e851(0x2ff)][_0x15e851(0x2eb)+'TaskAssign'+_0x15e851(0x82d)]){const [[_0x23aa67]]=await _0x4a9162['query'](_0x5b4137['OHnHY'],[_0x36b16b]);if(_0x23aa67&&_0x23aa67['phone']){if(_0x5b4137[_0x15e851(0x569)](_0x5b4137[_0x15e851(0x741)],_0x5b4137['zUlih']))_0x5212fb=_0x4b19a6[_0x15e851(0x342)];else{const [[_0x1b79e2]]=await _0x4a9162[_0x15e851(0x583)](_0x5b4137[_0x15e851(0x539)],[_0x10e0cf]),_0x51fc17={};_0x51fc17['technician'+_0x15e851(0x721)]=_0x23aa67[_0x15e851(0x7cd)],_0x51fc17[_0x15e851(0x4f8)]=_0x1b79e2['id'],_0x51fc17['customerNa'+'me']=_0x1b79e2[_0x15e851(0x48b)+'me'],_0x51fc17['customerAd'+_0x15e851(0x461)]=_0x1b79e2[_0x15e851(0x657)+_0x15e851(0x461)],_0x51fc17[_0x15e851(0x5f4)+_0x15e851(0x3d0)]=_0x1b79e2[_0x15e851(0x728)],_0x51fc17[_0x15e851(0x552)+_0x15e851(0x43a)]=_0x1b79e2[_0x15e851(0x584)+'n'];const _0xd9b654=replacePlaceholders(_0x3c83b3[_0x15e851(0x2ff)][_0x15e851(0x2eb)+'TaskAssign'+'ment'],_0x51fc17),_0x467842=await _0x1adb7c[_0x15e851(0x7e9)+'e'](_0x23aa67[_0x15e851(0x500)],_0xd9b654);await _0x4a9162[_0x15e851(0x583)](_0x5b4137[_0x15e851(0x764)],{'recipient_number':_0x23aa67[_0x15e851(0x500)],'customer_id':null,'message_body':_0xd9b654,'status':_0x467842[_0x15e851(0x468)]?_0x5b4137[_0x15e851(0x231)]:_0x5b4137[_0x15e851(0x30d)],'type':_0x5b4137[_0x15e851(0x295)],'error_message':_0x467842[_0x15e851(0x846)]||null});}}else console['warn']('[Notificat'+_0x15e851(0x6fc)+_0x15e851(0x700)+_0x15e851(0x31e)+'\x20notificat'+_0x15e851(0x62f)+'mplaint\x20'+_0x10e0cf+(':\x20Technici'+_0x15e851(0x4df))+_0x36b16b+(_0x15e851(0x807)+_0x15e851(0x3f1)+_0x15e851(0x441)+_0x15e851(0x3e8)));}}const [[_0x2b5152]]=await _0x4a9162[_0x15e851(0x583)](_0x5b4137[_0x15e851(0x4f5)],[_0x10e0cf]);_0x1669fe[_0x15e851(0x78a)](_0x2b5152);}catch(_0x21a320){console[_0x15e851(0x846)](_0x5b4137[_0x15e851(0x23f)],_0x21a320);const _0x49030a={};_0x49030a[_0x15e851(0x6c3)]=_0x5b4137['fPDsR'],_0x1669fe[_0x15e851(0x2c4)](0x8ef*-0x1+0x214d+-0x166a)[_0x15e851(0x78a)](_0x49030a);}}),router[_0xe9c38(0x2cf)]('/complaint'+_0xe9c38(0x660)+'y',upload[_0xe9c38(0x576)](_0xe9c38(0x5a8)),async(_0x58effc,_0x2d825b)=>{const _0xf3609f=_0xe9c38,_0x28fe1c={'qqrAw':'No\x20pending'+_0xf3609f(0x69f)+_0xf3609f(0x327)+_0xf3609f(0x4da)+'l.','hsETM':function(_0x233852,_0x2ebc2c){return _0x233852!==_0x2ebc2c;},'pOIaX':_0xf3609f(0x5e7),'vjZMf':_0xf3609f(0x449)+_0xf3609f(0x825)+'file\x20on\x20re'+_0xf3609f(0x25b)+'e:','jYLLj':function(_0x158413){return _0x158413();},'mDcJo':'Reply\x20must'+_0xf3609f(0x6d0)+_0xf3609f(0x59e)+_0xf3609f(0x4e5),'UnipI':'Replier\x20id'+_0xf3609f(0x27e)+_0xf3609f(0x7ed),'BhaJQ':_0xf3609f(0x376),'lgmVj':'PuSXR','vWENZ':_0xf3609f(0x2c3)+'e\x20FROM\x20use'+_0xf3609f(0x50c)+'sername\x20=\x20'+'?','GEsqd':function(_0x556008,_0x51e29a){return _0x556008===_0x51e29a;},'sYmFl':_0xf3609f(0x4d9),'wjDQh':_0xf3609f(0x2eb),'SpCSS':_0xf3609f(0x269),'gqZcK':_0xf3609f(0x280),'aXPjX':function(_0x4e17fa,_0x1bec62){return _0x4e17fa||_0x1bec62;},'BeNhw':function(_0x2853bf,_0x466fb7,_0x3fd398){return _0x2853bf(_0x466fb7,_0x3fd398);},'XCRCZ':'CIvIw','saAWx':_0xf3609f(0x6a4)+_0xf3609f(0x551)+_0xf3609f(0x2b5)+_0xf3609f(0x80f)+_0xf3609f(0x7ae)};try{const {id:_0x1377f3}=_0x58effc['params'],{replyText:_0x243d66,repliedBy:_0x33580d}=_0x58effc[_0xf3609f(0x365)],_0x2b49fc=_0x58effc[_0xf3609f(0x592)],_0x7e0697=await _0x28fe1c['jYLLj'](getSettings);if((!_0x243d66||!_0x243d66[_0xf3609f(0x3c9)]())&&!_0x2b49fc){const _0x32e468={};return _0x32e468[_0xf3609f(0x6c3)]=_0x28fe1c[_0xf3609f(0x6de)],_0x2d825b['status'](0xf6b+0xd*0x1f5+-0x274c)[_0xf3609f(0x78a)](_0x32e468);}if(!_0x33580d){if(_0x28fe1c[_0xf3609f(0x22a)](_0xf3609f(0x842),_0xf3609f(0x842))){const _0x438d2e={};return _0x438d2e[_0xf3609f(0x6c3)]=_0x28fe1c['qqrAw'],_0x585c74['status'](0x4*0x40+-0x178+0x20c)[_0xf3609f(0x78a)](_0x438d2e);}else{if(_0x2b49fc)_0x41ef8b[_0xf3609f(0x4cf)](_0x2b49fc['path']);const _0x436585={};return _0x436585[_0xf3609f(0x6c3)]=_0x28fe1c[_0xf3609f(0x360)],_0x2d825b[_0xf3609f(0x2c4)](-0xd36+-0x6*0x1af+0x10*0x18e)[_0xf3609f(0x78a)](_0x436585);}}const [[_0x31f737]]=await _0x4a9162[_0xf3609f(0x583)](_0xf3609f(0x7be)+_0xf3609f(0x82b)+_0xf3609f(0x548)+_0xf3609f(0x568)+_0xf3609f(0x60b)+_0xf3609f(0x7a3),[_0x1377f3]);if(!_0x31f737){if(_0x28fe1c[_0xf3609f(0x1fc)]===_0x28fe1c[_0xf3609f(0x229)]){const _0x228a4d={};return _0x228a4d['message']='New\x20PPPoE\x20'+'username\x20a'+_0xf3609f(0x242)+_0xf3609f(0x7e5)+_0xf3609f(0x35c),_0x55ce7c[_0xf3609f(0x2c4)](0x205a+-0x73*-0x20+-0x2d2a)[_0xf3609f(0x78a)](_0x228a4d);}else{if(_0x2b49fc)_0x41ef8b[_0xf3609f(0x4cf)](_0x2b49fc[_0xf3609f(0x5fb)]);const _0x17c087={};return _0x17c087[_0xf3609f(0x6c3)]=_0xf3609f(0x2f0)+_0xf3609f(0x636),_0x2d825b[_0xf3609f(0x2c4)](0xc*-0x305+0xb*-0x1d7+0xc1*0x4d)[_0xf3609f(0x78a)](_0x17c087);}}const [_0xb45f66]=await _0x4a9162[_0xf3609f(0x583)](_0x28fe1c[_0xf3609f(0x544)],[_0x33580d]),_0x235ffd=_0xb45f66[-0x2*0x660+0xca*-0x10+0xe*0x1d0],_0x155b8d=_0x235ffd&&(_0x28fe1c[_0xf3609f(0x43e)](_0x235ffd[_0xf3609f(0x3f4)],_0x28fe1c[_0xf3609f(0x28d)])||_0x28fe1c[_0xf3609f(0x43e)](_0x235ffd[_0xf3609f(0x3f4)],_0x28fe1c['wjDQh'])||_0x28fe1c[_0xf3609f(0x43e)](_0x235ffd[_0xf3609f(0x3f4)],_0x28fe1c[_0xf3609f(0x495)]))?_0x28fe1c[_0xf3609f(0x28d)]:_0x28fe1c[_0xf3609f(0x409)];let _0xff1dbb=[];try{_0x31f737['replies']&&(_0xff1dbb=JSON[_0xf3609f(0x392)](_0x31f737[_0xf3609f(0x84a)]));}catch(_0x93eba1){console[_0xf3609f(0x846)]('Could\x20not\x20'+'parse\x20repl'+_0xf3609f(0x682)+_0xf3609f(0x209)+_0x1377f3+(_0xf3609f(0x271)+_0xf3609f(0x3e9)+'ror:'),_0x93eba1),_0xff1dbb=[];}const _0x46d090={'id':_0xf3609f(0x3e0)+Date[_0xf3609f(0x743)](),'senderType':_0x155b8d,'senderName':_0x33580d,'replyText':_0x28fe1c[_0xf3609f(0x490)](_0x243d66,''),'createdAt':_0x28fe1c[_0xf3609f(0x361)](toMySQLDatetime,new Date(),_0x7e0697['app'][_0xf3609f(0x7a2)]),'photos':[]};if(_0x2b49fc){if(_0x28fe1c[_0xf3609f(0x22a)](_0x28fe1c[_0xf3609f(0x7d9)],'dLFBP')){const _0x12fff9=_0xf3609f(0x3f2)+_0x2b49fc['filename'];_0x46d090['photos'][_0xf3609f(0x2d5)](_0x12fff9);}else _0x2a9e89=_0x134f2b[_0xf3609f(0x757)](_0xcc5f3b=>_0x36898e(_0xcc5f3b[_0xf3609f(0x527)])===_0x106dc6)||null;}_0xff1dbb['push'](_0x46d090),await _0x4a9162['query'](_0x28fe1c[_0xf3609f(0x235)],[JSON[_0xf3609f(0x2ea)](_0xff1dbb),_0x1377f3]),_0x2d825b[_0xf3609f(0x2c4)](0x3*-0x9e5+-0x1*-0x1183+0x1*0xcf5)[_0xf3609f(0x78a)](_0x46d090);}catch(_0x4a1a9b){console[_0xf3609f(0x846)](_0xf3609f(0x6fe)+'ng\x20complai'+'nt\x20reply:',_0x4a1a9b);_0x58effc['file']&&_0x41ef8b['unlink'](_0x58effc[_0xf3609f(0x592)]['path'],_0x3868e1=>{const _0x44122c=_0xf3609f;if(_0x28fe1c[_0x44122c(0x22a)](_0x28fe1c[_0x44122c(0x484)],_0x28fe1c['pOIaX'])){if(_0x2b5e85)_0x100af7[_0x44122c(0x31d)]();}else{if(_0x3868e1)console[_0x44122c(0x846)](_0x28fe1c[_0x44122c(0x3ea)],_0x3868e1);}});const _0x57149c={};_0x57149c['message']=_0xf3609f(0x6fe)+_0xf3609f(0x26f),_0x2d825b['status'](-0x11d3+0x215c+-0x487*0x3)['json'](_0x57149c);}}),router[_0xe9c38(0x2cf)]('/complaint'+_0xe9c38(0x3bb)+'ete',async(_0x4e35ae,_0x2d74cf)=>{const _0x3ae1d2=_0xe9c38,_0x208077={};_0x208077[_0x3ae1d2(0x62e)]=_0x3ae1d2(0x4b3)+_0x3ae1d2(0x3d6)+'t\x20IDs\x20is\x20r'+'equired.',_0x208077[_0x3ae1d2(0x217)]=_0x3ae1d2(0x4c9)+'M\x20complain'+_0x3ae1d2(0x60b)+_0x3ae1d2(0x633),_0x208077['QayCf']=function(_0x2006a5,_0x28375b){return _0x2006a5===_0x28375b;},_0x208077[_0x3ae1d2(0x542)]=_0x3ae1d2(0x202)+'ng\x20bulk\x20co'+_0x3ae1d2(0x6be)+'letion:',_0x208077['bKrNt']=_0x3ae1d2(0x2a9)+'ccurred\x20wh'+'ile\x20deleti'+'ng\x20complai'+_0x3ae1d2(0x1ef);const _0x27a1a9=_0x208077,{ids:_0x26cdd1}=_0x4e35ae[_0x3ae1d2(0x365)];if(!Array[_0x3ae1d2(0x424)](_0x26cdd1)||_0x26cdd1[_0x3ae1d2(0x438)]===-0x165c+-0x4d4+-0xe8*-0x1e){const _0x3140b3={};return _0x3140b3[_0x3ae1d2(0x6c3)]=_0x27a1a9['kpyrR'],_0x2d74cf[_0x3ae1d2(0x2c4)](0x779*-0x1+0x2568+0x10d*-0x1b)[_0x3ae1d2(0x78a)](_0x3140b3);}try{const [_0x2e5e57]=await _0x4a9162[_0x3ae1d2(0x583)](_0x27a1a9[_0x3ae1d2(0x217)],[_0x26cdd1]);_0x27a1a9['QayCf'](_0x2e5e57[_0x3ae1d2(0x26b)+'ws'],0x127*-0xb+0x156f+-0x8c2)&&console['warn'](_0x3ae1d2(0x748)+'e\x20requeste'+_0x3ae1d2(0x382)+_0x26cdd1[_0x3ae1d2(0x438)]+(_0x3ae1d2(0x452)+_0x3ae1d2(0x27d)+_0x3ae1d2(0x4be)+_0x3ae1d2(0x6c6)+'.'));const _0x1397e6={};_0x1397e6[_0x3ae1d2(0x468)]=!![],_0x1397e6[_0x3ae1d2(0x6c3)]=_0x2e5e57[_0x3ae1d2(0x26b)+'ws']+(_0x3ae1d2(0x452)+'(s)\x20delete'+_0x3ae1d2(0x3c2)+_0x3ae1d2(0x437)),_0x2d74cf[_0x3ae1d2(0x78a)](_0x1397e6);}catch(_0x266c91){console[_0x3ae1d2(0x846)](_0x27a1a9[_0x3ae1d2(0x542)],_0x266c91);const _0x5453e9={};_0x5453e9[_0x3ae1d2(0x6c3)]=_0x27a1a9[_0x3ae1d2(0x667)],_0x2d74cf[_0x3ae1d2(0x2c4)](0xcb2*0x2+-0x891+-0x8d*0x1b)[_0x3ae1d2(0x78a)](_0x5453e9);}}),router[_0xe9c38(0x2cf)](_0xe9c38(0x7da)+'us',async(_0x21731e,_0x414aab)=>{const _0x4b0182=_0xe9c38,_0x5eab97={'SbTTm':'Payment\x20me'+_0x4b0182(0x6c0)+'quired.','AUGYW':function(_0x760b5c,_0x4d8642){return _0x760b5c===_0x4d8642;},'ibauB':'Suspended','DZIcE':_0x4b0182(0x790),'SvdQr':function(_0x5d9dfd){return _0x5d9dfd();},'faXvx':function(_0x221bf5,_0x33db36){return _0x221bf5!==_0x33db36;},'PYCaE':_0x4b0182(0x4fc),'KEKAC':_0x4b0182(0x4f4),'bsslv':_0x4b0182(0x70d)+_0x4b0182(0x21f)+_0x4b0182(0x321)+_0x4b0182(0x292)+_0x4b0182(0x6d2)+_0x4b0182(0x82f),'RkTvi':'SELECT\x20id,'+'\x20pppoeUser'+'name,\x20stat'+_0x4b0182(0x65d)+_0x4b0182(0x333)+_0x4b0182(0x7aa)+_0x4b0182(0x356)+_0x4b0182(0x4b4)+_0x4b0182(0x619)+_0x4b0182(0x2cd),'ZlVCs':function(_0x158446,_0x40eb28,_0x39e7d4,_0x2c3720){return _0x158446(_0x40eb28,_0x39e7d4,_0x2c3720);},'gDQpb':'UPDATE\x20cus'+'tomers\x20SET'+_0x4b0182(0x725)+_0x4b0182(0x58a)+_0x4b0182(0x2d1)+_0x4b0182(0x63d)+'ERE\x20id\x20=\x20?','pNIYf':function(_0xfeece3,_0x3e8a69,_0x2cc1f9,_0x2e0ed4){return _0xfeece3(_0x3e8a69,_0x2cc1f9,_0x2e0ed4);},'WnRTw':_0x4b0182(0x779),'bPVHk':_0x4b0182(0x5b4),'FqgKS':_0x4b0182(0x200)+_0x4b0182(0x21d)+'FROM\x20packa'+_0x4b0182(0x6b1)+_0x4b0182(0x7ae),'ZQPee':_0x4b0182(0x6e6)+_0x4b0182(0x67f)+_0x4b0182(0x725)+_0x4b0182(0x58a)+_0x4b0182(0x2d1)+_0x4b0182(0x4ed)+_0x4b0182(0x619)+_0x4b0182(0x2de),'zbHHf':_0x4b0182(0x6e6)+_0x4b0182(0x67f)+_0x4b0182(0x725)+_0x4b0182(0x379)+_0x4b0182(0x546),'wuBFR':_0x4b0182(0x1f9)+_0x4b0182(0x5d0)+_0x4b0182(0x770)+_0x4b0182(0x55d)},{ids:_0x513750,status:_0x56f8d3}=_0x21731e[_0x4b0182(0x365)];if(!Array[_0x4b0182(0x424)](_0x513750)||_0x5eab97['AUGYW'](_0x513750[_0x4b0182(0x438)],-0xd9f*-0x2+0x26e8+0x2113*-0x2)||![_0x4b0182(0x779),_0x5eab97[_0x4b0182(0x6c2)],_0x5eab97[_0x4b0182(0x686)],_0x4b0182(0x617)]['includes'](_0x56f8d3)){const _0x112687={};return _0x112687[_0x4b0182(0x6c3)]=_0x4b0182(0x809)+_0x4b0182(0x4b5)+'n\x20array\x20of'+_0x4b0182(0x63f)+'IDs\x20are\x20re'+_0x4b0182(0x83a),_0x414aab[_0x4b0182(0x2c4)](-0x1d35+0x1807+0x6be)[_0x4b0182(0x78a)](_0x112687);}try{const _0x11d2ed=await _0x5eab97[_0x4b0182(0x234)](getSettings),_0x4d96e2=_0x11d2ed[_0x4b0182(0x2e0)][_0x4b0182(0x224)+_0x4b0182(0x74d)+'e'];if(_0x5eab97[_0x4b0182(0x4c0)](_0x56f8d3,_0x5eab97['ibauB'])&&!_0x4d96e2){if(_0x5eab97[_0x4b0182(0x3a9)](_0x5eab97[_0x4b0182(0x60f)],_0x5eab97[_0x4b0182(0x795)])){const _0x7b20c5={};return _0x7b20c5[_0x4b0182(0x6c3)]=_0x5eab97[_0x4b0182(0x4e9)],_0x414aab[_0x4b0182(0x2c4)](-0x1*0x8de+0x1eaa+-0x143c)[_0x4b0182(0x78a)](_0x7b20c5);}else{const _0x3308dc={};return _0x3308dc[_0x4b0182(0x6c3)]=_0x5eab97[_0x4b0182(0x7d3)],_0x7edbc0[_0x4b0182(0x2c4)](-0x108a*0x2+-0xafb+0x33*0xe5)[_0x4b0182(0x78a)](_0x3308dc);}}const [_0x45c829]=await _0x4a9162['query'](_0x5eab97[_0x4b0182(0x332)],[_0x513750]),_0x2ec6ba=await _0x2a5b26[_0x4b0182(0x6f6)+'Users']();for(const _0x50fb1c of _0x45c829){const {username:_0xeb943c,routerUser:_0x3eac7c}=await _0x5eab97[_0x4b0182(0x476)](resolveCustomerPppoeLink,_0x4a9162,_0x50fb1c,_0x2ec6ba);if(!_0x3eac7c)continue;if(_0x5eab97[_0x4b0182(0x4c0)](_0x56f8d3,_0x4b0182(0x285))&&_0x5eab97['faXvx'](_0x50fb1c[_0x4b0182(0x2c4)],_0x5eab97['ibauB'])){await _0x4a9162['query'](_0x5eab97[_0x4b0182(0x2ed)],[_0x56f8d3,_0x3eac7c[_0x4b0182(0x7c7)],_0x50fb1c['id']]);const _0x60bd9d={};_0x60bd9d[_0x4b0182(0x7c7)]=_0x4d96e2,await _0x2a5b26[_0x4b0182(0x425)+_0x4b0182(0x49d)](_0x3eac7c['id'],_0x60bd9d),await _0x5eab97['pNIYf'](syncPppoeCacheProfile,_0x4a9162,_0xeb943c,_0x4d96e2),await _0x2a5b26['reconnectP'+_0x4b0182(0x7dc)](_0xeb943c);}else{if(_0x5eab97[_0x4b0182(0x4c0)](_0x56f8d3,_0x5eab97['WnRTw'])&&_0x5eab97[_0x4b0182(0x4c0)](_0x50fb1c[_0x4b0182(0x2c4)],_0x5eab97[_0x4b0182(0x6c2)])){let _0x4b845b=String(_0x50fb1c[_0x4b0182(0x244)+_0x4b0182(0x3f7)]||'')[_0x4b0182(0x3c9)]();if(!_0x4b845b){if(_0x5eab97['bPVHk']!==_0x4b0182(0x5b4))_0x3c0dd8[_0x4b0182(0x5eb)]=_0x10900a['name'];else{const [[_0x74ba56]]=await _0x4a9162[_0x4b0182(0x583)](_0x5eab97[_0x4b0182(0x21b)],[_0x50fb1c[_0x4b0182(0x226)]]);_0x4b845b=String(_0x74ba56?.['pppoeProfi'+'le']||'')[_0x4b0182(0x3c9)]();}}if(_0x4b845b){const _0x537ebf={};_0x537ebf[_0x4b0182(0x7c7)]=_0x4b845b,await _0x2a5b26[_0x4b0182(0x425)+_0x4b0182(0x49d)](_0x3eac7c['id'],_0x537ebf),await _0x5eab97['pNIYf'](syncPppoeCacheProfile,_0x4a9162,_0xeb943c,_0x4b845b),await _0x2a5b26[_0x4b0182(0x4d4)+'ppoeUser'](_0xeb943c);}await _0x4a9162['query'](_0x5eab97[_0x4b0182(0x4d7)],[_0x56f8d3,_0x50fb1c['id']]);}else await _0x4a9162[_0x4b0182(0x583)](_0x5eab97[_0x4b0182(0x4e3)],[_0x56f8d3,_0x50fb1c['id']]);}}const _0x1370aa={};_0x1370aa['success']=!![],_0x1370aa[_0x4b0182(0x6c3)]=_0x4b0182(0x2fd)+_0x513750[_0x4b0182(0x438)]+(_0x4b0182(0x4b4)+_0x4b0182(0x77c))+_0x56f8d3+'.',_0x414aab[_0x4b0182(0x78a)](_0x1370aa);}catch(_0x5650d2){console['error'](_0x4b0182(0x716)+_0x4b0182(0x27a)+_0x4b0182(0x504),_0x5650d2);const _0xf46f0b={};_0xf46f0b[_0x4b0182(0x6c3)]=_0x5650d2[_0x4b0182(0x6c3)]||_0x5eab97[_0x4b0182(0x59a)],_0x414aab[_0x4b0182(0x2c4)](-0x254+0x104*0x5+-0x2*0x66)[_0x4b0182(0x78a)](_0xf46f0b);}}),router['post'](_0xe9c38(0x473)+_0xe9c38(0x47e),async(_0x4c6725,_0xa18b1e)=>{const _0x2a8229=_0xe9c38,_0x3e6d1b={'hkCwZ':'Error\x20read'+_0x2a8229(0x2d3)+_0x2a8229(0x708),'uhzkV':_0x2a8229(0x403)+_0x2a8229(0x42f)+_0x2a8229(0x33e)+'r\x20data:','rSmtt':function(_0x2ccdb4,_0x906451){return _0x2ccdb4===_0x906451;},'Mfdcv':_0x2a8229(0x643),'HHxCW':'SELECT\x20id,'+_0x2a8229(0x512)+'name\x20FROM\x20'+_0x2a8229(0x65c),'ttrCY':function(_0x251e79,_0x547423){return _0x251e79!==_0x547423;},'GvZeZ':_0x2a8229(0x6bb),'bfWGO':'vdMjX','jdrMx':function(_0x31fec6,_0x3b458a){return _0x31fec6(_0x3b458a);},'fDWxo':_0x2a8229(0x487),'hGwvX':'IMFkM','PLMIW':function(_0x11f2cd,_0x385a35){return _0x11f2cd(_0x385a35);},'iKLjO':function(_0x3db250,_0x3218c5){return _0x3db250&&_0x3218c5;},'ffeFu':function(_0x11f89f,_0x4bd3d2){return _0x11f89f(_0x4bd3d2);},'EgNBW':'hDkxV','xlIEF':_0x2a8229(0x642),'JmiEP':_0x2a8229(0x6e6)+_0x2a8229(0x67f)+_0x2a8229(0x512)+_0x2a8229(0x380)+'HERE\x20id\x20=\x20'+'?','buvKr':function(_0x2d36fc,_0x24d98a){return _0x2d36fc||_0x24d98a;},'pklcN':'zAUhu','bnygC':'yUnjh','bsgUs':function(_0x3ef5a5,_0xd5300a){return _0x3ef5a5!==_0xd5300a;},'esVLd':function(_0x409806,_0x48c0b6,_0x32336f,_0x41fe62){return _0x409806(_0x48c0b6,_0x32336f,_0x41fe62);},'CpRUr':_0x2a8229(0x282)+_0x2a8229(0x65a)+_0x2a8229(0x606),'JGkVY':_0x2a8229(0x405)+_0x2a8229(0x48e)+'E\x20links:','fHSVt':_0x2a8229(0x68c)+'repair\x20PPP'+_0x2a8229(0x396)};try{if(_0x3e6d1b[_0x2a8229(0x45e)](_0x2a8229(0x643),_0x3e6d1b[_0x2a8229(0x237)])){const [_0x264461]=await _0x4a9162[_0x2a8229(0x583)](_0x3e6d1b[_0x2a8229(0x57b)]),_0x3b381a=await _0x2a5b26[_0x2a8229(0x6f6)+'Users'](),_0x1b6874=new Map(),_0x2e886c=new Map();for(const _0x5648c1 of _0x3b381a){if(_0x3e6d1b['ttrCY'](_0x3e6d1b[_0x2a8229(0x4a8)],_0x3e6d1b[_0x2a8229(0x5bc)])){const _0x3ffc2e=_0x3e6d1b[_0x2a8229(0x3f5)](normalizePppoeUsername,_0x5648c1[_0x2a8229(0x5ec)]),_0x544e0b=normalizeCustomerId(_0x5648c1['comment']);_0x3ffc2e&&!_0x1b6874[_0x2a8229(0x23e)](_0x3ffc2e)&&(_0x3e6d1b['fDWxo']!==_0x3e6d1b['hGwvX']?_0x1b6874[_0x2a8229(0x654)](_0x3ffc2e,_0x5648c1):_0x5e5285[_0x2a8229(0x31d)]()),_0x544e0b&&!_0x2e886c[_0x2a8229(0x23e)](_0x544e0b)&&_0x2e886c[_0x2a8229(0x654)](_0x544e0b,_0x5648c1);}else _0x527440['warn']('[Notificat'+_0x2a8229(0x6fc)+_0x2a8229(0x700)+_0x2a8229(0x31e)+_0x2a8229(0x5bf)+_0x2a8229(0x62f)+_0x2a8229(0x209)+_0x32243d+(_0x2a8229(0x26a)+'an\x20')+_0x18ba13+(_0x2a8229(0x807)+'\x20or\x20has\x20no'+_0x2a8229(0x441)+_0x2a8229(0x3e8)));}let _0x6b87cc=-0x145*0x15+-0x1494*-0x1+0x615,_0x1066d5=0x1cf4+-0x9e0+-0x16*0xde,_0x3bcc7a=-0x8d+0x108+-0x7b,_0x3491ef=0x1da*-0x1+0xe3e+0x3d*-0x34;const _0x385e76=new Set();for(const _0x5309ef of _0x264461){const _0x3de269=_0x3e6d1b[_0x2a8229(0x317)](normalizeCustomerId,_0x5309ef['id']),_0x4e385d=normalizePppoeUsername(_0x5309ef[_0x2a8229(0x2b9)+'ame']);let _0x26d37d=_0x4e385d?_0x1b6874[_0x2a8229(0x515)](_0x4e385d):null;if(_0x3e6d1b[_0x2a8229(0x294)](!_0x26d37d,_0x3de269)){_0x26d37d=_0x2e886c['get'](_0x3de269)||null;const _0x2168be=_0x3e6d1b['ffeFu'](normalizePppoeUsername,_0x26d37d?.['name']);if(_0x2168be&&_0x3e6d1b[_0x2a8229(0x689)](_0x2168be,_0x4e385d)){if(_0x3e6d1b[_0x2a8229(0x722)]!==_0x3e6d1b[_0x2a8229(0x455)])await _0x4a9162[_0x2a8229(0x583)](_0x3e6d1b['JmiEP'],[_0x2168be,_0x3de269]),_0x6b87cc+=0x16b2*0x1+-0x926+-0xd8b;else{_0x3bc80e[_0x2a8229(0x846)](_0x3e6d1b[_0x2a8229(0x79d)],_0x1a73d5);const _0x346734={};_0x346734['message']=_0x2a8229(0x710)+_0x2a8229(0x2d3)+'ers\x20data',_0x59fa72[_0x2a8229(0x2c4)](0xd*-0x211+-0x67f*-0x1+0x1652)[_0x2a8229(0x78a)](_0x346734);}}}const _0x26ace1=_0x3e6d1b['jdrMx'](normalizePppoeUsername,_0x26d37d?.['name']);if(_0x3e6d1b[_0x2a8229(0x509)](!_0x26ace1,!_0x26d37d)){if(_0x3e6d1b[_0x2a8229(0x45e)](_0x3e6d1b[_0x2a8229(0x615)],_0x3e6d1b[_0x2a8229(0x510)])){_0x5a3bfc['error'](_0x3e6d1b[_0x2a8229(0x685)],_0x41d7f9);const _0x2eb743={};_0x2eb743[_0x2a8229(0x6c3)]='Failed\x20to\x20'+_0x2a8229(0x73a)+_0x2a8229(0x7b5),_0x461d3c[_0x2a8229(0x2c4)](0x69a+0x1283+-0x1729)[_0x2a8229(0x78a)](_0x2eb743);}else{_0x3bcc7a+=-0x2265+0x19b8+-0x2*-0x457;continue;}}if(_0x385e76[_0x2a8229(0x23e)](_0x26ace1)&&_0x3e6d1b['bsgUs'](_0x4e385d,_0x26ace1)){_0x3491ef+=-0x409+-0x1d5f+0x1*0x2169;continue;}_0x385e76[_0x2a8229(0x3f8)](_0x26ace1);const _0x53190b=normalizeCustomerId(_0x26d37d[_0x2a8229(0x527)]);_0x3de269&&_0x53190b!==_0x3de269&&(await _0x2a5b26[_0x2a8229(0x425)+_0x2a8229(0x545)+_0x2a8229(0x72d)](_0x26ace1,_0x3de269),_0x1066d5+=0x4b5*0x1+-0x82f+0x37b),await _0x3e6d1b[_0x2a8229(0x6e8)](syncPppoeCacheComment,_0x4a9162,_0x26ace1,_0x3de269);}const _0x14886b={};_0x14886b[_0x2a8229(0x468)]=!![],_0x14886b[_0x2a8229(0x6c3)]=_0x3e6d1b[_0x2a8229(0x58c)],_0x14886b[_0x2a8229(0x398)+_0x2a8229(0x781)]=_0x6b87cc,_0x14886b[_0x2a8229(0x2cc)+_0x2a8229(0x561)]=_0x1066d5,_0x14886b[_0x2a8229(0x3ed)+_0x2a8229(0x2f3)+'t']=_0x3bcc7a,_0x14886b[_0x2a8229(0x3bc)+_0x2a8229(0x36f)]=_0x3491ef,_0x14886b[_0x2a8229(0x343)+_0x2a8229(0x75b)]=_0x264461['length'],_0x14886b[_0x2a8229(0x7ff)+_0x2a8229(0x74a)]=_0x3b381a[_0x2a8229(0x438)],_0xa18b1e[_0x2a8229(0x78a)](_0x14886b);}else return;}catch(_0x427f8c){console['error'](_0x3e6d1b['JGkVY'],_0x427f8c);const _0x5b290d={};_0x5b290d['message']=_0x427f8c[_0x2a8229(0x6c3)]||_0x3e6d1b[_0x2a8229(0x80c)],_0xa18b1e[_0x2a8229(0x2c4)](-0x2ef+-0x703*0x2+0x67*0x2f)[_0x2a8229(0x78a)](_0x5b290d);}}),router[_0xe9c38(0x2cf)](_0xe9c38(0x2a8)+'te',async(_0x1bd06d,_0x42607b)=>{const _0x1cb25c=_0xe9c38,_0x2ecc48={'twbpG':_0x1cb25c(0x7bc)+_0x1cb25c(0x811)+_0x1cb25c(0x5c4)+_0x1cb25c(0x64c),'uZVfl':function(_0x5c658d,_0x5c26b6){return _0x5c658d===_0x5c26b6;},'ShjMe':_0x1cb25c(0x3fa),'kcJTo':_0x1cb25c(0x758),'vUlRp':function(_0x1248dc,_0x3364ea){return _0x1248dc===_0x3364ea;},'QgnuO':_0x1cb25c(0x227),'ceJqr':_0x1cb25c(0x629),'vjnaV':_0x1cb25c(0x4b3)+_0x1cb25c(0x688)+'\x20IDs\x20is\x20re'+_0x1cb25c(0x83a),'fBPmP':function(_0x308dbe,_0x13fdb9){return _0x308dbe===_0x13fdb9;},'fRald':_0x1cb25c(0x7f3),'qrEwt':function(_0x9ad857,_0x1b68a4,_0x1bc65f,_0x141d35){return _0x9ad857(_0x1b68a4,_0x1bc65f,_0x141d35);},'HyipZ':_0x1cb25c(0x6ab),'iAqtZ':_0x1cb25c(0x4c9)+_0x1cb25c(0x6cd)+'s\x20WHERE\x20id'+_0x1cb25c(0x829),'bIGRJ':_0x1cb25c(0x716)+_0x1cb25c(0x2b4)+':','FXkzr':_0x1cb25c(0x1f9)+'or\x20during\x20'+_0x1cb25c(0x2e5)+'e.'},{ids:_0x5264b3}=_0x1bd06d['body'];if(!Array['isArray'](_0x5264b3)||_0x2ecc48[_0x1cb25c(0x236)](_0x5264b3[_0x1cb25c(0x438)],-0x77b*0x5+-0x1*0x1c12+0x4179)){if(_0x2ecc48['QgnuO']!==_0x2ecc48['ceJqr']){const _0x33bfb8={};return _0x33bfb8[_0x1cb25c(0x6c3)]=_0x2ecc48[_0x1cb25c(0x712)],_0x42607b[_0x1cb25c(0x2c4)](0xa6c+0xe1e+0xad*-0x22)[_0x1cb25c(0x78a)](_0x33bfb8);}else{const _0x59076e={};return _0x59076e['message']=_0x2ecc48[_0x1cb25c(0x233)],_0x4d39dc['status'](0x26*0xcd+-0x8c*0x11+-0x1392)['json'](_0x59076e);}}try{if(_0x2ecc48[_0x1cb25c(0x80b)](_0x1cb25c(0x7f3),_0x2ecc48[_0x1cb25c(0x2fe)])){const [_0x15fcae]=await _0x4a9162[_0x1cb25c(0x583)](_0x1cb25c(0x200)+_0x1cb25c(0x6a2)+_0x1cb25c(0x50d)+_0x1cb25c(0x23b)+_0x1cb25c(0x525)+')',[_0x5264b3]);for(const _0x4c40e9 of _0x15fcae){_0x4c40e9[_0x1cb25c(0x2b9)+_0x1cb25c(0x7db)]&&(await _0x2a5b26['updatePppo'+_0x1cb25c(0x545)+_0x1cb25c(0x72d)](_0x4c40e9[_0x1cb25c(0x2b9)+_0x1cb25c(0x7db)],''),await _0x2ecc48[_0x1cb25c(0x83e)](syncPppoeCacheComment,_0x4a9162,_0x4c40e9[_0x1cb25c(0x2b9)+_0x1cb25c(0x7db)],''));}const _0xb07976=await getSettings();if(_0xb07976[_0x1cb25c(0x2e0)][_0x1cb25c(0x61a)+_0x1cb25c(0x6ea)]){const _0x40c316=_0xb07976[_0x1cb25c(0x2e0)][_0x1cb25c(0x61a)+'erPrefix']||'bonus-';try{const _0x5d62a1=await _0x2a5b26[_0x1cb25c(0x1fb)+_0x1cb25c(0x79f)]();for(const _0xbaa845 of _0x5264b3){const _0x5deeb3=''+_0x40c316+_0xbaa845[_0x1cb25c(0x37f)](-(0x1b96+0x2705+-0x4297)),_0x2b5f93=_0x5d62a1[_0x1cb25c(0x757)](_0x27f243=>_0x27f243['name']===_0x5deeb3);if(_0x2b5f93){if(_0x2ecc48[_0x1cb25c(0x283)]==='DydSD')await _0x2a5b26['deleteHots'+_0x1cb25c(0x47f)](_0x2b5f93['id']),console['log']('[Customer\x20'+_0x1cb25c(0x2bc)+_0x1cb25c(0x60d)+_0x1cb25c(0x5fe)+_0x1cb25c(0x36c)+_0x5deeb3+'.');else return _0x2ecc48[_0x1cb25c(0x64e)](_0x1b4344,'fixed')?_0x2ecc48[_0x1cb25c(0x459)]:_0x2ecc48[_0x1cb25c(0x769)];}}}catch(_0x3eaf1f){console[_0x1cb25c(0x524)](_0x1cb25c(0x817)+_0x1cb25c(0x2bc)+_0x1cb25c(0x59f)+_0x1cb25c(0x831)+_0x1cb25c(0x7bd)+_0x1cb25c(0x705)+'ete\x20bonus\x20'+_0x1cb25c(0x61b)+_0x1cb25c(0x849)+_0x1cb25c(0x1ed)+_0x1cb25c(0x4b0)+'ll\x20continu'+'e.\x20Error:\x20'+_0x3eaf1f[_0x1cb25c(0x6c3)]);}}await _0x4a9162[_0x1cb25c(0x583)](_0x2ecc48['iAqtZ'],[_0x5264b3]);const _0x2d47c5={};_0x2d47c5[_0x1cb25c(0x468)]=!![],_0x2d47c5[_0x1cb25c(0x6c3)]=_0x5264b3[_0x1cb25c(0x438)]+(_0x1cb25c(0x4b4)+_0x1cb25c(0x778)),_0x42607b[_0x1cb25c(0x78a)](_0x2d47c5);}else throw new _0x3aead2('Customer\x20I'+_0x1cb25c(0x733)+_0x1f177b+('\x22\x20already\x20'+_0x1cb25c(0x313)));}catch(_0x3c7157){console[_0x1cb25c(0x846)](_0x2ecc48[_0x1cb25c(0x3da)],_0x3c7157);const _0xed0eae={};_0xed0eae[_0x1cb25c(0x6c3)]=_0x3c7157[_0x1cb25c(0x6c3)]||_0x2ecc48['FXkzr'],_0x42607b['status'](0x1*0x11f5+-0x469*-0x2+-0x18d3)[_0x1cb25c(0x78a)](_0xed0eae);}}),router[_0xe9c38(0x2cf)](_0xe9c38(0x5db)+'sapp',async(_0x2ce8c3,_0x2bc102)=>{const _0x18e1dd=_0xe9c38,_0xd61c17={'OKgfL':'Error\x20repa'+_0x18e1dd(0x48e)+_0x18e1dd(0x7a9),'rRPty':'Failed\x20to\x20'+_0x18e1dd(0x740)+_0x18e1dd(0x396),'unMoA':_0x18e1dd(0x51c)+_0x18e1dd(0x366),'ZlmoP':_0x18e1dd(0x3d3)+'ing\x20bonus\x20'+_0x18e1dd(0x4ff),'OdVlO':function(_0x4a7b38,_0x530b3a){return _0x4a7b38===_0x530b3a;},'VlfAQ':_0x18e1dd(0x353)+_0x18e1dd(0x1eb)+_0x18e1dd(0x634)+'\x20required.','FZIhq':function(_0x1df639){return _0x1df639();},'HTcPT':'SELECT\x20pho'+_0x18e1dd(0x751)+_0x18e1dd(0x6c7)+_0x18e1dd(0x604)+_0x18e1dd(0x674)+'(?)\x20AND\x20ph'+_0x18e1dd(0x2a7)+_0x18e1dd(0x673)+_0x18e1dd(0x638)+'\x22','UrAMH':function(_0x17fc8b,_0x580d1f){return _0x17fc8b!==_0x580d1f;},'CixoO':_0x18e1dd(0x7ee),'BKUHc':_0x18e1dd(0x341),'YcQeh':_0x18e1dd(0x3ec),'vLNMf':_0x18e1dd(0x391)+_0x18e1dd(0x72b)+_0x18e1dd(0x581)+'?','rLkfA':_0x18e1dd(0x3c5),'EQPFU':_0x18e1dd(0x5c1),'SJFOb':_0x18e1dd(0x738)+'ge','JNDzW':_0x18e1dd(0x648)+_0x18e1dd(0x24c)+'occurred\x20d'+'uring\x20bulk'+_0x18e1dd(0x800)+'.'},{ids:_0x4c15ca,message:_0x264732}=_0x2ce8c3['body'];if(!Array['isArray'](_0x4c15ca)||_0xd61c17[_0x18e1dd(0x74c)](_0x4c15ca[_0x18e1dd(0x438)],0x16*-0x1c4+0x1*-0x160f+-0x144d*-0x3)||!_0x264732){if(_0xd61c17[_0x18e1dd(0x74c)]('sFPvP','sFPvP')){const _0x177873={};return _0x177873['success']=![],_0x177873[_0x18e1dd(0x6c3)]=_0xd61c17[_0x18e1dd(0x39b)],_0x2bc102[_0x18e1dd(0x2c4)](-0x1*0x9c9+0x9*-0x1eb+0x1c9c*0x1)[_0x18e1dd(0x78a)](_0x177873);}else{_0x5c3c8e['error'](_0xd61c17[_0x18e1dd(0x665)],_0x5ea2d5);const _0x2b5a38={};_0x2b5a38[_0x18e1dd(0x6c3)]=_0x24f318['message']||_0xd61c17[_0x18e1dd(0x5a7)],_0x45c488[_0x18e1dd(0x2c4)](0x688*-0x2+-0x1b47+0x2a4b)[_0x18e1dd(0x78a)](_0x2b5a38);}}try{const _0x1146cd=await _0xd61c17[_0x18e1dd(0x5d6)](getSettings);_0x1adb7c['applySetti'+_0x18e1dd(0x6e3)](_0x1146cd);const [_0xf0eedb]=await _0x4a9162['query'](_0xd61c17['HTcPT'],[_0x4c15ca]);if(_0xd61c17[_0x18e1dd(0x74c)](_0xf0eedb[_0x18e1dd(0x438)],-0xd23+0x35*0x2f+0x368)){if(_0xd61c17[_0x18e1dd(0x24a)](_0xd61c17[_0x18e1dd(0x706)],_0xd61c17['BKUHc'])){const _0x59dc5d={};return _0x59dc5d['success']=!![],_0x59dc5d['message']='No\x20selecte'+_0x18e1dd(0x50e)+_0x18e1dd(0x5d1)+'alid\x20phone'+_0x18e1dd(0x7fb),_0x2bc102[_0x18e1dd(0x78a)](_0x59dc5d);}else{const _0x32d845={};return _0x32d845[_0x18e1dd(0x6c3)]=_0xd61c17[_0x18e1dd(0x4bd)],_0x2d8952[_0x18e1dd(0x2c4)](0x1ef8+0xd53+-0x2d9*0xf)[_0x18e1dd(0x78a)](_0x32d845);}}let _0x133b65=0x24c9+0x2*-0xe9e+-0x78d*0x1;for(const _0x1131c8 of _0xf0eedb){if(_0xd61c17[_0x18e1dd(0x74c)](_0xd61c17[_0x18e1dd(0x5f9)],_0xd61c17[_0x18e1dd(0x5f9)])){const _0x3ecb60={};_0x3ecb60[_0x18e1dd(0x48b)+'me']=_0x1131c8[_0x18e1dd(0x5ec)],_0x3ecb60['customerId']=_0x1131c8['id'];const _0x1606ce=replacePlaceholders(_0x264732,_0x3ecb60),_0x352337=await _0x1adb7c[_0x18e1dd(0x7e9)+'e'](_0x1131c8[_0x18e1dd(0x500)],_0x1606ce);await _0x4a9162['query'](_0xd61c17[_0x18e1dd(0x53b)],{'recipient_number':_0x1131c8[_0x18e1dd(0x500)],'customer_id':_0x1131c8['id'],'message_body':_0x1606ce,'status':_0x352337[_0x18e1dd(0x468)]?_0xd61c17['rLkfA']:_0xd61c17[_0x18e1dd(0x322)],'type':_0xd61c17[_0x18e1dd(0x3c8)],'error_message':_0x352337[_0x18e1dd(0x846)]||null});if(_0x352337[_0x18e1dd(0x468)])_0x133b65++;await new Promise(_0x43465d=>setTimeout(_0x43465d,Math[_0x18e1dd(0x2d0)]()*(0x198e+-0x1b7*-0x16+0x9a*-0x64)+(0x1833+-0x786*0x5+-0xf*-0xf9)));}else{_0x424c2a[_0x18e1dd(0x846)](_0xd61c17[_0x18e1dd(0x401)],_0x1cd527);const _0x2720dc={};_0x2720dc[_0x18e1dd(0x6c3)]=_0x10167e[_0x18e1dd(0x6c3)]||_0x18e1dd(0x72e)+_0x18e1dd(0x249)+'rror\x20occur'+_0x18e1dd(0x670)+_0x18e1dd(0x690),_0x33c0f9[_0x18e1dd(0x2c4)](-0x1441+0x959*0x3+-0x5d6*0x1)[_0x18e1dd(0x78a)](_0x2720dc);}}const _0x4ebd63={};_0x4ebd63[_0x18e1dd(0x468)]=!![],_0x4ebd63[_0x18e1dd(0x6c3)]='Message\x20se'+_0x18e1dd(0x702)+_0x133b65+_0x18e1dd(0x3fd)+_0x4c15ca[_0x18e1dd(0x438)]+('\x20selected\x20'+_0x18e1dd(0x395)),_0x2bc102[_0x18e1dd(0x78a)](_0x4ebd63);}catch(_0x369edf){const _0x5bb116={};_0x5bb116[_0x18e1dd(0x468)]=![],_0x5bb116[_0x18e1dd(0x6c3)]=_0x369edf[_0x18e1dd(0x6c3)]||_0xd61c17[_0x18e1dd(0x43f)],_0x2bc102[_0x18e1dd(0x2c4)](-0x2552+0xdff*-0x1+0x3545)[_0x18e1dd(0x78a)](_0x5bb116);}}),router[_0xe9c38(0x2cf)]('/import',async(_0x1a4f76,_0x5f555b)=>{const _0x2d514e=_0xe9c38,_0x2750e6={'eseVJ':_0x2d514e(0x68c)+_0x2d514e(0x32b)+_0x2d514e(0x47b)+_0x2d514e(0x768)+_0x2d514e(0x3ca)+_0x2d514e(0x415)+'ccessfully'+':','ouZXK':function(_0x22af00,_0x428ef1){return _0x22af00===_0x428ef1;},'GyKXH':'No\x20custome'+'r\x20data\x20pro'+_0x2d514e(0x22c),'LcYGc':function(_0x25463f){return _0x25463f();},'LdsMM':_0x2d514e(0x3de),'xnrrm':_0x2d514e(0x303),'ljLVT':function(_0x3fac68,_0x3bcd2d){return _0x3fac68(_0x3bcd2d);},'ndVIx':function(_0x11cfb7,_0x1bfcc3){return _0x11cfb7!==_0x1bfcc3;},'sUpcc':function(_0x3c9714,_0x1d69db){return _0x3c9714!==_0x1d69db;},'gkIqD':function(_0x5b56a7,_0x5ec254){return _0x5b56a7!==_0x5ec254;},'JZEfC':function(_0x1eacfd,_0x569205){return _0x1eacfd(_0x569205);},'ECwlQ':function(_0x34d78f,_0x2c3113){return _0x34d78f!==_0x2c3113;},'bdLxM':function(_0x4537ee,_0x3a0716){return _0x4537ee!==_0x3a0716;},'obbQh':function(_0x4667a9,_0x137984){return _0x4667a9!==_0x137984;},'EFxZX':function(_0x620b62,_0xb046da){return _0x620b62!==_0xb046da;},'ISqTs':function(_0x311faa,_0x14da02){return _0x311faa(_0x14da02);},'LPrfH':_0x2d514e(0x779),'NVGxv':function(_0x4d7fc7,_0x479972,_0x5df6b4){return _0x4d7fc7(_0x479972,_0x5df6b4);},'VXxUG':function(_0x440372,_0xcda745){return _0x440372===_0xcda745;},'WTfUA':_0x2d514e(0x3fa),'vQaXy':'postpaid','PGGyP':_0x2d514e(0x5a9)+_0x2d514e(0x57f)+_0x2d514e(0x331),'zwlEN':function(_0x39845b,_0x1aae7b){return _0x39845b===_0x1aae7b;},'vZaVU':_0x2d514e(0x7cb),'SnNfl':_0x2d514e(0x202)+'ng\x20custome'+_0x2d514e(0x335),'oTnFC':_0x2d514e(0x2a9)+_0x2d514e(0x6bc)+_0x2d514e(0x45b)+'t.\x20No\x20data'+_0x2d514e(0x64a)+_0x2d514e(0x76f)},_0x2f1d6c=_0x1a4f76[_0x2d514e(0x365)];if(!Array[_0x2d514e(0x424)](_0x2f1d6c)||_0x2750e6[_0x2d514e(0x323)](_0x2f1d6c[_0x2d514e(0x438)],0x1*-0x14b+0x7*-0x207+0xf7c)){const _0xb370ea={};return _0xb370ea[_0x2d514e(0x6c3)]=_0x2750e6[_0x2d514e(0x318)],_0x5f555b['status'](-0x2269+-0x213e+0x553*0xd)['json'](_0xb370ea);}const _0x13c637=await _0x4a9162[_0x2d514e(0x4a5)+_0x2d514e(0x71f)]();try{await _0x13c637['beginTrans'+_0x2d514e(0x5d5)]();const _0x3b995b=await _0x2750e6[_0x2d514e(0x4bb)](getSettings),_0x5564f6=_0x3b995b[_0x2d514e(0x4a4)][_0x2d514e(0x429)+_0x2d514e(0x7bb)]||_0x2750e6[_0x2d514e(0x289)];let _0x207ec5=-0x13f1*-0x1+-0x9b+-0x5*0x3de,_0x57d526=0x543*-0x1+0x547+-0x2*0x2;for(const _0xfd00e4 of _0x2f1d6c){if(_0x2750e6['ouZXK'](_0x2750e6[_0x2d514e(0x2e8)],_0x2750e6[_0x2d514e(0x2e8)])){const _0x1edc0e=_0xfd00e4['id']||_0x2750e6[_0x2d514e(0x46d)](generateNewCustomerId,_0x5564f6),_0x2607dd=_0xfd00e4['lat']??_0xfd00e4[_0x2d514e(0x342)]?.[_0x2d514e(0x833)],_0x58c6e4=_0xfd00e4[_0x2d514e(0x28e)]??_0xfd00e4[_0x2d514e(0x342)]?.[_0x2d514e(0x28e)],_0x1fa4a8=_0x2750e6[_0x2d514e(0x402)](_0x2607dd,undefined)&&_0x2607dd!==null&&_0x2607dd!=='',_0x5726be=_0x2750e6[_0x2d514e(0x2b8)](_0x58c6e4,undefined)&&_0x2750e6[_0x2d514e(0x5b1)](_0x58c6e4,null)&&_0x2750e6['gkIqD'](_0x58c6e4,''),_0x338687=_0x1fa4a8?parseFloat(_0x2607dd):null,_0x26580c=_0x5726be?_0x2750e6[_0x2d514e(0x55e)](parseFloat,_0x58c6e4):null,_0x2dd656=_0x2750e6[_0x2d514e(0x3e5)](_0x338687,null)&&!Number[_0x2d514e(0x45c)](_0x338687)&&_0x2750e6[_0x2d514e(0x2b8)](_0x26580c,null)&&!Number[_0x2d514e(0x45c)](_0x26580c),_0x3d667a=_0x2750e6[_0x2d514e(0x81f)](_0xfd00e4[_0x2d514e(0x226)],undefined)&&_0x2750e6[_0x2d514e(0x222)](_0xfd00e4['packageId'],null)?_0x2750e6['JZEfC'](parseInt,_0xfd00e4[_0x2d514e(0x226)]):null,_0x3797e6=_0xfd00e4[_0x2d514e(0x4b9)+_0x2d514e(0x656)]??_0xfd00e4['voucherBal'+'ance'],_0x54ebaf=_0x3797e6!==undefined&&_0x2750e6[_0x2d514e(0x3e5)](_0x3797e6,null)&&_0x2750e6[_0x2d514e(0x408)](_0x3797e6,'')?_0x2750e6[_0x2d514e(0x566)](parseFloat,_0x3797e6):-0xca7*0x2+-0x1468+0x2*0x16db,_0x49c1f7={};_0x49c1f7[_0x2d514e(0x833)]=_0x338687,_0x49c1f7[_0x2d514e(0x28e)]=_0x26580c;const _0x5ba6a3={'id':_0x1edc0e,'name':_0xfd00e4[_0x2d514e(0x5ec)],'nik':_0xfd00e4[_0x2d514e(0x794)]||null,'address':_0xfd00e4[_0x2d514e(0x320)]||null,'phone':_0xfd00e4['phone'],'email':_0xfd00e4[_0x2d514e(0x478)]||null,'packageId':Number[_0x2d514e(0x45c)](_0x3d667a)?null:_0x3d667a,'status':_0xfd00e4[_0x2d514e(0x2c4)]||_0x2750e6[_0x2d514e(0x4cc)],'location':_0x2dd656?JSON[_0x2d514e(0x2ea)](_0x49c1f7):null,'odpId':_0xfd00e4['odpId']||null,'pppoeUsername':_0xfd00e4['pppoeUsern'+_0x2d514e(0x7db)]||null,'activeDate':_0xfd00e4[_0x2d514e(0x334)]?_0x2750e6[_0x2d514e(0x2dc)](toMySQLDatetime,new Date(_0xfd00e4[_0x2d514e(0x334)]),_0x3b995b[_0x2d514e(0x4a4)][_0x2d514e(0x7a2)]):_0x2750e6[_0x2d514e(0x2dc)](toMySQLDatetime,new Date(),_0x3b995b[_0x2d514e(0x4a4)][_0x2d514e(0x7a2)]),'acsSerialNumber':_0xfd00e4[_0x2d514e(0x2b0)+_0x2d514e(0x6f7)]||null,'previousPppoeProfile':_0xfd00e4['previousPp'+_0x2d514e(0x3f7)]||null,'voucher_balance':Number[_0x2d514e(0x45c)](_0x54ebaf)?-0x1d45+-0x1535*-0x1+0x810:_0x54ebaf,'billing_type':_0x2750e6[_0x2d514e(0x848)](_0xfd00e4[_0x2d514e(0x644)+'pe'],_0x2750e6[_0x2d514e(0x28b)])?_0x2d514e(0x3fa):_0x2750e6[_0x2d514e(0x7e7)]};if(!_0x5ba6a3['name']||!_0x5ba6a3['phone']||!_0x5ba6a3[_0x2d514e(0x226)]){console[_0x2d514e(0x524)](_0x2750e6[_0x2d514e(0x2b1)],_0xfd00e4);continue;}const _0x444495=Object[_0x2d514e(0x687)](_0x5ba6a3)['map'](_0x3a11ff=>'`'+_0x3a11ff+'`')[_0x2d514e(0x5f7)](',\x20'),_0x103a09=Object[_0x2d514e(0x687)](_0x5ba6a3)['map'](()=>'?')['join'](',\x20'),_0xd43cad=Object[_0x2d514e(0x70f)](_0x5ba6a3),_0x40033c=Object[_0x2d514e(0x687)](_0x5ba6a3)[_0x2d514e(0x308)](_0x3fd07b=>_0x3fd07b!=='id')[_0x2d514e(0x823)](_0x1d35de=>'`'+_0x1d35de+(_0x2d514e(0x248)+'(`')+_0x1d35de+'`)')[_0x2d514e(0x5f7)](',\x20'),_0x3823c5=_0x2d514e(0x391)+_0x2d514e(0x3d9)+_0x2d514e(0x56a)+_0x444495+_0x2d514e(0x4b1)+_0x103a09+(')\x20ON\x20DUPLI'+_0x2d514e(0x503)+_0x2d514e(0x5a6))+_0x40033c,[_0x4c15b6]=await _0x13c637[_0x2d514e(0x583)](_0x3823c5,_0xd43cad);if(_0x2750e6[_0x2d514e(0x369)](_0x4c15b6[_0x2d514e(0x26b)+'ws'],-0x3ad*0x1+0xb44+0x796*-0x1))_0x207ec5++;if(_0x2750e6[_0x2d514e(0x323)](_0x4c15b6[_0x2d514e(0x26b)+'ws'],0x8*0x338+0x1*0x25a8+-0x1fb3*0x2))_0x57d526++;}else _0x2d7053[_0x2d514e(0x846)](_0x2750e6[_0x2d514e(0x7d7)],_0x3ccc08);}await _0x13c637[_0x2d514e(0x462)]();const _0x4badd9={};_0x4badd9['success']=!![],_0x4badd9[_0x2d514e(0x6c3)]='Import\x20com'+'plete.\x20Add'+_0x2d514e(0x3b9)+_0x207ec5+('\x20new\x20custo'+_0x2d514e(0x56b)+_0x2d514e(0x71c))+_0x57d526+(_0x2d514e(0x760)+_0x2d514e(0x395)),_0x5f555b[_0x2d514e(0x78a)](_0x4badd9);}catch(_0x15994c){if(_0x2750e6[_0x2d514e(0x369)](_0x2750e6[_0x2d514e(0x3ef)],_0x2750e6[_0x2d514e(0x3ef)])){await _0x13c637[_0x2d514e(0x59c)](),console[_0x2d514e(0x846)](_0x2750e6[_0x2d514e(0x7a8)],_0x15994c);const _0x14634f={};_0x14634f[_0x2d514e(0x6c3)]=_0x2750e6['oTnFC'],_0x5f555b[_0x2d514e(0x2c4)](0x12*0x193+-0x1*-0x8e7+-0x2349)[_0x2d514e(0x78a)](_0x14634f);}else{const _0x23e849=_0x2d514e(0x3f2)+_0x4c633e[_0x2d514e(0x82e)];_0x53eda2[_0x2d514e(0x2d5)](_0x23e849);}}finally{_0x13c637[_0x2d514e(0x31d)]();}}),router['get'](_0xe9c38(0x693)+'traffic',async(_0x594e63,_0x2a75b2)=>{const _0x40ac43=_0xe9c38,_0x32020c={'hhgxX':function(_0x20972a,_0x2d3159,_0x247208){return _0x20972a(_0x2d3159,_0x247208);},'OLhVq':function(_0x92dca4,_0x28cc42){return _0x92dca4(_0x28cc42);},'mSTBo':function(_0x96b25a,_0xcb76e9){return _0x96b25a===_0xcb76e9;},'HyFWa':'djMmi','MvuhX':_0x40ac43(0x641),'yWcQc':_0x40ac43(0x200)+'oeUsername'+_0x40ac43(0x50d)+_0x40ac43(0x23b)+_0x40ac43(0x2a5),'FGsvi':_0x40ac43(0x5ee)+_0x40ac43(0x734)+_0x40ac43(0x5c7)+'not\x20found.','FRxGk':_0x40ac43(0x68c)+_0x40ac43(0x56f)+_0x40ac43(0x507)+_0x40ac43(0x63c)+'.'},{id:_0x30e843}=_0x594e63[_0x40ac43(0x724)];try{if(_0x32020c[_0x40ac43(0x65f)](_0x32020c[_0x40ac43(0x41a)],_0x32020c[_0x40ac43(0x261)])){if(_0x5841a9[_0x40ac43(0x2e0)][_0x40ac43(0x776)+_0x40ac43(0x602)+_0x40ac43(0x7d6)]&&_0x3f3832['whatsapp']?.[_0x40ac43(0x210)+_0x40ac43(0x345)+'s']&&_0x2631ef[_0x40ac43(0x500)]){const _0x12c79e=_0x32020c['hhgxX'](_0x28b914,_0x107412[_0x40ac43(0x2ff)][_0x40ac43(0x210)+_0x40ac43(0x345)+'s'],{'customerName':_0x11f7e4[_0x40ac43(0x5ec)],'amount':_0x32020c[_0x40ac43(0x2b7)](_0x146673,_0x1d091a),'newBalance':_0x4614d9(_0x494ec2)});_0xe0cdd5[_0x40ac43(0x7e9)+'e'](_0x5af07a[_0x40ac43(0x500)],_0x12c79e);}}else{const [[_0x2ef156]]=await _0x4a9162['query'](_0x32020c[_0x40ac43(0x274)],[_0x30e843]);if(!_0x2ef156||!_0x2ef156[_0x40ac43(0x2b9)+'ame']){const _0x2f81cd={};return _0x2f81cd[_0x40ac43(0x846)]=_0x32020c[_0x40ac43(0x78e)],_0x2a75b2[_0x40ac43(0x2c4)](0x2*-0x51b+-0x3e*0x17+0x115c)[_0x40ac43(0x78a)](_0x2f81cd);}const _0x392ceb=_0x2ef156['pppoeUsern'+_0x40ac43(0x7db)],_0x1a6b06=await _0x2a5b26[_0x40ac43(0x413)+'fficForPpp'+_0x40ac43(0x448)](_0x392ceb);_0x2a75b2[_0x40ac43(0x78a)](_0x1a6b06);}}catch(_0x40f9fc){console[_0x40ac43(0x846)](_0x40ac43(0x403)+_0x40ac43(0x4c7)+_0x40ac43(0x47a)+_0x40ac43(0x421)+'\x20'+_0x30e843+':',_0x40f9fc);const _0x5c4849={};_0x5c4849[_0x40ac43(0x846)]=_0x32020c[_0x40ac43(0x6db)],_0x5c4849['rx']=0x0,_0x5c4849['tx']=0x0,_0x2a75b2[_0x40ac43(0x78a)](_0x5c4849);}}),router[_0xe9c38(0x515)](_0xe9c38(0x456)+_0xe9c38(0x6e3),async(_0x3c1b34,_0x46741c)=>{const _0x181cbf=_0xe9c38,_0x429ad4={'OcdkW':function(_0x27c266,_0x473ebf){return _0x27c266!==_0x473ebf;},'wYohy':_0x181cbf(0x3b0),'lPXWZ':function(_0xf5f003){return _0xf5f003();},'skkgo':_0x181cbf(0x83c),'cQyve':function(_0x494a09,_0x329946){return _0x494a09(_0x329946);},'zDPIO':'Error\x20fetc'+_0x181cbf(0x251)+_0x181cbf(0x5da)+_0x181cbf(0x63e)};try{if(_0x429ad4[_0x181cbf(0x7c4)](_0x429ad4['wYohy'],'BXFsU')){const _0x444767=await _0x429ad4[_0x181cbf(0x444)](getSettings),_0x26007a={};_0x26007a['appName']=_0x444767[_0x181cbf(0x4a4)][_0x181cbf(0x275)],_0x26007a[_0x181cbf(0x60e)+_0x181cbf(0x650)]=_0x444767[_0x181cbf(0x4a4)][_0x181cbf(0x60e)+_0x181cbf(0x650)],_0x26007a[_0x181cbf(0x845)+'ne']=_0x444767[_0x181cbf(0x4a4)][_0x181cbf(0x845)+'ne'];const _0x435f45={};_0x435f45[_0x181cbf(0x42b)]=_0x444767[_0x181cbf(0x2e0)][_0x181cbf(0x42b)];const _0x57f596={'app':_0x26007a,'billing':_0x435f45,'video':{'enabled':Boolean(_0x444767[_0x181cbf(0x6b8)]?.[_0x181cbf(0x1f8)]&&(_0x444767[_0x181cbf(0x6b8)]?.[_0x181cbf(0x787)+'l']||_0x444767[_0x181cbf(0x6b8)]?.[_0x181cbf(0x4a9)+'xt'])),'title':_0x444767[_0x181cbf(0x6b8)]?.[_0x181cbf(0x821)]||_0x429ad4[_0x181cbf(0x804)],'playlistUrl':_0x444767[_0x181cbf(0x6b8)]?.[_0x181cbf(0x787)+'l']||'','playlistText':_0x444767[_0x181cbf(0x6b8)]?.[_0x181cbf(0x4a9)+'xt']||'','posterUrl':_0x444767[_0x181cbf(0x6b8)]?.[_0x181cbf(0x399)]||'','description':_0x444767[_0x181cbf(0x6b8)]?.[_0x181cbf(0x584)+'n']||'','autoplay':_0x429ad4[_0x181cbf(0x481)](Boolean,_0x444767[_0x181cbf(0x6b8)]?.[_0x181cbf(0x5a5)]),'loop':_0x429ad4['cQyve'](Boolean,_0x444767[_0x181cbf(0x6b8)]?.[_0x181cbf(0x793)]),'controls':_0x429ad4[_0x181cbf(0x7c4)](_0x444767[_0x181cbf(0x6b8)]?.[_0x181cbf(0x6ce)],![])}};_0x46741c[_0x181cbf(0x78a)](_0x57f596);}else _0x5ea72[_0x181cbf(0x84a)]&&(_0x781e75=_0xbd2374['parse'](_0x804576['replies']));}catch(_0x567aa6){const _0x16be41={};_0x16be41['message']=_0x429ad4[_0x181cbf(0x268)],_0x46741c[_0x181cbf(0x2c4)](-0x106a+-0x1*0x26d6+0x3934)[_0x181cbf(0x78a)](_0x16be41);}}),router[_0xe9c38(0x515)](_0xe9c38(0x25f)+'en',async(_0x4f5405,_0x1d53ef)=>{const _0x5e669d=_0xe9c38,_0x1a5b78={};_0x1a5b78[_0x5e669d(0x774)]=_0x5e669d(0x51c)+_0x5e669d(0x366),_0x1a5b78['YJnMx']=_0x5e669d(0x74b),_0x1a5b78[_0x5e669d(0x677)]=_0x5e669d(0x34b)+_0x5e669d(0x76f),_0x1a5b78[_0x5e669d(0x5e3)]='media',_0x1a5b78[_0x5e669d(0x55a)]=_0x5e669d(0x4ab),_0x1a5b78[_0x5e669d(0x567)]=_0x5e669d(0x817)+_0x5e669d(0x213)+_0x5e669d(0x6b7),_0x1a5b78[_0x5e669d(0x773)]=_0x5e669d(0x68c)+_0x5e669d(0x7ea)+_0x5e669d(0x651)+'.';const _0x3db8c8=_0x1a5b78;try{const _0xfbb3d=_0x4f5405[_0x5e669d(0x51d)]?.['id'];if(!_0xfbb3d){if(_0x3db8c8[_0x5e669d(0x51f)]===_0x5e669d(0x739))throw new _0x62b42f(_0x3db8c8[_0x5e669d(0x774)]);else{const _0x13ba2f={};return _0x13ba2f['message']=_0x3db8c8['RppwH'],_0x1d53ef[_0x5e669d(0x2c4)](0x2*-0x787+-0x164c+0x26eb)[_0x5e669d(0x78a)](_0x13ba2f);}}const _0x52d94f={};_0x52d94f[_0x5e669d(0x4a7)]=_0xfbb3d,_0x52d94f[_0x5e669d(0x80a)]=_0x3db8c8[_0x5e669d(0x5e3)];const _0x219da5={};_0x219da5[_0x5e669d(0x63b)]=_0x3db8c8[_0x5e669d(0x55a)];const _0xbd331e=_0x556a4['sign'](_0x52d94f,process[_0x5e669d(0x71a)]['JWT_SECRET'],_0x219da5),_0x3083dd={};_0x3083dd[_0x5e669d(0x7af)]=_0xbd331e,_0x3083dd[_0x5e669d(0x612)+_0x5e669d(0x44f)]=(-0x15c2+-0x1*-0x1f96+0x9c5*-0x1)*(0x4a9*0x6+0x1*0x5a7+-0x2161),_0x1d53ef[_0x5e669d(0x78a)](_0x3083dd);}catch(_0x48a49f){console['error'](_0x3db8c8[_0x5e669d(0x567)],_0x48a49f);const _0x3e0e81={};_0x3e0e81['message']=_0x3db8c8[_0x5e669d(0x773)],_0x1d53ef[_0x5e669d(0x2c4)](-0x25*-0x36+0x11*0x142+-0x1b3c)[_0x5e669d(0x78a)](_0x3e0e81);}}),router[_0xe9c38(0x515)](_0xe9c38(0x68a)+_0xe9c38(0x4d2),async(_0x598bfe,_0x38d87b)=>{const _0x3ea810=_0xe9c38,_0x4732f5={'MzBOG':_0x3ea810(0x319)+_0x3ea810(0x4d0)+_0x3ea810(0x49c)+_0x3ea810(0x4ac)+'ofile.','IcfuM':'LdeZN','JVHGi':function(_0xcabe8e,_0x3d20e4,_0x259653){return _0xcabe8e(_0x3d20e4,_0x259653);},'IOjiy':_0x3ea810(0x711),'sAaZo':_0x3ea810(0x648)+_0x3ea810(0x24c)+_0x3ea810(0x6a9)+_0x3ea810(0x7c0)+_0x3ea810(0x800)+'.','JeULU':_0x3ea810(0x6c9),'BHpgJ':'lWgHH','jVJuI':function(_0x32a60e,_0x46cc62){return _0x32a60e(_0x46cc62);},'WtmEL':function(_0x4f983a,_0x516b0d){return _0x4f983a===_0x516b0d;},'lURPD':_0x3ea810(0x7c2),'gyNmn':_0x3ea810(0x4f0),'lsxzx':_0x3ea810(0x755)+_0x3ea810(0x66c)+_0x3ea810(0x3e2)+_0x3ea810(0x6fb),'VZwvX':'Mozilla/5.'+_0x3ea810(0x620)+_0x3ea810(0x4eb)+_0x3ea810(0x2ec)+_0x3ea810(0x411)+_0x3ea810(0x7b8)+'\x20(KHTML,\x20l'+'ike\x20Gecko)'+_0x3ea810(0x66e)+'5.0.0.0\x20Sa'+_0x3ea810(0x435)+'6','pOBef':_0x3ea810(0x426),'ZjeGI':'en-US,en;q'+_0x3ea810(0x83d)+_0x3ea810(0x797),'RsGpy':'no-cache','xzvAl':'#EXTINF','wNYog':function(_0x5ebd46,_0x39959e){return _0x5ebd46!==_0x39959e;},'KWZiM':_0x3ea810(0x4c4),'tNSkA':_0x3ea810(0x75d),'jXzgD':_0x3ea810(0x384),'wxlyW':_0x3ea810(0x431)+'pe','ijpwP':'text/plain'+_0x3ea810(0x516)+_0x3ea810(0x326),'uHrFw':'[Customer\x20'+_0x3ea810(0x314)+'roxy]\x20Fail'+'ed:'};try{if(_0x4732f5[_0x3ea810(0x76e)]!==_0x4732f5[_0x3ea810(0x5ab)]){const _0x545279=_0x4732f5['jVJuI'](String,_0x598bfe[_0x3ea810(0x583)][_0x3ea810(0x52e)]||'')[_0x3ea810(0x3c9)]();if(!_0x545279){if(_0x4732f5[_0x3ea810(0x70e)](_0x4732f5['lURPD'],_0x3ea810(0x7c2))){const _0x48459a={};return _0x48459a[_0x3ea810(0x6c3)]=_0x3ea810(0x309)+'st\x20tidak\x20t'+'ersedia.',_0x38d87b[_0x3ea810(0x2c4)](-0x1b80+-0xcb3*-0x1+0x105d)[_0x3ea810(0x78a)](_0x48459a);}else return _0xcb9607['json'](null);}if(!/^https?:\/\//i[_0x3ea810(0x6dc)](_0x545279)){if(_0x4732f5[_0x3ea810(0x48f)]!=='XNNIA'){const _0x3e73cc={};return _0x3e73cc[_0x3ea810(0x6c3)]=_0x4732f5[_0x3ea810(0x820)],_0x38d87b[_0x3ea810(0x2c4)](-0x1370+0x47*0x4f+-0xe9)['json'](_0x3e73cc);}else _0x1b7b9b[_0x3ea810(0x524)]('[Customer\x20'+_0x3ea810(0x27b)+_0x3ea810(0x4e4)+'sh\x20failed\x20'+_0x3ea810(0x582)+_0x117b98+':',_0x47f92e);}const _0x2e7ba={};_0x2e7ba[_0x3ea810(0x381)]=_0x4732f5[_0x3ea810(0x4f9)],_0x2e7ba[_0x3ea810(0x6c4)]=_0x4732f5['pOBef'],_0x2e7ba[_0x3ea810(0x5ce)+_0x3ea810(0x824)]=_0x4732f5[_0x3ea810(0x68f)],_0x2e7ba[_0x3ea810(0x5ba)+_0x3ea810(0x40c)]=_0x4732f5[_0x3ea810(0x43c)],_0x2e7ba[_0x3ea810(0x591)]=_0x4732f5[_0x3ea810(0x43c)];const _0x3c683c=_0x2e7ba,_0x4f66c7=async _0xb89d4b=>{const _0x17d3ce=_0x3ea810,_0x5f4893={};_0x5f4893[_0x17d3ce(0x51a)]=_0x4732f5[_0x17d3ce(0x841)];const _0xabd19e=_0x5f4893;if(_0x17d3ce(0x7c3)!==_0x4732f5[_0x17d3ce(0x1f0)]){const _0x1890f0=await _0x4732f5['JVHGi'](fetch,_0xb89d4b,{'headers':_0x3c683c,'redirect':_0x4732f5['IOjiy']}),_0x1efa76=await _0x1890f0['text'](),_0x5b819e={};return _0x5b819e[_0x17d3ce(0x3bd)]=_0x1890f0,_0x5b819e[_0x17d3ce(0x365)]=_0x1efa76,_0x5b819e;}else{const _0x51f101={};return _0x51f101[_0x17d3ce(0x6c3)]=_0xabd19e[_0x17d3ce(0x51a)],_0x35734a[_0x17d3ce(0x2c4)](-0x126e+-0xb1+0x14b2)[_0x17d3ce(0x78a)](_0x51f101);}};let {response:_0xaea9a0,body:_0x379d25}=await _0x4732f5['jVJuI'](_0x4f66c7,_0x545279);const _0x44816a=_0x379d25['includes'](_0x4732f5[_0x3ea810(0x2c8)])||_0x379d25[_0x3ea810(0x2b2)](_0x3ea810(0x745)),_0x396408=/<\s*html/i['test'](_0x379d25)||/<!doctype html/i['test'](_0x379d25);if((!_0xaea9a0['ok']||!_0x44816a)&&_0x396408){if(_0x4732f5[_0x3ea810(0x701)](_0x4732f5['KWZiM'],_0x4732f5[_0x3ea810(0x330)])){const _0x235d03={};_0x235d03[_0x3ea810(0x468)]=![],_0x235d03[_0x3ea810(0x6c3)]=_0x3e06b3['message']||_0x4732f5['sAaZo'],_0x2b07ff[_0x3ea810(0x2c4)](-0x23a0+-0x23ea+0x2e*0x199)[_0x3ea810(0x78a)](_0x235d03);}else{const _0x576e45=Array[_0x3ea810(0x25d)](_0x379d25[_0x3ea810(0x260)](/https?:\/\/[^\s"'<>]+/gi))[_0x3ea810(0x823)](_0x438687=>_0x438687[-0x11f6+-0xc91+0x1e87*0x1]),_0x5ead6f=_0x576e45[_0x3ea810(0x757)](_0x172f55=>_0x172f55!==_0x545279&&!_0x172f55[_0x3ea810(0x2b2)]('googleapis'+_0x3ea810(0x73d)))||null;if(_0x5ead6f){if(_0x4732f5[_0x3ea810(0x7df)]!==_0x4732f5[_0x3ea810(0x23a)]){const _0x56690b=await _0x4f66c7(_0x5ead6f);_0xaea9a0=_0x56690b[_0x3ea810(0x3bd)],_0x379d25=_0x56690b['body'];}else _0x112ee2[_0x3ea810(0x524)](_0x3ea810(0x817)+'Bulk\x20Delet'+_0x3ea810(0x59f)+_0x3ea810(0x831)+'\x20while\x20try'+_0x3ea810(0x705)+_0x3ea810(0x639)+'vouchers\x20f'+'rom\x20the\x20ro'+_0x3ea810(0x1ed)+_0x3ea810(0x4b0)+_0x3ea810(0x79c)+_0x3ea810(0x2f9)+_0x471b7c['message']);}}}if(!_0xaea9a0['ok'])return _0x38d87b[_0x3ea810(0x2c4)](_0xaea9a0[_0x3ea810(0x2c4)])[_0x3ea810(0x78a)]({'message':_0x3ea810(0x614)+'ambil\x20play'+_0x3ea810(0x3a2)+_0xaea9a0[_0x3ea810(0x2c4)]+')'});_0x38d87b[_0x3ea810(0x5b5)](_0x4732f5['wxlyW'],_0x4732f5[_0x3ea810(0x378)]),_0x38d87b[_0x3ea810(0x80e)](_0x379d25);}else _0x2c1f30['warn'](_0x3ea810(0x817)+'Delete]\x20Co'+_0x3ea810(0x352)+'lete\x20bonus'+_0x3ea810(0x684)+_0x29949d+(_0x3ea810(0x7de)+_0x3ea810(0x571)+_0x3ea810(0x786)+_0x3ea810(0x20e)+_0x3ea810(0x4b6)+_0x3ea810(0x40d)+'\x20Error:\x20')+_0x266080['message']);}catch(_0x2cae3f){console[_0x3ea810(0x846)](_0x4732f5[_0x3ea810(0x34c)],_0x2cae3f);const _0x291fbe={};_0x291fbe[_0x3ea810(0x6c3)]=_0x2cae3f['message']||_0x3ea810(0x614)+'ambil\x20play'+_0x3ea810(0x707),_0x38d87b[_0x3ea810(0x2c4)](-0xdb7*-0x1+0x19c+-0xd5f)[_0x3ea810(0x78a)](_0x291fbe);}}),router[_0xe9c38(0x515)](_0xe9c38(0x4d5)+_0xe9c38(0x761),async(_0x56463d,_0x12ae8d)=>{const _0xddbd84=_0xe9c38,_0x26f065={'SjWlC':function(_0x32d319){return _0x32d319();},'NEdoQ':_0xddbd84(0x68c)+_0xddbd84(0x52a)+_0xddbd84(0x57c)+'from\x20route'+'r.'},_0x139438=_0x56463d[_0xddbd84(0x51d)]['id'],_0x8ec8eb=await _0x26f065['SjWlC'](getSettings),_0x6bfc71=_0x8ec8eb[_0xddbd84(0x2e0)][_0xddbd84(0x61a)+'erPrefix']||'bonus-',_0x4e5dfb=''+_0x6bfc71+_0x139438[_0xddbd84(0x37f)](-(-0x309*0x7+0x14e7+0x5c));try{const _0x481235=await _0x2a5b26[_0xddbd84(0x1fb)+'otUsers'](),_0x41fd18=_0x481235['find'](_0x265e8f=>_0x265e8f['name']===_0x4e5dfb);if(!_0x41fd18)return _0x12ae8d[_0xddbd84(0x78a)](null);!_0x41fd18[_0xddbd84(0x5eb)]&&(_0x41fd18[_0xddbd84(0x5eb)]=_0x41fd18[_0xddbd84(0x5ec)]),_0x12ae8d[_0xddbd84(0x78a)](_0x41fd18);}catch(_0x2ca560){console['error']('Error\x20fetc'+_0xddbd84(0x298)+'\x20voucher\x20f'+_0xddbd84(0x531)+'r\x20'+_0x139438+':',_0x2ca560);const _0x1517ce={};_0x1517ce['message']=_0x2ca560[_0xddbd84(0x6c3)]||_0x26f065['NEdoQ'],_0x12ae8d[_0xddbd84(0x2c4)](0x23dd+0x149d+-0x3686)['json'](_0x1517ce);}}),router[_0xe9c38(0x515)](_0xe9c38(0x7f4)+'-voucher',async(_0xd5a37d,_0x4e4717)=>{const _0x4ffbb3=_0xe9c38,_0x2cb1da={'DkosE':_0x4ffbb3(0x297)+_0x4ffbb3(0x79b)+_0x4ffbb3(0x3a8)+'e.','KZOQb':function(_0x308031,_0x1330e4){return _0x308031!==_0x1330e4;},'oslha':'admin','eCqdB':function(_0x227356,_0x5038d5){return _0x227356!==_0x5038d5;},'QcteB':_0x4ffbb3(0x2eb),'XQhHz':function(_0x3dd6e8,_0x2686f4){return _0x3dd6e8!==_0x2686f4;},'uPrna':_0x4ffbb3(0x269),'OVVSX':function(_0x560613,_0x444b14){return _0x560613!==_0x444b14;},'LIflh':'dYzXF','NELkU':_0x4ffbb3(0x843),'oihwY':_0x4ffbb3(0x7e4),'HJJgh':function(_0x446e05){return _0x446e05();},'zdDYT':function(_0x50d4b0,_0xbd9ce){return _0x50d4b0!==_0xbd9ce;},'IIFeu':'OtWao','rSTlY':_0x4ffbb3(0x68c)+_0x4ffbb3(0x52a)+_0x4ffbb3(0x57c)+_0x4ffbb3(0x205)+'r.'};if(_0x2cb1da['KZOQb'](_0xd5a37d[_0x4ffbb3(0x51d)]['role'],_0x2cb1da['oslha'])&&_0x2cb1da[_0x4ffbb3(0x412)](_0xd5a37d[_0x4ffbb3(0x51d)][_0x4ffbb3(0x3f4)],_0x2cb1da[_0x4ffbb3(0x613)])&&_0x2cb1da[_0x4ffbb3(0x5c3)](_0xd5a37d[_0x4ffbb3(0x51d)][_0x4ffbb3(0x3f4)],_0x2cb1da[_0x4ffbb3(0x81e)])){if(_0x2cb1da[_0x4ffbb3(0x407)](_0x2cb1da[_0x4ffbb3(0x77e)],_0x2cb1da[_0x4ffbb3(0x607)])){const _0x5740f6={};return _0x5740f6[_0x4ffbb3(0x6c3)]=_0x2cb1da[_0x4ffbb3(0x626)],_0x4e4717[_0x4ffbb3(0x2c4)](0x1f4a*-0x1+0x565+-0x494*-0x6)[_0x4ffbb3(0x78a)](_0x5740f6);}else{_0xa768d2['error'](_0x4ffbb3(0x297)+_0x4ffbb3(0x79b)+_0x4ffbb3(0x3a8)+'e:',_0x4d4323);const _0x374eed={};_0x374eed[_0x4ffbb3(0x6c3)]=_0x2cb1da[_0x4ffbb3(0x6aa)],_0x48e122[_0x4ffbb3(0x2c4)](0xdfd*0x2+-0x7c1*0x3+-0x2c3)['json'](_0x374eed);}}const {id:_0x504d05}=_0xd5a37d[_0x4ffbb3(0x724)],_0x44c705=await _0x2cb1da['HJJgh'](getSettings),_0xe7f9d0=_0x44c705[_0x4ffbb3(0x2e0)][_0x4ffbb3(0x61a)+_0x4ffbb3(0x563)]||'bonus-',_0x1c3417=''+_0xe7f9d0+_0x504d05[_0x4ffbb3(0x37f)](-(0x2*0x7fc+0xfd*-0x13+0x3*0xf1));try{if(_0x2cb1da['zdDYT'](_0x2cb1da[_0x4ffbb3(0x65b)],_0x2cb1da[_0x4ffbb3(0x65b)])){const _0x301ea8=_0x2a862e['constructo'+'r'][_0x4ffbb3(0x791)][_0x4ffbb3(0x46a)](_0x7f02e4),_0x171c1e=_0x3e739e[_0x26a5fa],_0x3cf6af=_0xa52416[_0x171c1e]||_0x301ea8;_0x301ea8[_0x4ffbb3(0x736)]=_0x331822[_0x4ffbb3(0x46a)](_0x262d5a),_0x301ea8[_0x4ffbb3(0x727)]=_0x3cf6af[_0x4ffbb3(0x727)]['bind'](_0x3cf6af),_0x1feef1[_0x171c1e]=_0x301ea8;}else{const _0x1c4974=await _0x2a5b26[_0x4ffbb3(0x1fb)+_0x4ffbb3(0x79f)](),_0x3ebeb2=_0x1c4974['find'](_0x5314ca=>_0x5314ca[_0x4ffbb3(0x5ec)]===_0x1c3417);if(!_0x3ebeb2)return _0x4e4717[_0x4ffbb3(0x78a)](null);!_0x3ebeb2[_0x4ffbb3(0x5eb)]&&(_0x3ebeb2[_0x4ffbb3(0x5eb)]=_0x3ebeb2['name']),_0x4e4717['json'](_0x3ebeb2);}}catch(_0x12244b){console[_0x4ffbb3(0x846)]('Error\x20fetc'+_0x4ffbb3(0x298)+_0x4ffbb3(0x3c0)+_0x4ffbb3(0x531)+'r\x20'+_0x504d05+_0x4ffbb3(0x7c1),_0x12244b);const _0x416e17={};_0x416e17['message']=_0x12244b['message']||_0x2cb1da[_0x4ffbb3(0x299)],_0x4e4717[_0x4ffbb3(0x2c4)](0x1*0xe11+0x1*0x2363+-0xbe0*0x4)['json'](_0x416e17);}}),router[_0xe9c38(0x2cf)]('/:id/creat'+'e-bonus-vo'+_0xe9c38(0x3c3),async(_0x5221da,_0x4ef11e)=>{const _0x5468bd=_0xe9c38,_0x4458ac={'eAhsB':'Phone\x20and\x20'+_0x5468bd(0x367)+_0x5468bd(0x5b7)+'.','RKfDW':function(_0x1ac9d9,_0x84339c){return _0x1ac9d9!==_0x84339c;},'AHyls':_0x5468bd(0x4d9),'iDiTS':function(_0x59419e){return _0x59419e();},'HUxOn':'JrwSf','sGOuP':_0x5468bd(0x73f)+_0x5468bd(0x808)+_0x5468bd(0x22b)+_0x5468bd(0x453)+'in\x20Billing'+'\x20Settings.','xCgwS':function(_0xc849e9,_0x477baa){return _0xc849e9!==_0x477baa;},'tUPZW':_0x5468bd(0x502),'sGvOC':_0x5468bd(0x529),'hqhEr':_0x5468bd(0x51c)+_0x5468bd(0x366),'tZkdi':function(_0x3a10d6,_0x1fc699){return _0x3a10d6(_0x1fc699);},'AbBWE':_0x5468bd(0x38a)+_0x5468bd(0x5a3)+'age\x20is\x20not'+'\x20eligible\x20'+_0x5468bd(0x55b)+_0x5468bd(0x6b9),'SuLva':function(_0x5e8b29,_0x309a91){return _0x5e8b29===_0x309a91;},'OTbOt':'Active','MvvhP':_0x5468bd(0x239),'fPruY':function(_0x5d900f,_0x2f1b93){return _0x5d900f===_0x2f1b93;},'NwtSn':_0x5468bd(0x71d),'ZVldS':_0x5468bd(0x36d),'KxdNJ':_0x5468bd(0x68c)+_0x5468bd(0x62b)+_0x5468bd(0x4d1)+_0x5468bd(0x7d0)+_0x5468bd(0x5e4)+_0x5468bd(0x767)+_0x5468bd(0x7c6)+'tion.'};if(_0x4458ac[_0x5468bd(0x2be)](_0x5221da['user'][_0x5468bd(0x3f4)],_0x4458ac[_0x5468bd(0x69e)])){const _0x578597={};return _0x578597[_0x5468bd(0x6c3)]=_0x5468bd(0x7e4),_0x4ef11e[_0x5468bd(0x2c4)](0x1c8b*-0x1+0x1*0x1666+-0xf7*-0x8)['json'](_0x578597);}const {id:_0x55af9d}=_0x5221da[_0x5468bd(0x724)];try{const _0x518316=await _0x4458ac[_0x5468bd(0x377)](getSettings),_0x4c56d4=_0x518316[_0x5468bd(0x2e0)][_0x5468bd(0x61a)+'erProfile'];if(!_0x4c56d4){if(_0x4458ac[_0x5468bd(0x511)]===_0x4458ac[_0x5468bd(0x511)]){const _0x5f4b74={};return _0x5f4b74[_0x5468bd(0x6c3)]=_0x4458ac[_0x5468bd(0x62c)],_0x4ef11e[_0x5468bd(0x2c4)](0x1*-0x13cf+-0x1b7c+-0x17b*-0x21)[_0x5468bd(0x78a)](_0x5f4b74);}else _0x4b3691[_0x5468bd(0x846)]('[Customer\x20'+_0x5468bd(0x6a5)+_0x5468bd(0x40e)+_0x5468bd(0x3e4)+_0x5468bd(0x5b3)+_0x5468bd(0x63f)+'ID\x20'+_0x39536f['id']+_0x5468bd(0x753),_0x3949a1[_0x5468bd(0x342)],_0x3bfe34);}const [[_0x22a3dd]]=await _0x4a9162['query']('SELECT\x20TRI'+'M(status)\x20'+_0x5468bd(0x63a)+_0x5468bd(0x52c)+_0x5468bd(0x50d)+_0x5468bd(0x23b)+_0x5468bd(0x2a5),[_0x55af9d]);if(!_0x22a3dd){if(_0x4458ac[_0x5468bd(0x7cc)](_0x4458ac[_0x5468bd(0x501)],_0x4458ac['sGvOC'])){const _0x54aae0={};return _0x54aae0[_0x5468bd(0x6c3)]=_0x4458ac[_0x5468bd(0x257)],_0x4ef11e[_0x5468bd(0x2c4)](0xd34+0x249b+0x1*-0x303b)[_0x5468bd(0x78a)](_0x54aae0);}else _0x587e23['set'](_0x54f671,_0x4484a7);}const _0x3a443b=_0x518316['billing'][_0x5468bd(0x61a)+'erPackageI'+'ds']||[],_0x28b4bb=_0x3a443b[_0x5468bd(0x438)]===0x20ea+-0xb86+0x1564*-0x1||_0x3a443b[_0x5468bd(0x2b2)](_0x4458ac[_0x5468bd(0x6e1)](Number,_0x22a3dd['packageId']));if(!_0x28b4bb){const _0xa95330={};return _0xa95330[_0x5468bd(0x6c3)]=_0x4458ac['AbBWE'],_0x4ef11e['status'](0x993+0x3*-0x8bd+0x1237)[_0x5468bd(0x78a)](_0xa95330);}const _0x497bd1=_0x518316[_0x5468bd(0x2e0)][_0x5468bd(0x61a)+_0x5468bd(0x563)]||_0x5468bd(0x6c1),_0x300504=''+_0x497bd1+_0x55af9d[_0x5468bd(0x37f)](-(-0x128e+-0xd*0xdf+0x1de5)),_0x60cca4=_0x300504,_0x4ec083=await _0x2a5b26['fetchHotsp'+_0x5468bd(0x79f)](),_0x4705b7=_0x4ec083[_0x5468bd(0x757)](_0x41c9ce=>_0x41c9ce[_0x5468bd(0x5ec)]===_0x300504);if(_0x4705b7){if(_0x4458ac[_0x5468bd(0x84d)](_0x5468bd(0x5cc),'ZMBdI')){const _0x88c0c9={};return _0x88c0c9[_0x5468bd(0x6c3)]=_0x5468bd(0x349)+_0x5468bd(0x679)+_0x300504+(_0x5468bd(0x388)+_0x5468bd(0x32f)+_0x5468bd(0x669)+'.'),_0x4ef11e['status'](0x23*0x45+0x1*-0x269f+0x1ec9)['json'](_0x88c0c9);}else{const _0x5f30a7={};return _0x5f30a7[_0x5468bd(0x6c3)]=_0x4458ac[_0x5468bd(0x337)],_0x1464c2[_0x5468bd(0x2c4)](0x6*-0x3a4+-0xea8+0x2610)[_0x5468bd(0x78a)](_0x5f30a7);}}const _0x1c110e=_0x4458ac[_0x5468bd(0x7cc)](_0x22a3dd[_0x5468bd(0x2c4)],_0x4458ac[_0x5468bd(0x830)]),_0x4f9688={};_0x4f9688['name']=_0x300504,_0x4f9688[_0x5468bd(0x5eb)]=_0x60cca4,_0x4f9688[_0x5468bd(0x7c7)]=_0x4c56d4,_0x4f9688[_0x5468bd(0x527)]=_0x5468bd(0x522)+_0x55af9d,_0x4f9688[_0x5468bd(0x720)]=_0x1c110e?_0x4458ac[_0x5468bd(0x703)]:'no',await _0x2a5b26[_0x5468bd(0x6cb)+_0x5468bd(0x803)](_0x4f9688);const _0x34a5b9=await _0x2a5b26[_0x5468bd(0x1fb)+_0x5468bd(0x79f)](),_0x45e08f=_0x34a5b9[_0x5468bd(0x757)](_0x97b746=>_0x97b746[_0x5468bd(0x5ec)]===_0x300504);if(!_0x45e08f){if(_0x4458ac['fPruY'](_0x4458ac['NwtSn'],_0x4458ac[_0x5468bd(0x37e)]))_0x5e52ae['set'](_0x428201[_0x5468bd(0x429)],_0xe9b673);else throw new Error(_0x4458ac['KxdNJ']);}!_0x45e08f[_0x5468bd(0x5eb)]&&(_0x45e08f[_0x5468bd(0x5eb)]=_0x45e08f['name']),_0x4ef11e['status'](0x1755+0x11b2+0x6b5*-0x6)[_0x5468bd(0x78a)](_0x45e08f);}catch(_0x4c0f79){console[_0x5468bd(0x846)](_0x5468bd(0x32d)+_0x5468bd(0x267)+_0x5468bd(0x3c0)+_0x5468bd(0x531)+'r\x20'+_0x55af9d+':',_0x4c0f79);const _0x1873bb={};_0x1873bb[_0x5468bd(0x6c3)]=_0x4c0f79[_0x5468bd(0x6c3)]||_0x5468bd(0x72e)+_0x5468bd(0x249)+_0x5468bd(0x57e)+_0x5468bd(0x220),_0x4ef11e[_0x5468bd(0x2c4)](-0xac*-0x3+-0x766*-0x4+-0x1da8)[_0x5468bd(0x78a)](_0x1873bb);}}),router['post'](_0xe9c38(0x5af)+_0xe9c38(0x434),async(_0x3d7deb,_0x4d0c44)=>{const _0x6b15ea=_0xe9c38,_0x190ca7={'VltHl':_0x6b15ea(0x258)+'\x20customer\x20'+_0x6b15ea(0x636),'obiHH':function(_0x5b325c,_0x407b78){return _0x5b325c(_0x407b78);},'suasN':function(_0x57d0aa,_0x689c49){return _0x57d0aa!==_0x689c49;},'XhocW':function(_0x3a9bf5,_0x34ad44){return _0x3a9bf5===_0x34ad44;},'plYDY':_0x6b15ea(0x37c),'uMnvV':'Forbidden','tIZgp':function(_0x4513dc,_0x20e116){return _0x4513dc===_0x20e116;},'Unhno':_0x6b15ea(0x2ac),'IQABw':_0x6b15ea(0x329),'PLnUT':function(_0x545477){return _0x545477();},'qPLyw':'Bonus\x20Hots'+_0x6b15ea(0x808)+_0x6b15ea(0x22b)+'onfigured\x20'+_0x6b15ea(0x56d)+'s.','xXxsy':_0x6b15ea(0x729)+_0x6b15ea(0x2df)+_0x6b15ea(0x287)+_0x6b15ea(0x1f4)+'ers\x20WHERE\x20'+_0x6b15ea(0x69d)+_0x6b15ea(0x77f),'FvfeG':function(_0x448742,_0x35dbfc){return _0x448742>_0x35dbfc;},'OElrq':'bonus-','jYcSa':'vnONq','TBcYo':_0x6b15ea(0x3d3)+_0x6b15ea(0x359)+_0x6b15ea(0x4ff),'asLDT':_0x6b15ea(0x72e)+'l\x20server\x20e'+_0x6b15ea(0x57e)+'red\x20during'+'\x20sync.'};if(_0x190ca7['suasN'](_0x3d7deb[_0x6b15ea(0x51d)][_0x6b15ea(0x3f4)],_0x6b15ea(0x4d9))){if(_0x190ca7[_0x6b15ea(0x2c9)](_0x190ca7[_0x6b15ea(0x277)],_0x6b15ea(0x37c))){const _0x190b6e={};return _0x190b6e['message']=_0x190ca7[_0x6b15ea(0x7dd)],_0x4d0c44[_0x6b15ea(0x2c4)](0x187+-0x7c5+0x7d1)[_0x6b15ea(0x78a)](_0x190b6e);}else{if(_0x1ca0ed)_0x249075[_0x6b15ea(0x4cf)](_0x7179a1[_0x6b15ea(0x5fb)]);const _0x2721f2={};return _0x2721f2[_0x6b15ea(0x6c3)]=_0x190ca7[_0x6b15ea(0x50f)],_0x53656a[_0x6b15ea(0x2c4)](0x1*0x2488+-0x1*0x18a7+-0xa4d)[_0x6b15ea(0x78a)](_0x2721f2);}}try{if(_0x190ca7[_0x6b15ea(0x5dc)](_0x190ca7[_0x6b15ea(0x601)],_0x190ca7[_0x6b15ea(0x4cb)]))_0x217c40+='\x20AND\x20packa'+_0x6b15ea(0x58f)+_0x4b02a9['map'](()=>'?')[_0x6b15ea(0x5f7)](',')+')';else{const _0x2d63e6=await _0x190ca7[_0x6b15ea(0x3f6)](getSettings),_0x425d55=_0x2d63e6[_0x6b15ea(0x2e0)][_0x6b15ea(0x61a)+_0x6b15ea(0x6ea)];if(!_0x425d55){const _0x1ff2ba={};return _0x1ff2ba[_0x6b15ea(0x6c3)]=_0x190ca7[_0x6b15ea(0x2f5)],_0x4d0c44[_0x6b15ea(0x2c4)](-0x4b6+-0x1892+0x1ed8)[_0x6b15ea(0x78a)](_0x1ff2ba);}const _0x565525=_0x2d63e6[_0x6b15ea(0x2e0)][_0x6b15ea(0x61a)+'erPackageI'+'ds']||[];let _0x50153e=_0x190ca7['xXxsy'];_0x190ca7[_0x6b15ea(0x805)](_0x565525[_0x6b15ea(0x438)],0x1063+-0x3*-0x745+-0x2632)&&(_0x50153e+=_0x6b15ea(0x50a)+'geId\x20IN\x20('+_0x565525[_0x6b15ea(0x823)](()=>'?')[_0x6b15ea(0x5f7)](',')+')');const [_0x5de2e8]=await _0x4a9162[_0x6b15ea(0x583)](_0x50153e,_0x565525),_0xd70d61=await _0x2a5b26['fetchHotsp'+'otUsers'](),_0x29bb51=new Set(_0xd70d61[_0x6b15ea(0x823)](_0x1edf2e=>_0x1edf2e[_0x6b15ea(0x5ec)])),_0x54418c=_0x2d63e6['billing'][_0x6b15ea(0x61a)+_0x6b15ea(0x563)]||_0x190ca7['OElrq'];let _0x2931eb=-0x53*-0x53+0xa3*0x1b+-0x2c1a;for(const _0x12487e of _0x5de2e8){const _0x5d1cc9=''+_0x54418c+_0x12487e['id']['slice'](-(-0x2438+-0x9*-0x397+0x3ed));if(!_0x29bb51[_0x6b15ea(0x23e)](_0x5d1cc9)){if(_0x190ca7[_0x6b15ea(0x301)](_0x190ca7[_0x6b15ea(0x7f1)],_0x190ca7[_0x6b15ea(0x7f1)]))throw new _0x11f094(_0x6b15ea(0x315)+_0x6b15ea(0x458)+_0x6b15ea(0x216)+'\x20'+_0x190ca7[_0x6b15ea(0x2bf)](_0x5a6000,_0x308e89)+(',\x20but\x20you\x20'+_0x6b15ea(0x69a))+_0xdc6bb2(_0x2ae7cd[_0x6b15ea(0x4b9)+_0x6b15ea(0x656)])+'.');else{const _0x52a575={};_0x52a575['name']=_0x5d1cc9,_0x52a575[_0x6b15ea(0x5eb)]=_0x5d1cc9,_0x52a575[_0x6b15ea(0x7c7)]=_0x425d55,_0x52a575[_0x6b15ea(0x527)]=_0x6b15ea(0x522)+_0x12487e['id'],_0x52a575[_0x6b15ea(0x720)]='no',await _0x2a5b26[_0x6b15ea(0x6cb)+_0x6b15ea(0x803)](_0x52a575),_0x2931eb++;}}}const _0x1cd4b7={};_0x1cd4b7['message']=_0x6b15ea(0x6a0)+_0x6b15ea(0x775)+_0x6b15ea(0x3b9)+_0x2931eb+(_0x6b15ea(0x311)+_0x6b15ea(0x71b)+_0x6b15ea(0x2a4)+_0x6b15ea(0x37d)+_0x6b15ea(0x395)),_0x4d0c44[_0x6b15ea(0x78a)](_0x1cd4b7);}}catch(_0x58bcfb){console[_0x6b15ea(0x846)](_0x190ca7[_0x6b15ea(0x7d4)],_0x58bcfb);const _0x57d467={};_0x57d467[_0x6b15ea(0x6c3)]=_0x58bcfb['message']||_0x190ca7[_0x6b15ea(0x5d9)],_0x4d0c44[_0x6b15ea(0x2c4)](0x1d45*-0x1+-0x2c*0x62+0x3011*0x1)[_0x6b15ea(0x78a)](_0x57d467);}});export default router;
+
+
+import express from 'express';
+import pool from '../db.js';
+import { getSettings, replacePlaceholders, generateNewCustomerId, dbDateTimeToLocalISO, formatRupiah, formatBillingPeriod, formatDateDisplay, dbDateToISO, toMySQLDatetime, dateToYMD } from '../utils.js';
+import mikrotikApi from '../mikrotik-api.js';
+import whatsappService from '../whatsappService.js';
+import multer from 'multer';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import fs from 'fs';
+import jwt from 'jsonwebtoken';
+import tripayService from '../tripayService.js';
+import { recordCashMutation } from '../cashMutationService.js';
+import { pushCustomerPppoeToAcs } from '../services.js';
+
+
+const router = express.Router();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const UPLOADS_DIR = path.join(__dirname, '..', 'uploads');
+
+// Konfigurasi Multer untuk penyimpanan file
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        // Ensure the directory exists
+        if (!fs.existsSync(UPLOADS_DIR)) {
+            fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+        }
+        cb(null, UPLOADS_DIR);
+    },
+    filename: function (req, file, cb) {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
+    }
+});
+const upload = multer({ storage: storage });
+
+// GET /me - Get current logged in customer's full data
+router.get('/me', async (req, res) => {
+    const customerId = req.user.id;
+    try {
+        const [[customer]] = await pool.query('SELECT * FROM customers WHERE id = ?', [customerId]);
+        if (!customer) {
+            return res.status(404).json({ message: 'Customer not found.' });
+        }
+        res.json(customer);
+    } catch (e) {
+        console.error("Error fetching current customer data:", e);
+        res.status(500).json({ message: 'Failed to fetch customer data.' });
+    }
+});
+
+
+// Temporary in-memory store for OTPs. In production, use Redis or a database table.
+const otpStore = {};
+
+function normalizeBillingType(value) {
+    return value === 'fixed' ? 'fixed' : 'postpaid';
+}
+
+function normalizeNextBillingStart(value, billingType) {
+    if (billingType !== 'fixed' || !value) {
+        return null;
+    }
+
+    if (typeof value === 'string') {
+        const trimmed = value.trim();
+        if (!trimmed) {
+            return null;
+        }
+        return trimmed.length >= 10 ? trimmed.slice(0, 10) : trimmed;
+    }
+
+    return value;
+}
+
+const normalizePppoeUsername = (value) => {
+    const normalized = String(value || '').trim();
+    return normalized || null;
+};
+
+const normalizeCustomerId = (value) => {
+    const normalized = String(value || '').trim();
+    return normalized || null;
+};
+
+async function syncPppoeCacheComment(queryable, username, comment) {
+    const normalizedUsername = normalizePppoeUsername(username);
+    if (!normalizedUsername) return;
+    await queryable.query('UPDATE pppoe_users SET comment = ? WHERE name = ?', [comment || '', normalizedUsername]);
+}
+
+async function syncPppoeCacheProfile(queryable, username, profile) {
+    const normalizedUsername = normalizePppoeUsername(username);
+    if (!normalizedUsername || !profile) return;
+    await queryable.query('UPDATE pppoe_users SET profile = ? WHERE name = ?', [profile, normalizedUsername]);
+}
+
+async function resolveCustomerPppoeLink(connection, customer, preloadedRouterUsers = null) {
+    const customerId = normalizeCustomerId(customer?.id);
+    const configuredUsername = normalizePppoeUsername(customer?.pppoeUsername);
+    const routerUsers = preloadedRouterUsers || await mikrotikApi.fetchPppoeUsers();
+
+    let routerUser = null;
+    if (configuredUsername) {
+        routerUser = routerUsers.find((u) => normalizePppoeUsername(u.name) === configuredUsername) || null;
+    }
+    if (!routerUser && customerId) {
+        routerUser = routerUsers.find((u) => normalizeCustomerId(u.comment) === customerId) || null;
+    }
+
+    if (!routerUser) {
+        return { username: configuredUsername, routerUser: null, routerUsers };
+    }
+
+    const resolvedUsername = normalizePppoeUsername(routerUser.name);
+    const resolvedComment = normalizeCustomerId(routerUser.comment);
+    if (resolvedUsername && resolvedUsername !== configuredUsername && customerId) {
+        await connection.query('UPDATE customers SET pppoeUsername = ? WHERE id = ?', [resolvedUsername, customerId]);
+    }
+
+    if (customerId && resolvedUsername && resolvedComment !== customerId) {
+        await mikrotikApi.updatePppoeUserCommentByName(resolvedUsername, customerId);
+        await syncPppoeCacheComment(connection, resolvedUsername, customerId);
+        routerUser = { ...routerUser, comment: customerId };
+    }
+
+    return { username: resolvedUsername, routerUser, routerUsers };
+}
+
+
+/**
+ * Synchronizes a customer's bonus voucher status based on their package eligibility and account status.
+ * This is the single source of truth for voucher state.
+ * @param {object} customer - The customer object (must include id, status, packageId).
+ * @param {object} settings - The application settings object.
+ */
+async function syncBonusVoucher(customer, settings) {
+    const bonusProfile = settings.billing.bonusVoucherProfile;
+    if (!bonusProfile) {
+        return; // Bonus feature is off.
+    }
+
+    const eligiblePackages = settings.billing.bonusVoucherPackageIds || [];
+    // FIX: Pastikan packageId diperlakukan sebagai angka untuk pemeriksaan .includes().
+    const isPackageEligible = eligiblePackages.length === 0 || eligiblePackages.includes(Number(customer.packageId));
+
+    const voucherPrefix = settings.billing.bonusVoucherPrefix || 'bonus-';
+    const bonusUsername = `${voucherPrefix}${customer.id.slice(-4)}`;
+    
+    const routerUsers = await mikrotikApi.fetchHotspotUsers();
+    const bonusUser = routerUsers.find(u => u.name === bonusUsername);
+
+    if (isPackageEligible && (customer.status || '').trim() === 'Active') {
+        // Customer should have an active voucher
+        if (bonusUser) {
+            if (bonusUser.disabled) {
+                await mikrotikApi.enableHotspotUser(bonusUser.id);
+                console.log(`[Sync Voucher] Enabled bonus user ${bonusUsername} for active eligible customer ${customer.id}.`);
+            }
+        } else {
+            await mikrotikApi.addHotspotUser({
+                name: bonusUsername,
+                password: bonusUsername,
+                profile: bonusProfile,
+                comment: `Bonus for ${customer.id}`,
+                disabled: 'no'
+            });
+            console.log(`[Sync Voucher] Created and enabled bonus user ${bonusUsername} for active eligible customer ${customer.id}.`);
+        }
+    } else {
+        // Customer should have a disabled or non-existent voucher
+        if (bonusUser && !bonusUser.disabled) {
+            await mikrotikApi.disableHotspotUser(bonusUser.id);
+            console.log(`[Sync Voucher] Disabled bonus user ${bonusUsername} for inactive/ineligible customer ${customer.id}.`);
+        }
+    }
+}
+
+
+// --- NEW AFFILIATE ROUTES ---
+
+router.post('/affiliate/request-topup', async (req, res) => {
+    const customerId = req.user.id;
+    const { amount, method } = req.body;
+
+    if (!amount || isNaN(amount) || amount <= 0) {
+        return res.status(400).json({ message: 'Invalid top-up amount.' });
+    }
+    if (!method) {
+        return res.status(400).json({ message: 'Payment method is required.' });
+    }
+
+
+    const connection = await pool.getConnection();
+    try {
+        await connection.beginTransaction();
+
+        const topupId = `TOPUP-${Date.now()}`;
+        const newTopupRequest = {
+            id: topupId,
+            customer_id: customerId,
+            user_id: null, // Ensure user_id is null for customers
+            amount: amount,
+            status: 'pending',
+        };
+        await connection.query('INSERT INTO topup_requests SET ?', newTopupRequest);
+        
+        const [[customer]] = await connection.query('SELECT * FROM customers WHERE id = ?', [customerId]);
+        if (!customer) throw new Error('Customer not found.');
+
+        const settings = await getSettings();
+        const returnUrl = `${settings.app.baseUrl.replace(/\/$/, '')}/#portal`;
+
+        const dummyInvoice = {
+            id: topupId,
+            amount: amount,
+        };
+
+        const tripayResponse = await tripayService.createTransaction(dummyInvoice, customer, returnUrl, method);
+
+        await connection.query('UPDATE topup_requests SET tripay_reference = ? WHERE id = ?', [tripayResponse.reference, topupId]);
+        
+        await connection.commit();
+        
+        res.json({ paymentUrl: tripayResponse.checkout_url });
+
+    } catch (error) {
+        if (connection) await connection.rollback();
+        console.error("Error requesting top-up:", error);
+        res.status(500).json({ message: error.message || 'Failed to request top-up.' });
+    } finally {
+        if (connection) connection.release();
+    }
+});
+
+router.post('/affiliate/sell-voucher', async (req, res) => {
+    const customerId = req.user.id;
+    const { profileId } = req.body;
+    
+    const connection = await pool.getConnection();
+    try {
+        await connection.beginTransaction();
+
+        const [[customer]] = await connection.query('SELECT * FROM customers WHERE id = ? FOR UPDATE', [customerId]);
+        if (!customer) throw new Error("Customer not found.");
+        
+        const [[profile]] = await connection.query('SELECT * FROM hotspot_profiles WHERE id = ?', [profileId]);
+        if (!profile) throw new Error("Voucher profile not found.");
+
+        const sellingPrice = Number(profile.sellingPrice) || 0;
+        const costPrice = Number(profile.price) || 0;
+        const profit = sellingPrice - costPrice;
+        
+        if (Number(customer.voucher_balance) < sellingPrice) {
+            throw new Error(`Insufficient balance. You need ${formatRupiah(sellingPrice)}, but you only have ${formatRupiah(customer.voucher_balance)}.`);
+        }
+        
+        const newBalance = Number(customer.voucher_balance) - sellingPrice;
+
+        // Generate voucher where username and password are the same
+        const code = Math.random().toString(36).substring(2, 8).toUpperCase();
+        const username = code;
+        const password = code;
+        
+        const routerResponse = await mikrotikApi.addHotspotUser({ name: username, password, profile: profile.name });
+        
+        const newVoucher = {
+            username,
+            password,
+            profile: profile.name,
+            duration_minutes: profile.duration_minutes,
+            status: 'new',
+            created_at: new Date(),
+            mikrotik_id: routerResponse.id,
+            sold_by_customer_id: customerId,
+        };
+        const [voucherInsertResult] = await connection.query('INSERT INTO hotspot_vouchers SET ?', newVoucher);
+        const newVoucherId = voucherInsertResult.insertId;
+
+        // Create commission record
+        const newCommission = {
+            customer_id: customerId,
+            voucher_id: newVoucherId,
+            profit_amount: profit,
+            status: 'pending',
+        };
+        await connection.query('INSERT INTO customer_commissions SET ?', newCommission);
+
+        // Update customer balance
+        await connection.query('UPDATE customers SET voucher_balance = ? WHERE id = ?', [newBalance, customerId]);
+
+        await connection.commit();
+        
+        // Return the full voucher details for printing
+        res.status(201).json({ ...newVoucher, id: newVoucherId });
+
+    } catch (error) {
+        if (connection) await connection.rollback();
+        console.error("Error selling voucher:", error);
+        res.status(500).json({ message: error.message || 'Failed to sell voucher.' });
+    } finally {
+        if (connection) connection.release();
+    }
+});
+
+
+// GET /:id/affiliate-data
+router.get('/:id/affiliate-data', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const [[customer]] = await pool.query('SELECT voucher_balance FROM customers WHERE id = ?', [id]);
+        if (!customer) {
+            return res.status(404).json({ message: 'Customer not found.' });
+        }
+
+        const [sellableProfiles] = await pool.query('SELECT id, name, rateLimit, sharedUsers, price, sellingPrice, duration_minutes FROM hotspot_profiles WHERE sellingPrice > 0 ORDER BY sellingPrice ASC');
+        
+        const [commissions] = await pool.query(`
+            SELECT 
+                cc.id, 
+                cc.customer_id, 
+                cc.voucher_id, 
+                cc.profit_amount, 
+                cc.status, 
+                cc.created_at, 
+                cc.applied_to_invoice_id, 
+                hv.username as voucher_username 
+            FROM customer_commissions cc 
+            LEFT JOIN hotspot_vouchers hv ON cc.voucher_id = hv.id
+            WHERE cc.customer_id = ?
+        `, [id]);
+        
+        const [topups] = await pool.query('SELECT id, customer_id, amount, status, created_at, paid_at, tripay_reference FROM topup_requests WHERE customer_id = ?', [id]);
+
+        const transactions = [...commissions, ...topups].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+
+        res.json({
+            balance: customer.voucher_balance || 0,
+            sellableProfiles,
+            transactions,
+        });
+    } catch (e) {
+        console.error("Error fetching affiliate data:", e);
+        res.status(500).json({ message: 'Failed to fetch affiliate data.' });
+    }
+});
+
+// Admin endpoint to add balance to a customer's affiliate account
+router.post('/:id/add-balance', async (req, res) => {
+    if (req.user.role !== 'admin') {
+        return res.status(403).json({ message: 'Forbidden: Only admins can perform this action.' });
+    }
+
+    const { id: customerId } = req.params;
+    const { amount } = req.body;
+    const adminUserId = req.user.id; // The admin performing the action
+
+    if (!amount || isNaN(amount) || amount <= 0) {
+        return res.status(400).json({ message: 'A valid positive amount is required.' });
+    }
+
+    let connection;
+    try {
+        connection = await pool.getConnection();
+        await connection.beginTransaction();
+
+        const [[customer]] = await connection.query('SELECT * FROM customers WHERE id = ? FOR UPDATE', [customerId]);
+        if (!customer) {
+            throw new Error('Customer not found.');
+        }
+        
+        const settings = await getSettings();
+
+        const currentBalance = Number(customer.voucher_balance) || 0;
+        const newBalance = currentBalance + amount;
+
+        await connection.query('UPDATE customers SET voucher_balance = ? WHERE id = ?', [newBalance, customerId]);
+
+        // Log this action as a payment record for traceability
+        const paymentRecord = {
+            id: `PAY-TOPUP-ADMIN-${Date.now()}`,
+            invoiceId: 'Affiliate Top Up (Admin)',
+            customerId: customerId,
+            date: toMySQLDatetime(new Date(), settings.app.timezone),
+            amount: amount,
+            method: 'Admin Grant',
+            sold_by_user_id: adminUserId,
+        };
+        await connection.query('INSERT INTO payments SET ?', paymentRecord);
+        await recordCashMutation(connection, {
+            date: paymentRecord.date,
+            direction: 'in',
+            category: 'affiliate_topup',
+            amount,
+            method: paymentRecord.method,
+            description: `Top up saldo affiliate admin untuk ${customer.name}`,
+            reference_type: 'payment',
+            reference_id: paymentRecord.id,
+            customer_id: customerId,
+            user_id: adminUserId,
+            created_by: adminUserId,
+            source: 'system',
+            timezone: settings.app.timezone,
+        });
+
+        await connection.commit();
+
+        // Optionally send a notification (outside the transaction)
+        try {
+            // const settings = await getSettings(); // Already fetched
+            if (settings.billing.whatsappNotificationsEnabled && settings.whatsapp?.affiliateTopupSuccess && customer.phone) {
+                const message = replacePlaceholders(settings.whatsapp.affiliateTopupSuccess, {
+                    customerName: customer.name,
+                    amount: formatRupiah(amount),
+                    newBalance: formatRupiah(newBalance)
+                });
+                whatsappService.sendMessage(customer.phone, message);
+            }
+        } catch (notificationError) {
+            console.error("Failed to send top-up notification, but balance was added successfully:", notificationError);
+        }
+
+        res.json({ success: true, newBalance });
+
+    } catch (error) {
+        if (connection) await connection.rollback();
+        console.error("Error adding affiliate balance by admin:", error);
+        res.status(500).json({ message: error.message || 'Failed to add balance.' });
+    } finally {
+        if (connection) connection.release();
+    }
+});
+
+
+// --- Customers CRUD ---
+router.get('/', async (req, res) => {
+    try {
+        const settings = await getSettings();
+        const timezone = settings.app?.timezone || 'Asia/Jakarta';
+        const currentMonthKey = dateToYMD(new Date(), timezone).slice(0, 7);
+
+        const [[rows], [invoiceRows]] = await Promise.all([
+            pool.query(`
+                SELECT
+                    id,
+                    name,
+                    nik,
+                    address,
+                    phone,
+                    email,
+                    packageId,
+                    status,
+                    location,
+                    odpId,
+                    pppoeUsername,
+                    activeDate,
+                    nextBillingStart,
+                    previousPppoeProfile,
+                    acsSerialNumber,
+                    voucher_balance,
+                    billing_type
+                FROM customers
+                ORDER BY activeDate DESC
+            `),
+            pool.query(
+                `SELECT customerId, status, dueDate, issueDate
+                 FROM invoices
+                 WHERE DATE_FORMAT(dueDate, '%Y-%m') = ?
+                 ORDER BY dueDate DESC, issueDate DESC`,
+                [currentMonthKey]
+            )
+        ]);
+
+        const statusPriority = { Overdue: 3, Unpaid: 2, Paid: 1 };
+        const invoiceStatusByCustomer = new Map();
+
+        for (const invoice of invoiceRows) {
+            const existing = invoiceStatusByCustomer.get(invoice.customerId);
+            if (!existing) {
+                invoiceStatusByCustomer.set(invoice.customerId, invoice);
+                continue;
+            }
+
+            const existingDueDate = existing.dueDate ? new Date(existing.dueDate).getTime() : 0;
+            const currentDueDate = invoice.dueDate ? new Date(invoice.dueDate).getTime() : 0;
+
+            if (currentDueDate > existingDueDate) {
+                invoiceStatusByCustomer.set(invoice.customerId, invoice);
+                continue;
+            }
+
+            if (currentDueDate === existingDueDate) {
+                const existingPriority = statusPriority[existing.status] || 0;
+                const currentPriority = statusPriority[invoice.status] || 0;
+                if (currentPriority > existingPriority) {
+                    invoiceStatusByCustomer.set(invoice.customerId, invoice);
+                }
+            }
+        }
+
+        const formattedRows = rows.map(c => {
+            let parsedLocation = null;
+            if (c.location) {
+                try {
+                    // Only parse if it's a string that looks like an object
+                    if (typeof c.location === 'string' && c.location.trim().startsWith('{')) {
+                        parsedLocation = JSON.parse(c.location);
+                    } else if (typeof c.location === 'object' && c.location !== null) {
+                        // If it's already an object (though it should be a string from DB), use it
+                        parsedLocation = c.location;
+                    }
+                } catch (parseError) {
+                    console.error(`[Customer Route] Failed to parse location JSON for customer ID ${c.id}. Value:`, c.location, parseError);
+                    // Keep parsedLocation as null on error
+                }
+            }
+            return {
+                ...c,
+                currentMonthInvoiceStatus: invoiceStatusByCustomer.get(c.id)?.status || null,
+                location: parsedLocation,
+                activeDate: dbDateTimeToLocalISO(c.activeDate),
+            };
+        });
+        res.json(formattedRows);
+    } catch (e) {
+        console.error("Error reading customers data:", e);
+        res.status(500).json({ message: 'Error reading customers data' });
+    }
+});
+
+router.post('/', async (req, res) => {
+    try {
+        const { createNewPppoe, newPppoeUsername, newPppoePassword, ...customerData } = req.body;
+        
+        const settings = await getSettings();
+        const prefix = settings.app.customerIdPrefix || 'CUS';
+        
+        const newId = generateNewCustomerId(prefix);
+
+        let pppoeUsernameToSave = normalizePppoeUsername(customerData.pppoeUsername);
+
+        if (createNewPppoe) {
+            if (!newPppoeUsername || !newPppoePassword) {
+                return res.status(400).json({ message: 'New PPPoE username and password are required.' });
+            }
+
+            const [[pkg]] = await pool.query('SELECT pppoeProfile FROM packages WHERE id = ?', [customerData.packageId]);
+            if (!pkg) return res.status(400).json({ message: 'Selected package not found.' });
+            if (!pkg.pppoeProfile) return res.status(400).json({ message: 'The selected package does not have a linked PPPoE profile.' });
+
+            const normalizedNewPppoeUsername = normalizePppoeUsername(newPppoeUsername);
+            await mikrotikApi.addPppoeUser({
+                name: newPppoeUsername,
+                password: newPppoePassword,
+                profile: pkg.pppoeProfile,
+                comment: newId,
+            });
+            pppoeUsernameToSave = normalizedNewPppoeUsername;
+            await syncPppoeCacheComment(pool, pppoeUsernameToSave, newId);
+            await syncPppoeCacheProfile(pool, pppoeUsernameToSave, pkg.pppoeProfile);
+        } else if (pppoeUsernameToSave) {
+            await mikrotikApi.updatePppoeUserCommentByName(pppoeUsernameToSave, newId);
+            await syncPppoeCacheComment(pool, pppoeUsernameToSave, newId);
+        }
+
+        if (pppoeUsernameToSave) {
+            const [[otherCustomer]] = await pool.query('SELECT id FROM customers WHERE pppoeUsername = ?', [pppoeUsernameToSave]);
+            if (otherCustomer) {
+                await pool.query('UPDATE customers SET pppoeUsername = NULL WHERE id = ?', [otherCustomer.id]);
+            }
+        }
+
+        const customerToSave = {
+            id: newId,
+            name: customerData.name,
+            nik: customerData.nik || null,
+            address: customerData.address,
+            phone: customerData.phone,
+            email: customerData.email,
+            packageId: customerData.packageId,
+            status: customerData.status,
+            location: customerData.location ? JSON.stringify(customerData.location) : null,
+            odpId: customerData.odpId || null, // FIX: Ensure empty string becomes NULL
+            // Store the "wall time" string from the form directly, formatted for MySQL DATETIME.
+            // This prevents timezone conversions on the server.
+            activeDate: customerData.activeDate ? customerData.activeDate.replace('T', ' ') : new Date(),
+            pppoeUsername: pppoeUsernameToSave,
+            acsSerialNumber: customerData.acsSerialNumber || null,
+            billing_type: normalizeBillingType(customerData.billing_type),
+            nextBillingStart: normalizeNextBillingStart(customerData.nextBillingStart, normalizeBillingType(customerData.billing_type)),
+        };
+
+        await pool.query('INSERT INTO customers SET ?', customerToSave);
+        
+        // Sync bonus voucher status after creation
+        await syncBonusVoucher({ ...customerToSave, id: newId }, settings);
+
+        let acsPppoeSync = null;
+        if (createNewPppoe) {
+            acsPppoeSync = await pushCustomerPppoeToAcs({
+                customerId: newId,
+                pppoeUsername: newPppoeUsername,
+                pppoePassword: newPppoePassword,
+            });
+            if (!acsPppoeSync.success && !acsPppoeSync.skipped) {
+                console.warn(`[Customer Create] ACS PPPoE push failed for ${newId}:`, acsPppoeSync);
+            }
+        }
+
+        res.status(201).json({ ...customerToSave, acsPppoeSync });
+    } catch (e) {
+        console.error("Error creating customer:", e);
+        res.status(500).json({ message: e.message || 'Error creating customer' });
+    }
+});
+
+router.put('/:id', async (req, res) => {
+    const { id } = req.params;
+    let connection;
+    let acsPppoeSync = null;
+
+    try {
+        connection = await pool.getConnection();
+        await connection.beginTransaction();
+
+        const { createNewPppoe, newPppoeUsername, newPppoePassword, ...customerData } = req.body;
+
+        const [[oldCustomer]] = await connection.query('SELECT * FROM customers WHERE id = ? FOR UPDATE', [id]);
+        if (!oldCustomer) {
+            throw new Error('Customer not found');
+        }
+        
+        let pppoeUsernameToSave = normalizePppoeUsername(customerData.pppoeUsername);
+
+        if (createNewPppoe) {
+            // ... (logika pembuatan pengguna PPPoE baru seperti sebelumnya)
+             if (!newPppoeUsername || !newPppoePassword) {
+                throw new Error('New PPPoE username and password are required.');
+            }
+            const [[pkg]] = await connection.query('SELECT pppoeProfile FROM packages WHERE id = ?', [customerData.packageId]);
+            if (!pkg || !pkg.pppoeProfile) throw new Error('Selected package or its PPPoE profile not found.');
+            const normalizedNewPppoeUsername = normalizePppoeUsername(newPppoeUsername);
+            await mikrotikApi.addPppoeUser({ name: newPppoeUsername, password: newPppoePassword, profile: pkg.pppoeProfile, comment: id });
+            pppoeUsernameToSave = normalizedNewPppoeUsername;
+            await syncPppoeCacheComment(connection, pppoeUsernameToSave, id);
+            await syncPppoeCacheProfile(connection, pppoeUsernameToSave, pkg.pppoeProfile);
+        }
+        
+        if (pppoeUsernameToSave !== oldCustomer.pppoeUsername) {
+            if (oldCustomer.pppoeUsername) {
+                await mikrotikApi.updatePppoeUserCommentByName(oldCustomer.pppoeUsername, '');
+                await syncPppoeCacheComment(connection, oldCustomer.pppoeUsername, '');
+            }
+            if (pppoeUsernameToSave) {
+                const [[otherCustomer]] = await connection.query('SELECT id FROM customers WHERE pppoeUsername = ? AND id != ?', [pppoeUsernameToSave, id]);
+                if (otherCustomer) await connection.query('UPDATE customers SET pppoeUsername = NULL WHERE id = ?', [otherCustomer.id]);
+                await mikrotikApi.updatePppoeUserCommentByName(pppoeUsernameToSave, id);
+                await syncPppoeCacheComment(connection, pppoeUsernameToSave, id);
+            }
+        } else if (pppoeUsernameToSave) {
+            await mikrotikApi.updatePppoeUserCommentByName(pppoeUsernameToSave, id);
+            await syncPppoeCacheComment(connection, pppoeUsernameToSave, id);
+        }
+
+        const packageChanged = customerData.packageId && customerData.packageId !== oldCustomer.packageId;
+        if (packageChanged && pppoeUsernameToSave) {
+            console.log(`[Customer Update] Package changed for customer ${id}. Updating MikroTik profile.`);
+            const [[newPackage]] = await connection.query('SELECT pppoeProfile FROM packages WHERE id = ?', [customerData.packageId]);
+            if (newPackage && newPackage.pppoeProfile) {
+                const pppoeUsers = await mikrotikApi.fetchPppoeUsers();
+                const pppoeUserOnRouter = pppoeUsers.find(u => normalizePppoeUsername(u.name) === pppoeUsernameToSave);
+                if (pppoeUserOnRouter) {
+                    await mikrotikApi.updatePppoeUser(pppoeUserOnRouter.id, { profile: newPackage.pppoeProfile });
+                    await syncPppoeCacheProfile(connection, pppoeUsernameToSave, newPackage.pppoeProfile);
+                    await mikrotikApi.reconnectPppoeUser(pppoeUsernameToSave);
+                } else {
+                    console.warn(`[Customer Update] Could not find PPPoE user ${pppoeUsernameToSave} on router.`);
+                }
+            }
+        }
+
+        const normalizedBillingType = normalizeBillingType(customerData.billing_type ?? oldCustomer.billing_type);
+        const nextBillingStart = Object.prototype.hasOwnProperty.call(customerData, 'nextBillingStart')
+            ? normalizeNextBillingStart(customerData.nextBillingStart, normalizedBillingType)
+            : oldCustomer.nextBillingStart;
+
+        const customerToUpdate = {
+            name: customerData.name,
+            nik: customerData.nik || null,
+            address: customerData.address,
+            phone: customerData.phone,
+            email: customerData.email,
+            packageId: customerData.packageId,
+            status: customerData.status,
+            location: customerData.location ? JSON.stringify(customerData.location) : null,
+            odpId: customerData.odpId || null,
+            pppoeUsername: pppoeUsernameToSave,
+            activeDate: customerData.activeDate ? customerData.activeDate.replace('T', ' ') : new Date(),
+            acsSerialNumber: customerData.acsSerialNumber || null,
+            billing_type: normalizedBillingType,
+            nextBillingStart: nextBillingStart,
+        };
+        
+        await connection.query('UPDATE customers SET ? WHERE id = ?', [customerToUpdate, id]);
+        
+        const settings = await getSettings();
+        await syncBonusVoucher({ ...customerToUpdate, id }, settings);
+        
+        const oldStatus = (oldCustomer.status || '').trim();
+        const newStatus = (customerData.status || '').trim();
+
+        if (newStatus && newStatus !== oldStatus) {
+            const suspensionProfile = settings.billing.suspensionProfileName;
+            const { username: linkedPppoeUsername, routerUser: pppoeUserOnRouter } = await resolveCustomerPppoeLink(
+                connection,
+                { id, pppoeUsername: pppoeUsernameToSave }
+            );
+            if (pppoeUserOnRouter) {
+                 if (newStatus === 'Inactive') {
+                    await mikrotikApi.disablePppoeUser(pppoeUserOnRouter.id);
+                    await connection.query('UPDATE customers SET previousPppoeProfile = ? WHERE id = ?', [pppoeUserOnRouter.profile, id]);
+                } else if (newStatus === 'Suspended') {
+                    if (!suspensionProfile) throw new Error('Suspension profile name is not configured in settings.');
+                    await mikrotikApi.enablePppoeUser(pppoeUserOnRouter.id);
+                    await connection.query('UPDATE customers SET previousPppoeProfile = ? WHERE id = ?', [pppoeUserOnRouter.profile, id]);
+                    await mikrotikApi.updatePppoeUser(pppoeUserOnRouter.id, { profile: suspensionProfile });
+                    await syncPppoeCacheProfile(connection, linkedPppoeUsername, suspensionProfile);
+                    await mikrotikApi.reconnectPppoeUser(linkedPppoeUsername);
+                } else if (newStatus === 'Active') {
+                    await mikrotikApi.enablePppoeUser(pppoeUserOnRouter.id);
+                    let targetProfile = String(oldCustomer.previousPppoeProfile || '').trim();
+                    if (!targetProfile) {
+                        const [[pkgForRestore]] = await connection.query('SELECT pppoeProfile FROM packages WHERE id = ?', [customerData.packageId || oldCustomer.packageId]);
+                        targetProfile = String(pkgForRestore?.pppoeProfile || '').trim();
+                    }
+                    if (targetProfile) {
+                        await mikrotikApi.updatePppoeUser(pppoeUserOnRouter.id, { profile: targetProfile });
+                        await syncPppoeCacheProfile(connection, linkedPppoeUsername, targetProfile);
+                    }
+                    await connection.query('UPDATE customers SET previousPppoeProfile = NULL WHERE id = ?', [id]);
+                    await mikrotikApi.reconnectPppoeUser(linkedPppoeUsername);
+                }
+            }
+        }
+
+        await connection.commit();
+        if (createNewPppoe) {
+            acsPppoeSync = await pushCustomerPppoeToAcs({
+                customerId: id,
+                pppoeUsername: newPppoeUsername,
+                pppoePassword: newPppoePassword,
+            });
+            if (!acsPppoeSync.success && !acsPppoeSync.skipped) {
+                console.warn(`[Customer Update] ACS PPPoE push failed for ${id}:`, acsPppoeSync);
+            }
+        }
+
+        if (newStatus && newStatus !== oldStatus) {
+            if (settings.billing.whatsappNotificationsEnabled && customerToUpdate.phone) {
+                let template = null; let logType = '';
+                if (newStatus === 'Active' && (oldStatus === 'Suspended' || oldStatus === 'Inactive')) { template = settings.whatsapp.accountReactivated; logType = 'Account Reactivated (Manual)'; }
+                else if (newStatus === 'Suspended') { template = settings.whatsapp.accountSuspended; logType = 'Account Suspended (Manual)'; }
+                else if (newStatus === 'Inactive') { template = settings.whatsapp.accountDeactivated; logType = 'Account Deactivated (Manual)'; }
+                if (template) {
+                    const [[pkg]] = await pool.query('SELECT name FROM packages WHERE id = ?', [customerToUpdate.packageId]);
+                    const message = replacePlaceholders(template, { customerName: customerToUpdate.name, customerId: id, packageName: pkg?.name || 'N/A' });
+                    const waResult = await whatsappService.sendMessage(customerToUpdate.phone, message);
+                    await pool.query('INSERT INTO whatsapp_logs SET ?', { recipient_number: customerToUpdate.phone, customer_id: id, message_body: message, status: waResult.success ? 'sent' : 'failed', type: logType, error_message: waResult.error || null });
+                }
+            }
+        }
+
+        res.json({ ...customerToUpdate, id, acsPppoeSync });
+
+    } catch (e) {
+        if (connection) await connection.rollback();
+        console.error("Error updating customer:", e);
+        res.status(500).json({ message: e.message || 'Error updating customer' });
+    } finally {
+        if (connection) connection.release();
+    }
+});
+
+
+router.delete('/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        
+        const [[customer]] = await pool.query('SELECT pppoeUsername FROM customers WHERE id = ?', [id]);
+        if (customer && customer.pppoeUsername) {
+            await mikrotikApi.updatePppoeUserCommentByName(customer.pppoeUsername, '');
+            await syncPppoeCacheComment(pool, customer.pppoeUsername, '');
+        }
+
+        // --- Delete Bonus Hotspot User ---
+        const settings = await getSettings();
+        if (settings.billing.bonusVoucherProfile) {
+            const voucherPrefix = settings.billing.bonusVoucherPrefix || 'bonus-';
+            const bonusUsername = `${voucherPrefix}${id.slice(-4)}`;
+            
+            try {
+                const routerHotspotUsers = await mikrotikApi.fetchHotspotUsers();
+                const bonusUser = routerHotspotUsers.find(u => u.name === bonusUsername);
+                if (bonusUser) {
+                    await mikrotikApi.deleteHotspotUser(bonusUser.id);
+                    console.log(`[Customer Delete] Deleted bonus hotspot user ${bonusUsername}.`);
+                }
+            } catch (mikrotikError) {
+                console.warn(`[Customer Delete] Could not delete bonus voucher ${bonusUsername} from router. It may not exist or the router may be offline. Error: ${mikrotikError.message}`);
+            }
+        }
+
+
+        await pool.query('DELETE FROM customers WHERE id = ?', [id]);
+        res.status(204).send();
+    } catch (e) {
+        console.error("Error deleting customer:", e);
+        res.status(500).json({ message: e.message || 'Error deleting customer' });
+    }
+});
+
+// Endpoint baru untuk memperbarui ID pelanggan (kunci primer)
+router.put('/:id/update-id', async (req, res) => {
+    const { id: oldId } = req.params;
+    const { newId } = req.body;
+    let connection;
+
+    if (!newId || newId.trim() === '') {
+        return res.status(400).json({ message: 'New Customer ID cannot be empty.' });
+    }
+
+    try {
+        connection = await pool.getConnection();
+        await connection.beginTransaction();
+
+        const [[existingCustomer]] = await connection.query('SELECT id FROM customers WHERE id = ?', [newId]);
+        if (existingCustomer) {
+            throw new Error(`Customer ID "${newId}" already exists.`);
+        }
+
+        const [[customerToUpdate]] = await connection.query('SELECT pppoeUsername FROM customers WHERE id = ?', [oldId]);
+
+        // Nonaktifkan sementara pemeriksaan foreign key untuk memungkinkan pembaruan kunci primer
+        await connection.query('SET FOREIGN_KEY_CHECKS=0');
+
+        // Perbarui semua tabel anak terlebih dahulu
+        await connection.query('UPDATE invoices SET customerId = ? WHERE customerId = ?', [newId, oldId]);
+        await connection.query('UPDATE payments SET customerId = ? WHERE customerId = ?', [newId, oldId]);
+        await connection.query('UPDATE complaints SET customerId = ? WHERE customerId = ?', [newId, oldId]);
+        await connection.query('UPDATE whatsapp_logs SET customer_id = ? WHERE customer_id = ?', [newId, oldId]);
+        await connection.query('UPDATE package_changes SET customer_id = ? WHERE customer_id = ?', [newId, oldId]);
+
+        // Perbarui tabel pelanggan utama
+        await connection.query('UPDATE customers SET id = ? WHERE id = ?', [newId, oldId]);
+
+        // Perbarui komentar di MikroTik dan tabel pppoe_users jika ada
+        if (customerToUpdate && customerToUpdate.pppoeUsername) {
+            await connection.query('UPDATE pppoe_users SET comment = ? WHERE comment = ?', [newId, oldId]);
+            await mikrotikApi.updatePppoeUserCommentByName(customerToUpdate.pppoeUsername, newId);
+            await syncPppoeCacheComment(connection, customerToUpdate.pppoeUsername, newId);
+        }
+
+        // Aktifkan kembali pemeriksaan foreign key
+        await connection.query('SET FOREIGN_KEY_CHECKS=1');
+
+        await connection.commit();
+        res.json({ success: true, message: `Customer ID successfully updated from ${oldId} to ${newId}.` });
+
+    } catch (error) {
+        if (connection) {
+            await connection.query('SET FOREIGN_KEY_CHECKS=1'); // Pastikan untuk mengaktifkan kembali jika terjadi kesalahan
+            await connection.rollback();
+        }
+        console.error("Error updating customer ID:", error);
+        res.status(500).json({ message: error.message || 'An internal server error occurred.' });
+    } finally {
+        if (connection) connection.release();
+    }
+});
+
+
+// --- NEW ENDPOINT for customer to edit their own profile ---
+router.put('/:id/profile', async (req, res) => {
+    const { id } = req.params;
+    const { phone, address, location } = req.body;
+    
+    // Basic validation
+    if (!phone || !address) {
+        return res.status(400).json({ message: 'Phone and address are required.' });
+    }
+
+    // Security check: Make sure the logged-in user can only edit their own profile.
+    // The user ID from the JWT should match the ID in the URL parameter.
+    if (req.user.role === 'customer' && req.user.id !== id) {
+        return res.status(403).json({ message: 'Forbidden: You can only edit your own profile.' });
+    }
+
+    try {
+        const profileData = {
+            phone,
+            address,
+            location: location ? JSON.stringify(location) : null,
+        };
+
+        const [result] = await pool.query('UPDATE customers SET ? WHERE id = ?', [profileData, id]);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: 'Customer not found.' });
+        }
+        
+        // After updating, fetch the complete customer data to create a new token
+        const [[updatedCustomer]] = await pool.query('SELECT * FROM customers WHERE id = ?', [id]);
+        if (!updatedCustomer) {
+            return res.status(404).json({ message: 'Could not retrieve updated customer data.' });
+        }
+
+        // Create the payload for the new JWT
+        const customerPayload = {
+            id: updatedCustomer.id,
+            name: updatedCustomer.name,
+            address: updatedCustomer.address,
+            phone: updatedCustomer.phone,
+            email: updatedCustomer.email,
+            packageId: updatedCustomer.packageId,
+            status: updatedCustomer.status,
+            pppoeUsername: updatedCustomer.pppoeUsername,
+            acsSerialNumber: updatedCustomer.acsSerialNumber,
+            role: 'customer'
+        };
+
+        // Sign the new token
+        const token = jwt.sign(customerPayload, process.env.JWT_SECRET, { expiresIn: '7d' });
+        
+        // Send the new token back to the frontend
+        res.json({ success: true, message: 'Profile updated successfully.', token: token });
+
+    } catch (error) {
+        console.error(`Error updating profile for customer ${id}:`, error);
+        res.status(500).json({ message: 'An internal server error occurred while updating your profile.' });
+    }
+});
+
+
+// --- Package Change Endpoints ---
+router.get('/:id/package-change', async (req, res) => {
+    try {
+        const [[pendingChange]] = await pool.query(
+            `SELECT 
+                pc.id, 
+                pc.customer_id, 
+                pc.new_package_id, 
+                pc.status, 
+                pc.created_at, 
+                pc.processed_at, 
+                p.name AS new_package_name 
+             FROM package_changes pc 
+             JOIN packages p ON pc.new_package_id = p.id 
+             WHERE pc.customer_id = ? AND pc.status = 'pending' LIMIT 1`,
+            [req.params.id]
+        );
+        res.json(pendingChange || null);
+    } catch (e) {
+        console.error("Error fetching pending package change:", e);
+        res.status(500).json({ message: 'Error fetching package change status.' });
+    }
+});
+
+router.post('/:id/package-change', async (req, res) => {
+    try {
+        const { id: customer_id } = req.params;
+        const { new_package_id } = req.body;
+        
+        const [[customer]] = await pool.query('SELECT packageId FROM customers WHERE id = ?', [customer_id]);
+        if (!customer) return res.status(404).json({ message: 'Customer not found.' });
+        if (customer.packageId == new_package_id) return res.status(400).json({ message: 'You are already subscribed to this package.' });
+
+        // Using INSERT ... ON DUPLICATE KEY UPDATE to handle existing pending requests atomically
+        // This requires a UNIQUE key on (customer_id, status)
+        await pool.query(
+            `INSERT INTO package_changes (customer_id, new_package_id, status) 
+             VALUES (?, ?, 'pending') 
+             ON DUPLICATE KEY UPDATE new_package_id = VALUES(new_package_id)`,
+            [customer_id, new_package_id]
+        );
+        
+        res.status(201).json({ success: true, message: 'Package change scheduled successfully.' });
+    } catch (e) {
+        console.error("Error scheduling package change:", e);
+        res.status(500).json({ message: 'Error scheduling package change.' });
+    }
+});
+
+router.delete('/:id/package-change', async (req, res) => {
+    try {
+        const { id: customer_id } = req.params;
+        // FIX: Delete the pending request instead of updating its status to 'cancelled'.
+        // This avoids a unique key constraint violation if a 'cancelled' record for the customer already exists.
+        const [result] = await pool.query(
+            "DELETE FROM package_changes WHERE customer_id = ? AND status = 'pending'",
+            [customer_id]
+        );
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: 'No pending package change found to cancel.' });
+        }
+        res.json({ success: true, message: 'Your package change request has been cancelled.' });
+    } catch (e) {
+        console.error("Error cancelling package change:", e);
+        res.status(500).json({ message: 'Error cancelling package change.' });
+    }
+});
+
+
+// --- Complaints ---
+router.get('/complaints', async (req, res) => {
+    try {
+        const { customerId } = req.query;
+        let query = 'SELECT * FROM complaints';
+        const params = [];
+
+        if (customerId) {
+            query += ' WHERE customerId = ?';
+            params.push(customerId);
+        }
+        query += ' ORDER BY dateSubmitted DESC';
+
+        const [rows] = await pool.query(query, params);
+        const formattedRows = rows.map(c => {
+            const parseJsonField = (jsonString) => {
+                if (!jsonString) return [];
+                try {
+                    const parsed = typeof jsonString === 'string' ? JSON.parse(jsonString) : jsonString;
+                    return Array.isArray(parsed) ? parsed : [];
+                } catch (e) {
+                    console.error(`Failed to parse JSON field for complaint ${c.id}:`, e);
+                    return [];
+                }
+            }
+
+            return {
+                ...c,
+                dateSubmitted: dbDateToISO(c.dateSubmitted),
+                replies: parseJsonField(c.replies).map(r => ({ ...r, createdAt: dbDateToISO(r.createdAt) })),
+                photos: parseJsonField(c.photos),
+            };
+        });
+        res.json(formattedRows);
+    } catch (e) {
+        console.error(`Error in GET /complaints:`, e);
+        res.status(500).send('Error reading complaints data');
+    }
+});
+
+router.post('/complaints', upload.single('photo'), async (req, res) => {
+    try {
+        const { customerId, type, description } = req.body;
+        const photoFile = req.file;
+
+        const [[customer]] = await pool.query('SELECT c.name, c.phone, p.name as packageName FROM customers c LEFT JOIN packages p ON c.packageId = p.id WHERE c.id = ?', [customerId]);
+        if (!customer) {
+            if (photoFile) fs.unlinkSync(photoFile.path);
+            return res.status(404).json({ message: 'Submitting customer not found.' });
+        }
+        
+        const settings = await getSettings();
+        let photos = [];
+        if (photoFile) {
+            // The URL path should be relative to how it's served by the server
+            const photoUrl = `/uploads/${photoFile.filename}`;
+            photos.push(photoUrl);
+        }
+
+        const newComplaint = {
+            id: `TICKET-${Date.now()}`,
+            customerId,
+            customerName: customer.name,
+            dateSubmitted: toMySQLDatetime(new Date(), settings.app.timezone),
+            type,
+            description,
+            status: 'Pending',
+            replies: '[]',
+            photos: JSON.stringify(photos),
+        };
+
+        await pool.query('INSERT INTO complaints SET ?', newComplaint);
+        
+        // const settings = await getSettings(); // Already fetched
+        if (settings.whatsapp?.adminPhoneNumber && settings.whatsapp?.newComplaintNotification) {
+            const message = replacePlaceholders(settings.whatsapp.newComplaintNotification, {
+                customerName: newComplaint.customerName,
+                customerId: newComplaint.customerId,
+                customerPhone: customer.phone,
+                packageName: customer.packageName || 'N/A',
+                complaintType: newComplaint.type,
+                description: newComplaint.description,
+            });
+            const result = await whatsappService.sendMessage(settings.whatsapp.adminPhoneNumber, message);
+            await pool.query('INSERT INTO whatsapp_logs SET ?', {
+                recipient_number: settings.whatsapp.adminPhoneNumber,
+                customer_id: newComplaint.customerId,
+                message_body: message,
+                status: result.success ? 'sent' : 'failed',
+                type: 'Admin Complaint Notification',
+                error_message: result.error || null,
+            });
+        }
+
+        res.status(201).json(newComplaint);
+    } catch (e) {
+        console.error("Error creating complaint:", e);
+        if (req.file) fs.unlinkSync(req.file.path);
+        res.status(500).json({ message: 'Error creating complaint' });
+    }
+});
+
+router.put('/complaints/:id', async (req, res) => {
+    const { id } = req.params;
+    const { status, assignedTo } = req.body;
+
+    try {
+        // 1. Get the current state of the complaint BEFORE updating
+        const [[oldComplaint]] = await pool.query('SELECT * FROM complaints WHERE id = ?', [id]);
+        if (!oldComplaint) {
+            return res.status(404).json({ message: 'Complaint not found.' });
+        }
+
+        // 2. Prepare the update payload
+        const fieldsToUpdate = {};
+        if (status) fieldsToUpdate.status = status;
+        if (typeof assignedTo !== 'undefined') fieldsToUpdate.assignedTo = assignedTo || null;
+
+        // 3. Perform the database update if there are changes
+        if (Object.keys(fieldsToUpdate).length > 0) {
+            await pool.query('UPDATE complaints SET ? WHERE id = ?', [fieldsToUpdate, id]);
+        }
+
+        // 4. Check if a technician was newly assigned and send notification
+        if (assignedTo && assignedTo !== oldComplaint.assignedTo) {
+            console.log(`[Notification] New assignment detected for complaint ${id} to technician ${assignedTo}`);
+            const settings = await getSettings();
+            
+            if (settings.billing.whatsappNotificationsEnabled && settings.whatsapp.technicianTaskAssignment) {
+                const [[technician]] = await pool.query('SELECT username, phone FROM users WHERE id = ? AND role = "technician"', [assignedTo]);
+                
+                if (technician && technician.phone) {
+                    const [[complaintDetails]] = await pool.query('SELECT co.*, cu.name as customerName, cu.address as customerAddress FROM complaints co JOIN customers cu ON co.customerId = cu.id WHERE co.id = ?', [id]);
+                    
+                    const message = replacePlaceholders(settings.whatsapp.technicianTaskAssignment, {
+                        technicianName: technician.username,
+                        ticketId: complaintDetails.id,
+                        customerName: complaintDetails.customerName,
+                        customerAddress: complaintDetails.customerAddress,
+                        complaintType: complaintDetails.type,
+                        complaintDescription: complaintDetails.description,
+                    });
+
+                    const waResult = await whatsappService.sendMessage(technician.phone, message);
+                    
+                    await pool.query('INSERT INTO whatsapp_logs SET ?', {
+                        recipient_number: technician.phone,
+                        customer_id: null,
+                        message_body: message,
+                        status: waResult.success ? 'sent' : 'failed',
+                        type: 'Technician Assignment',
+                        error_message: waResult.error || null,
+                    });
+                } else {
+                    console.warn(`[Notification] Could not send assignment notification for complaint ${id}: Technician ${assignedTo} not found or has no phone number.`);
+                }
+            }
+        }
+
+        const [[updatedComplaint]] = await pool.query('SELECT * FROM complaints WHERE id = ?', [id]);
+        res.json(updatedComplaint);
+
+    } catch (e) {
+        console.error("Error updating complaint:", e);
+        res.status(500).json({ message: 'Error updating complaint' });
+    }
+});
+
+router.post('/complaints/:id/reply', upload.single('photo'), async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { replyText, repliedBy } = req.body;
+        const photoFile = req.file;
+        const settings = await getSettings();
+
+        // Allow replies with only a photo
+        if ((!replyText || !replyText.trim()) && !photoFile) {
+            return res.status(400).json({ message: 'Reply must contain text or a photo.' });
+        }
+         if (!repliedBy) {
+            if (photoFile) fs.unlinkSync(photoFile.path);
+            return res.status(400).json({ message: 'Replier identity is required.' });
+        }
+
+
+        const [[complaint]] = await pool.query('SELECT replies, customerId FROM complaints WHERE id = ?', [id]);
+        if (!complaint) {
+            if (photoFile) fs.unlinkSync(photoFile.path);
+            return res.status(404).json({ message: 'Complaint not found.' });
+        }
+
+        const [users] = await pool.query('SELECT role FROM users WHERE username = ?', [repliedBy]);
+        const user = users[0];
+        const senderType = (user && (user.role === 'admin' || user.role === 'technician' || user.role === 'reseller')) ? 'admin' : 'customer';
+
+        let replies = [];
+        try {
+            if (complaint.replies) {
+                replies = JSON.parse(complaint.replies);
+            }
+        } catch (e) {
+            console.error(`Could not parse replies for complaint ${id}. Starting fresh. Error:`, e);
+            replies = [];
+        }
+        
+        const newReply = {
+            id: `REP-${Date.now()}`,
+            senderType: senderType,
+            senderName: repliedBy,
+            replyText: replyText || '',
+            createdAt: toMySQLDatetime(new Date(), settings.app.timezone),
+            photos: [],
+        };
+
+        if (photoFile) {
+            const photoUrl = `/uploads/${photoFile.filename}`;
+            newReply.photos.push(photoUrl);
+        }
+
+        replies.push(newReply);
+
+        await pool.query('UPDATE complaints SET replies = ? WHERE id = ?', [JSON.stringify(replies), id]);
+
+        res.status(201).json(newReply);
+    } catch (e) {
+        console.error("Error adding complaint reply:", e);
+        if (req.file) {
+            fs.unlink(req.file.path, (err) => {
+                if (err) console.error("Error deleting temp file on reply failure:", err);
+            });
+        }
+        res.status(500).json({ message: 'Error adding reply.' });
+    }
+});
+
+router.post('/complaints/bulk-delete', async (req, res) => {
+    const { ids } = req.body;
+    if (!Array.isArray(ids) || ids.length === 0) {
+        return res.status(400).json({ message: 'An array of complaint IDs is required.' });
+    }
+
+    try {
+        const [result] = await pool.query('DELETE FROM complaints WHERE id IN (?)', [ids]);
+        if (result.affectedRows === 0) {
+            console.warn(`Bulk delete requested for ${ids.length} complaints, but none were found/deleted.`);
+        }
+        res.json({ success: true, message: `${result.affectedRows} complaint(s) deleted successfully.` });
+    } catch (error) {
+        console.error("Error during bulk complaint deletion:", error);
+        res.status(500).json({ message: 'An error occurred while deleting complaints.' });
+    }
+});
+
+
+// --- Bulk Actions ---
+router.post('/bulk-status', async (req, res) => {
+    const { ids, status } = req.body;
+    if (!Array.isArray(ids) || ids.length === 0 || !['Active', 'Suspended', 'Inactive', 'Unregister'].includes(status)) {
+        return res.status(400).json({ message: 'A valid status and an array of customer IDs are required.' });
+    }
+
+    try {
+        const settings = await getSettings();
+        const suspensionProfile = settings.billing.suspensionProfileName;
+        
+        if (status === 'Suspended' && !suspensionProfile) {
+             return res.status(400).json({ message: 'Suspension profile name is not configured in settings.' });
+        }
+        
+        const [customers] = await pool.query('SELECT id, pppoeUsername, status, previousPppoeProfile, packageId FROM customers WHERE id IN (?)', [ids]);
+        const routerUsers = await mikrotikApi.fetchPppoeUsers();
+
+        for (const customer of customers) {
+            const { username: linkedPppoeUsername, routerUser: pppoeUser } = await resolveCustomerPppoeLink(pool, customer, routerUsers);
+            if (!pppoeUser) continue;
+
+            if (status === 'Suspended' && customer.status !== 'Suspended') {
+                await pool.query('UPDATE customers SET status = ?, previousPppoeProfile = ? WHERE id = ?', [status, pppoeUser.profile, customer.id]);
+                await mikrotikApi.updatePppoeUser(pppoeUser.id, { profile: suspensionProfile });
+                await syncPppoeCacheProfile(pool, linkedPppoeUsername, suspensionProfile);
+                await mikrotikApi.reconnectPppoeUser(linkedPppoeUsername);
+            } else if (status === 'Active' && customer.status === 'Suspended') {
+                let targetProfile = String(customer.previousPppoeProfile || '').trim();
+                if (!targetProfile) {
+                    const [[pkg]] = await pool.query('SELECT pppoeProfile FROM packages WHERE id = ?', [customer.packageId]);
+                    targetProfile = String(pkg?.pppoeProfile || '').trim();
+                }
+                if (targetProfile) {
+                    await mikrotikApi.updatePppoeUser(pppoeUser.id, { profile: targetProfile });
+                    await syncPppoeCacheProfile(pool, linkedPppoeUsername, targetProfile);
+                    await mikrotikApi.reconnectPppoeUser(linkedPppoeUsername);
+                }
+                await pool.query('UPDATE customers SET status = ?, previousPppoeProfile = NULL WHERE id = ?', [status, customer.id]);
+            } else {
+                 await pool.query('UPDATE customers SET status = ? WHERE id = ?', [status, customer.id]);
+            }
+        }
+        
+        res.json({ success: true, message: `Updated ${ids.length} customers to ${status}.` });
+    } catch (e) {
+        console.error('Error in bulk status update:', e);
+        res.status(500).json({ message: e.message || 'Server error during bulk status update.' });
+    }
+});
+
+router.post('/repair-pppoe-links', async (req, res) => {
+    try {
+        const [customers] = await pool.query('SELECT id, pppoeUsername FROM customers');
+        const routerUsers = await mikrotikApi.fetchPppoeUsers();
+
+        const routerByUsername = new Map();
+        const routerByComment = new Map();
+
+        for (const user of routerUsers) {
+            const username = normalizePppoeUsername(user.name);
+            const comment = normalizeCustomerId(user.comment);
+            if (username && !routerByUsername.has(username)) {
+                routerByUsername.set(username, user);
+            }
+            if (comment && !routerByComment.has(comment)) {
+                routerByComment.set(comment, user);
+            }
+        }
+
+        let fixedUsernameCount = 0;
+        let fixedCommentCount = 0;
+        let notFoundOnRouterCount = 0;
+        let skippedConflictCount = 0;
+        const seenUsernames = new Set();
+
+        for (const customer of customers) {
+            const customerId = normalizeCustomerId(customer.id);
+            const storedUsername = normalizePppoeUsername(customer.pppoeUsername);
+            let routerUser = storedUsername ? routerByUsername.get(storedUsername) : null;
+
+            if (!routerUser && customerId) {
+                routerUser = routerByComment.get(customerId) || null;
+                const resolvedUsername = normalizePppoeUsername(routerUser?.name);
+                if (resolvedUsername && resolvedUsername !== storedUsername) {
+                    await pool.query('UPDATE customers SET pppoeUsername = ? WHERE id = ?', [resolvedUsername, customerId]);
+                    fixedUsernameCount += 1;
+                }
+            }
+
+            const resolvedUsername = normalizePppoeUsername(routerUser?.name);
+            if (!resolvedUsername || !routerUser) {
+                notFoundOnRouterCount += 1;
+                continue;
+            }
+
+            if (seenUsernames.has(resolvedUsername) && storedUsername !== resolvedUsername) {
+                skippedConflictCount += 1;
+                continue;
+            }
+            seenUsernames.add(resolvedUsername);
+
+            const currentComment = normalizeCustomerId(routerUser.comment);
+            if (customerId && currentComment !== customerId) {
+                await mikrotikApi.updatePppoeUserCommentByName(resolvedUsername, customerId);
+                fixedCommentCount += 1;
+            }
+            await syncPppoeCacheComment(pool, resolvedUsername, customerId);
+        }
+
+        res.json({
+            success: true,
+            message: 'PPPoE link repair completed.',
+            fixedUsernameCount,
+            fixedCommentCount,
+            notFoundOnRouterCount,
+            skippedConflictCount,
+            totalCustomers: customers.length,
+            totalRouterUsers: routerUsers.length,
+        });
+    } catch (error) {
+        console.error('Error repairing PPPoE links:', error);
+        res.status(500).json({ message: error.message || 'Failed to repair PPPoE links.' });
+    }
+});
+
+router.post('/bulk-delete', async (req, res) => {
+    const { ids } = req.body;
+    if (!Array.isArray(ids) || ids.length === 0) {
+        return res.status(400).json({ message: 'An array of customer IDs is required.' });
+    }
+    try {
+        // --- 1. Unlink PPPoE comments ---
+        const [customers] = await pool.query('SELECT pppoeUsername FROM customers WHERE id IN (?)', [ids]);
+        for (const customer of customers) {
+            if (customer.pppoeUsername) {
+                await mikrotikApi.updatePppoeUserCommentByName(customer.pppoeUsername, '');
+                await syncPppoeCacheComment(pool, customer.pppoeUsername, '');
+            }
+        }
+        
+        // --- 2. Delete Bonus Vouchers ---
+        const settings = await getSettings();
+        if (settings.billing.bonusVoucherProfile) {
+            const voucherPrefix = settings.billing.bonusVoucherPrefix || 'bonus-';
+            try {
+                const routerHotspotUsers = await mikrotikApi.fetchHotspotUsers();
+                for (const id of ids) {
+                    const bonusUsername = `${voucherPrefix}${id.slice(-4)}`;
+                    const bonusUser = routerHotspotUsers.find(u => u.name === bonusUsername);
+                    if (bonusUser) {
+                        await mikrotikApi.deleteHotspotUser(bonusUser.id);
+                        console.log(`[Customer Bulk Delete] Deleted bonus hotspot user ${bonusUsername}.`);
+                    }
+                }
+            } catch (mikrotikError) {
+                console.warn(`[Customer Bulk Delete] An error occurred while trying to delete bonus vouchers from the router. The process will continue. Error: ${mikrotikError.message}`);
+            }
+        }
+
+        // --- 3. Delete Customers from DB ---
+        await pool.query('DELETE FROM customers WHERE id IN (?)', [ids]);
+        res.json({ success: true, message: `${ids.length} customers deleted.` });
+    } catch (e) {
+        console.error('Error in bulk delete:', e);
+        res.status(500).json({ message: e.message || 'Server error during bulk delete.' });
+    }
+});
+
+router.post('/bulk-whatsapp', async (req, res) => {
+    const { ids, message } = req.body;
+     if (!Array.isArray(ids) || ids.length === 0 || !message) {
+        return res.status(400).json({ success: false, message: 'Customer IDs and a message are required.' });
+    }
+
+    try {
+        const settings = await getSettings();
+        whatsappService.applySettings(settings);
+        const [targetCustomers] = await pool.query('SELECT phone, name, id FROM customers WHERE id IN (?) AND phone IS NOT NULL AND phone != ""', [ids]);
+
+        if (targetCustomers.length === 0) {
+            return res.json({ success: true, message: 'No selected customers have a valid phone number.' });
+        }
+
+        let sentCount = 0;
+        for (const customer of targetCustomers) {
+            const personalizedMessage = replacePlaceholders(message, { customerName: customer.name, customerId: customer.id });
+            const result = await whatsappService.sendMessage(customer.phone, personalizedMessage);
+            await pool.query('INSERT INTO whatsapp_logs SET ?', {
+                recipient_number: customer.phone,
+                customer_id: customer.id,
+                message_body: personalizedMessage,
+                status: result.success ? 'sent' : 'failed',
+                type: 'Bulk Message',
+                error_message: result.error || null,
+            });
+            if(result.success) sentCount++;
+            await new Promise(resolve => setTimeout(resolve, Math.random() * 800 + 300));
+        }
+        res.json({ success: true, message: `Message sent to ${sentCount} out of ${ids.length} selected customers.` });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message || 'An unexpected error occurred during bulk messaging.' });
+    }
+});
+
+router.post('/import', async (req, res) => {
+    const customers = req.body;
+    if (!Array.isArray(customers) || customers.length === 0) {
+        return res.status(400).json({ message: 'No customer data provided.' });
+    }
+
+    const connection = await pool.getConnection();
+    try {
+        await connection.beginTransaction();
+        
+        const settings = await getSettings();
+        const prefix = settings.app.customerIdPrefix || 'CUS';
+
+        let insertedCount = 0;
+        let updatedCount = 0;
+
+        for (const customer of customers) {
+            // Use the consistent ID generation logic here
+            const customerId = customer.id || generateNewCustomerId(prefix);
+
+            const latValue = customer.lat ?? customer.location?.lat;
+            const lngValue = customer.lng ?? customer.location?.lng;
+            const hasLat = latValue !== undefined && latValue !== null && latValue !== '';
+            const hasLng = lngValue !== undefined && lngValue !== null && lngValue !== '';
+            const parsedLat = hasLat ? parseFloat(latValue) : null;
+            const parsedLng = hasLng ? parseFloat(lngValue) : null;
+            const hasValidLocation = parsedLat !== null && !Number.isNaN(parsedLat) && parsedLng !== null && !Number.isNaN(parsedLng);
+
+            const parsedPackageId = customer.packageId !== undefined && customer.packageId !== null ? parseInt(customer.packageId) : null;
+            const voucherBalanceRaw = customer.voucher_balance ?? customer.voucherBalance;
+            const parsedVoucherBalance = voucherBalanceRaw !== undefined && voucherBalanceRaw !== null && voucherBalanceRaw !== '' ? parseFloat(voucherBalanceRaw) : 0;
+
+            const customerData = {
+                id: customerId,
+                name: customer.name,
+                nik: customer.nik || null,
+                address: customer.address || null,
+                phone: customer.phone,
+                email: customer.email || null,
+                packageId: Number.isNaN(parsedPackageId) ? null : parsedPackageId,
+                status: customer.status || 'Active',
+                location: hasValidLocation ? JSON.stringify({ lat: parsedLat, lng: parsedLng }) : null,
+                odpId: customer.odpId || null,
+                pppoeUsername: customer.pppoeUsername || null,
+                activeDate: customer.activeDate ? toMySQLDatetime(new Date(customer.activeDate), settings.app.timezone) : toMySQLDatetime(new Date(), settings.app.timezone),
+                acsSerialNumber: customer.acsSerialNumber || null,
+                previousPppoeProfile: customer.previousPppoeProfile || null,
+                voucher_balance: Number.isNaN(parsedVoucherBalance) ? 0 : parsedVoucherBalance,
+                billing_type: customer.billing_type === 'fixed' ? 'fixed' : 'postpaid',
+            };
+
+            // Basic validation
+            if (!customerData.name || !customerData.phone || !customerData.packageId) {
+                console.warn('Skipping invalid customer row:', customer);
+                continue;
+            }
+
+            const columns = Object.keys(customerData).map(c => `\`${c}\``).join(', ');
+            const placeholders = Object.keys(customerData).map(() => '?').join(', ');
+            const values = Object.values(customerData);
+
+            const onUpdateClauses = Object.keys(customerData)
+                .filter(key => key !== 'id')
+                .map(key => `\`${key}\` = VALUES(\`${key}\`)`)
+                .join(', ');
+
+            const query = `INSERT INTO customers (${columns}) VALUES (${placeholders}) ON DUPLICATE KEY UPDATE ${onUpdateClauses}`;
+            
+            const [result] = await connection.query(query, values);
+            
+            // affectedRows is 1 for an insert, 2 for an update, 0 for no change
+            if (result.affectedRows === 1) insertedCount++;
+            if (result.affectedRows === 2) updatedCount++;
+        }
+
+        await connection.commit();
+        res.json({
+            success: true,
+            message: `Import complete. Added ${insertedCount} new customers and updated ${updatedCount} existing customers.`
+        });
+    } catch (error) {
+        await connection.rollback();
+        console.error('Error during customer import:', error);
+        res.status(500).json({ message: 'An error occurred during import. No data was changed.' });
+    } finally {
+        connection.release();
+    }
+});
+
+// --- NEW ENDPOINT FOR LIVE TRAFFIC ---
+router.get('/:id/live-traffic', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const [[customer]] = await pool.query('SELECT pppoeUsername FROM customers WHERE id = ?', [id]);
+        if (!customer || !customer.pppoeUsername) {
+            return res.status(404).json({ error: 'Customer or linked PPPoE user not found.' });
+        }
+        
+        const username = customer.pppoeUsername;
+        const traffic = await mikrotikApi.monitorTrafficForPppoeUser(username);
+        
+        res.json(traffic);
+
+    } catch (error) {
+        console.error(`Error fetching live traffic for customer ${id}:`, error);
+        // Don't send a 500 for a single poll failure, just report it.
+        res.json({ error: 'Failed to retrieve live data from router.', rx: 0, tx: 0 });
+    }
+});
+
+// NEW ENDPOINT for customer portal settings
+router.get('/app-settings', async (req, res) => {
+    try {
+        const settings = await getSettings();
+        // Only expose non-sensitive settings needed for the customer portal (e.g., for PDF generation)
+        const portalSettings = {
+            app: {
+                appName: settings.app.appName,
+                companyAddress: settings.app.companyAddress,
+                companyPhone: settings.app.companyPhone,
+            },
+            billing: { // Juga ekspos taxRate
+                taxRate: settings.billing.taxRate,
+            },
+            video: {
+                enabled: Boolean(settings.video?.enabled && (settings.video?.playlistUrl || settings.video?.playlistText)),
+                title: settings.video?.title || 'TV Channel',
+                playlistUrl: settings.video?.playlistUrl || '',
+                playlistText: settings.video?.playlistText || '',
+                posterUrl: settings.video?.posterUrl || '',
+                description: settings.video?.description || '',
+                autoplay: Boolean(settings.video?.autoplay),
+                loop: Boolean(settings.video?.loop),
+                controls: settings.video?.controls !== false,
+            }
+        };
+        res.json(portalSettings);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching application settings.' });
+    }
+});
+
+router.get('/media-token', async (req, res) => {
+    try {
+        const customerId = req.user?.id;
+        if (!customerId) {
+            return res.status(401).json({ message: 'Unauthorized.' });
+        }
+
+        const token = jwt.sign(
+            { sub: customerId, scope: 'media' },
+            process.env.JWT_SECRET,
+            { expiresIn: '15m' }
+        );
+
+        res.json({ token, expiresInSeconds: 15 * 60 });
+    } catch (error) {
+        console.error('[Customer Media Token] Failed:', error);
+        res.status(500).json({ message: 'Failed to generate media token.' });
+    }
+});
+
+router.get('/playlist-source', async (req, res) => {
+    try {
+        const rawUrl = String(req.query.url || '').trim();
+        if (!rawUrl) {
+            return res.status(400).json({ message: 'URL playlist tidak tersedia.' });
+        }
+
+        if (!/^https?:\/\//i.test(rawUrl)) {
+            return res.status(400).json({ message: 'Hanya URL http(s) yang dapat diproxy.' });
+        }
+
+        const playlistHeaders = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
+            'Accept': '*/*',
+            'Accept-Language': 'en-US,en;q=0.9,id;q=0.8',
+            'Cache-Control': 'no-cache',
+            'Pragma': 'no-cache',
+        };
+
+        const fetchPlaylistText = async (targetUrl) => {
+            const response = await fetch(targetUrl, {
+                headers: playlistHeaders,
+                redirect: 'follow',
+            });
+            const body = await response.text();
+            return { response, body };
+        };
+
+        let { response, body } = await fetchPlaylistText(rawUrl);
+
+        const looksLikePlaylist = body.includes('#EXTINF') || body.includes('#EXTM3U');
+        const looksLikeHtml = /<\s*html/i.test(body) || /<!doctype html/i.test(body);
+
+        if ((!response.ok || !looksLikePlaylist) && looksLikeHtml) {
+            const urlMatches = Array.from(body.matchAll(/https?:\/\/[^\s"'<>]+/gi)).map((match) => match[0]);
+            const fallbackUrl = urlMatches.find((candidate) => candidate !== rawUrl && !candidate.includes('googleapis.com')) || null;
+            if (fallbackUrl) {
+                const retry = await fetchPlaylistText(fallbackUrl);
+                response = retry.response;
+                body = retry.body;
+            }
+        }
+
+        if (!response.ok) {
+            return res.status(response.status).json({ message: `Gagal mengambil playlist (${response.status})` });
+        }
+
+        res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+        res.send(body);
+    } catch (error) {
+        console.error('[Customer Playlist Proxy] Failed:', error);
+        res.status(500).json({ message: error.message || 'Gagal mengambil playlist.' });
+    }
+});
+
+// GET My Bonus Voucher (for logged-in customer)
+router.get('/my-bonus-voucher', async (req, res) => {
+    const customerId = req.user.id;
+    const settings = await getSettings();
+    const voucherPrefix = settings.billing.bonusVoucherPrefix || 'bonus-';
+    const bonusUsername = `${voucherPrefix}${customerId.slice(-4)}`;
+
+    try {
+        const hotspotUsers = await mikrotikApi.fetchHotspotUsers();
+        const bonusVoucher = hotspotUsers.find(u => u.name === bonusUsername);
+        
+        if (!bonusVoucher) {
+            return res.json(null);
+        }
+        
+        // Ensure password is included for display
+        if (!bonusVoucher.password) {
+            bonusVoucher.password = bonusVoucher.name;
+        }
+
+        res.json(bonusVoucher);
+    } catch (e) {
+        console.error(`Error fetching bonus voucher for customer ${customerId}:`, e);
+        res.status(500).json({ message: e.message || "Failed to fetch bonus voucher from router." });
+    }
+});
+
+
+// GET Bonus Voucher for a specific customer (for Admin)
+router.get('/:id/bonus-voucher', async (req, res) => {
+    // Basic role check for security
+    if (req.user.role !== 'admin' && req.user.role !== 'technician' && req.user.role !== 'reseller') {
+        return res.status(403).json({ message: 'Forbidden' });
+    }
+    
+    const { id: customerId } = req.params;
+    const settings = await getSettings();
+    const voucherPrefix = settings.billing.bonusVoucherPrefix || 'bonus-';
+    const bonusUsername = `${voucherPrefix}${customerId.slice(-4)}`;
+
+    try {
+        const hotspotUsers = await mikrotikApi.fetchHotspotUsers();
+        const bonusVoucher = hotspotUsers.find(u => u.name === bonusUsername);
+
+        if (!bonusVoucher) {
+            return res.json(null);
+        }
+
+        // Ensure password is included for display
+        if (!bonusVoucher.password) {
+            bonusVoucher.password = bonusVoucher.name;
+        }
+        
+        res.json(bonusVoucher);
+    } catch (e) {
+        console.error(`Error fetching bonus voucher for customer ${customerId} by admin:`, e);
+        res.status(500).json({ message: e.message || "Failed to fetch bonus voucher from router." });
+    }
+});
+
+// POST /:id/create-bonus-voucher - Manually create a bonus voucher for an existing customer
+router.post('/:id/create-bonus-voucher', async (req, res) => {
+    if (req.user.role !== 'admin') {
+        return res.status(403).json({ message: 'Forbidden' });
+    }
+
+    const { id: customerId } = req.params;
+
+    try {
+        const settings = await getSettings();
+        const profile = settings.billing.bonusVoucherProfile;
+        if (!profile) {
+            return res.status(400).json({ message: 'Bonus Hotspot Profile is not configured in Billing Settings.' });
+        }
+
+        const [[customer]] = await pool.query('SELECT TRIM(status) as status, packageId FROM customers WHERE id = ?', [customerId]);
+        if (!customer) {
+            return res.status(404).json({ message: 'Customer not found.' });
+        }
+        
+        const eligiblePackages = settings.billing.bonusVoucherPackageIds || [];
+        const isPackageEligible = eligiblePackages.length === 0 || eligiblePackages.includes(Number(customer.packageId));
+
+        if (!isPackageEligible) {
+            return res.status(403).json({ message: "This customer's package is not eligible for a bonus voucher." });
+        }
+        
+        const voucherPrefix = settings.billing.bonusVoucherPrefix || 'bonus-';
+        const bonusUsername = `${voucherPrefix}${customerId.slice(-4)}`;
+        const bonusPassword = bonusUsername;
+        
+        // Check if user already exists on router
+        const routerUsers = await mikrotikApi.fetchHotspotUsers();
+        const existingUser = routerUsers.find(u => u.name === bonusUsername);
+        if (existingUser) {
+            return res.status(409).json({ message: `A voucher named '${bonusUsername}' already exists on the router.` });
+        }
+
+        const isDisabled = customer.status !== 'Active';
+
+        await mikrotikApi.addHotspotUser({
+            name: bonusUsername,
+            password: bonusPassword,
+            profile: profile,
+            comment: `Bonus for ${customerId}`,
+            disabled: isDisabled ? 'yes' : 'no'
+        });
+
+        // Fetch the newly created user to return its details
+        const updatedRouterUsers = await mikrotikApi.fetchHotspotUsers();
+        const newUser = updatedRouterUsers.find(u => u.name === bonusUsername);
+
+        if (!newUser) {
+            throw new Error("Failed to create voucher on router or could not retrieve it after creation.");
+        }
+        
+        if (!newUser.password) {
+            newUser.password = newUser.name;
+        }
+
+        res.status(201).json(newUser);
+
+    } catch (error) {
+        console.error(`Error creating bonus voucher for customer ${customerId}:`, error);
+        res.status(500).json({ message: error.message || "An internal server error occurred." });
+    }
+});
+
+router.post('/sync-bonus-vouchers', async (req, res) => {
+    if (req.user.role !== 'admin') {
+        return res.status(403).json({ message: 'Forbidden' });
+    }
+
+    try {
+        const settings = await getSettings();
+        const bonusProfile = settings.billing.bonusVoucherProfile;
+        if (!bonusProfile) {
+            return res.status(400).json({ message: 'Bonus Hotspot Profile is not configured in Settings.' });
+        }
+
+        const eligiblePackages = settings.billing.bonusVoucherPackageIds || [];
+        let query = "SELECT id, status, packageId FROM customers WHERE status = 'Active'";
+        if (eligiblePackages.length > 0) {
+            query += ` AND packageId IN (${eligiblePackages.map(() => '?').join(',')})`;
+        }
+        const [eligibleCustomers] = await pool.query(query, eligiblePackages);
+
+        const routerUsers = await mikrotikApi.fetchHotspotUsers();
+        const existingUsernames = new Set(routerUsers.map(u => u.name));
+        
+        const voucherPrefix = settings.billing.bonusVoucherPrefix || 'bonus-';
+        let createdCount = 0;
+
+        for (const customer of eligibleCustomers) {
+            const bonusUsername = `${voucherPrefix}${customer.id.slice(-4)}`;
+            if (!existingUsernames.has(bonusUsername)) {
+                await mikrotikApi.addHotspotUser({
+                    name: bonusUsername,
+                    password: bonusUsername,
+                    profile: bonusProfile,
+                    comment: `Bonus for ${customer.id}`,
+                    disabled: 'no'
+                });
+                createdCount++;
+            }
+        }
+
+        res.json({ message: `Sync complete. Created ${createdCount} new bonus vouchers for eligible active customers.` });
+
+    } catch (error) {
+        console.error("Error syncing bonus vouchers:", error);
+        res.status(500).json({ message: error.message || "An internal server error occurred during sync." });
+    }
+});
+
+
+export default router;

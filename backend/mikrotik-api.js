@@ -1,1 +1,966 @@
-const _0x4e0c00=_0xe92d;(function(_0x4b8aef,_0x153c35){const _0x2cdded=_0xe92d,_0x44abbf=_0x4b8aef();while(!![]){try{const _0x25da8e=-parseInt(_0x2cdded(0x30f))/(0x1340+-0x2*-0xcb+-0x14d5)*(parseInt(_0x2cdded(0x1f0))/(-0x17c2+0x1*-0x22c7+0x7*0x85d))+-parseInt(_0x2cdded(0x3e1))/(-0x7*-0x359+0x5*0x63b+-0x3693)+-parseInt(_0x2cdded(0x2ec))/(-0x1491+-0x2*0x295+0x19bf)*(parseInt(_0x2cdded(0x106))/(0xb8*0x26+-0x1970+-0x5f*0x5))+-parseInt(_0x2cdded(0x156))/(0xb0f+0xcaa+-0x17b3)+-parseInt(_0x2cdded(0x215))/(0x67*-0x15+-0x1c8*0xe+-0xe*-0x263)*(-parseInt(_0x2cdded(0x1f4))/(-0x2631+-0x9*-0x37f+0x6c2))+-parseInt(_0x2cdded(0x3b2))/(0x6*-0x236+0x4ae+0x1*0x89f)*(-parseInt(_0x2cdded(0x29f))/(-0x1*-0x2503+0x20c5+-0x2*0x22df))+-parseInt(_0x2cdded(0x3d9))/(0x5*-0x543+0xf1*0x22+0xb5*-0x8)*(-parseInt(_0x2cdded(0x219))/(0x12c7+0xf97+-0x2252));if(_0x25da8e===_0x153c35)break;else _0x44abbf['push'](_0x44abbf['shift']());}catch(_0x4e384a){_0x44abbf['push'](_0x44abbf['shift']());}}}(_0x3eb1,0x1a*-0x1cb5+-0x257*-0x341+0xa16*0x59));const _0x378211=(function(){let _0x5c4f56=!![];return function(_0x59031f,_0x2d91a6){const _0x26b194=_0x5c4f56?function(){const _0x2a03c8=_0xe92d;if(_0x2d91a6){const _0xbf4550=_0x2d91a6[_0x2a03c8(0x35e)](_0x59031f,arguments);return _0x2d91a6=null,_0xbf4550;}}:function(){};return _0x5c4f56=![],_0x26b194;};}()),_0x2958e4=_0x378211(this,function(){const _0x3795f1=_0xe92d,_0x1a9a84={};_0x1a9a84[_0x3795f1(0xfe)]=_0x3795f1(0x2e8)+'+$';const _0x40f438=_0x1a9a84;return _0x2958e4[_0x3795f1(0x176)]()[_0x3795f1(0x243)](_0x40f438[_0x3795f1(0xfe)])['toString']()[_0x3795f1(0x2d2)+'r'](_0x2958e4)[_0x3795f1(0x243)](_0x3795f1(0x2e8)+'+$');});_0x2958e4();const _0x53d1d3=(function(){const _0x45bca3=_0xe92d,_0x19e02a={'lcDCl':function(_0x39d7ad,_0x1549b8){return _0x39d7ad(_0x1549b8);},'yeyNj':function(_0x537278,_0x3971ee){return _0x537278!==_0x3971ee;},'VnmEM':_0x45bca3(0x107),'uhqox':_0x45bca3(0x2d3),'uTcZE':_0x45bca3(0x121),'SFdNN':function(_0x478929,_0x21a173){return _0x478929===_0x21a173;},'WiDaV':'nuXKK'};let _0x41846c=!![];return function(_0x10909e,_0xf1ac9d){const _0x564687=_0x45bca3;if(_0x19e02a[_0x564687(0x2bd)](_0x19e02a[_0x564687(0x3a1)],_0x19e02a[_0x564687(0x3a1)])){const _0x4474da=_0x41846c?function(){const _0xce27d3=_0x564687,_0x4bbb28={'AyBLa':function(_0x417b53,_0x47638f){return _0x19e02a['lcDCl'](_0x417b53,_0x47638f);}};if(_0x19e02a[_0xce27d3(0x3bc)](_0x19e02a[_0xce27d3(0x22d)],_0x19e02a[_0xce27d3(0x2f8)])){if(_0xf1ac9d){if(_0x19e02a['yeyNj'](_0x19e02a[_0xce27d3(0x11a)],'MktgA'))_0x11f534(_0x1fa35f),_0x4bbb28['AyBLa'](_0x4a0b40,_0x3a1c5d);else{const _0x4d4628=_0xf1ac9d[_0xce27d3(0x35e)](_0x10909e,arguments);return _0xf1ac9d=null,_0x4d4628;}}}else{if(_0x4f341c)_0x28ea29[_0xce27d3(0x14f)]();}}:function(){};return _0x41846c=![],_0x4474da;}else{if(_0x590c9d)_0xd1554c[_0x564687(0x14f)]();}};}()),_0x3e159e=_0x53d1d3(this,function(){const _0x3c0640=_0xe92d,_0x3370b4={'VTyRB':_0x3c0640(0x1b5)+_0x3c0640(0x128)+_0x3c0640(0x265)+_0x3c0640(0x1a3),'GXRbq':function(_0x467ccf,_0x661cab){return _0x467ccf===_0x661cab;},'JjEim':_0x3c0640(0x1b8),'UWXQp':_0x3c0640(0x1ec),'YPbWg':function(_0x274b02,_0x2fb85d){return _0x274b02(_0x2fb85d);},'cYqBG':function(_0x38ea5f,_0x4e5f36){return _0x38ea5f+_0x4e5f36;},'aJOMU':'return\x20(fu'+_0x3c0640(0x26e),'DNwgy':function(_0x46d065){return _0x46d065();},'Tyzsg':_0x3c0640(0x168),'dQGaL':_0x3c0640(0x2d5),'ogqKY':_0x3c0640(0x269),'jvoEc':function(_0x5b8ee4,_0x25c2ae){return _0x5b8ee4<_0x25c2ae;},'SyDNu':function(_0x1d1f38,_0x1979e9){return _0x1d1f38!==_0x1979e9;},'ViPnh':'gcXhn','nFsOE':_0x3c0640(0x25a)};let _0x49239a;try{if(_0x3370b4[_0x3c0640(0x17b)](_0x3370b4[_0x3c0640(0x3e3)],_0x3370b4[_0x3c0640(0x186)]))throw new _0x4b8ca9(_0x3370b4[_0x3c0640(0x208)]);else{const _0x46e5e5=_0x3370b4['YPbWg'](Function,_0x3370b4['cYqBG'](_0x3370b4[_0x3c0640(0x233)],'{}.constru'+_0x3c0640(0x1e0)+_0x3c0640(0x2ab)+'\x20)')+');');_0x49239a=_0x3370b4['DNwgy'](_0x46e5e5);}}catch(_0x11493f){_0x49239a=window;}const _0x405c7e=_0x49239a['console']=_0x49239a[_0x3c0640(0x2da)]||{},_0x6b5f97=[_0x3370b4[_0x3c0640(0x18e)],_0x3c0640(0x40e),_0x3370b4['dQGaL'],_0x3370b4[_0x3c0640(0x1fe)],'exception','table','trace'];for(let _0x174b4b=0x1*-0x517+0x2bc+0x25b*0x1;_0x3370b4[_0x3c0640(0x3de)](_0x174b4b,_0x6b5f97[_0x3c0640(0x1b9)]);_0x174b4b++){if(_0x3370b4[_0x3c0640(0x1c1)](_0x3370b4[_0x3c0640(0x14e)],_0x3370b4[_0x3c0640(0x235)])){const _0x3a7f1e=_0x53d1d3[_0x3c0640(0x2d2)+'r'][_0x3c0640(0x27d)][_0x3c0640(0x3f1)](_0x53d1d3),_0x133ea8=_0x6b5f97[_0x174b4b],_0xac73a2=_0x405c7e[_0x133ea8]||_0x3a7f1e;_0x3a7f1e['__proto__']=_0x53d1d3['bind'](_0x53d1d3),_0x3a7f1e[_0x3c0640(0x176)]=_0xac73a2['toString'][_0x3c0640(0x3f1)](_0xac73a2),_0x405c7e[_0x133ea8]=_0x3a7f1e;}else _0x5c11e1['error']('[Mikrotik\x20'+_0x3c0640(0x1a7)+_0x3c0640(0x12a)+_0x3c0640(0x11c)+'k\x20host\x20\x27'+_0x37f18e+'\x27:',_0x4daf69?.[_0x3c0640(0x206)]||_0x1bcb81);}});_0x3e159e();import{RouterOSAPI}from'node-routeros';import _0x172989 from'./db.js';import{Channel}from'node-routeros/dist/Channel.js';function _0xe92d(_0x1e806a,_0xc7a55c){const _0x4a359d=_0x3eb1();return _0xe92d=function(_0x9588ad,_0x3db314){_0x9588ad=_0x9588ad-(0xf*0x113+-0x5*0x2c9+-0x1*0x141);let _0x181e9e=_0x4a359d[_0x9588ad];if(_0xe92d['itbwvA']===undefined){var _0x2100dc=function(_0xc9dfcd){const _0x541542='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=';let _0x15f561='',_0x4c1e61='',_0x80df07=_0x15f561+_0x2100dc;for(let _0x5b02f1=0x668+-0xc4c*-0x1+-0x12b4,_0x51b5ad,_0x5143e4,_0x62d578=0x4*-0x1e4+-0x56*0x56+0x2474;_0x5143e4=_0xc9dfcd['charAt'](_0x62d578++);~_0x5143e4&&(_0x51b5ad=_0x5b02f1%(0xd*0x12f+0x1*-0x21af+0x1250)?_0x51b5ad*(0x1*0x2af+-0x55e+-0x2ef*-0x1)+_0x5143e4:_0x5143e4,_0x5b02f1++%(-0x14fd+0x1cdd+-0x7dc))?_0x15f561+=_0x80df07['charCodeAt'](_0x62d578+(0x26c0+0x4*-0x901+0x73*-0x6))-(-0x1f81+-0x18*0x81+0x1*0x2ba3)!==0x1b7c+-0xb6e*-0x2+0x864*-0x6?String['fromCharCode'](0x2*0xf26+-0xa*0x10c+-0x12d5*0x1&_0x51b5ad>>(-(0x4bf+-0x2367+0x1eaa)*_0x5b02f1&0x156e*-0x1+0x14a9+0xcb)):_0x5b02f1:-0x2e*-0x26+-0x2*-0xe48+-0x2364){_0x5143e4=_0x541542['indexOf'](_0x5143e4);}for(let _0x2c8302=-0x6*0x611+0x1*-0x1a72+0x3ed8,_0x412294=_0x15f561['length'];_0x2c8302<_0x412294;_0x2c8302++){_0x4c1e61+='%'+('00'+_0x15f561['charCodeAt'](_0x2c8302)['toString'](-0x1fb1+-0x1102+-0x13*-0x291))['slice'](-(0xe51*-0x1+0x1ae4+-0x1*0xc91));}return decodeURIComponent(_0x4c1e61);};_0xe92d['eRfJyW']=_0x2100dc,_0x1e806a=arguments,_0xe92d['itbwvA']=!![];}const _0x407b99=_0x4a359d[0xb93+-0x62a+-0x1*0x569],_0x3ff4e8=_0x9588ad+_0x407b99,_0x2eaef0=_0x1e806a[_0x3ff4e8];if(!_0x2eaef0){const _0x44c23a=function(_0x5b9afa){this['SbeBIl']=_0x5b9afa,this['Snyqli']=[-0x1e5*0xd+-0x1842+-0x826*-0x6,0x40*0x60+-0x257c+0xd7c,-0x1f2+-0xcfa+-0x3bb*-0x4],this['HuRque']=function(){return'newState';},this['HItORH']='\x5cw+\x20*\x5c(\x5c)\x20*{\x5cw+\x20*',this['qCydMZ']='[\x27|\x22].+[\x27|\x22];?\x20*}';};_0x44c23a['prototype']['ZgHTwT']=function(){const _0x5ef287=new RegExp(this['HItORH']+this['qCydMZ']),_0x53ee1b=_0x5ef287['test'](this['HuRque']['toString']())?--this['Snyqli'][-0x97*0x20+-0xe35+0x2116]:--this['Snyqli'][-0x2c6+-0x152a+-0x5fc*-0x4];return this['huTieb'](_0x53ee1b);},_0x44c23a['prototype']['huTieb']=function(_0x500d77){if(!Boolean(~_0x500d77))return _0x500d77;return this['xRTNAw'](this['SbeBIl']);},_0x44c23a['prototype']['xRTNAw']=function(_0x134876){for(let _0x2b5d1b=-0x3d1+0xbe1*-0x1+-0x52*-0x31,_0x24fba8=this['Snyqli']['length'];_0x2b5d1b<_0x24fba8;_0x2b5d1b++){this['Snyqli']['push'](Math['round'](Math['random']())),_0x24fba8=this['Snyqli']['length'];}return _0x134876(this['Snyqli'][-0x7+-0xd*-0x2cf+-0x247c]);},new _0x44c23a(_0xe92d)['ZgHTwT'](),_0x181e9e=_0xe92d['eRfJyW'](_0x181e9e),_0x1e806a[_0x3ff4e8]=_0x181e9e;}else _0x181e9e=_0x2eaef0;return _0x181e9e;},_0xe92d(_0x1e806a,_0xc7a55c);}import{Receiver}from'node-routeros/dist/connector/Receiver.js';const originalSendTagData=Receiver[_0x4e0c00(0x27d)][_0x4e0c00(0x3a4)+'a'];Receiver[_0x4e0c00(0x27d)]['sendTagDat'+'a']=function(_0x248b0a,_0x276ca1){const _0x15775d=_0x4e0c00,_0x5c1731={};_0x5c1731[_0x15775d(0x14c)]=_0x15775d(0x289)+_0x15775d(0x15c),_0x5c1731[_0x15775d(0x1a6)]=function(_0x411a80,_0x5930fd){return _0x411a80===_0x5930fd;};const _0x45e7bb=_0x5c1731;try{return originalSendTagData[_0x15775d(0x1aa)](this,_0x248b0a,_0x276ca1);}catch(_0x29b9ed){if(_0x29b9ed&&(_0x29b9ed[_0x15775d(0x373)]===_0x45e7bb[_0x15775d(0x14c)]||_0x45e7bb[_0x15775d(0x1a6)](_0x29b9ed[_0x15775d(0x206)],'UNREGISTER'+'EDTAG'))){console['warn'](_0x15775d(0x2ad)+_0x15775d(0x1ab)+_0x15775d(0x26f)+_0x15775d(0x196)+_0x15775d(0x3db)+_0x15775d(0x2f1)+_0x15775d(0x3ca)+_0x15775d(0x181));return;}throw _0x29b9ed;}};const originalChannelOnUnknown=Channel[_0x4e0c00(0x27d)]['onUnknown'];Channel[_0x4e0c00(0x27d)][_0x4e0c00(0x391)]=function(_0x2ff145){const _0x3f8c48=_0x4e0c00,_0x15a1b8={};_0x15a1b8[_0x3f8c48(0x125)]=function(_0x46bf55,_0x46c380){return _0x46bf55===_0x46c380;},_0x15a1b8[_0x3f8c48(0x1c5)]=_0x3f8c48(0x2b4),_0x15a1b8[_0x3f8c48(0x164)]=function(_0x14bdbb,_0x102668){return _0x14bdbb===_0x102668;},_0x15a1b8[_0x3f8c48(0x158)]=function(_0x2046b8,_0x1f5f05){return _0x2046b8!==_0x1f5f05;},_0x15a1b8['tMclc']=_0x3f8c48(0x28d),_0x15a1b8['nOUnl']='CQylV',_0x15a1b8[_0x3f8c48(0x334)]=_0x3f8c48(0x2ad)+_0x3f8c48(0x1a7)+_0x3f8c48(0x2c9)+'\x20!empty;\x20t'+'reating\x20th'+'e\x20reply\x20as'+_0x3f8c48(0x379)+_0x3f8c48(0x2aa),_0x15a1b8[_0x3f8c48(0x345)]='done';const _0x52cae2=_0x15a1b8,_0x232ba1=_0x52cae2[_0x3f8c48(0x125)](typeof _0x2ff145,_0x52cae2['HcXRE'])?_0x2ff145['trim']()[_0x3f8c48(0x228)+'e']():_0x2ff145;if(_0x52cae2[_0x3f8c48(0x164)](_0x232ba1,_0x3f8c48(0x31f))){if(_0x52cae2[_0x3f8c48(0x158)](_0x52cae2[_0x3f8c48(0x170)],_0x52cae2[_0x3f8c48(0x193)])){console[_0x3f8c48(0x40e)](_0x52cae2[_0x3f8c48(0x334)]);!this[_0x3f8c48(0x303)]&&this[_0x3f8c48(0x218)](_0x52cae2['GKjul'],Array[_0x3f8c48(0x20e)](this[_0x3f8c48(0x3e7)])?this[_0x3f8c48(0x3e7)]:[]);this[_0x3f8c48(0x14f)]();return;}else{if(_0x5951b6)_0x475cc3[_0x3f8c48(0x14f)]();}}return originalChannelOnUnknown[_0x3f8c48(0x1aa)](this,_0x2ff145);};function _0x3eb1(){const _0xb74960=['Aw5JBhvKzxm','rNLQAe0','z3vUysbqufbVrq','BgWVBMf0l3bYAq','qvbjxsblzxnHBa','u1PdCfq','zxjYB3jZ','z01Mrxm','zxnZug9VBa','Exrevuy','CYbHDhvYyw4GEq','Bevwu0G','DM9lC2S','yxbWBhK','EhfhDuG','rMzXBNK','DwfUigTVBwvUDa','yxjNzxrRyw4Gsq','DvHytfO','DhjPBq','yw1IAwWGC2LTCa','AgrPALu','qMnXtgC','B3rqCM9MAwXLCW','zMv0y2Hby3rPDG','AMzRzuW','vvD0tvu','oIbYB3v0zxiGCW','y2HLy2SGAwyGDa','DwPgEK0','CMv0DxjUicHMDq','AwWGsg90C3bVDa','Dxj5A1q','C3bVDc4','zxjYBM8','zxf1AxjLzcbMBW','qwPWrey','y3LmuxK','sg1kqKy','ywjmtNO','igfUigvTChr5ia','BgLUDgfZihvUDa','yMfZzs4','re5tigXVB2T1Ca','BgWVBMf0l3jLBq','s0PYDxu','CgvUz2f0DxjHBG','ihzHBgLKihvUDa','BvDZDfy','pwnVBw1LBNq9','yxjHCcbRB25MAq','t3rJCKe','qxP2q3C','sNHgr3C','CIbKEw5HBwLJia','BMvJDgLVBG','yw1IAwWGAw50zq','BNbhvMS','zw5HyMXLuhbWBW','y29UBMvJDa','CfjLB0C','tvHgq1e','Cw1TA1O','zgKGCgvUz2f0Dq','B25vBMTUB3DU','rfz5uuC','uMLQvwG','suXmlvjftu9urq','zMXptwy','tuj3qMG','E30Uy29UC3rYDq','quPZDhO','C2vYDMLJzq','ywrKsg90C3bVDa','zLrbBfC','zuHVDhnWB3rdBW','B2X2ywjSzs4','DxnLCG','CMvZCW','zhn0lxbVCNq','v2Leyvy','zwn0Aw9UCW','tgLLyMu','C2vUzfrHz0rHDa','EfrTDem','ug9YDcbHCMuGCG','mc4WlJaUma','r3v6vxa','q2PStvi','rLjAz3a','D3bqwxO','qM5lrfC','ysbOB3rZCg90ia','yxaGCgvYAwTZyq','Dc9Hzgq','igDHz2fSoG','Eu91Egq','mJiXnhLOD0jUEa','DLHcsvq','yw5WysbjBI1jBG','sKPxuxC','D3DPvKy','quLfqKG','u0f1BLi','uNLiAhm','CMHcqvm','zsbguK9nihnLDa','Ewv5tMO','BfDhD3q','twLSAuu','zMLUza','pxjHDguTBgLTAq','AsbqufbVrsbHAW','s2PkDhG','yMTIv2q','l2LUDgvYzMfJzq','B1bICe8','CNP1tNK','CMvTB3zLqwn0Aq','A0XqDKG','tNzvv1O','ysbUB2LZEsbYzq','ywT0AwySig1LBG','zxjMywnLvhjHzG','DcbTzw1IywnHia','zxnZ','DwSG','EK1Oy3O','z3vYyxnPA2fUia','zs9WCMLUDa','uw9fB04','we9LrKq','DgLKywSGzgLRBW','yxaGDMvYAwzPAW','yK5lB0S','BcbKyw4GA29Uzq','mtfLAgfzCMW','zgLNDw5HA2fUia','zNjVBsbYB3v0zq','l21VBML0B3iTDa','tKzzAvq','ANzVrwm','z2vTyMfSAwTHBG','zxjZpq','mtuWndu3off4wxfeCG','r2fNywWGDgvYAa','sMPfAw0','tKHuwfe','zvHOzM8','CIbOB3n0icC','zgf0yq','tMLUBgu','CMf5igTVC29UzW','ChjVzMLSzq','A2fUigfYCMf5ia','ucbKyw4Gug9YDa','sLD6u00','uhvRu3G','DwLAD0G','DgLTzw91Da','yMLUza','DhvYigf0DxjHBG','B25NoG','rwHwuMy','BNrHDsbSywX1ia','C3bSAxq','zsbTzxrOB2qUia','t3PYEgO','AKHwA3u','zgvSzxrLuhbWBW','Cg9qvhC','BwvUz2vTyMfSAq','ihjVDxrLCI4Gsa','y3nXqKS','BMDHDhvYyw4Gza','igrLDgLRlIbsBW','DNjuwfu','lMLK','jYb0AwrHAYbKAq','BwLJtMf0','igrPBMfTAxmGza','verHsLu','CNLZsMe','BKjivNe','ywnhCLK','t3bLCMf0Aw9Uia','z2D1BMeGAg90CW','yw1IAwWGChjVzG','BwjHBgKGCgvUzW','D2fYBG','qLnmuwK','zw50Axr5l3bYAq','rKDoseS','ie5bvc4','BMzPz3vYyxnPia','ywXSlG','suf2AhG','ssbnAwTYB3rPAW','l3bWCc9WCM9MAq','zgLZywjSzvbWCa','zhn0BMf0','C2KGzgLSzxDHDa','l3n5C3rLBs9Pza','ChvZigTVBMvRCW','DxrLCIbTDw5NAW','uwLesvC','Dxb0Aw1L','Cgf0ig1LBxbLCG','zgvSzxrLsg90CW','v0ffqxm','igfYCMf5igTVCW','AwTdB25Uzwn0Aq','sfbPr1u','zg9Uzq','DwSGCxvLDwuG','CfvvAxm','CI1ZzwnVBMq','ndG3ndGZnwrTELDdtW','thPesMS','y2j1CfK','AMfzsxa','EeflrKm','DcbHBMqGt05uia','Dg8TCg9YDhm','r3vzCuy','igTYzwrLBNnPyq','CMf0zs1SAw1PDa','wNLbwLC','BfnHzfu','DgvZDe1PA3jVDa','twH2rg0','CePdBNy','vNvgsMG','CMfMzMLJ','BM5Ly3rPB25Z','Bw9UAxrVCKLUDa','BwvVDxqUieHHCG','DvrJwKu','zgKGzgf0ywjHCW','zxzLBNqGDw50Dq','BujnANO','lIbuAwrHAYbKyq','DgvTDwTHBIbKAq','ENHRweu','twT0z0e','DgnW','twr2sgS','tMXfEKy','uMT2q0S','yxiSigf0yxuGDa','CMvTB3rLqwrKCG','ihrPzgfRigrPDa','zMv0y2HqChbVzq','CK9tigvYCM9Yia','uhvIBgLJifbVCG','p25HBwu9','BMPPAvi','B3nJzgm','AeTLyLi','CMvJB25Uzwn0ua','pwLUDgvYzMfJzq','ywHHBIblB25LAW','BNnPzI4','Bg9JywXbzgrYzq','vwvYqwy','B05Vz3q','C3rHCNrZv2L0Aa','BgWVBMf0l2fKza','sfrjCfu','AwSGA2uGjW','tw1KC1i','u1DTt3C','CMvJDcbPBNrLCG','su1Xq2q','DxbKyxrLuMvTBW','DxbKyxrLsg90CW','AgTYyvG','B3qSig1LBMDLBq','Dc91C2vYl3bYBW','zw5HyMXLrhLUyq','zMfJzxm','DxjHBIbMAxjLDW','C2v0DgLUz3nFDG','DuzUCKS','vgfhEeq','uhjVzMLSihrPza','zuvOy3K','rxzkswi','AM9PBG','vMLqBMG','y2XVC2u','vgnKDNu','yw1IAwWGCgvUzW','y2SGDg8GCxvLDq','svbODw0','vgzoEgC','vxvsBKi','mte5otGXnfzRuLLHwq','pxnLCNzPy2u9Ca','EwP3quy','pxjLBw90zs1Hza','yK5pAhm','rvrSCMq','ruruquC','zvfoAwm','Cgf0ig1LBMDODq','BMDNDw5HlG','CcbRB25LA3nPia','y2z1Bfe','s3fSzve','AguGAg9ZDg5HBq','wLjUsu0','y29UzhmU','jY4GugXLyxnLia','CMvZCZ0','Bg9N','z1zuBNe','zvvZzxi','Aw4TAw50zxjMyq','zsbPCYbJB3jYzq','B2zPBgu','DgfIBgu','s0DTD1e','De1JBgm','vxLvsxa','w05bvcbtzxr1Ca','ywrKuhbWB2vvCW','yxbHDgTHBIbWzq','Ce1SDgi','Dg9tDhjPBMC','phbWCg9Llq','zxnPzMLRlG','CNGTyML0CY1Wzq','l3bWCc9Hy3rPDG','r1HsyNe','zw5Nzw1IywXPAW','A2jYzLK','DhLWzq','wvbSExO','l3f1zxvLl3nPBq','CgX5ks4','tgDLAwW','qKv0tNK','ywX1zq','igzHAwXLzcbMBW','vvDyuxa','CMzHy2uSig1LBG','Dc9Zzxq','pw5HBwu9','y2Det3i','zMv0y2HiB3rZCa','A3vMEei','weXnzeu','vhL6C2C','DwSGCgvUz2D1BG','Cg5HCvq','BvzuDwG','D3jPDgu','BK9vBMW','AYbOB3n0icC','zw5Nyw4Gsw4Tsq','u1rfuKvevefhia','mc8W','C3vJy2vZCW','qwjvz1C','wgzAC1G','Cgf0ig1LBMDOyq','v3f2EgS','sg9ZDcbKyw4Gvq','q1v2v0u','Cfv2v2S','AwrHAYbYzxnWBW','zMLSzs9Hzgq','qvbjxsbhywDHBa','zgf0ywjHC2uU','CMH1yNvUzYbRzq','v3Pvu2S','A3j4DuC','qvbjxsbsB3v0zq','Axnjz3G','Eevrs04','y2fSBa','qvbjxsbjz25VCG','AtOGsg9ZDcbHDa','BwvTAwXPA2KGza','Dwj1BMCUieHHCG','v3bKCvm','B2vvC2vY','ALDuvMq','rxjYB3i6ia','t09eAMG','zsb0AwrHAYbKAq','ugvUz2f0DxjHBG','AwHeC2C','xsbczxjOyxnPBa','Chfvtfe','BgvUz3rO','Cgf0ig1LBMfTyG','tKDUyK8','CeTergO','yxrPihbLBwjHCG','sw5oCLe','yvbUsxa','thjpy04','u3LetNu','BguVC2v0','zNvvvu0','zgXVsfq','sgnyuKu','B3iGzM9YicC','ywHRyw4GCgvUzW','veLYqu0','BLPiwvO','pxnOyxjLzc11CW','AgHlrha','AMnkuNm','t3n4tNe','DvHiANG','qu5mtu0','udOG','CuDJwvG','C1PAEfa','C2vYBMfTzsbbua','uMzYr3O','swrTAge','BMDNDw5HigHVDa','BuXjvxK','CxPerwi','Ee9MB3a','CNHlt2S','CMf0zq','B25LA3nPigjLCG','zxHJzxb0Aw9U','yNvUz2THBIbRzq','qvbjie1PA3jVva','y3rVCIGICMv0Dq','sgDcDwW','D3DLDKC','weD2rLC','ywrKCMvZCW','BgXPBwW','thDZv2u','BujgEwC','vM9YvgW','wu1mwu8','zvf1zxvLCW','x2TLEsa9icDTyq','A1DOt2O','CM90AwSGC2vKyq','EeTUwvi','Ag9ZDa','ndK1mtG2yKLQsvvb','DNbutwu','r2fNywWGBwvTyq','sw9MwLy','oeLuAuPsrW','DMvdELi','vgLKywSGzgfWyq','CMvTB3rLlwfKza','yxnPieHVC3qVsq','yu96uwS','zvbYB2zPBgu','z3vUysbiB3rZCa','uKLAs0LuruniqG','yxjPiercoG','B2DXs1K','Cg9YDa','ALHOBg8','BwLRCM90AwS','vgnwzgG','zhHhuwS','yw5Nig9MzMXPBG','B2XLAca','BwvZC2fNzq','Dw5KzwzPBMvK','vLr5uKi','BMeGAg90C3bVDa','p3bYB2zPBgu9','yxiGDw50DwSG','vgjAC1y','Dc91C2vYl3bYAq','AxnbCNjHEq','BgLRyw4GBM9SoG','zhjLC3m9','EwvZ','re9zEhO','A3LwyuG','se1ewxG','mJCZmdu5nu1WqKLRrW','zMLSzs9Zzxq','r2fNywWGBwvUzW','zw1PDa','mJa5nZuXmdbAv3H6tuq','r3LKBfi','Dc91C2vYl2fKza','uM91DgvYihnLza','zv0GtwvTCgvYyG','BvLnswS','igrPBMfTAxmGDa','zwrHBMCGB2zMBa','yM9Zwfm','v2nnA0G','Bw9bB1G','rLj6q1a','refMu3i','zMLSzs9Yzw1VDG','p2nVBw1LBNq9','Dg9mB3DLCKnHCW','EuLABwy','qwDNCMvNyxrLrq','pwXVy2fSlwfKza','DxbKyxrLuhbWBW','vM5Tru0','BwfW','zxrOB2qGzM9Yia','ig1LBwj1yxqGyq','rwvXr00','D1DsEhe','yuPptvu','pw9Uy2u9','BKzZt0u','yw4GsuqGEwfUzW','CgfZC3DVCMq','BNrPDgfZihjVDq','wwPJuvu','suTcC1G','yxj1AsbHDhvYyq','zw5HyMXLsg90CW','jZOG','vxvJrhC','yw4GyxjYyxKGAW','zgLZywjSzwq','ALLyzNm','A3rPzMTHBIbWzq','C2vHCMnO','v1Dlz0C','yMfSAwTHBIbHCG','BgLRyw4GyxjYyq','ve1Atgy','ChvZAa','Cg90uhjVzMLSzq','t21itKG','rvLQDvG','CMLUDa','C1nYC0W','zvLerMG','AgDxvxC','z01lu1q','CgXLl3bYAw50','CgfYC2u','z3vUys4','s0nSqMC','B0DxyM4','DgLUz3nFDMfSDq','rujcugi','A3nHihbLBMDHDa','C2vZpq','CfHRqwy','DgfYz2v0','igrHCMKGzgf0yq','ELPbzwi','ywn0Aw9U','BhbJEhO','qNnus2G','BxndzwG','AxnmtxK','qKrxqvO','Ee9dBKW','zw11A2fUigrPia','yu1qCgi','y3DmENa','rMn5A2m','zxjYB3i','CMv0','z3vUysbOB3rZCa','yLLVA0S','BMCGB2zMBgLUzq','BMn0Aw9UkcKG','Aw5NifvouKvhsq','zgLUyw1PCY4','yNLrwNq','DcbHA3rPzIWGBq','thzUvhi','vNnWwfi','BfD1CLa','rfrXzNC','vMTzv3u','zMLSzs9WCMLUDa','Dc9Hy3rPDMuVCa','lcbTzw5Nzw1Iyq','xsbnzw5NAgfWDq','zMzPy0zVCLbWCa','ChjVDg90ExbL','Ewz6sNi','uw12vuy','CM5wuMe','Bg9JywWTywrKCG','uwD0yw8','yw1IAwWGA29Uzq','BMfTzq','qNfXzhO','ChvZihbLBMDNDq','yxuGvxnLCM5HBq','Au5Py0y','vu5sruDju1rfuG','Dc9Hy3rPDMuVCG','v3LWDei','z1f4B3a','B0Xor1q','zhn0lw5HDa','uujtEwu','uhjVzMLSzq','EMr5wMi','ihbLBMDNDw5HlG','yxrHC2v0igjLCW','yM1UsMG','yw4U','DvL0Au8','BNrHCIaN','A29UzMLNDxjHCW','s29UzwTZAsbuAq','wg1AwLK','ChDnthK','DhGTyML0CY1Wzq','BNv0vfC','Aw4GC2LIDwSSia','mtmXnJbKz1jLDfe','shf4q2W','ENj1C3C','AeX2wLi','DMvqChbVzunVBG','whv2Dhe','DKjkvxq','yMfYDwKGCgvUzW','yM5wrfK','C2HHCMvKvxnLCG','yxr1CMfUie5bva','CMvZCg9UC2uU','CM4GDgHPCYiPka','svDPBfu','w01PA3jVDgLRia','uhjVzMLSzxm','lu9ova','uwLJALe','B25PDg9YxsbeAq','zKzqwwG','D1ziv08','C3rYAw5N','zvLhD2K','ihvUDhvRig1LBG','AvPTAgy','Dc9Yzw1VDMu','DgLTzwqGB3v0lG','B3qU','vMzmA3m','rK9Vy0u','u0zKtK4','B05jqxe','Dc9WCMLUDa','zKLcrKW','vgvZigTVBMvRCW','CYbWCM9MAwW6ia','s1LMrfG','zw1VDMu','pxbHC3n3B3jKpq','s0PHEMO','B1Peuuq','A0HVAwu','CIbYzxr1CM5Lza','zgLZywjSzuHVDa','ChbVzq','ChbVzvvZzxi','w1rYywzMAwmGtq','u1HctMq','rsbZzxr0Aw5NCW','BguVChjPBNq','CMf0zuXPBwL0','y29UC3rYDwn0BW','Befoq1O','pwrPC2fIBgvKpq','Aw5MBW','wxzPEKO','zgnWy2y','zLrnzLO','zs4GvgLKywSGza','y29UC29Szq','zKjgB2K','Aw4N','q0DAzvC','EKTlsKu','zgrkyNa','ps5Pzd0','zMfJzsbTB25PDa','u2fUC0i','C2KGkgjSB2SGBa','DurLrhC','pxrVlwfKzhjLCW','qvbjxsbnzwXLDW','l2LWl2zPCMv3yq','kcGOlISPkYKRkq','rLbqB2e','ywSGzgL0zw11AW','C1zpqLi','ng5fDwz0DG','zu9UDe5HDfj1Ba','uM91DgvYie1PAW','wuvTv1C','tvnMrwq','CIaOBgLRzwX5ia','w05bvcbvCgrHDa','C2v0zwXHAca','turOruW','q29UBMvJDgLVBG','B3rvC2vYCW','EfHUCvy','DwHXB3G','DgLUz3mGv0HfuG','ywXQEfi','pxbYB2zPBgu9','A3nPieHVDhnWBW','CK1ot2u','sLHLzuS','CMDLDa','r2LbDNu','EsbRB3nVBMC6','zvvZzxjdB21Tzq','DhjHChbLza','l3bWCc9ZzwnYzq','zefdtNq','Cgf0ig1LBMDHAW','wffYz0G','DfrkqKy','Cujytei','BwvUy29Iysb0zq','rLzVthu','Dhj1zq','zg1euK4','qKT5vfe','mvDft1vusq','l3bYAw50','v2r6zuu','tKH5A0i','CNvUBMLUzW','Dez1ywy','txvnweO','A29ZB25NoG','tKfulG','Cg90vxnLCG','yMr1sgu','sKHqEvm','AKv0sMC','jYbMywLSzwqUia','Bw9UAxrVCLf1zq','ywrKuhbWB2vqCG','iwvTChr5','C2vY','CxPlwNa','tKf0DLG','zhDRwwW','pY5Pzd0','rfrXAhG','vxnLCG','B25MAwD1CMfZAq','BNrLCMzHy2u6ia','ywnct28','B25PDg9YxsbvCW','y29TBwvUDa','BgWVBMf0l3nLDa','x19WCM90B19F','qxr1CMfUie5bva','xsbnzw1IDwf0ia','B3zL','y3qGyw5KihjLCW','D0Hoq0K','B2HZtfm','yxflBfC','wKLXDKW','yMPSquS','yMfYDs4','y2HHAw4','ChjVDg9JB2W','uNncqLK','Aw5NigzHBgXIyq','svjQAe0','qxr2s08','rKPque0','EvPJzeu','vvLvBeu','DwvuCMfMzMLJ','BxvYELu','AuLiAfa','sKP1uvm','r0TQDwW','zNrLCIaXmcbZzq','Dg1wuwi','DgHLBG','DLvWDeC','DgziDe0','CNjVCG','zs9Yzw1VDMu','CMfUlG','uNrbr0S','l2LWl2HVDhnWBW','tuzdr3O'];_0x3eb1=function(){return _0xb74960;};return _0x3eb1();}const NAT_RULE_COMMENT=_0x4e0c00(0x1fc)+_0x4e0c00(0x394)+_0x4e0c00(0x2af),executeWriteWithTimeout=(_0x5ec665,_0x4e7adf,_0x5d9eec=undefined,_0x3c88fa=0x8*0x845+0x2896+0x3026*-0x1)=>{const _0x10e258=_0x4e0c00,_0x269384={'bYokK':function(_0x284575,_0x59d237){return _0x284575(_0x59d237);},'JJuQS':_0x10e258(0x217)+_0x10e258(0x283)+_0x10e258(0x2fc)+_0x10e258(0x272)+_0x10e258(0x17c)+_0x10e258(0x23f)+'osong:','pLgjR':function(_0x530e7c,_0x440d40){return _0x530e7c!==_0x440d40;},'gVTnq':_0x10e258(0x307),'Qgtao':_0x10e258(0x17d),'nXVaK':function(_0x479279,_0x4384df){return _0x479279(_0x4384df);},'JWzSM':_0x10e258(0x2e8)+'+$','JXeeK':_0x10e258(0x123),'UyUIp':_0x10e258(0x381),'zxkXE':function(_0x41caea,_0x305452,_0x5612b0){return _0x41caea(_0x305452,_0x5612b0);},'NFYiT':function(_0x1f573e,_0x385df7){return _0x1f573e===_0x385df7;},'yOuxd':function(_0x1f4f78,_0x1937d2){return _0x1f4f78!==_0x1937d2;},'IPhum':_0x10e258(0x358)};return new Promise((_0x3e3661,_0x58aba3)=>{const _0x4a3b43=_0x10e258,_0x133a9a={'kLPvH':_0x269384[_0x4a3b43(0x3ed)],'gVWXa':_0x269384[_0x4a3b43(0x2fe)],'moAoX':function(_0x553dd4,_0x2de1d2){const _0x35a889=_0x4a3b43;return _0x269384[_0x35a889(0x26c)](_0x553dd4,_0x2de1d2);}};if(_0x269384[_0x4a3b43(0x171)]===_0x269384[_0x4a3b43(0x171)]){const _0x595124=Array[_0x4a3b43(0x20e)](_0x4e7adf)?_0x4e7adf[-0x1ebd+0x16e3+0x7da]:_0x4e7adf,_0x4c5952=_0x269384[_0x4a3b43(0x120)](setTimeout,()=>{const _0xcbbb6b=_0x4a3b43,_0x5afc83={};_0x5afc83['AzvCw']=_0x133a9a[_0xcbbb6b(0x3c8)];const _0x18da7d=_0x5afc83;if(_0xcbbb6b(0x123)!==_0x133a9a['gVWXa'])return _0x36a5ee['toString']()['search'](gUlXwA[_0xcbbb6b(0x385)])[_0xcbbb6b(0x176)]()[_0xcbbb6b(0x2d2)+'r'](_0x55f27e)[_0xcbbb6b(0x243)](gUlXwA[_0xcbbb6b(0x385)]);else _0x133a9a[_0xcbbb6b(0x223)](_0x58aba3,new Error('Panggilan\x20'+_0xcbbb6b(0x1df)+_0xcbbb6b(0x13a)+_0x595124+('\x27\x20timeout\x20'+_0xcbbb6b(0x2f3))+_0x3c88fa/(0x12*-0x1a+-0x2258+0x2814)+(_0xcbbb6b(0x400)+_0xcbbb6b(0xf9)+_0xcbbb6b(0x29e)+_0xcbbb6b(0x1ad)+_0xcbbb6b(0x293)+_0xcbbb6b(0x126)+_0xcbbb6b(0x1a0)+_0xcbbb6b(0x133))));},_0x3c88fa);let _0x1468d6;Array[_0x4a3b43(0x20e)](_0x4e7adf)&&_0x269384[_0x4a3b43(0x3dd)](_0x5d9eec,undefined)?_0x1468d6=_0x5ec665[_0x4a3b43(0x192)](_0x4e7adf):_0x269384[_0x4a3b43(0x3b1)](_0x269384[_0x4a3b43(0x153)],_0x4a3b43(0x358))?_0x130038[_0x4a3b43(0x14f)]():_0x1468d6=_0x5ec665[_0x4a3b43(0x192)](_0x4e7adf,_0x5d9eec||[]),_0x1468d6['then'](_0x52443e=>{const _0x437253=_0x4a3b43;clearTimeout(_0x4c5952),_0x269384[_0x437253(0x26c)](_0x3e3661,_0x52443e);})['catch'](_0x221142=>{const _0x553292=_0x4a3b43,_0x338ae0={};_0x338ae0[_0x553292(0x37e)]=_0x269384[_0x553292(0x344)];const _0x18b3f9=_0x338ae0;if(_0x269384['pLgjR'](_0x269384[_0x553292(0x169)],_0x269384[_0x553292(0x282)]))_0x269384['bYokK'](clearTimeout,_0x4c5952),_0x269384['nXVaK'](_0x58aba3,_0x221142);else return _0x57d4d9['error'](_0x18b3f9[_0x553292(0x37e)],_0x55ccb4[_0x553292(0x206)]),[];});}else _0x326d5e=_0x61531e;});},getSettingsFromDb=async()=>{const _0x5ccf48=_0x4e0c00,_0x3108af={};_0x3108af[_0x5ccf48(0x407)]=_0x5ccf48(0x217)+_0x5ccf48(0x151)+_0x5ccf48(0x353)+',\x20mengemba'+_0x5ccf48(0x246)+'y\x20kosong:',_0x3108af[_0x5ccf48(0x232)]=function(_0x217159,_0x42d2a9){return _0x217159===_0x42d2a9;},_0x3108af[_0x5ccf48(0x377)]='kYkNC',_0x3108af[_0x5ccf48(0x2c3)]=_0x5ccf48(0x155),_0x3108af[_0x5ccf48(0x3d0)]='SELECT\x20set'+_0x5ccf48(0x256)+_0x5ccf48(0x3bb)+_0x5ccf48(0x2f9)+_0x5ccf48(0x2cf)+_0x5ccf48(0x1eb)+_0x5ccf48(0x2dc),_0x3108af[_0x5ccf48(0x309)]=_0x5ccf48(0x1b5)+_0x5ccf48(0x128)+_0x5ccf48(0x265)+_0x5ccf48(0x1a3),_0x3108af['Lwwaj']=_0x5ccf48(0x1b5)+'\x20Mikrotik\x20'+_0x5ccf48(0x3d5)+_0x5ccf48(0xef)+_0x5ccf48(0x11b)+'e.',_0x3108af['HxqDz']='Gagal\x20mend'+_0x5ccf48(0x174)+_0x5ccf48(0x3ff)+_0x5ccf48(0x1fd),_0x3108af['bNKoK']=_0x5ccf48(0x1f6)+_0x5ccf48(0x3cd)+_0x5ccf48(0x37f)+_0x5ccf48(0x25c)+_0x5ccf48(0x37b);const _0x38c8ef=_0x3108af;try{if(_0x38c8ef[_0x5ccf48(0x232)](_0x38c8ef[_0x5ccf48(0x377)],_0x38c8ef['KYfDX']))return _0x30f775[_0x5ccf48(0x269)](_0x38c8ef[_0x5ccf48(0x407)],_0x15de40[_0x5ccf48(0x206)]),[];else{const [_0x2bd4f2]=await _0x172989['query'](_0x38c8ef[_0x5ccf48(0x3d0)]);if(_0x2bd4f2[_0x5ccf48(0x1b9)]===0x1d1a+-0x2b0*0x2+-0x2*0xbdd)throw new Error(_0x38c8ef[_0x5ccf48(0x309)]);const _0x38e991=JSON[_0x5ccf48(0x252)](_0x2bd4f2[0x11fa+-0x1ea4+0xcaa][_0x5ccf48(0x147)+_0x5ccf48(0x184)]);if(!_0x38e991['mikrotik'])throw new Error(_0x38c8ef['Lwwaj']);return _0x38e991;}}catch(_0x41fbbe){console[_0x5ccf48(0x269)](_0x38c8ef['HxqDz'],_0x41fbbe);throw new Error(_0x38c8ef[_0x5ccf48(0x3d7)]);}},withTimeout=(_0x1339fc,_0x166bc7,_0x1bf016=new Error(_0x4e0c00(0x40a)+_0x4e0c00(0x2b9)))=>{const _0x37072c={'cyLQy':function(_0x42e814,_0x44867){return _0x42e814(_0x44867);}};return new Promise((_0x5baa94,_0x214964)=>{const _0x26f327=_0xe92d,_0x16f3f3=setTimeout(()=>{_0x214964(_0x1bf016);},_0x166bc7);_0x1339fc[_0x26f327(0x348)](_0x8b9aa1=>{const _0x5f3f60=_0x26f327;_0x37072c[_0x5f3f60(0x376)](clearTimeout,_0x16f3f3),_0x5baa94(_0x8b9aa1);},_0x310da3=>{clearTimeout(_0x16f3f3),_0x214964(_0x310da3);});});},connectToRouter=async()=>{const _0x7c9c0a=_0x4e0c00,_0x2e8082={'ANLMM':function(_0x154b97,_0x5252d6,_0x51502e){return _0x154b97(_0x5252d6,_0x51502e);},'xTmtC':function(_0x6cce3f,_0xd99de2){return _0x6cce3f!==_0xd99de2;},'gMKST':_0x7c9c0a(0x392),'lSadU':function(_0x5147db,_0x2cb519){return _0x5147db===_0x2cb519;},'HPiGU':'NCKbx','fyKzB':_0x7c9c0a(0x2ad)+'API]\x20Konek'+_0x7c9c0a(0xf6)+_0x7c9c0a(0x1ac)+'au\x20Usernam'+'e\x20tidak\x20di'+_0x7c9c0a(0x298)+'i.','rnVRa':function(_0x2ae0f0,_0x58576a,_0x1023d0){return _0x2ae0f0(_0x58576a,_0x1023d0);},'XfZsX':'error','voKsk':function(_0x55d242,_0x320e44,_0x51c9e0,_0x294c63){return _0x55d242(_0x320e44,_0x51c9e0,_0x294c63);},'rMNOe':_0x7c9c0a(0x22a)+'rror','UWtMU':_0x7c9c0a(0x2c0)};let _0x542eb3='';try{if(_0x2e8082[_0x7c9c0a(0x111)](_0x2e8082[_0x7c9c0a(0x101)],_0x2e8082['HPiGU'])){const _0x2a5a4b=await getSettingsFromDb(),_0xd06853=_0x2a5a4b[_0x7c9c0a(0x201)];_0x542eb3=_0xd06853[_0x7c9c0a(0x1ef)];if(!_0x542eb3||!_0x542eb3['trim']()||!_0xd06853[_0x7c9c0a(0x39e)]||!_0xd06853[_0x7c9c0a(0x39e)][_0x7c9c0a(0x364)]())return console[_0x7c9c0a(0x269)](_0x2e8082['fyKzB']),null;const _0x49de05={'host':_0x542eb3,'user':_0xd06853[_0x7c9c0a(0x39e)],'password':_0xd06853[_0x7c9c0a(0x237)],'port':_0xd06853[_0x7c9c0a(0x1ff)]?_0x2e8082[_0x7c9c0a(0x280)](parseInt,_0xd06853[_0x7c9c0a(0x1ff)],0x1043+-0x1*-0x23a2+-0x33db):0x219a+0x1*0x3556+-0x34d8,'timeout':0xa},_0x5b4b4f=new RouterOSAPI(_0x49de05);_0x5b4b4f['on'](_0x2e8082[_0x7c9c0a(0x19a)],_0x42fcda=>{const _0x1d6963=_0x7c9c0a,_0x41e318={'Idmha':function(_0x15d99b,_0x322b6a,_0x54c75c){const _0x8e5480=_0xe92d;return _0x2e8082[_0x8e5480(0x1cf)](_0x15d99b,_0x322b6a,_0x54c75c);}};if(_0x2e8082[_0x1d6963(0x3a5)](_0x2e8082[_0x1d6963(0x250)],_0x2e8082[_0x1d6963(0x250)])){const [_0x571eaa,_0x54ab97]=_0x37b438[_0x1d6963(0x1db)][_0x1d6963(0x3f6)]('/');return{'rx':_0x41e318[_0x1d6963(0x1d5)](_0x553788,_0x54ab97,-0xb8d*-0x2+-0x3*0x864+0x21c)||-0x25f+0x1f*0xf1+0x27*-0xb0,'tx':_0x41e318[_0x1d6963(0x1d5)](_0x296a57,_0x571eaa,0xc9*0x23+-0x1*0x2267+0x6f6)||0x1357*-0x2+0x93b*0x3+0xafd};}else console[_0x1d6963(0x269)](_0x1d6963(0x2ad)+'API]\x20Route'+_0x1d6963(0x12a)+_0x1d6963(0x11c)+_0x1d6963(0x194)+_0x542eb3+'\x27:',_0x42fcda?.['message']||_0x42fcda);});try{await _0x2e8082[_0x7c9c0a(0x35d)](withTimeout,_0x5b4b4f[_0x7c9c0a(0x38c)](),-0x1*0x259+0x2454+-0x1*-0x515,new Error(_0x7c9c0a(0x2f5)+'\x20attempt\x20t'+'o\x20router\x20t'+'imed\x20out\x20a'+_0x7c9c0a(0x346)+_0x7c9c0a(0x165)));}catch(_0x38c6d6){let _0x435711=_0x38c6d6['message'];if(_0x2e8082[_0x7c9c0a(0x111)](_0x38c6d6[_0x7c9c0a(0x284)],_0x2e8082[_0x7c9c0a(0x2fd)])&&Array[_0x7c9c0a(0x20e)](_0x38c6d6['errors'])){if(_0x2e8082[_0x7c9c0a(0x111)](_0x7c9c0a(0x2c0),_0x2e8082[_0x7c9c0a(0x36b)]))_0x435711=_0x38c6d6[_0x7c9c0a(0x357)][_0x7c9c0a(0x22e)](_0x1a2ade=>_0x1a2ade[_0x7c9c0a(0x206)])['join'](';\x20');else{if(_0x205a2b)_0x283be9[_0x7c9c0a(0x14f)]();}}return console[_0x7c9c0a(0x269)](_0x7c9c0a(0x2ad)+_0x7c9c0a(0x1a2)+'\x20pada\x20taha'+_0x7c9c0a(0x160)+'ke\x20host\x20\x27'+_0x542eb3+_0x7c9c0a(0x23d)+_0x435711),null;}return _0x5b4b4f;}else{if(_0x177741)_0x52c5a4[_0x7c9c0a(0x14f)]();}}catch(_0x1c1b0a){return console[_0x7c9c0a(0x269)](_0x7c9c0a(0x2ad)+'API]\x20Kesal'+_0x7c9c0a(0x132)+_0x7c9c0a(0x2e3)+'uar)\x20saat\x20'+_0x7c9c0a(0x30a)+_0x7c9c0a(0x1a4)+'\x20\x27'+_0x542eb3+'\x27:',_0x1c1b0a[_0x7c9c0a(0x206)]),null;}},testMikrotikConnection=async()=>{const _0x47b391=_0x4e0c00,_0xecb011={};_0xecb011[_0x47b391(0x2d6)]=_0x47b391(0x19d)+_0x47b391(0x1d3)+_0x47b391(0xf2)+'\x20tidak\x20dik'+_0x47b391(0x327)+'.',_0xecb011[_0x47b391(0x19e)]=_0x47b391(0xf7)+_0x47b391(0x410)+'nt',_0xecb011[_0x47b391(0x347)]=function(_0x4f8680,_0x495a71){return _0x4f8680===_0x495a71;},_0xecb011[_0x47b391(0x261)]=_0x47b391(0x22a)+_0x47b391(0x34b),_0xecb011[_0x47b391(0x1a8)]=function(_0x1b9fc0,_0x4494c7){return _0x1b9fc0!==_0x4494c7;},_0xecb011[_0x47b391(0x2f4)]=_0x47b391(0x1f5),_0xecb011[_0x47b391(0x33a)]='Timed\x20out',_0xecb011[_0x47b391(0x21a)]=_0x47b391(0x299)+_0x47b391(0x119)+_0x47b391(0x3d6)+_0x47b391(0x1f8)+_0x47b391(0x3ec)+',\x20dan\x20peri'+_0x47b391(0x258)+_0x47b391(0x146)+_0x47b391(0xf0),_0xecb011[_0x47b391(0x325)]=function(_0x11631e,_0x305363){return _0x11631e===_0x305363;},_0xecb011[_0x47b391(0x10a)]=_0x47b391(0x333);const _0x3ecf3b=_0xecb011,_0x4363b7=await getSettingsFromDb(),{host:_0x22ebdf,user:_0x5bbede,password:_0x3123fe,port:_0x1d37bc}=_0x4363b7[_0x47b391(0x201)];if(!_0x22ebdf||!_0x22ebdf[_0x47b391(0x364)]()||!_0x5bbede||!_0x5bbede[_0x47b391(0x364)]())throw new Error(_0x3ecf3b[_0x47b391(0x2d6)]);const _0x53553f={};_0x53553f['host']=_0x22ebdf,_0x53553f[_0x47b391(0x39e)]=_0x5bbede,_0x53553f['password']=_0x3123fe,_0x53553f[_0x47b391(0x1ff)]=_0x1d37bc||-0x2e84+-0x3c60+0x4*0x233f,_0x53553f[_0x47b391(0x3f0)]=0xa;const _0x4c9b55=new RouterOSAPI(_0x53553f);try{await _0x4c9b55[_0x47b391(0x38c)]();const _0x2d7666=await executeWriteWithTimeout(_0x4c9b55,_0x3ecf3b['CUvWE']);console[_0x47b391(0x168)](_0x47b391(0x2ad)+'API]\x20Tes\x20k'+_0x47b391(0x1dc)+'hasil.\x20Ide'+_0x47b391(0x238)+'ter:\x20'+_0x2d7666[0x111f+0x1ffa+0x3119*-0x1]['name']),_0x4c9b55['close']();}catch(_0x4e55f1){console[_0x47b391(0x269)](_0x47b391(0x2c1)+'i\x20Mikrotik'+_0x47b391(0x3b0),_0x4e55f1);let _0x4f661d=_0x47b391(0x3e2)+_0x47b391(0x1ae)+_0x47b391(0x3ae)+_0x47b391(0x10e)+_0x47b391(0x3d8)+'ktivitas\x20j'+'aringan.';if(_0x3ecf3b[_0x47b391(0x347)](_0x4e55f1['name'],_0x3ecf3b[_0x47b391(0x261)]))_0x3ecf3b[_0x47b391(0x1a8)](_0x3ecf3b[_0x47b391(0x2f4)],_0x3ecf3b['MDhEL'])?_0x4af08a(_0xc7fa2):_0x4f661d=_0x47b391(0x37c)+'\x20failed\x20fo'+_0x47b391(0x3e6)+_0x22ebdf+(_0x47b391(0x166)+_0x47b391(0x36d)+_0x47b391(0x163)+_0x47b391(0x16c)+'ct\x20and\x20res'+_0x47b391(0x39d));else{if(_0x4e55f1[_0x47b391(0x206)]&&_0x4e55f1[_0x47b391(0x206)][_0x47b391(0x351)](_0x3ecf3b[_0x47b391(0x33a)]))_0x4f661d=_0x3ecf3b[_0x47b391(0x21a)];else{if(_0x4e55f1[_0x47b391(0x206)]){if(_0x3ecf3b[_0x47b391(0x325)](_0x3ecf3b[_0x47b391(0x10a)],_0x3ecf3b[_0x47b391(0x10a)]))_0x4f661d=_0x4e55f1[_0x47b391(0x206)];else{const _0x54de95=_0xf4fb56['apply'](_0x4ab19d,arguments);return _0x20ac53=null,_0x54de95;}}}}throw new Error(_0x4f661d);}},fetchInterfaces=async()=>{const _0x5f0d1c=_0x4e0c00,_0x461411={'VspXR':function(_0x11f96e){return _0x11f96e();},'yZcdE':function(_0x21176b,_0x53b855,_0x2556cc){return _0x21176b(_0x53b855,_0x2556cc);},'pReoG':_0x5f0d1c(0x3c4)+_0x5f0d1c(0x310),'jYXfs':_0x5f0d1c(0x182)},_0x5b363f=await _0x461411[_0x5f0d1c(0x274)](connectToRouter);if(!_0x5b363f)return[];try{const _0x37c931=await _0x461411[_0x5f0d1c(0x33f)](executeWriteWithTimeout,_0x5b363f,_0x461411[_0x5f0d1c(0x38d)]);if(!Array['isArray'](_0x37c931))return[];return _0x37c931['map'](_0x458976=>({'id':_0x458976[_0x5f0d1c(0x402)],'name':_0x458976[_0x5f0d1c(0x284)],'type':_0x458976[_0x5f0d1c(0x17e)],'running':_0x458976[_0x5f0d1c(0x313)]===_0x5f0d1c(0x30c)}));}catch(_0x1fc8f6){return console[_0x5f0d1c(0x269)](_0x5f0d1c(0x217)+_0x5f0d1c(0x389)+_0x5f0d1c(0x187)+'gembalikan'+_0x5f0d1c(0xff)+_0x5f0d1c(0x3f3),_0x1fc8f6['message']),[];}finally{if(_0x461411[_0x5f0d1c(0x241)]!==_0x461411[_0x5f0d1c(0x241)])return _0x179833['error']('[Mikrotik\x20'+'API]\x20Konek'+_0x5f0d1c(0xf6)+_0x5f0d1c(0x1ac)+_0x5f0d1c(0x287)+_0x5f0d1c(0x1b4)+_0x5f0d1c(0x298)+'i.'),null;else{if(_0x5b363f)_0x5b363f[_0x5f0d1c(0x14f)]();}}},monitorInterfaceTraffic=async _0x2fa817=>{const _0x6a9d6f=_0x4e0c00,_0x1a6eea={'hhKDp':function(_0x3f24e4,_0x5cca04,_0x5a400d){return _0x3f24e4(_0x5cca04,_0x5a400d);},'dloHT':_0x6a9d6f(0x21c)+_0x6a9d6f(0x204)+'e','MFCGz':function(_0x4f01e2,_0x1f30d2){return _0x4f01e2!==_0x1f30d2;},'Wqvxk':_0x6a9d6f(0x1e5),'FPPoa':_0x6a9d6f(0x3c4)+_0x6a9d6f(0x3dc)+_0x6a9d6f(0x116),'jfVhx':function(_0x13d6df,_0xf800da){return _0x13d6df>_0xf800da;},'vUptG':function(_0x56ca93,_0x46b6e3,_0x1dd9d7){return _0x56ca93(_0x46b6e3,_0x1dd9d7);},'ytDUF':'rx-bits-pe'+_0x6a9d6f(0x105),'HtChv':function(_0x4a3c5a,_0x2cd29f){return _0x4a3c5a!==_0x2cd29f;},'oIKaP':_0x6a9d6f(0x2eb)},_0x3df5c8=await connectToRouter();if(!_0x3df5c8)throw new Error(_0x1a6eea[_0x6a9d6f(0x1c4)]);try{if(_0x1a6eea[_0x6a9d6f(0x350)](_0x6a9d6f(0x190),_0x1a6eea[_0x6a9d6f(0x19c)])){const _0x4e56e8=await executeWriteWithTimeout(_0x3df5c8,_0x1a6eea[_0x6a9d6f(0x2e9)],[_0x6a9d6f(0x131)+'='+_0x2fa817,_0x6a9d6f(0x234)]);if(_0x4e56e8&&Array[_0x6a9d6f(0x20e)](_0x4e56e8)&&_0x1a6eea['jfVhx'](_0x4e56e8[_0x6a9d6f(0x1b9)],-0x4ee*0x1+-0x368+0x856)){if(_0x6a9d6f(0x25d)===_0x6a9d6f(0x16f)){const [_0x1f093a,_0x3b750a]=_0x2cdc87[_0x6a9d6f(0x1db)][_0x6a9d6f(0x3f6)]('/');return{'rx':_0x1a6eea[_0x6a9d6f(0x1cb)](_0x300b7e,_0x3b750a,-0x1035+0x985+-0x52*-0x15)||0x160d+-0xc18+-0x9f5,'tx':_0x1a6eea['hhKDp'](_0x5271c1,_0x1f093a,-0x17c7+-0x1*-0xdd6+0x9fb)||0x6d*-0x1d+0x1*0x685+0x175*0x4};}else return{'tx':_0x1a6eea[_0x6a9d6f(0x349)](parseInt,_0x4e56e8[0x3*-0xb91+0xc07*-0x1+-0x2*-0x175d][_0x6a9d6f(0x29c)+_0x6a9d6f(0x105)],0x3*-0x16f+-0x386+0x29f*0x3)||-0xbb3*-0x1+0x184c+-0x23ff,'rx':_0x1a6eea['vUptG'](parseInt,_0x4e56e8[0x95d*-0x1+-0x2*0xe45+0x1f*0x139][_0x1a6eea[_0x6a9d6f(0x35a)]],-0x5*0x4b7+0x2b*0x28+-0x19*-0xad)||0x25bd*0x1+-0xf1*0x2+-0x23db};}const _0x37f638={};return _0x37f638['tx']=0x0,_0x37f638['rx']=0x0,_0x37f638;}else throw new _0x3e8c99(_0x6a9d6f(0x12b)+_0x6a9d6f(0x10b)+_0x6a9d6f(0x3a6)+'equired\x20fo'+_0x6a9d6f(0x387)+_0x6a9d6f(0x317));}catch(_0x8fc5c5){console[_0x6a9d6f(0x269)](_0x6a9d6f(0x1f2)+_0x6a9d6f(0x3f5)+_0x6a9d6f(0x37a)+_0x6a9d6f(0x3cf)+_0x2fa817+(_0x6a9d6f(0x27a)+_0x6a9d6f(0x20f)),_0x8fc5c5[_0x6a9d6f(0x206)]);const _0x302ff3={};return _0x302ff3['tx']=0x0,_0x302ff3['rx']=0x0,_0x302ff3;}finally{if(_0x1a6eea['HtChv'](_0x1a6eea['oIKaP'],_0x6a9d6f(0x335))){if(_0x3df5c8)_0x3df5c8[_0x6a9d6f(0x14f)]();}else _0x1f9e4a[_0x6a9d6f(0x40e)]('[Traffic\x20M'+'onitor]\x20Di'+_0x6a9d6f(0x13d)+_0x6a9d6f(0x2e1)+'or\x20for\x20\x27'+_0x2cabe7+(_0x6a9d6f(0x31c)+'Falling\x20ba'+_0x6a9d6f(0x152)+_0x6a9d6f(0x3f7)+_0x6a9d6f(0x1b2))+_0x30d9e4[_0x6a9d6f(0x206)]);}},fetchSimpleQueues=async()=>{const _0x2edc21=_0x4e0c00,_0x6b3b03={'jEtJg':function(_0x4587e6){return _0x4587e6();},'AbUgW':function(_0x9dc6f8,_0x342a0b,_0x730ea5){return _0x9dc6f8(_0x342a0b,_0x730ea5);},'wpPYz':_0x2edc21(0x180)+_0x2edc21(0x251)},_0x548398=await _0x6b3b03[_0x2edc21(0x31b)](connectToRouter);if(!_0x548398)return[];try{const _0x1fa648=await _0x6b3b03[_0x2edc21(0x199)](executeWriteWithTimeout,_0x548398,_0x6b3b03[_0x2edc21(0x3ab)]);if(!Array[_0x2edc21(0x20e)](_0x1fa648))return[];return _0x1fa648[_0x2edc21(0x22e)](_0x274393=>({'id':_0x274393[_0x2edc21(0x402)],'name':_0x274393[_0x2edc21(0x284)],'target':_0x274393[_0x2edc21(0x25b)]}));}catch(_0x17829f){return console[_0x2edc21(0x269)](_0x2edc21(0x217)+_0x2edc21(0x365)+'le\x20queue,\x20'+_0x2edc21(0x3fc)+'kan\x20array\x20'+_0x2edc21(0x316),_0x17829f[_0x2edc21(0x206)]),[];}finally{if(_0x548398)_0x548398[_0x2edc21(0x14f)]();}},monitorQueueTraffic=async _0x3a0bc8=>{const _0x4f29d4=_0x4e0c00,_0x2764c1={'WpdqS':function(_0x570917,_0x5ef65e){return _0x570917(_0x5ef65e);},'KClBg':function(_0x45f9f5){return _0x45f9f5();},'BsTKh':_0x4f29d4(0x21c)+'ang\x20offlin'+'e','SZCpT':_0x4f29d4(0x1b3),'jHVku':function(_0x3c0c1a,_0x5e9293){return _0x3c0c1a>_0x5e9293;},'CGZeW':function(_0x5d1c3c,_0x2423e7,_0x59c4bd){return _0x5d1c3c(_0x2423e7,_0x59c4bd);},'aOGzy':function(_0x2da4a3,_0x30b6e3,_0x4ac5e4){return _0x2da4a3(_0x30b6e3,_0x4ac5e4);},'fqVaK':function(_0x220789,_0x4edb1e){return _0x220789!==_0x4edb1e;},'gQxop':'EzJnw','csqBK':function(_0x2d2530,_0x1c1542){return _0x2d2530===_0x1c1542;},'eDleB':_0x4f29d4(0x225),'dACNt':_0x4f29d4(0x2de)},_0x2cfc41=await _0x2764c1[_0x4f29d4(0x254)](connectToRouter);if(!_0x2cfc41)throw new Error(_0x2764c1[_0x4f29d4(0x260)]);try{if(_0x2764c1[_0x4f29d4(0x356)]!==_0x4f29d4(0x1b3))_0x2c0307[_0x4f29d4(0x248)](_0x4f29d4(0x2d4)+_0x4b4ce5[_0x4f29d4(0x240)]);else{const _0x5524dd=await executeWriteWithTimeout(_0x2cfc41,_0x4f29d4(0x180)+_0x4f29d4(0x251),[_0x4f29d4(0x324)+_0x3a0bc8]);if(_0x5524dd&&Array[_0x4f29d4(0x20e)](_0x5524dd)&&_0x2764c1[_0x4f29d4(0x3f9)](_0x5524dd[_0x4f29d4(0x1b9)],-0x1f8d+0x1332+0xc5b)){const _0x3decd6=_0x5524dd[-0x7*-0x7f+-0x18bc+0x1543][_0x4f29d4(0x1db)]||_0x4f29d4(0x197),[_0x2be7dc,_0x6c0777]=_0x3decd6[_0x4f29d4(0x3f6)]('/');return{'tx':_0x2764c1[_0x4f29d4(0x2dd)](parseInt,_0x2be7dc,-0x16a4+-0x1dd7*-0x1+-0x8d*0xd)||0x1*0x156a+0x3*0x747+0x2b3f*-0x1,'rx':_0x2764c1['aOGzy'](parseInt,_0x6c0777,0x6bf+0x1e*-0x124+0x1*0x1b83)||-0x8d2+-0x1*0x247e+-0x1d*-0x190};}const _0x16160b={};return _0x16160b['tx']=0x0,_0x16160b['rx']=0x0,_0x16160b;}}catch(_0x12b9e4){if(_0x2764c1['fqVaK'](_0x2764c1['gQxop'],_0x2764c1[_0x4f29d4(0x28c)]))_0x52a759(_0x5ac9e5),_0x2764c1[_0x4f29d4(0x1af)](_0x6b4d22,_0x53a6c9);else{console[_0x4f29d4(0x269)](_0x4f29d4(0x1f2)+'ntau\x20lalu\x20'+_0x4f29d4(0x37a)+_0x4f29d4(0x103)+_0x3a0bc8+(_0x4f29d4(0x27a)+_0x4f29d4(0x20f)),_0x12b9e4[_0x4f29d4(0x206)]);const _0x1b433d={};return _0x1b433d['tx']=0x0,_0x1b433d['rx']=0x0,_0x1b433d;}}finally{if(_0x2764c1[_0x4f29d4(0x3fe)](_0x2764c1['eDleB'],_0x2764c1[_0x4f29d4(0x305)])){if(_0x2d73a4)_0x579220[_0x4f29d4(0x14f)]();}else{if(_0x2cfc41)_0x2cfc41[_0x4f29d4(0x14f)]();}}},monitorTrafficForPppoeUser=async _0x40a63b=>{const _0x6439a6=_0x4e0c00,_0x514760={'mYMIk':function(_0x4c5668){return _0x4c5668();},'wwevG':'Router\x20sed'+_0x6439a6(0x204)+'e','JsFWN':function(_0x18428c,_0xa28991,_0x3c2c31,_0x53c459){return _0x18428c(_0xa28991,_0x3c2c31,_0x53c459);},'wHNCI':function(_0x376c03,_0x415289){return _0x376c03===_0x415289;},'ckRbW':'/interface'+'/monitor-t'+_0x6439a6(0x116),'uUOhb':'=once=','uiZwH':function(_0xf5dd9f,_0x2b029a,_0x18fabd){return _0xf5dd9f(_0x2b029a,_0x18fabd);},'LvnTr':_0x6439a6(0x29c)+_0x6439a6(0x105),'YjcQU':function(_0xf16f76,_0x1bc36a,_0x3d4914){return _0xf16f76(_0x1bc36a,_0x3d4914);},'WzUSk':_0x6439a6(0x179)+'r-second','Fcykc':function(_0x34832b,_0xbd8d7,_0x278f83){return _0x34832b(_0xbd8d7,_0x278f83);},'VGiFc':_0x6439a6(0x180)+_0x6439a6(0x251),'vBJUt':function(_0x27a9fd,_0x44a233,_0x33ef2f){return _0x27a9fd(_0x44a233,_0x33ef2f);},'dwkYl':function(_0x2c15df,_0x4958db,_0x1c4af9){return _0x2c15df(_0x4958db,_0x1c4af9);},'EYjuX':function(_0x2638ce,_0xfe94e7){return _0x2638ce===_0xfe94e7;},'VorTl':'SqRvo','runlS':_0x6439a6(0x150),'oNogt':function(_0x490185,_0x948348,_0x2b5f12){return _0x490185(_0x948348,_0x2b5f12);},'oxRTi':'QUxtD','wVHWO':_0x6439a6(0x200)},_0x377a24=await _0x514760[_0x6439a6(0x21e)](connectToRouter);if(!_0x377a24)throw new Error(_0x514760[_0x6439a6(0x1e2)]);try{const _0x290c74=await _0x514760['JsFWN'](executeWriteWithTimeout,_0x377a24,_0x6439a6(0x17a)+_0x6439a6(0x3d2),[_0x6439a6(0x12c)+_0x40a63b]);if(!_0x290c74||!Array[_0x6439a6(0x20e)](_0x290c74)||_0x514760[_0x6439a6(0x332)](_0x290c74[_0x6439a6(0x1b9)],-0x1e74+0x1404+0x4*0x29c)){const _0x4202db={};return _0x4202db['rx']=0x0,_0x4202db['tx']=0x0,_0x4202db;}const _0x48eaf9=_0x6439a6(0x177)+_0x40a63b+'>';try{const _0x2485d3=await executeWriteWithTimeout(_0x377a24,_0x514760['ckRbW'],[_0x6439a6(0x131)+'='+_0x48eaf9,_0x514760['uUOhb']]);if(_0x2485d3&&Array[_0x6439a6(0x20e)](_0x2485d3)&&_0x2485d3[_0x6439a6(0x1b9)]>0x596+0x1b5*0x16+-0x2b24)return{'tx':_0x514760['uiZwH'](parseInt,_0x2485d3[-0x29*0x97+0x163*0x13+0x1*-0x22a][_0x514760[_0x6439a6(0x273)]],-0xb*0x352+-0xa*-0x1a7+0x140a)||0x1a51*0x1+-0x1*-0x1526+-0x2f77,'rx':_0x514760[_0x6439a6(0x239)](parseInt,_0x2485d3[-0x1dd4+0x1*0x3c4+0x2*0xd08][_0x514760[_0x6439a6(0x1a5)]],-0x29c*0xd+0x8e*-0x3b+0x42b0)||-0x1*-0x1e35+0x976+0x1*-0x27ab};}catch(_0x4dfbae){console['warn'](_0x6439a6(0x2cd)+_0x6439a6(0x2b1)+'rect\x20inter'+_0x6439a6(0x2e1)+_0x6439a6(0x1c6)+_0x48eaf9+(_0x6439a6(0x31c)+'Falling\x20ba'+_0x6439a6(0x152)+_0x6439a6(0x3f7)+_0x6439a6(0x1b2))+_0x4dfbae[_0x6439a6(0x206)]);}console[_0x6439a6(0x168)]('[Traffic\x20M'+_0x6439a6(0x32a)+_0x6439a6(0x33b)+'ck\x20queue\x20m'+_0x6439a6(0x22f)+_0x40a63b+'.');const _0x1df485=_0x290c74[-0x7*-0x57+0xff*0xd+-0x3d5*0x4][_0x6439a6(0x1e4)],_0x3123e8=await _0x514760[_0x6439a6(0x268)](executeWriteWithTimeout,_0x377a24,_0x514760['VGiFc']);if(!Array['isArray'](_0x3123e8)){const _0x494b87={};return _0x494b87['rx']=0x0,_0x494b87['tx']=0x0,_0x494b87;}const _0x49b757=_0x3123e8[_0x6439a6(0x3bf)](_0x16469e=>_0x16469e[_0x6439a6(0x25b)]&&_0x16469e[_0x6439a6(0x25b)][_0x6439a6(0x137)](_0x1df485));if(_0x49b757&&_0x49b757[_0x6439a6(0x1db)]){const [_0x34bf30,_0xb52665]=_0x49b757[_0x6439a6(0x1db)][_0x6439a6(0x3f6)]('/');return{'rx':_0x514760['uiZwH'](parseInt,_0xb52665,-0x5*-0x10b+-0xe*0xda+0x6bf)||0x1*0xc78+0x58f+-0x41*0x47,'tx':_0x514760[_0x6439a6(0x3ef)](parseInt,_0x34bf30,0x1889*0x1+0x11f9+-0x2a78)||-0x2*0x731+0x1*0xf7+0xd6b};}const _0x3fbd3e=_0x3123e8[_0x6439a6(0x3bf)](_0x39fb85=>_0x39fb85[_0x6439a6(0x284)]===_0x48eaf9);if(_0x3fbd3e&&_0x3fbd3e[_0x6439a6(0x1db)]){const [_0x586de5,_0x40276a]=_0x3fbd3e['rate'][_0x6439a6(0x3f6)]('/');return{'rx':_0x514760[_0x6439a6(0x2a5)](parseInt,_0x40276a,0xb89*0x1+-0x9d*0x33+0x1a6*0xc)||-0xef*-0x9+0x61*0x1d+-0x11*0x124,'tx':_0x514760[_0x6439a6(0x323)](parseInt,_0x586de5,-0x9f9*-0x3+0x18a3+-0x3684)||-0x13fd+-0x26c9*0x1+0x1*0x3ac6};}const _0x3f21ba=_0x3123e8['find'](_0x217f70=>_0x217f70['name']===_0x40a63b);if(_0x3f21ba&&_0x3f21ba['rate']){if(_0x514760['EYjuX'](_0x514760[_0x6439a6(0x1e8)],_0x514760['runlS'])){if(_0x33f691)_0x2f8ad6[_0x6439a6(0x14f)]();}else{const [_0xa37e25,_0x95ecff]=_0x3f21ba[_0x6439a6(0x1db)][_0x6439a6(0x3f6)]('/');return{'rx':_0x514760[_0x6439a6(0x136)](parseInt,_0x95ecff,-0x556+0x12d1+-0xd71)||-0x223+0xbe2+-0x9bf,'tx':parseInt(_0xa37e25,-0xd6*-0x2+-0x1*-0x230e+-0x24b0*0x1)||-0x2*0xa4+-0x219*0xb+-0x2b*-0x91};}}const _0x467dd9={};return _0x467dd9['rx']=0x0,_0x467dd9['tx']=0x0,_0x467dd9;}catch(_0x2c6316){if(_0x514760[_0x6439a6(0x24b)](_0x514760['oxRTi'],_0x514760[_0x6439a6(0x2b3)]))throw new _0x3786d6(_0x6439a6(0x32e)+'\x20dinamis\x20d'+'engan\x20kome'+_0x6439a6(0x297)+_0x38aff6+(_0x6439a6(0x403)+'temukan\x20di'+'\x20router.\x20H'+_0x6439a6(0x383)+_0x6439a6(0x3d1)+_0x6439a6(0x390)+_0x6439a6(0x34d)));else{console[_0x6439a6(0x269)](_0x6439a6(0x1f2)+'ntau\x20lalu\x20'+'lintas\x20unt'+_0x6439a6(0x3cf)+_0x40a63b+(',\x20mengemba'+_0x6439a6(0x20f)),_0x2c6316[_0x6439a6(0x206)]);const _0x1e9b6f={};return _0x1e9b6f['rx']=0x0,_0x1e9b6f['tx']=0x0,_0x1e9b6f;}}finally{if(_0x377a24)_0x377a24[_0x6439a6(0x14f)]();}},fetchPppoeUsers=async({includeActive:includeActive=!![]}={})=>{const _0x1e637f=_0x4e0c00,_0x1bcee2={'hRSTv':function(_0x27d58a){return _0x27d58a();},'qGcYX':function(_0x74b74e,_0x115acb,_0x833670){return _0x74b74e(_0x115acb,_0x833670);},'poPTw':_0x1e637f(0x304)+_0x1e637f(0x2bf),'Ozrxj':function(_0x3e6079,_0x4fd67e){return _0x3e6079!==_0x4fd67e;},'GfWJk':_0x1e637f(0x308),'qmmkZ':function(_0x5c0cdb,_0x31d32d,_0x53972b){return _0x5c0cdb(_0x31d32d,_0x53972b);},'ctPII':function(_0x415838,_0x321d9a){return _0x415838===_0x321d9a;},'acBOo':_0x1e637f(0x30b)},_0x8e9b09=await _0x1bcee2['hRSTv'](connectToRouter);if(!_0x8e9b09)return[];try{const _0x4b2312=await _0x1bcee2[_0x1e637f(0x1d1)](executeWriteWithTimeout,_0x8e9b09,_0x1bcee2[_0x1e637f(0x3fb)]),_0x5b3276=Array['isArray'](_0x4b2312)?_0x4b2312:[];let _0x4fb8a8=new Set();if(includeActive){if(_0x1bcee2[_0x1e637f(0x3f8)](_0x1bcee2['GfWJk'],'WcBdG')){const _0x45a397=await _0x1bcee2[_0x1e637f(0x38f)](executeWriteWithTimeout,_0x8e9b09,_0x1e637f(0x17a)+_0x1e637f(0x3d2)),_0x41573d=Array[_0x1e637f(0x20e)](_0x45a397)?_0x45a397:[];_0x4fb8a8=new Set(_0x41573d['map'](_0x50b707=>_0x50b707[_0x1e637f(0x284)]));}else{const _0x4248ca=_0x5f09ec?function(){const _0x25b068=_0x1e637f;if(_0x292317){const _0x8539e3=_0x543d64[_0x25b068(0x35e)](_0xca32b6,arguments);return _0x1612c7=null,_0x8539e3;}}:function(){};return _0x32f69d=![],_0x4248ca;}}return _0x5b3276[_0x1e637f(0x22e)](_0x2adc1b=>({'id':_0x2adc1b[_0x1e637f(0x402)],'name':_0x2adc1b[_0x1e637f(0x284)],'password':_0x2adc1b[_0x1e637f(0x237)],'service':_0x2adc1b[_0x1e637f(0x399)],'profile':_0x2adc1b['profile'],'comment':_0x2adc1b[_0x1e637f(0x32b)]||'','disabled':_0x2adc1b[_0x1e637f(0x240)]===_0x1e637f(0x30c),'active':_0x4fb8a8['has'](_0x2adc1b[_0x1e637f(0x284)])}));}catch(_0x2f33f1){if(_0x1bcee2['ctPII'](_0x1bcee2[_0x1e637f(0x329)],'FVoLu'))return console[_0x1e637f(0x269)](_0x1e637f(0x217)+'ambil\x20peng'+_0x1e637f(0x353)+_0x1e637f(0x27a)+'likan\x20arra'+_0x1e637f(0x301),_0x2f33f1[_0x1e637f(0x206)]),[];else _0x557cf8=_0x532d28['write'](_0x39b616);}finally{_0x8e9b09['close']();}},fetchActivePppoeConnections=async()=>{const _0x389bbf=_0x4e0c00,_0x4b99b0={'TaGxD':function(_0x57c875,_0x3ff0ca,_0x1b73d2){return _0x57c875(_0x3ff0ca,_0x1b73d2);},'vrTXU':function(_0x42658f,_0x55c1b4,_0x5766df){return _0x42658f(_0x55c1b4,_0x5766df);},'toPCL':function(_0x2e444c){return _0x2e444c();},'oscdc':function(_0x10a4fc,_0x96e6a8){return _0x10a4fc===_0x96e6a8;},'mfhtu':'Nebsv','mBMjz':_0x389bbf(0x17a)+_0x389bbf(0x3d2),'TcVdh':_0x389bbf(0x267),'IMqCd':_0x389bbf(0x217)+_0x389bbf(0x283)+'ksi\x20PPPoE\x20'+_0x389bbf(0x3cb)+_0x389bbf(0x3df)+_0x389bbf(0xff)+_0x389bbf(0x3f3),'cbupY':_0x389bbf(0x114)},_0x49117a=await _0x4b99b0['toPCL'](connectToRouter);if(!_0x49117a)return[];try{if(_0x4b99b0[_0x389bbf(0x12e)](_0x389bbf(0x183),_0x4b99b0['mfhtu'])){if(_0x42903f)_0x348fe1[_0x389bbf(0x14f)]();}else{const _0x305af5=await _0x4b99b0[_0x389bbf(0x401)](executeWriteWithTimeout,_0x49117a,_0x4b99b0[_0x389bbf(0x11d)]);return Array[_0x389bbf(0x20e)](_0x305af5)?_0x305af5:[];}}catch(_0x3d0fc3){if(_0x4b99b0[_0x389bbf(0x202)]!=='cwLzp'){const [_0x4890d1,_0x5319c5]=_0x5f2e62[_0x389bbf(0x1db)]['split']('/');return{'rx':_0x4b99b0[_0x389bbf(0x149)](_0x16d938,_0x5319c5,-0x4*-0x4ae+0x25aa+-0x259*0x18)||-0xa4e+0x65f*0x1+0x3ef,'tx':_0x4b99b0[_0x389bbf(0x401)](_0x10713b,_0x4890d1,-0x1b1c+0x1b61*-0x1+0x21*0x1a7)||-0x10a9+-0x658+0x1701};}else return console[_0x389bbf(0x269)](_0x4b99b0[_0x389bbf(0x13e)],_0x3d0fc3[_0x389bbf(0x206)]),[];}finally{if('kgZQh'!==_0x4b99b0[_0x389bbf(0x108)]){if(_0x49117a)_0x49117a[_0x389bbf(0x14f)]();}else{if(_0x27e043)_0x9c4493[_0x389bbf(0x14f)]();}}},removeActivePppoeConnection=async _0x35ffc5=>{const _0xb10b6=_0x4e0c00,_0x5e5844={'ujFzM':function(_0x4678c2,_0x16c2b0,_0x4d2f42){return _0x4678c2(_0x16c2b0,_0x4d2f42);},'zAquV':function(_0x3003f7,_0x2377c7,_0x395656){return _0x3003f7(_0x2377c7,_0x395656);},'SansB':_0xb10b6(0x179)+_0xb10b6(0x105),'eXhfo':function(_0x4a6381){return _0x4a6381();},'byQZt':'Router\x20Mik'+_0xb10b6(0x1ed)+_0xb10b6(0x26d)+_0xb10b6(0x11e)+_0xb10b6(0x19b)+_0xb10b6(0xf8)+_0xb10b6(0x3c1)+'tif.','HAuqJ':function(_0x5e19d0,_0x1e314f){return _0x5e19d0===_0x1e314f;},'TIrAM':'CZpRq','FtSaj':_0xb10b6(0x3b9),'TDaJU':function(_0x31aa85,_0x15d67b){return _0x31aa85!==_0x15d67b;},'HgBul':'IioTl','NHTXQ':'rJFFF'},_0x15d458=await _0x5e5844[_0xb10b6(0x3e5)](connectToRouter);if(!_0x15d458)throw new Error(_0x5e5844[_0xb10b6(0x271)]);try{if(_0x5e5844['HAuqJ'](_0x5e5844[_0xb10b6(0x1c8)],_0x5e5844['FtSaj'])){if(_0x1fa4b0){const _0x136dc1=_0x1d9e7f[_0xb10b6(0x35e)](_0x316710,arguments);return _0x2fb431=null,_0x136dc1;}}else{await _0x5e5844[_0xb10b6(0x36e)](executeWriteWithTimeout,_0x15d458,['/ppp/activ'+_0xb10b6(0x34c),'=.id='+_0x35ffc5]);const _0xff5a7={};return _0xff5a7['success']=!![],_0xff5a7;}}finally{if(_0x5e5844[_0xb10b6(0x406)](_0x5e5844[_0xb10b6(0x1e1)],_0x5e5844[_0xb10b6(0x3e4)])){if(_0x15d458)_0x15d458[_0xb10b6(0x14f)]();}else return{'tx':_0x5e5844['ujFzM'](_0x4fb3ca,_0x48a664[-0x1068+0x1139+-0x1*0xd1][_0xb10b6(0x29c)+_0xb10b6(0x105)],-0x2f6+0xe94+-0xb94)||-0x7*0x39b+0x60f+-0x5*-0x3d6,'rx':_0x5e5844['zAquV'](_0x3d7413,_0x1a2898[0xc8f+0x2*-0x8ef+0x97*0x9][_0x5e5844[_0xb10b6(0x2e2)]],0xb2*0x1+0x15*0x29+-0x3*0x157)||-0x2497+0x1a47+-0x370*-0x3};}},updatePppoeUser=async(_0x5c4b44,_0x352b04)=>{const _0x36d0d6=_0x4e0c00,_0x871cf2={'cgDOr':_0x36d0d6(0x16b)+'ce','AtvKO':function(_0x5c3d17){return _0x5c3d17();},'xXnqV':function(_0x30b423,_0x204b8b){return _0x30b423===_0x204b8b;},'ETlrd':_0x36d0d6(0x1e9),'QBSye':'tPIwB','eYGwi':_0x36d0d6(0x304)+_0x36d0d6(0x188),'aMPpb':function(_0x428826,_0xfe9189){return _0x428826!==_0xfe9189;},'flOMf':function(_0x49c3e5,_0x39a1cd,_0x42fa1c){return _0x49c3e5(_0x39a1cd,_0x42fa1c);}},_0x470bb5=await _0x871cf2[_0x36d0d6(0x33d)](connectToRouter);if(!_0x470bb5)throw new Error(_0x36d0d6(0x2ee)+_0x36d0d6(0x1ed)+_0x36d0d6(0x26d)+_0x36d0d6(0x11e)+_0x36d0d6(0xfc)+_0x36d0d6(0x2a6)+'guna.');try{if(_0x871cf2[_0x36d0d6(0x2f7)](_0x871cf2[_0x36d0d6(0x15b)],_0x871cf2[_0x36d0d6(0x28f)]))_0x361f8c[_0x871cf2[_0x36d0d6(0x18a)]]=_0x2f738c,_0x5e9925[_0x36d0d6(0x168)](_0x36d0d6(0x172)+']\x20Membuat\x20'+'aturan\x20NAT'+'\x20dinamis\x20d'+_0x36d0d6(0x195)+_0x36d0d6(0x328)+_0x3f3689+'.');else{const _0x4d6994=[_0x871cf2[_0x36d0d6(0x2b5)],_0x36d0d6(0x2e0)+_0x5c4b44];if(_0x352b04[_0x36d0d6(0x284)])_0x4d6994['push'](_0x36d0d6(0x189)+_0x352b04[_0x36d0d6(0x284)]);if(_0x352b04[_0x36d0d6(0x237)])_0x4d6994['push'](_0x36d0d6(0x2c5)+_0x352b04['password']);if(_0x352b04[_0x36d0d6(0x3ea)])_0x4d6994[_0x36d0d6(0x248)](_0x36d0d6(0x2fb)+_0x352b04[_0x36d0d6(0x3ea)]);if(_0x871cf2[_0x36d0d6(0x266)](typeof _0x352b04['comment'],_0x36d0d6(0x207)))_0x4d6994[_0x36d0d6(0x248)](_0x36d0d6(0x382)+_0x352b04[_0x36d0d6(0x32b)]);return await _0x871cf2[_0x36d0d6(0x395)](executeWriteWithTimeout,_0x470bb5,_0x4d6994);}}finally{if(_0x470bb5)_0x470bb5[_0x36d0d6(0x14f)]();}},disablePppoeUser=async _0x2c4b00=>{const _0x3824ab=_0x4e0c00,_0x65e07a={'xouRi':_0x3824ab(0x102),'yvWyX':function(_0x17e789){return _0x17e789();},'kyVaH':'Router\x20Mik'+_0x3824ab(0x1ed)+_0x3824ab(0x26d)+_0x3824ab(0x11e)+'pat\x20menona'+_0x3824ab(0x242)+_0x3824ab(0x15f),'ddJbp':function(_0x3f3c65,_0x443666){return _0x3f3c65===_0x443666;},'oGWbn':_0x3824ab(0x343),'JxFGw':function(_0x4e9920,_0x2999ca,_0x22c914){return _0x4e9920(_0x2999ca,_0x22c914);},'acGrY':_0x3824ab(0x304)+_0x3824ab(0x188)},_0x3fbfa4=await _0x65e07a['yvWyX'](connectToRouter);if(!_0x3fbfa4)throw new Error(_0x65e07a[_0x3824ab(0x213)]);try{if(_0x65e07a[_0x3824ab(0x2df)](_0x65e07a[_0x3824ab(0x255)],'iIHhP')){await _0x65e07a[_0x3824ab(0x386)](executeWriteWithTimeout,_0x3fbfa4,[_0x65e07a[_0x3824ab(0x409)],'=disabled='+_0x3824ab(0x211),_0x3824ab(0x2e0)+_0x2c4b00]);const _0x4e60e3={};return _0x4e60e3[_0x3824ab(0x198)]=!![],_0x4e60e3;}else this['emit'](_0x65e07a['xouRi'],_0x69d352[_0x3824ab(0x20e)](this['data'])?this[_0x3824ab(0x3e7)]:[]);}finally{if(_0x3fbfa4)_0x3fbfa4['close']();}},enablePppoeUser=async _0x505ec9=>{const _0x33cdc1=_0x4e0c00,_0x3642c4={'OtcrA':_0x33cdc1(0x197),'urykT':function(_0x5294da,_0x2bef16,_0xc2bf5f){return _0x5294da(_0x2bef16,_0xc2bf5f);},'vXBIT':_0x33cdc1(0x2ee)+_0x33cdc1(0x1ed)+'ng\x20offline'+_0x33cdc1(0x11e)+_0x33cdc1(0x306)+'tifkan\x20pen'+'gguna.','eYDFh':function(_0x260256,_0x13f02e){return _0x260256===_0x13f02e;},'FOocE':_0x33cdc1(0x264),'InNrQ':'HkGZU','pMltb':_0x33cdc1(0x304)+'t/set','tFuaf':_0x33cdc1(0x2d4)+'no'},_0x4f4f88=await connectToRouter();if(!_0x4f4f88)throw new Error(_0x3642c4[_0x33cdc1(0x3b3)]);try{if(_0x3642c4[_0x33cdc1(0x24e)](_0x3642c4[_0x33cdc1(0x2bc)],_0x3642c4[_0x33cdc1(0x1be)])){const _0x1e7d4f=_0x11327c[-0x14a7+0xae*0x10+0x9c7]['rate']||_0x3642c4[_0x33cdc1(0x384)],[_0x59f852,_0x4a4c77]=_0x1e7d4f[_0x33cdc1(0x3f6)]('/');return{'tx':_0x2257dc(_0x59f852,0x17*-0x94+-0xea*-0x1+-0x14*-0x9f)||0x2158+-0x118a+0xee*-0x11,'rx':_0x3642c4[_0x33cdc1(0x371)](_0x4acc81,_0x4a4c77,0xe1c+0x5*-0x131+-0x81d)||0xb94+0xb*-0x32+-0x96e};}else{await _0x3642c4['urykT'](executeWriteWithTimeout,_0x4f4f88,[_0x3642c4[_0x33cdc1(0x175)],_0x3642c4[_0x33cdc1(0x314)],_0x33cdc1(0x2e0)+_0x505ec9]);const _0x256217={};return _0x256217[_0x33cdc1(0x198)]=!![],_0x256217;}}finally{if(_0x4f4f88)_0x4f4f88['close']();}},reconnectPppoeUser=async _0x2b724c=>{const _0x5626ba=_0x4e0c00,_0x433e07={'Zvkvi':_0x5626ba(0x2ad)+'API]\x20Ignor'+_0x5626ba(0x26f)+'STEREDTAG\x20'+_0x5626ba(0x3db)+_0x5626ba(0x2f1)+_0x5626ba(0x3ca)+_0x5626ba(0x181),'vpTMe':function(_0x35978e){return _0x35978e();},'SWmOw':_0x5626ba(0x2ee)+'rotik\x20seda'+'ng\x20offline'+_0x5626ba(0x11e)+_0x5626ba(0x15e)+_0x5626ba(0x1de)+_0x5626ba(0x40d)+_0x5626ba(0x253),'hgWUw':function(_0x15dbbd,_0x592cba,_0x271d49){return _0x15dbbd(_0x592cba,_0x271d49);},'iNicF':function(_0xce6fbd,_0x119ae1){return _0xce6fbd>_0x119ae1;},'uXHjx':function(_0x1b9894,_0x16b268){return _0x1b9894===_0x16b268;},'OsxNq':_0x5626ba(0x3c3),'qzDEb':_0x5626ba(0x402),'bjlAK':function(_0x408c3c,_0x47fe27){return _0x408c3c!==_0x47fe27;},'cKURo':_0x5626ba(0x2ce)},_0x4399de=await _0x433e07[_0x5626ba(0x1f1)](connectToRouter);if(!_0x4399de)throw new Error(_0x433e07[_0x5626ba(0x13c)]);try{const _0x3d592b=await _0x433e07[_0x5626ba(0x24f)](executeWriteWithTimeout,_0x4399de,[_0x5626ba(0x17a)+_0x5626ba(0x3d2),_0x5626ba(0x12c)+_0x2b724c]);if(_0x3d592b&&Array[_0x5626ba(0x20e)](_0x3d592b)&&_0x433e07[_0x5626ba(0x288)](_0x3d592b['length'],-0x1f1d+0x25a+0x1cc3)){if(_0x433e07[_0x5626ba(0x1ce)](_0x433e07[_0x5626ba(0x1cd)],'IxZAo')){if(_0x52da72)_0x24e5f7[_0x5626ba(0x14f)]();}else{const _0x40a197=_0x3d592b[0x2603+0xf5b+-0xcf*0x42][_0x433e07[_0x5626ba(0x1d8)]];await executeWriteWithTimeout(_0x4399de,[_0x5626ba(0x17a)+_0x5626ba(0x34c),_0x5626ba(0x2e0)+_0x40a197]);}}const _0x4c5eb5={};return _0x4c5eb5[_0x5626ba(0x198)]=!![],_0x4c5eb5;}finally{if(_0x433e07[_0x5626ba(0x336)](_0x5626ba(0x2ce),_0x433e07['cKURo'])){_0x5316f9[_0x5626ba(0x40e)](_0x433e07['Zvkvi']);return;}else{if(_0x4399de)_0x4399de[_0x5626ba(0x14f)]();}}},deletePppoeUser=async _0x5abd17=>{const _0x3a7add=_0x4e0c00,_0x24e036={'fFPYh':function(_0x3ff79f){return _0x3ff79f();},'IWilU':_0x3a7add(0x2ee)+'rotik\x20seda'+_0x3a7add(0x26d)+_0x3a7add(0x11e)+_0x3a7add(0x19b)+_0x3a7add(0x286)+'na.','DHcvp':_0x3a7add(0x304)+_0x3a7add(0x2bf),'lWGwt':function(_0x1328a5,_0x2c9c34){return _0x1328a5>_0x2c9c34;},'TbZsV':function(_0x35dd5c,_0xa7f0df,_0x1f1a61){return _0x35dd5c(_0xa7f0df,_0x1f1a61);},'zdyZb':function(_0x5dcfa6,_0x21393a){return _0x5dcfa6>_0x21393a;},'HqxCl':function(_0x21c36d,_0x560b78,_0x39e63e){return _0x21c36d(_0x560b78,_0x39e63e);},'pKDDj':'.id','fuUUM':function(_0x4043c9,_0x496d8f,_0x387941){return _0x4043c9(_0x496d8f,_0x387941);}},_0x1ac852=await _0x24e036[_0x3a7add(0x2b2)](connectToRouter);if(!_0x1ac852)throw new Error(_0x24e036[_0x3a7add(0x2ac)]);try{const _0x1cd790=await executeWriteWithTimeout(_0x1ac852,[_0x24e036['DHcvp'],'?.id='+_0x5abd17]);if(_0x1cd790&&Array['isArray'](_0x1cd790)&&_0x24e036[_0x3a7add(0x3bd)](_0x1cd790['length'],0x5*-0xa2+-0x1538+0x1862)){const _0x27994d=_0x1cd790[0x1*0x9b1+0x1*0xe95+-0x1de*0xd]['name'],_0x5372a9=await _0x24e036[_0x3a7add(0x20c)](executeWriteWithTimeout,_0x1ac852,[_0x3a7add(0x17a)+_0x3a7add(0x3d2),_0x3a7add(0x12c)+_0x27994d]);_0x5372a9&&Array[_0x3a7add(0x20e)](_0x5372a9)&&_0x24e036[_0x3a7add(0x291)](_0x5372a9[_0x3a7add(0x1b9)],-0xcb5+0x1*0x1fc3+0x987*-0x2)&&await _0x24e036[_0x3a7add(0x2a0)](executeWriteWithTimeout,_0x1ac852,['/ppp/activ'+'e/remove','=.id='+_0x5372a9[-0x5e5+0x4df+0x106][_0x24e036[_0x3a7add(0x1bc)]]]),await _0x24e036[_0x3a7add(0x1c3)](executeWriteWithTimeout,_0x1ac852,[_0x3a7add(0x304)+_0x3a7add(0x2b8),_0x3a7add(0x2e0)+_0x5abd17]);}const _0x42a2b5={};return _0x42a2b5[_0x3a7add(0x198)]=!![],_0x42a2b5;}finally{if(_0x1ac852)_0x1ac852[_0x3a7add(0x14f)]();}},addPppoeUser=async _0x28eb3=>{const _0x2dcf6b=_0x4e0c00,_0x48962a={'abLNz':function(_0x20570a){return _0x20570a();},'iWaEI':_0x2dcf6b(0x304)+_0x2dcf6b(0x3af)},_0x32f0f3=await _0x48962a[_0x2dcf6b(0x378)](connectToRouter);if(!_0x32f0f3)throw new Error('Router\x20Mik'+'rotik\x20seda'+_0x2dcf6b(0x26d)+'.\x20Tidak\x20da'+_0x2dcf6b(0x1ba)+_0x2dcf6b(0x1c7)+_0x2dcf6b(0x253));try{const _0x2d5dbe=[_0x48962a['iWaEI'],_0x2dcf6b(0x189)+_0x28eb3[_0x2dcf6b(0x284)],_0x2dcf6b(0x2c5)+_0x28eb3[_0x2dcf6b(0x237)],_0x2dcf6b(0x157)+_0x2dcf6b(0x2cb),'=profile='+_0x28eb3[_0x2dcf6b(0x3ea)],'=comment='+(_0x28eb3[_0x2dcf6b(0x32b)]||'')];return await executeWriteWithTimeout(_0x32f0f3,_0x2d5dbe);}finally{if(_0x32f0f3)_0x32f0f3[_0x2dcf6b(0x14f)]();}},updatePppoeUserCommentByName=async(_0x45022c,_0xf08e1d)=>{const _0x2d5068=_0x4e0c00,_0x30385b={'hkraX':function(_0xb85cf8){return _0xb85cf8();},'rzuNy':function(_0x20ae08,_0x4329d1,_0x5619eb){return _0x20ae08(_0x4329d1,_0x5619eb);},'VuFJh':_0x2d5068(0x304)+_0x2d5068(0x2bf),'MBwBh':function(_0x31371b,_0xdf9227){return _0x31371b>_0xdf9227;},'ihDsg':function(_0x33cdef,_0x440859){return _0x33cdef===_0x440859;},'Liebe':_0x2d5068(0x1d9),'hAiQm':_0x2d5068(0x402),'FRzCP':_0x2d5068(0x304)+_0x2d5068(0x188),'mXgaZ':function(_0x4b3911,_0x29d326){return _0x4b3911||_0x29d326;}};if(!_0x45022c)return;const _0xd647e3=await _0x30385b[_0x2d5068(0x141)](connectToRouter);if(!_0xd647e3){console[_0x2d5068(0x40e)](_0x2d5068(0x2ad)+_0x2d5068(0x2e6)+_0x2d5068(0x1bd)+_0x2d5068(0x361)+_0x2d5068(0x20b)+_0x45022c+(_0x2d5068(0x36c)+_0x2d5068(0x220)+'ine.'));return;}try{const _0x3de409=await _0x30385b[_0x2d5068(0x3c6)](executeWriteWithTimeout,_0xd647e3,[_0x30385b[_0x2d5068(0x115)],_0x2d5068(0x12c)+_0x45022c]);if(_0x3de409&&Array[_0x2d5068(0x20e)](_0x3de409)&&_0x30385b[_0x2d5068(0x396)](_0x3de409['length'],0x2d4*0x8+0x9*-0x23b+-0x28d)){if(_0x30385b[_0x2d5068(0x1b6)](_0x30385b[_0x2d5068(0x3a3)],_0x30385b[_0x2d5068(0x3a3)])){const _0x25827f=_0x3de409[-0x725+0x1*-0x1517+0x1c3c][_0x30385b['hAiQm']];await _0x30385b[_0x2d5068(0x3c6)](executeWriteWithTimeout,_0xd647e3,[_0x30385b[_0x2d5068(0x224)],_0x2d5068(0x2e0)+_0x25827f,_0x2d5068(0x382)+_0x30385b['mXgaZ'](_0xf08e1d,'')]);}else{if(_0x4e7c8a)_0x503b58[_0x2d5068(0x14f)]();}}}finally{if(_0xd647e3)_0xd647e3[_0x2d5068(0x14f)]();}},fetchHotspotUsers=async()=>{const _0x1d2a40=_0x4e0c00,_0x20b376={'aOzQk':_0x1d2a40(0x299)+_0x1d2a40(0x119)+'ap\x20verifik'+'asi\x20Host/I'+_0x1d2a40(0x3ec)+',\x20dan\x20peri'+'ksa\x20pengat'+'uran\x20firew'+_0x1d2a40(0xf0),'FvCRl':function(_0x2724fb){return _0x2724fb();},'GuzUp':'EOBxP','ZyAZW':'gRQsf','uYtiO':function(_0x38eb6c,_0x85b54f,_0x254627){return _0x38eb6c(_0x85b54f,_0x254627);},'hKebR':_0x1d2a40(0x34f)+_0x1d2a40(0x20d)+'nt','wtIMY':function(_0x3d756c,_0x5e4388){return _0x3d756c===_0x5e4388;},'BSLQi':'KLeEZ','oNIAq':_0x1d2a40(0x217)+_0x1d2a40(0x151)+_0x1d2a40(0x1fb)+_0x1d2a40(0x142)+_0x1d2a40(0x245)+_0x1d2a40(0x3e9)+':','IAvhx':function(_0x2b15f1,_0x213b34){return _0x2b15f1===_0x213b34;},'GiAvu':_0x1d2a40(0x1a9)},_0x30f32d=await _0x20b376['FvCRl'](connectToRouter);if(!_0x30f32d)return[];try{if(_0x20b376[_0x1d2a40(0x3a8)]!==_0x20b376[_0x1d2a40(0x110)]){const _0x4c5342=await _0x20b376[_0x1d2a40(0x296)](executeWriteWithTimeout,_0x30f32d,_0x20b376[_0x1d2a40(0x12f)]);if(!Array[_0x1d2a40(0x20e)](_0x4c5342))return[];return _0x4c5342[_0x1d2a40(0x22e)](_0xf912f=>({'id':_0xf912f[_0x1d2a40(0x402)],'name':_0xf912f['name'],'password':_0xf912f[_0x1d2a40(0x237)],'profile':_0xf912f[_0x1d2a40(0x3ea)],'comment':_0xf912f['comment']||'','disabled':_0xf912f[_0x1d2a40(0x240)]==='true','totalUptime':_0xf912f[_0x1d2a40(0xfb)]}));}else _0x38f317=_0x347bf0[_0x1d2a40(0x357)][_0x1d2a40(0x22e)](_0x3fb47a=>_0x3fb47a[_0x1d2a40(0x206)])[_0x1d2a40(0x14d)](';\x20');}catch(_0x261b6d){if(_0x20b376['wtIMY'](_0x20b376[_0x1d2a40(0x40f)],_0x20b376[_0x1d2a40(0x40f)]))return console[_0x1d2a40(0x269)](_0x20b376[_0x1d2a40(0x2be)],_0x261b6d[_0x1d2a40(0x206)]),[];else{if(_0x388b10)_0x375673[_0x1d2a40(0x14f)]();}}finally{if(_0x20b376[_0x1d2a40(0xf1)](_0x1d2a40(0x1a9),_0x20b376[_0x1d2a40(0x300)])){if(_0x30f32d)_0x30f32d[_0x1d2a40(0x14f)]();}else _0x5dd714=_0x20b376[_0x1d2a40(0x1f9)];}},fetchActiveHotspotConnections=async()=>{const _0x19d302=_0x4e0c00,_0x1c52d8={'iXViX':function(_0x53e29f){return _0x53e29f();},'yIZmf':function(_0x5775d6,_0x1df875,_0x4c6633){return _0x5775d6(_0x1df875,_0x4c6633);},'cfulQ':_0x19d302(0x217)+_0x19d302(0x283)+_0x19d302(0x2fc)+_0x19d302(0x272)+_0x19d302(0x17c)+'an\x20array\x20k'+'osong:','tfHtM':function(_0x3f2736,_0x8bf887){return _0x3f2736===_0x8bf887;},'FRZgp':_0x19d302(0x312)},_0x269e47=await _0x1c52d8['iXViX'](connectToRouter);if(!_0x269e47)return[];try{const _0x3e2b66=await _0x1c52d8[_0x19d302(0x229)](executeWriteWithTimeout,_0x269e47,_0x19d302(0x34f)+'t/active/p'+'rint');return Array[_0x19d302(0x20e)](_0x3e2b66)?_0x3e2b66:[];}catch(_0x55ff1f){return console[_0x19d302(0x269)](_0x1c52d8[_0x19d302(0x161)],_0x55ff1f[_0x19d302(0x206)]),[];}finally{if(_0x1c52d8[_0x19d302(0x34a)](_0x19d302(0x312),_0x1c52d8[_0x19d302(0x3aa)])){if(_0x269e47)_0x269e47[_0x19d302(0x14f)]();}else{if(_0x1a6eec)_0x1f2547['close']();}}},addHotspotUser=async _0x36b354=>{const _0x2e87a1=_0x4e0c00,_0x5a62a7={'sSrsL':function(_0xb7c4d1,_0x25ca92){return _0xb7c4d1(_0x25ca92);},'KsUxn':function(_0x574389){return _0x574389();},'DwoZh':_0x2e87a1(0x2ee)+_0x2e87a1(0x1ed)+_0x2e87a1(0x26d)+_0x2e87a1(0x11e)+_0x2e87a1(0x1ba)+_0x2e87a1(0x1c7)+_0x2e87a1(0x26b)+_0x2e87a1(0x2ba),'nlLcj':'/ip/hotspo'+_0x2e87a1(0x21b),'hdijU':function(_0x215739,_0xacb6fe){return _0x215739!==_0xacb6fe;},'Ffqny':'JmLoe','Znhux':function(_0x24a375,_0x4773b1,_0x3e809b){return _0x24a375(_0x4773b1,_0x3e809b);},'lEVSH':function(_0x27ff04,_0x2df0e4){return _0x27ff04===_0x2df0e4;},'xqGuH':_0x2e87a1(0x33e),'BMHyN':_0x2e87a1(0x3d3),'WdzeE':function(_0x867530,_0x45f5d0){return _0x867530!==_0x45f5d0;},'VNLbK':_0x2e87a1(0x148)},_0x25d063=await _0x5a62a7['KsUxn'](connectToRouter);if(!_0x25d063)throw new Error(_0x5a62a7['DwoZh']);try{const _0x400c3d=[_0x5a62a7['nlLcj'],'=name='+_0x36b354[_0x2e87a1(0x284)],'=password='+_0x36b354['password'],_0x2e87a1(0x2fb)+_0x36b354[_0x2e87a1(0x3ea)],'=comment='+(_0x36b354[_0x2e87a1(0x32b)]||'')];if(_0x36b354[_0x2e87a1(0x240)]){if(_0x5a62a7[_0x2e87a1(0x366)](_0x5a62a7['Ffqny'],_0x5a62a7[_0x2e87a1(0x360)]))return _0x5b9afa['call'](this,_0x5ef287,_0x53ee1b);else _0x400c3d[_0x2e87a1(0x248)](_0x2e87a1(0x2d4)+_0x36b354[_0x2e87a1(0x240)]);}const _0x34a92e=await _0x5a62a7['Znhux'](executeWriteWithTimeout,_0x25d063,_0x400c3d);if(_0x34a92e&&Array[_0x2e87a1(0x20e)](_0x34a92e)&&_0x34a92e[_0x2e87a1(0x1b9)]>0x31e+0x38c+-0x6aa&&_0x34a92e[-0x302+-0x25e6+-0x268*-0x11]['ret']){if(_0x5a62a7[_0x2e87a1(0x35c)](_0x5a62a7[_0x2e87a1(0x35f)],_0x5a62a7['BMHyN']))_0x5a62a7[_0x2e87a1(0x24d)](_0x4e2eb5,_0x1ab5cb),_0x5a62a7['sSrsL'](_0x341a0e,_0x1353af);else{const _0x13491c={};return _0x13491c['id']=_0x34a92e[0x1f66*-0x1+0x1606+0x18*0x64][_0x2e87a1(0x26a)],_0x13491c;}}throw new Error(_0x2e87a1(0x1df)+'ik\x20tidak\x20m'+_0x2e87a1(0x17c)+_0x2e87a1(0x236)+_0x2e87a1(0x380)+_0x2e87a1(0x18f)+_0x2e87a1(0x3ad)+_0x2e87a1(0x337));}finally{if(_0x5a62a7[_0x2e87a1(0x311)](_0x5a62a7['VNLbK'],_0x2e87a1(0x2a4))){if(_0x25d063)_0x25d063[_0x2e87a1(0x14f)]();}else _0xfca7af='DNS\x20lookup'+_0x2e87a1(0x185)+'r\x20host\x20\x27'+_0x37c2b7+(_0x2e87a1(0x166)+'check\x20if\x20t'+_0x2e87a1(0x163)+_0x2e87a1(0x16c)+_0x2e87a1(0x331)+_0x2e87a1(0x39d));}},removeActiveHotspotUser=async _0x3865be=>{const _0x53c030=_0x4e0c00,_0x3aa131={'OmHNH':function(_0x46dc3e){return _0x46dc3e();},'nZHYZ':_0x53c030(0x2ee)+_0x53c030(0x1ed)+'ng\x20offline'+_0x53c030(0x11e)+_0x53c030(0x19b)+_0x53c030(0x286)+'na\x20aktif.','DTqfw':function(_0x50a1a1,_0x13ef67){return _0x50a1a1!==_0x13ef67;},'NvUWZ':_0x53c030(0x3f4),'WyptB':function(_0x4fcf6f,_0x1b1e3e,_0x4e8523){return _0x4fcf6f(_0x1b1e3e,_0x4e8523);},'jfmLy':'/ip/hotspo'+_0x53c030(0x28a)+_0x53c030(0x2c4)},_0x311ae9=await _0x3aa131[_0x53c030(0x24a)](connectToRouter);if(!_0x311ae9)throw new Error(_0x3aa131[_0x53c030(0x1c9)]);try{if(_0x3aa131[_0x53c030(0x276)]('fYyuF',_0x3aa131[_0x53c030(0x3c9)]))return await _0x3aa131[_0x53c030(0x28b)](executeWriteWithTimeout,_0x311ae9,[_0x3aa131['jfmLy'],_0x53c030(0x2e0)+_0x3865be]);else{if(_0x368a9e)_0x4d54a5[_0x53c030(0x14f)]();}}finally{if(_0x311ae9)_0x311ae9[_0x53c030(0x14f)]();}},deleteHotspotUser=async _0x5e78e5=>{const _0x496b7b=_0x4e0c00,_0x1d48ad={'XLMdE':function(_0xdcf54e){return _0xdcf54e();},'mBFyg':_0x496b7b(0x2ee)+_0x496b7b(0x1ed)+_0x496b7b(0x26d)+_0x496b7b(0x11e)+_0x496b7b(0x19b)+_0x496b7b(0x286)+_0x496b7b(0x209)+'.','NGnbO':function(_0x4ea349,_0x2dea22,_0x19243e){return _0x4ea349(_0x2dea22,_0x19243e);},'iKHyn':function(_0x32fc37,_0x34abe4){return _0x32fc37>_0x34abe4;},'YTguH':function(_0x1bb997,_0xee6e13){return _0x1bb997>_0xee6e13;},'zrusw':_0x496b7b(0x34f)+_0x496b7b(0x28a)+_0x496b7b(0x2c4),'AIEBH':_0x496b7b(0x402),'LwsWe':function(_0x4df7f1,_0x642828,_0x3267c0){return _0x4df7f1(_0x642828,_0x3267c0);}},_0x548bdb=await _0x1d48ad[_0x496b7b(0x18d)](connectToRouter);if(!_0x548bdb)throw new Error(_0x1d48ad[_0x496b7b(0x1e7)]);try{const _0x156f41=await _0x1d48ad[_0x496b7b(0x1bb)](executeWriteWithTimeout,_0x548bdb,['/ip/hotspo'+_0x496b7b(0x20d)+'nt','?.id='+_0x5e78e5]);if(_0x156f41&&Array[_0x496b7b(0x20e)](_0x156f41)&&_0x1d48ad['iKHyn'](_0x156f41[_0x496b7b(0x1b9)],0x1*0x1bbf+0x19cc+-0x358b)){const _0x53ab5d=_0x156f41[0x7*-0x132+0x14b*0x5+0x1e7][_0x496b7b(0x284)],_0x44afac=await executeWriteWithTimeout(_0x548bdb,[_0x496b7b(0x34f)+_0x496b7b(0x279)+_0x496b7b(0x24c),'?user='+_0x53ab5d]);_0x44afac&&Array[_0x496b7b(0x20e)](_0x44afac)&&_0x1d48ad['YTguH'](_0x44afac[_0x496b7b(0x1b9)],-0x1*-0x2028+0x2ca+-0x1f1*0x12)&&await executeWriteWithTimeout(_0x548bdb,[_0x1d48ad[_0x496b7b(0x2a1)],_0x496b7b(0x2e0)+_0x44afac[-0xc92+0x1*0x1475+-0x7e3][_0x1d48ad[_0x496b7b(0x3b7)]]]),await _0x1d48ad[_0x496b7b(0x1e6)](executeWriteWithTimeout,_0x548bdb,[_0x496b7b(0x34f)+'t/user/rem'+_0x496b7b(0x330),_0x496b7b(0x2e0)+_0x5e78e5]);}const _0x547cd3={};return _0x547cd3[_0x496b7b(0x198)]=!![],_0x547cd3;}finally{if(_0x548bdb)_0x548bdb[_0x496b7b(0x14f)]();}},disableHotspotUser=async _0x250b8f=>{const _0x28f8a6=_0x4e0c00,_0x450213={'Ninle':'Gagal\x20meng'+_0x28f8a6(0x151)+_0x28f8a6(0x1fb)+_0x28f8a6(0x142)+_0x28f8a6(0x245)+_0x28f8a6(0x3e9)+':','jtRcX':function(_0x4d0ddd){return _0x4d0ddd();},'MhvDm':_0x28f8a6(0x2ee)+_0x28f8a6(0x1ed)+_0x28f8a6(0x26d)+_0x28f8a6(0x11e)+'pat\x20menona'+_0x28f8a6(0x242)+_0x28f8a6(0x1d6)+_0x28f8a6(0x372),'hLvZR':_0x28f8a6(0x1b1),'YPlyz':_0x28f8a6(0x2d4)+_0x28f8a6(0x211)},_0x3b37e9=await _0x450213['jtRcX'](connectToRouter);if(!_0x3b37e9)throw new Error(_0x450213[_0x28f8a6(0x113)]);try{if(_0x450213[_0x28f8a6(0x2a2)]!==_0x450213['hLvZR'])return _0x5c5dec[_0x28f8a6(0x269)](_0x450213[_0x28f8a6(0x3e8)],_0x57e0d4['message']),[];else{await executeWriteWithTimeout(_0x3b37e9,['/ip/hotspo'+'t/user/set',_0x450213[_0x28f8a6(0x17f)],'=.id='+_0x250b8f]);const _0x19f421={};return _0x19f421[_0x28f8a6(0x198)]=!![],_0x19f421;}}finally{if(_0x3b37e9)_0x3b37e9[_0x28f8a6(0x14f)]();}},enableHotspotUser=async _0x31959f=>{const _0x17647b=_0x4e0c00,_0x498778={'GuYqF':function(_0x35ec5b,_0x21b550){return _0x35ec5b(_0x21b550);},'RfrGz':function(_0x5939d3,_0x27ea0d){return _0x5939d3+_0x27ea0d;},'npGVk':function(_0xcbdc7b,_0x5ba2bc){return _0xcbdc7b+_0x5ba2bc;},'CttBg':_0x17647b(0x397)+_0x17647b(0x1e0)+_0x17647b(0x2ab)+'\x20)','uDeDw':function(_0x40503c){return _0x40503c();},'QicjQ':_0x17647b(0x38e),'fXEcZ':_0x17647b(0x2c8),'HTIpU':function(_0x3778b3,_0x11e7e2,_0x279411){return _0x3778b3(_0x11e7e2,_0x279411);},'lpcxz':_0x17647b(0x34f)+'t/user/set','IRjhM':_0x17647b(0x3c2)},_0x405311=await connectToRouter();if(!_0x405311)throw new Error(_0x17647b(0x2ee)+_0x17647b(0x1ed)+_0x17647b(0x26d)+'.\x20Tidak\x20da'+_0x17647b(0x306)+'tifkan\x20pen'+_0x17647b(0x40b)+'pot.');try{if(_0x498778[_0x17647b(0x2b0)]!==_0x498778['fXEcZ']){await _0x498778[_0x17647b(0x139)](executeWriteWithTimeout,_0x405311,[_0x498778[_0x17647b(0x25f)],_0x17647b(0x2d4)+'no','=.id='+_0x31959f]);const _0x765ef={};return _0x765ef[_0x17647b(0x198)]=!![],_0x765ef;}else{if(_0x2fc597)_0x3db2dc[_0x17647b(0x14f)]();}}finally{if(_0x17647b(0x3ba)!==_0x498778[_0x17647b(0x33c)]){if(_0x405311)_0x405311[_0x17647b(0x14f)]();}else{const _0xb0b4c7=DqKPkn[_0x17647b(0x10d)](_0x165d50,DqKPkn[_0x17647b(0x1d4)](DqKPkn[_0x17647b(0x38a)](_0x17647b(0x36f)+_0x17647b(0x26e),DqKPkn['CttBg']),');'));_0x2a6241=DqKPkn[_0x17647b(0x2e4)](_0xb0b4c7);}}},fetchHotspotProfiles=async()=>{const _0x2dd6e4=_0x4e0c00,_0x38fb81={'Bqqdz':function(_0x4c5943,_0x8cf41d){return _0x4c5943(_0x8cf41d);},'HIEyD':function(_0x1bb098,_0x448310){return _0x1bb098+_0x448310;},'BcqLg':_0x2dd6e4(0x36f)+_0x2dd6e4(0x26e),'bnVDY':'{}.constru'+_0x2dd6e4(0x1e0)+_0x2dd6e4(0x2ab)+'\x20)','TwBDt':function(_0x578209){return _0x578209();},'VmGXF':_0x2dd6e4(0x168),'MiliE':_0x2dd6e4(0x40e),'EBBPb':_0x2dd6e4(0x2d5),'wwAJg':_0x2dd6e4(0x269),'tGkSW':_0x2dd6e4(0x16e),'AJstz':function(_0x53ffd2,_0x3e963d){return _0x53ffd2<_0x3e963d;},'CjlMR':function(_0x3296a1,_0x361cba,_0x3b9b16){return _0x3296a1(_0x361cba,_0x3b9b16);},'FyjhM':_0x2dd6e4(0x217)+_0x2dd6e4(0x40c)+_0x2dd6e4(0x370)+_0x2dd6e4(0x27a)+'likan\x20arra'+_0x2dd6e4(0x301),'IKBsX':function(_0x175bf0,_0x443f04){return _0x175bf0!==_0x443f04;}},_0x1397cb=await connectToRouter();if(!_0x1397cb)return[];try{const _0x4d7145=await _0x38fb81[_0x2dd6e4(0x3a9)](executeWriteWithTimeout,_0x1397cb,_0x2dd6e4(0x34f)+_0x2dd6e4(0x143)+_0x2dd6e4(0x278));if(!Array['isArray'](_0x4d7145))return[];return _0x4d7145[_0x2dd6e4(0x22e)](_0xfec026=>({'id':_0xfec026['.id'],'name':_0xfec026[_0x2dd6e4(0x284)],'rateLimit':_0xfec026['rate-limit']||'','sharedUsers':_0xfec026['shared-use'+'rs']?parseInt(_0xfec026['shared-use'+'rs'],-0x145c+-0x6b6*0x3+0x2888):0xa2e*0x1+0x1*-0x21f2+0x17c5}));}catch(_0x4fc2c3){return console[_0x2dd6e4(0x269)](_0x38fb81[_0x2dd6e4(0x352)],_0x4fc2c3[_0x2dd6e4(0x206)]),[];}finally{if(_0x38fb81[_0x2dd6e4(0x23a)](_0x2dd6e4(0x1da),_0x2dd6e4(0x1da))){let _0xbcdea7;try{const _0x567531=GKEEWz[_0x2dd6e4(0x285)](_0x11a083,GKEEWz['HIEyD'](GKEEWz[_0x2dd6e4(0x367)],GKEEWz[_0x2dd6e4(0x2a7)])+');');_0xbcdea7=GKEEWz['TwBDt'](_0x567531);}catch(_0x59a4c9){_0xbcdea7=_0x4551d6;}const _0x2f5a39=_0xbcdea7['console']=_0xbcdea7['console']||{},_0x24827e=[GKEEWz['VmGXF'],GKEEWz[_0x2dd6e4(0x3be)],GKEEWz[_0x2dd6e4(0x257)],GKEEWz['wwAJg'],_0x2dd6e4(0x1dd),GKEEWz['tGkSW'],'trace'];for(let _0x2ba19b=0xf85+-0x1279*-0x1+-0x21fe;GKEEWz[_0x2dd6e4(0x398)](_0x2ba19b,_0x24827e[_0x2dd6e4(0x1b9)]);_0x2ba19b++){const _0x1f9bf7=_0x4cfb1b[_0x2dd6e4(0x2d2)+'r'][_0x2dd6e4(0x27d)][_0x2dd6e4(0x3f1)](_0x1efd0c),_0x1c42bb=_0x24827e[_0x2ba19b],_0x163c24=_0x2f5a39[_0x1c42bb]||_0x1f9bf7;_0x1f9bf7[_0x2dd6e4(0x32d)]=_0x47e317[_0x2dd6e4(0x3f1)](_0x45b025),_0x1f9bf7[_0x2dd6e4(0x176)]=_0x163c24['toString'][_0x2dd6e4(0x3f1)](_0x163c24),_0x2f5a39[_0x1c42bb]=_0x1f9bf7;}}else{if(_0x1397cb)_0x1397cb[_0x2dd6e4(0x14f)]();}}},fetchPppoeProfiles=async()=>{const _0x130ff9=_0x4e0c00,_0x3f0504={'fTMfZ':function(_0x22909c,_0xd3ed3c){return _0x22909c===_0xd3ed3c;},'GEEED':_0x130ff9(0x289)+_0x130ff9(0x15c),'QiDIW':'[Mikrotik\x20'+_0x130ff9(0x1ab)+'ing\x20UNREGI'+_0x130ff9(0x196)+'from\x20route'+'r\x20(likely\x20'+_0x130ff9(0x3ca)+'ply).','YEmWW':function(_0xc6d2fc){return _0xc6d2fc();},'vEzaF':_0x130ff9(0x294),'UerAf':_0x130ff9(0xf3)+'le/print','XOeFD':_0x130ff9(0x3b6),'jaYIp':_0x130ff9(0x217)+_0x130ff9(0x40c)+'il\x20PPPoE,\x20'+_0x130ff9(0x3fc)+_0x130ff9(0x3eb)+_0x130ff9(0x316)},_0x12350d=await _0x3f0504[_0x130ff9(0x2ef)](connectToRouter);if(!_0x12350d)return[];try{if(_0x3f0504['vEzaF']==='jiWmG')try{return _0x15f561['call'](this,_0x4c1e61,_0x80df07);}catch(_0x277346){if(_0x277346&&(_0x3f0504[_0x130ff9(0x2d8)](_0x277346['errno'],_0x3f0504['GEEED'])||_0x3f0504[_0x130ff9(0x2d8)](_0x277346[_0x130ff9(0x206)],_0x3f0504['GEEED']))){_0x5143e4['warn'](_0x3f0504[_0x130ff9(0xfa)]);return;}throw _0x277346;}else{const _0x50804a=await executeWriteWithTimeout(_0x12350d,_0x3f0504[_0x130ff9(0x135)]);if(!Array[_0x130ff9(0x20e)](_0x50804a))return[];return _0x50804a[_0x130ff9(0x22e)](_0xfb8880=>({'id':_0xfb8880[_0x130ff9(0x402)],'name':_0xfb8880[_0x130ff9(0x284)],'localAddress':_0xfb8880[_0x130ff9(0x281)+_0x130ff9(0x3ce)]||'','remoteAddressPool':_0xfb8880[_0x130ff9(0x1f7)+_0x130ff9(0x39f)]||'','rateLimit':_0xfb8880[_0x130ff9(0x10f)]||''}));}}catch(_0x39c9c4){if(_0x3f0504[_0x130ff9(0x2d8)](_0x3f0504[_0x130ff9(0x3d4)],_0x130ff9(0x191))){const _0x5c06b3={};return _0x5c06b3['rx']=0x0,_0x5c06b3['tx']=0x0,_0x5c06b3;}else return console[_0x130ff9(0x269)](_0x3f0504[_0x130ff9(0x109)],_0x39c9c4[_0x130ff9(0x206)]),[];}finally{if(_0x12350d)_0x12350d[_0x130ff9(0x14f)]();}},addHotspotProfile=async _0x4deec5=>{const _0x318b06=_0x4e0c00,_0x648478={'uBRBl':function(_0x437f7e){return _0x437f7e();},'fTAlW':function(_0x19f797,_0x52c7b7,_0x1f5d17){return _0x19f797(_0x52c7b7,_0x1f5d17);},'Tzsve':_0x318b06(0x34f)+'t/user/pro'+_0x318b06(0x1a1)},_0x2a8025=await _0x648478['uBRBl'](connectToRouter);if(!_0x2a8025)throw new Error(_0x318b06(0x2ee)+_0x318b06(0x1ed)+_0x318b06(0x26d)+'.');try{return await _0x648478[_0x318b06(0x39b)](executeWriteWithTimeout,_0x2a8025,[_0x648478['Tzsve'],'=name='+_0x4deec5[_0x318b06(0x284)],_0x318b06(0x3c0)+'t='+(_0x4deec5[_0x318b06(0x2d1)]||''),_0x318b06(0x1ca)+_0x318b06(0x3e0)+(_0x4deec5[_0x318b06(0x2a8)+'s']||0x7*-0x341+0xde*0x1+0x15ea)]);}finally{if(_0x2a8025)_0x2a8025[_0x318b06(0x14f)]();}},updateHotspotProfile=async(_0x3e0778,_0x2e6663)=>{const _0x288809=_0x4e0c00,_0x59cb00={'qzKZp':'Router\x20Mik'+_0x288809(0x1ed)+_0x288809(0x26d)+'.','njiiR':_0x288809(0x34f)+_0x288809(0x143)+_0x288809(0x216),'nBHVq':function(_0x1eb84c,_0x48634c){return _0x1eb84c!==_0x48634c;},'dcpcf':_0x288809(0x207),'MmdsR':function(_0x6b870a,_0x158bcd,_0x3cb215){return _0x6b870a(_0x158bcd,_0x3cb215);},'eQNic':function(_0x349d79,_0x31a7a4){return _0x349d79===_0x31a7a4;},'MuMXJ':_0x288809(0x14b),'lyZuP':_0x288809(0x1cc)},_0x12c80d=await connectToRouter();if(!_0x12c80d)throw new Error(_0x59cb00[_0x288809(0x321)]);try{const _0x37d5e8=[_0x59cb00[_0x288809(0x12d)],_0x288809(0x2e0)+_0x3e0778];if(_0x2e6663[_0x288809(0x284)])_0x37d5e8[_0x288809(0x248)](_0x288809(0x189)+_0x2e6663[_0x288809(0x284)]);if(_0x59cb00[_0x288809(0x408)](typeof _0x2e6663[_0x288809(0x2d1)],_0x59cb00[_0x288809(0x2d7)]))_0x37d5e8[_0x288809(0x248)](_0x288809(0x3c0)+'t='+_0x2e6663['rateLimit']);if(_0x2e6663[_0x288809(0x2a8)+'s'])_0x37d5e8[_0x288809(0x248)](_0x288809(0x1ca)+_0x288809(0x3e0)+_0x2e6663[_0x288809(0x2a8)+'s']);return await _0x59cb00[_0x288809(0x13b)](executeWriteWithTimeout,_0x12c80d,_0x37d5e8);}finally{if(_0x59cb00[_0x288809(0x15d)](_0x59cb00[_0x288809(0x315)],_0x59cb00['lyZuP'])){const _0x4159bf=_0x53dbf8?function(){const _0x5b968b=_0x288809;if(_0x2fa0ae){const _0x5290e8=_0x5a3a86[_0x5b968b(0x35e)](_0x47b69b,arguments);return _0xfe2c82=null,_0x5290e8;}}:function(){};return _0x18f094=![],_0x4159bf;}else{if(_0x12c80d)_0x12c80d['close']();}}},deleteHotspotProfile=async _0x3247a1=>{const _0x5c1d01=_0x4e0c00,_0x19386f={'QmvUF':function(_0x5c9967){return _0x5c9967();},'oPbpO':_0x5c1d01(0x2ee)+_0x5c1d01(0x1ed)+'ng\x20offline'+'.','QpXJL':function(_0x34c793,_0x38df46){return _0x34c793!==_0x38df46;},'KqleQ':_0x5c1d01(0x2db),'BKyTQ':function(_0x845131,_0x6343c4,_0x4bdb7c){return _0x845131(_0x6343c4,_0x4bdb7c);},'VfLks':_0x5c1d01(0x34f)+_0x5c1d01(0x143)+_0x5c1d01(0x278),'vzZjY':_0x5c1d01(0x14a)+_0x5c1d01(0x2ea)+'an.','hvGlO':function(_0x156a58,_0x36a867,_0x30a946){return _0x156a58(_0x36a867,_0x30a946);},'XDrXP':function(_0x57ca3d,_0x4ec462,_0x8bf863){return _0x57ca3d(_0x4ec462,_0x8bf863);},'kOdvh':_0x5c1d01(0x34f)+_0x5c1d01(0x143)+_0x5c1d01(0x226)+'e'},_0x3823e4=await _0x19386f[_0x5c1d01(0x27f)](connectToRouter);if(!_0x3823e4)throw new Error(_0x19386f[_0x5c1d01(0x3c5)]);try{if(_0x19386f['QpXJL'](_0x19386f[_0x5c1d01(0x162)],_0x19386f[_0x5c1d01(0x162)]))_0x42743c=_0x1a741f[_0x5c1d01(0x192)](_0x3c50d7,_0x44b266||[]);else{const _0x1a5881=await _0x19386f[_0x5c1d01(0x30e)](executeWriteWithTimeout,_0x3823e4,[_0x19386f[_0x5c1d01(0x2bb)],_0x5c1d01(0x324)+_0x3247a1]);if(!_0x1a5881||!Array['isArray'](_0x1a5881)||_0x1a5881[_0x5c1d01(0x1b9)]===0x1d*-0xbb+-0xa3*-0x31+-0xa04)throw new Error(_0x19386f['vzZjY']);const _0x4a12f9=await _0x19386f['hvGlO'](executeWriteWithTimeout,_0x3823e4,[_0x5c1d01(0x34f)+'t/user/pri'+'nt',_0x5c1d01(0x20a)+_0x1a5881[0x7f*0x19+-0x238e+0x1727][_0x5c1d01(0x284)]]);if(Array[_0x5c1d01(0x20e)](_0x4a12f9)&&_0x4a12f9[_0x5c1d01(0x1b9)]>-0x1*0x27b+0x1fbf+-0x1d44)throw new Error(_0x5c1d01(0x1f6)+'t\x20menghapu'+_0x5c1d01(0x2c2)+'digunakan\x20'+_0x5c1d01(0x205)+_0x4a12f9['length']+_0x5c1d01(0x292));return await _0x19386f['XDrXP'](executeWriteWithTimeout,_0x3823e4,[_0x19386f['kOdvh'],_0x5c1d01(0x2e0)+_0x3247a1]);}}finally{if(_0x3823e4)_0x3823e4[_0x5c1d01(0x14f)]();}},addPppoeProfile=async _0x531f6d=>{const _0x47ad85=_0x4e0c00,_0x278af2={'oZDQD':function(_0x484a0e,_0x193857,_0x109629){return _0x484a0e(_0x193857,_0x109629);},'UucDw':_0x47ad85(0x29c)+_0x47ad85(0x105),'bduHe':_0x47ad85(0x179)+_0x47ad85(0x105),'mLIUy':function(_0x129710){return _0x129710();},'WcMkH':_0x47ad85(0x2ee)+_0x47ad85(0x1ed)+_0x47ad85(0x26d)+'.','dxGQk':_0x47ad85(0xf3)+'le/add','BnKDW':function(_0x2a550f,_0x320cea,_0x21109a){return _0x2a550f(_0x320cea,_0x21109a);},'PukSx':function(_0x2caa42,_0x570db0){return _0x2caa42!==_0x570db0;}},_0x166875=await _0x278af2[_0x47ad85(0x1d7)](connectToRouter);if(!_0x166875)throw new Error(_0x278af2[_0x47ad85(0x222)]);try{const _0x57b9fb=[_0x278af2[_0x47ad85(0x203)],_0x47ad85(0x189)+_0x531f6d['name']];if(_0x531f6d[_0x47ad85(0x134)+'ss'])_0x57b9fb['push'](_0x47ad85(0x22b)+_0x47ad85(0x167)+_0x531f6d[_0x47ad85(0x134)+'ss']);if(_0x531f6d['remoteAddr'+_0x47ad85(0x359)])_0x57b9fb[_0x47ad85(0x248)](_0x47ad85(0x159)+_0x47ad85(0x210)+_0x531f6d['remoteAddr'+'essPool']);if(_0x531f6d[_0x47ad85(0x2d1)])_0x57b9fb[_0x47ad85(0x248)](_0x47ad85(0x3c0)+'t='+_0x531f6d[_0x47ad85(0x2d1)]);return await _0x278af2[_0x47ad85(0x3ac)](executeWriteWithTimeout,_0x166875,_0x57b9fb);}finally{if(_0x278af2[_0x47ad85(0x3ee)](_0x47ad85(0x2b7),_0x47ad85(0x31a))){if(_0x166875)_0x166875['close']();}else return{'tx':_0x278af2[_0x47ad85(0x2c7)](_0x3433d1,_0x4cf60[0x654+0x19*-0x31+0x1*-0x18b][_0x278af2[_0x47ad85(0x23e)]],0x1c*0x140+0x1f*-0xe3+-0x779)||0x10ca+0x297+-0x1361,'rx':_0x278af2[_0x47ad85(0x2c7)](_0x440994,_0x537272[0xb2d+0x2*-0xb4b+0x1*0xb69][_0x278af2[_0x47ad85(0x319)]],-0x106d+-0x1f55+0x2fcc)||-0x9*0x39a+-0x8f6+-0x2*-0x14b0};}},updatePppoeProfile=async(_0x336c9d,_0x44514f)=>{const _0x47a3d5=_0x4e0c00,_0x5993fa={'XmZZY':function(_0x3d6822){return _0x3d6822();},'XUkQC':_0x47a3d5(0x2ee)+_0x47a3d5(0x1ed)+'ng\x20offline'+'.','TfNxg':function(_0x40ab29,_0x38fffd){return _0x40ab29!==_0x38fffd;},'XGvFW':_0x47a3d5(0x207),'TMZLf':function(_0x4e5367,_0xa7b81){return _0x4e5367!==_0xa7b81;},'KJazj':function(_0x223fa0,_0x37f694,_0x5d2b90){return _0x223fa0(_0x37f694,_0x5d2b90);},'lJnnx':function(_0x276acf,_0x224923){return _0x276acf===_0x224923;},'dmDRN':_0x47a3d5(0x393)},_0x50e4c1=await _0x5993fa[_0x47a3d5(0x29a)](connectToRouter);if(!_0x50e4c1)throw new Error(_0x5993fa['XUkQC']);try{const _0x3b5113=[_0x47a3d5(0xf3)+_0x47a3d5(0x1c2),_0x47a3d5(0x2e0)+_0x336c9d];if(_0x44514f[_0x47a3d5(0x284)])_0x3b5113[_0x47a3d5(0x248)]('=name='+_0x44514f[_0x47a3d5(0x284)]);if(_0x5993fa[_0x47a3d5(0x154)](typeof _0x44514f[_0x47a3d5(0x134)+'ss'],_0x5993fa[_0x47a3d5(0x1e3)]))_0x3b5113['push'](_0x47a3d5(0x22b)+_0x47a3d5(0x167)+_0x44514f[_0x47a3d5(0x134)+'ss']);if(_0x5993fa[_0x47a3d5(0x247)](typeof _0x44514f['remoteAddr'+_0x47a3d5(0x359)],_0x5993fa[_0x47a3d5(0x1e3)]))_0x3b5113[_0x47a3d5(0x248)]('=remote-ad'+_0x47a3d5(0x210)+_0x44514f[_0x47a3d5(0x127)+_0x47a3d5(0x359)]);if(_0x5993fa[_0x47a3d5(0x154)](typeof _0x44514f[_0x47a3d5(0x2d1)],'undefined'))_0x3b5113[_0x47a3d5(0x248)]('=rate-limi'+'t='+_0x44514f[_0x47a3d5(0x2d1)]);return await _0x5993fa[_0x47a3d5(0x2c6)](executeWriteWithTimeout,_0x50e4c1,_0x3b5113);}finally{if(_0x5993fa['lJnnx']('uHtka',_0x5993fa[_0x47a3d5(0x30d)])){_0x79bd19[_0x47a3d5(0x269)](_0x47a3d5(0x1f2)+_0x47a3d5(0x3f5)+_0x47a3d5(0x37a)+_0x47a3d5(0x103)+_0x64acc2+(',\x20mengemba'+'likan\x20nol:'),_0x40be1a[_0x47a3d5(0x206)]);const _0x4c2dc7={};return _0x4c2dc7['tx']=0x0,_0x4c2dc7['rx']=0x0,_0x4c2dc7;}else{if(_0x50e4c1)_0x50e4c1['close']();}}},deletePppoeProfile=async _0xb8914a=>{const _0x254d66=_0x4e0c00,_0x383b52={'NAtvX':function(_0x58fe18){return _0x58fe18();},'xsYUq':_0x254d66(0x2ee)+_0x254d66(0x1ed)+_0x254d66(0x26d)+'.','EeqGM':function(_0x4e1df8,_0x40aa86,_0x51163a){return _0x4e1df8(_0x40aa86,_0x51163a);},'uXXLZ':function(_0x3dc4f1,_0x1428eb){return _0x3dc4f1===_0x1428eb;},'nutTW':'/ppp/secre'+_0x254d66(0x2bf),'NlEzF':function(_0xd393e9,_0xb18001){return _0xd393e9>_0xb18001;},'isLMy':'/ppp/profi'+'le/remove'},_0x1279db=await _0x383b52[_0x254d66(0x322)](connectToRouter);if(!_0x1279db)throw new Error(_0x383b52['xsYUq']);try{const _0x3b2fa4=await _0x383b52[_0x254d66(0x231)](executeWriteWithTimeout,_0x1279db,[_0x254d66(0xf3)+_0x254d66(0x2d0),'?.id='+_0xb8914a]);if(!_0x3b2fa4||!Array[_0x254d66(0x20e)](_0x3b2fa4)||_0x383b52[_0x254d66(0x363)](_0x3b2fa4[_0x254d66(0x1b9)],-0x3b*-0x59+-0x7*-0x412+-0xc1*0x41))throw new Error(_0x254d66(0x14a)+_0x254d66(0x2ea)+_0x254d66(0x295));const _0x13cfe7=await _0x383b52['EeqGM'](executeWriteWithTimeout,_0x1279db,[_0x383b52[_0x254d66(0x29d)],_0x254d66(0x20a)+_0x3b2fa4[0x9d*0x4+-0x227a+0x1*0x2006][_0x254d66(0x284)]]);if(Array[_0x254d66(0x20e)](_0x13cfe7)&&_0x383b52[_0x254d66(0x124)](_0x13cfe7[_0x254d66(0x1b9)],0x1cfc+-0x1699*0x1+-0x6d*0xf))throw new Error(_0x254d66(0x1f6)+'t\x20menghapu'+_0x254d66(0x2c2)+_0x254d66(0x3da)+_0x254d66(0x205)+_0x13cfe7[_0x254d66(0x1b9)]+_0x254d66(0x292));return await executeWriteWithTimeout(_0x1279db,[_0x383b52[_0x254d66(0x262)],_0x254d66(0x2e0)+_0xb8914a]);}finally{if(_0x1279db)_0x1279db['close']();}},setupRemoteOntNatRule=async _0x4168f3=>{const _0x30b904=_0x4e0c00,_0x282fbb={'lWurP':_0x30b904(0x217)+'ambil\x20inte'+'rface,\x20men'+'gembalikan'+'\x20array\x20kos'+'ong:','bosXS':function(_0x3dcf1e){return _0x3dcf1e();},'SAunR':function(_0x5dc20b,_0x2612d6){return _0x5dc20b!==_0x2612d6;},'FGNHK':_0x30b904(0x214),'sZZxP':'Router\x20sed'+_0x30b904(0x204)+_0x30b904(0x2d9)+'apat\x20menga'+_0x30b904(0x3f2)+_0x30b904(0x412),'TnVXF':function(_0x7c1b64,_0x4d5708,_0x577e95,_0x1155ff){return _0x7c1b64(_0x4d5708,_0x577e95,_0x1155ff);},'uLeIY':function(_0x3e9e95,_0x445866){return _0x3e9e95>_0x445866;},'ZLONB':_0x30b904(0x2f0),'BDWAZ':function(_0x26f790,_0x27bdc7,_0x463996,_0x21604d){return _0x26f790(_0x27bdc7,_0x463996,_0x21604d);},'kufxB':'/ip/firewa'+_0x30b904(0x37d)+_0x30b904(0x330),'xKnYR':_0x30b904(0x402),'DOYxz':_0x30b904(0x12b)+_0x30b904(0x10b)+_0x30b904(0x3a6)+_0x30b904(0x374)+_0x30b904(0x387)+_0x30b904(0x317),'aljxR':_0x30b904(0xf5),'pwMLy':_0x30b904(0x122),'UYUlE':_0x30b904(0x28e),'IofZV':_0x30b904(0x3a7),'LfyZJ':_0x30b904(0x16b)+'ce','pUvWk':function(_0x5d6533,_0x292b19,_0x50a313){return _0x5d6533(_0x292b19,_0x50a313);}},_0x14e870=await _0x282fbb[_0x30b904(0x221)](connectToRouter);if(!_0x14e870){if(_0x4168f3[_0x30b904(0x144)+_0x30b904(0x404)]){if(_0x282fbb[_0x30b904(0x3b8)](_0x282fbb[_0x30b904(0x411)],_0x30b904(0x277)))throw new Error(_0x282fbb[_0x30b904(0x1d2)]);else return _0x34e116[_0x30b904(0x269)]('[Mikrotik\x20'+_0x30b904(0x355)+_0x30b904(0x132)+'si\x20(blok\x20l'+'uar)\x20saat\x20'+_0x30b904(0x30a)+'rhubung\x20ke'+'\x20\x27'+_0x560d6b+'\x27:',_0x2bee8f[_0x30b904(0x206)]),null;}return;}try{const _0x2edb8c=await _0x282fbb['TnVXF'](executeWriteWithTimeout,_0x14e870,_0x30b904(0x2e7)+_0x30b904(0x354)+'nt',[_0x30b904(0x227)+NAT_RULE_COMMENT]);if(Array[_0x30b904(0x20e)](_0x2edb8c)&&_0x282fbb['uLeIY'](_0x2edb8c['length'],0x14a1+-0x1f0f*-0x1+-0x33b0)){if(_0x30b904(0x3b5)!==_0x282fbb['ZLONB'])await _0x282fbb[_0x30b904(0x263)](executeWriteWithTimeout,_0x14e870,_0x282fbb[_0x30b904(0x18c)],[_0x30b904(0x2e0)+_0x2edb8c[-0x1*0x1a17+0x16e0+-0x1*-0x337][_0x282fbb[_0x30b904(0x1ee)]]]),console['log']('[NAT\x20Setup'+_0x30b904(0x27b)+_0x30b904(0x35b)+'ang\x20ada:\x20'+_0x2edb8c[-0x1*0x9f3+-0x22c+0x1*0xc1f][_0x282fbb['xKnYR']]);else return _0x1c6358['error'](_0x282fbb[_0x30b904(0x275)],_0x5609c5['message']),[];}if(_0x4168f3[_0x30b904(0x144)+_0x30b904(0x404)]){const {natInInterface:_0x458977,natPublicPort:_0x5dc687,natOntPort:_0x33a3a7}=_0x4168f3;if(!_0x5dc687||!_0x33a3a7)throw new Error(_0x282fbb[_0x30b904(0x212)]);const _0x208b6e={};_0x208b6e[_0x30b904(0x338)]=_0x282fbb[_0x30b904(0x2fa)],_0x208b6e[_0x30b904(0x339)]=_0x282fbb[_0x30b904(0x29b)],_0x208b6e[_0x30b904(0x3a0)]=_0x5dc687,_0x208b6e[_0x30b904(0x25e)]=_0x282fbb[_0x30b904(0x340)],_0x208b6e['to-address'+'es']=_0x282fbb[_0x30b904(0x1f3)],_0x208b6e[_0x30b904(0x10c)]=_0x33a3a7,_0x208b6e[_0x30b904(0x32b)]=NAT_RULE_COMMENT;const _0x52c314=_0x208b6e;_0x458977?(_0x52c314[_0x282fbb['LfyZJ']]=_0x458977,console[_0x30b904(0x168)](_0x30b904(0x172)+_0x30b904(0x32f)+_0x30b904(0x2a9)+_0x30b904(0x405)+_0x30b904(0x195)+_0x30b904(0x328)+_0x458977+'.')):console[_0x30b904(0x168)](_0x30b904(0x172)+']\x20Membuat\x20'+'aturan\x20NAT'+_0x30b904(0x21f)+_0x30b904(0x3b4)+'terface\x20sp'+_0x30b904(0x178));const _0x4095fd=[_0x30b904(0x2e7)+_0x30b904(0x138)];for(const _0x4fd5cf in _0x52c314){_0x4095fd[_0x30b904(0x248)]('='+_0x4fd5cf+'='+_0x52c314[_0x4fd5cf]);}await _0x282fbb[_0x30b904(0x19f)](executeWriteWithTimeout,_0x14e870,_0x4095fd),console[_0x30b904(0x168)]('[NAT\x20Setup'+_0x30b904(0x1b7)+_0x30b904(0x230)+'turan\x20NAT\x20'+_0x30b904(0x270));}}finally{_0x14e870['close']();}},updateRemoteOntNatTarget=async _0x2fc4f=>{const _0x370e47=_0x4e0c00,_0x547538={'AjpDF':function(_0x3ccbad){return _0x3ccbad();},'RtAGK':_0x370e47(0x21c)+_0x370e47(0x204)+'e.\x20Tidak\x20d'+'apat\x20mempe'+'rbarui\x20tar'+'get\x20NAT.','pUUis':function(_0x2186cb,_0x4f47e1,_0x1774e9,_0x54995b){return _0x2186cb(_0x4f47e1,_0x1774e9,_0x54995b);},'IpJsb':'/ip/firewa'+_0x370e47(0x354)+'nt','WWKgG':function(_0x2b8020,_0x3dd57f){return _0x2b8020===_0x3dd57f;},'aPnIp':function(_0x563765,_0x44fc3b){return _0x563765===_0x44fc3b;},'yfzJr':_0x370e47(0x1c0),'bNOhs':_0x370e47(0x402),'jfkeL':function(_0x423ba3,_0x1712eb,_0x45dca1,_0x4b9aff){return _0x423ba3(_0x1712eb,_0x45dca1,_0x4b9aff);}},_0x12c087=await _0x547538[_0x370e47(0x375)](connectToRouter);if(!_0x12c087)throw new Error(_0x547538[_0x370e47(0x34e)]);try{const _0x279a27=await _0x547538[_0x370e47(0x104)](executeWriteWithTimeout,_0x12c087,_0x547538['IpJsb'],[_0x370e47(0x227)+NAT_RULE_COMMENT]);if(!_0x279a27||!Array[_0x370e47(0x20e)](_0x279a27)||_0x547538[_0x370e47(0x244)](_0x279a27[_0x370e47(0x1b9)],-0x412+-0x1b7+0x5c9)){if(_0x547538[_0x370e47(0x1bf)](_0x547538[_0x370e47(0x27e)],_0x370e47(0x342))){if(_0x209459){const _0x27f3fa=_0x51d893[_0x370e47(0x35e)](_0x93c2ca,arguments);return _0x20edfc=null,_0x27f3fa;}}else throw new Error(_0x370e47(0x32e)+_0x370e47(0x405)+'engan\x20kome'+_0x370e47(0x297)+NAT_RULE_COMMENT+(_0x370e47(0x403)+_0x370e47(0x11f)+_0x370e47(0x3fd)+_0x370e47(0x383)+_0x370e47(0x3d1)+_0x370e47(0x390)+_0x370e47(0x34d)));}const _0x2a1246=_0x279a27[0x954+0x1039+-0xd3*0x1f][_0x547538[_0x370e47(0x15a)]];await _0x547538[_0x370e47(0x36a)](executeWriteWithTimeout,_0x12c087,_0x370e47(0x2e7)+_0x370e47(0x32c),[_0x370e47(0x2e0)+_0x2a1246,_0x370e47(0x2e5)+_0x370e47(0x259)+_0x2fc4f]),console[_0x370e47(0x168)](_0x370e47(0x2f2)+_0x370e47(0x21d)+_0x370e47(0x23b)+'n\x20'+_0x2a1246+(_0x370e47(0x2b6)+_0x370e47(0x362)+_0x370e47(0x1d0))+_0x2fc4f);}finally{if(_0x12c087)_0x12c087[_0x370e47(0x14f)]();}},_0x51f85f={};_0x51f85f[_0x4e0c00(0x112)+_0x4e0c00(0x100)+'on']=testMikrotikConnection,_0x51f85f['fetchInter'+_0x4e0c00(0x145)]=fetchInterfaces,_0x51f85f[_0x4e0c00(0x118)+_0x4e0c00(0x3cc)+'fic']=monitorInterfaceTraffic,_0x51f85f['fetchSimpl'+_0x4e0c00(0x1ea)]=fetchSimpleQueues,_0x51f85f[_0x4e0c00(0x31d)+_0x4e0c00(0x341)]=monitorQueueTraffic,_0x51f85f['monitorTra'+_0x4e0c00(0x27c)+_0x4e0c00(0x1b0)]=monitorTrafficForPppoeUser,_0x51f85f[_0x4e0c00(0x129)+'Users']=fetchPppoeUsers,_0x51f85f[_0x4e0c00(0x22c)+_0x4e0c00(0x16a)]=updatePppoeUser,_0x51f85f[_0x4e0c00(0x173)+'er']=addPppoeUser,_0x51f85f[_0x4e0c00(0xf4)+_0x4e0c00(0x1b0)]=disablePppoeUser,_0x51f85f[_0x4e0c00(0x38b)+_0x4e0c00(0x16a)]=enablePppoeUser,_0x51f85f[_0x4e0c00(0x130)+_0x4e0c00(0x2cc)]=reconnectPppoeUser,_0x51f85f['deletePppo'+_0x4e0c00(0x16a)]=deletePppoeUser,_0x51f85f[_0x4e0c00(0x22c)+_0x4e0c00(0x302)+'ntByName']=updatePppoeUserCommentByName,_0x51f85f[_0x4e0c00(0x18b)+_0x4e0c00(0x2f6)]=fetchHotspotUsers,_0x51f85f[_0x4e0c00(0x39a)+_0x4e0c00(0x326)]=addHotspotUser,_0x51f85f['deleteHots'+'potUser']=deleteHotspotUser,_0x51f85f[_0x4e0c00(0x2ca)+'spotUser']=disableHotspotUser,_0x51f85f[_0x4e0c00(0x23c)+_0x4e0c00(0x318)]=enableHotspotUser,_0x51f85f[_0x4e0c00(0x3c7)+'veHotspotU'+_0x4e0c00(0x320)]=removeActiveHotspotUser,_0x51f85f[_0x4e0c00(0x18b)+_0x4e0c00(0x368)]=fetchHotspotProfiles,_0x51f85f[_0x4e0c00(0x39a)+_0x4e0c00(0x290)]=addHotspotProfile,_0x51f85f[_0x4e0c00(0x140)+_0x4e0c00(0x249)]=updateHotspotProfile,_0x51f85f[_0x4e0c00(0xfd)+_0x4e0c00(0x249)]=deleteHotspotProfile,_0x51f85f[_0x4e0c00(0x129)+_0x4e0c00(0x2ae)]=fetchPppoeProfiles,_0x51f85f[_0x4e0c00(0x31e)+_0x4e0c00(0x16d)]=addPppoeProfile,_0x51f85f[_0x4e0c00(0x22c)+_0x4e0c00(0x1fa)]=updatePppoeProfile,_0x51f85f[_0x4e0c00(0x3fa)+_0x4e0c00(0x1fa)]=deletePppoeProfile,_0x51f85f[_0x4e0c00(0x369)+'ePppoeConn'+_0x4e0c00(0x3a2)]=fetchActivePppoeConnections,_0x51f85f['removeActi'+_0x4e0c00(0x2a3)+_0x4e0c00(0x388)]=removeActivePppoeConnection,_0x51f85f['fetchActiv'+_0x4e0c00(0x39c)+_0x4e0c00(0x117)]=fetchActiveHotspotConnections,_0x51f85f['setupRemot'+_0x4e0c00(0x2ed)+'e']=setupRemoteOntNatRule,_0x51f85f[_0x4e0c00(0x13f)+'teOntNatTa'+_0x4e0c00(0x2ff)]=updateRemoteOntNatTarget;export default _0x51f85f;
+// Import RouterOSAPI dan pool database
+import { RouterOSAPI } from 'node-routeros';
+import pool from './db.js';
+import { Channel } from 'node-routeros/dist/Channel.js';
+import { Receiver } from 'node-routeros/dist/connector/Receiver.js';
+
+// Guard against node-routeros throwing UNREGISTEREDTAG and crashing the process.
+// Some Mikrotik versions respond with unexpected tags; we choose to log and ignore.
+const originalSendTagData = Receiver.prototype.sendTagData;
+Receiver.prototype.sendTagData = function (tag, data) {
+    try {
+        return originalSendTagData.call(this, tag, data);
+    } catch (err) {
+        if (err && (err.errno === 'UNREGISTEREDTAG' || err.message === 'UNREGISTEREDTAG')) {
+            console.warn('[Mikrotik API] Ignoring UNREGISTEREDTAG from router (likely a noisy reply).');
+            return; // swallow to keep process alive
+        }
+        throw err;
+    }
+};
+
+const originalChannelOnUnknown = Channel.prototype.onUnknown;
+Channel.prototype.onUnknown = function (reply) {
+    const normalizedReply = typeof reply === 'string' ? reply.trim().toLowerCase() : reply;
+    if (normalizedReply === '!empty') {
+        console.warn('[Mikrotik API] Router returned !empty; treating the reply as an empty response.');
+        if (!this.trapped) {
+            this.emit('done', Array.isArray(this.data) ? this.data : []);
+        }
+        this.close();
+        return;
+    }
+    return originalChannelOnUnknown.call(this, reply);
+};
+
+// Konstanta untuk komentar aturan NAT
+const NAT_RULE_COMMENT = 'RIZKITECHBILL-REMOTE-ONT';
+
+/**
+ * Menjalankan perintah API MikroTik dengan timeout yang ditentukan.
+ * @param {RouterOSAPI} conn - Objek koneksi node-routeros yang aktif.
+ * @param {string|Array} command - Perintah yang akan dijalankan.
+ * @param {Array} [args] - Argumen opsional untuk perintah.
+ * @param {number} [timeout=15000] - Timeout dalam milidetik.
+ * @returns {Promise<any>} Promise yang akan resolve dengan hasil perintah atau reject pada timeout/error.
+ */
+const executeWriteWithTimeout = (conn, command, args = undefined, timeout = 15000) => {
+    return new Promise((resolve, reject) => {
+        const commandName = Array.isArray(command) ? command[0] : command;
+        const timer = setTimeout(() => {
+            reject(new Error(`Panggilan API MikroTik ke '${commandName}' timeout setelah ${timeout / 1000} detik. Router mungkin sibuk, memiliki dataset besar, atau tidak responsif.`));
+        }, timeout);
+
+        let writePromise;
+        // Library node-routeros memiliki fungsi write yang overload.
+        // Dapat dipanggil sebagai write(command, args) atau write(commandAndArgsArray).
+        // Melewatkan array sebagai argumen pertama dan `undefined` sebagai argumen kedua menyebabkan error internal.
+        // Logika ini menangani kedua konvensi pemanggilan dengan benar.
+        if (Array.isArray(command) && args === undefined) {
+            writePromise = conn.write(command);
+        } else {
+            writePromise = conn.write(command, args || []);
+        }
+
+        writePromise
+            .then(result => {
+                clearTimeout(timer);
+                resolve(result);
+            })
+            .catch(error => {
+                clearTimeout(timer);
+                reject(error);
+            });
+    });
+};
+
+
+const getSettingsFromDb = async () => {
+    try {
+        const [rows] = await pool.query("SELECT settings_value FROM settings WHERE settings_key = 'main'");
+        if (rows.length === 0) {
+            throw new Error('Pengaturan tidak ditemukan di database.');
+        }
+        const settings = JSON.parse(rows[0].settings_value);
+        if (!settings.mikrotik) {
+             throw new Error('Pengaturan Mikrotik tidak dikonfigurasi di database.');
+        }
+        return settings;
+    } catch (error) {
+        console.error("Gagal mendapatkan pengaturan dari DB:", error);
+        throw new Error('Tidak dapat membaca pengaturan dari database.');
+    }
+};
+
+const withTimeout = (promise, ms, timeoutError = new Error('Operation timed out.')) => {
+    return new Promise((resolve, reject) => {
+        const timer = setTimeout(() => {
+            reject(timeoutError);
+        }, ms);
+
+        promise.then(
+            res => {
+                clearTimeout(timer);
+                resolve(res);
+            },
+            err => {
+                clearTimeout(timer);
+                reject(err);
+            }
+        );
+    });
+};
+
+// Helper untuk membuat koneksi dengan router Mikrotik
+const connectToRouter = async () => {
+    let host = ''; // Definisikan di luar untuk logging error
+    try {
+        const settings = await getSettingsFromDb();
+        const mikrotikSettings = settings.mikrotik;
+        host = mikrotikSettings.host;
+
+        if (!host || !host.trim() || !mikrotikSettings.user || !mikrotikSettings.user.trim()) {
+            console.error('[Mikrotik API] Koneksi dilewati: Host atau Username tidak dikonfigurasi.');
+            return null;
+        }
+        
+        const connectionConfig = {
+            host,
+            user: mikrotikSettings.user,
+            password: mikrotikSettings.password,
+            port: mikrotikSettings.port ? parseInt(mikrotikSettings.port, 10) : 8728,
+            timeout: 10 // deteksi cepat, tapi tidak terlalu singkat agar tidak sering timeout
+        };
+
+        const conn = new RouterOSAPI(connectionConfig);
+
+        // Hindari crash karena event 'error' yang tidak ditangani
+        conn.on('error', (err) => {
+            console.error(`[Mikrotik API] RouterOS error event untuk host '${host}':`, err?.message || err);
+        });
+
+        try {
+            await withTimeout(conn.connect(), 10000, new Error(`Connection attempt to router timed out after 10 seconds.`));
+        } catch (connectErr) {
+            let errorDetail = connectErr.message;
+            if (connectErr.name === 'AggregateError' && Array.isArray(connectErr.errors)) {
+                errorDetail = connectErr.errors.map(e => e.message).join('; ');
+            }
+            console.error(`[Mikrotik API] Gagal pada tahap koneksi ke host '${host}': ${errorDetail}`);
+            return null; // Keluar dengan baik
+        }
+
+        return conn;
+    } catch (err) {
+        console.error(`[Mikrotik API] Kesalahan Koneksi (blok luar) saat mencoba terhubung ke '${host}':`, err.message);
+        return null;
+    }
+};
+
+/**
+ * Fungsi sederhana untuk menguji koneksi ke router Mikrotik.
+ * Fungsi ini SENGAJA dirancang untuk melempar error saat gagal untuk tombol tes UI.
+ * @throws Error jika koneksi atau pembacaan gagal.
+ */
+const testMikrotikConnection = async () => {
+    const settings = await getSettingsFromDb();
+    const { host, user, password, port } = settings.mikrotik;
+    if (!host || !host.trim() || !user || !user.trim()) {
+        throw new Error('Host dan Username API Mikrotik tidak dikonfigurasi.');
+    }
+    const conn = new RouterOSAPI({ host, user, password, port: port || 8728, timeout: 10 });
+    try {
+        await conn.connect();
+        const identity = await executeWriteWithTimeout(conn, '/system/identity/print');
+        console.log(`[Mikrotik API] Tes koneksi berhasil. Identitas router: ${identity[0].name}`);
+        conn.close();
+    } catch (err) {
+        console.error("Tes koneksi Mikrotik gagal:", err);
+        let errorMessage = 'Gagal terhubung. Harap periksa kredensial dan konektivitas jaringan.';
+        if (err.name === 'AggregateError') {
+            errorMessage = `DNS lookup failed for host '${host}'. Please check if the hostname is correct and resolvable.`;
+        } else if (err.message && err.message.includes('Timed out')) {
+            errorMessage = 'Koneksi Timeout. Harap verifikasi Host/IP dan Port, dan periksa pengaturan firewall.';
+        } else if (err.message) {
+            errorMessage = err.message;
+        }
+        throw new Error(errorMessage);
+    }
+};
+
+/**
+ * Mengambil daftar semua interface dari router.
+ * @returns {Promise<Array<Object>>} Promise yang resolve dengan array interface.
+ */
+const fetchInterfaces = async () => {
+    const conn = await connectToRouter();
+    if (!conn) return [];
+    try {
+        const interfaces = await executeWriteWithTimeout(conn, '/interface/print');
+        if (!Array.isArray(interfaces)) return [];
+        return interfaces.map(iface => ({
+            id: iface['.id'],
+            name: iface.name,
+            type: iface.type,
+            running: iface.running === 'true'
+        }));
+    } catch (error) {
+        console.error("Gagal mengambil interface, mengembalikan array kosong:", error.message);
+        return [];
+    } finally {
+        if (conn) conn.close();
+    }
+};
+
+/**
+ * Memantau lalu lintas untuk interface tertentu selama satu siklus.
+ * @param {string} interfaceName - Nama interface yang akan dipantau.
+ * @returns {Promise<Object>} Promise yang resolve dengan objek yang berisi tx dan rx bps.
+ */
+const monitorInterfaceTraffic = async (interfaceName) => {
+    const conn = await connectToRouter();
+    if (!conn) throw new Error('Router sedang offline');
+    try {
+        const result = await executeWriteWithTimeout(conn, '/interface/monitor-traffic', [`=interface=${interfaceName}`, '=once=']);
+        if (result && Array.isArray(result) && result.length > 0) {
+            return {
+                tx: parseInt(result[0]['tx-bits-per-second'], 10) || 0,
+                rx: parseInt(result[0]['rx-bits-per-second'], 10) || 0,
+            };
+        }
+        return { tx: 0, rx: 0 };
+    } catch (error) {
+        console.error(`Gagal memantau lalu lintas untuk ${interfaceName}, mengembalikan nol:`, error.message);
+        return { tx: 0, rx: 0 };
+    } finally {
+        if (conn) conn.close();
+    }
+};
+
+/**
+ * Mengambil daftar semua simple queue dari router.
+ * @returns {Promise<Array<Object>>} Promise yang resolve dengan array simple queue.
+ */
+const fetchSimpleQueues = async () => {
+    const conn = await connectToRouter();
+    if (!conn) return [];
+    try {
+        const queues = await executeWriteWithTimeout(conn, '/queue/simple/print');
+        if (!Array.isArray(queues)) return [];
+        return queues.map(queue => ({
+            id: queue['.id'],
+            name: queue.name,
+            target: queue.target,
+        }));
+    } catch (error) {
+        console.error("Gagal mengambil simple queue, mengembalikan array kosong:", error.message);
+        return [];
+    } finally {
+        if (conn) conn.close();
+    }
+};
+
+/**
+ * Memantau lalu lintas untuk simple queue tertentu selama satu siklus.
+ * @param {string} queueId - .id dari queue yang akan dipantau.
+ * @returns {Promise<Object>} Promise yang resolve dengan objek yang berisi tx dan rx bps.
+ */
+const monitorQueueTraffic = async (queueId) => {
+    const conn = await connectToRouter();
+    if (!conn) throw new Error('Router sedang offline');
+    try {
+        const result = await executeWriteWithTimeout(conn, '/queue/simple/print', [`?.id=${queueId}`]);
+        if (result && Array.isArray(result) && result.length > 0) {
+            const rate = result[0].rate || '0/0';
+            const [txBps, rxBps] = rate.split('/');
+            return {
+                tx: parseInt(txBps, 10) || 0,
+                rx: parseInt(rxBps, 10) || 0,
+            };
+        }
+        return { tx: 0, rx: 0 };
+    } catch (error) {
+        console.error(`Gagal memantau lalu lintas untuk queue ${queueId}, mengembalikan nol:`, error.message);
+        return { tx: 0, rx: 0 };
+    } finally {
+        if (conn) conn.close();
+    }
+};
+
+/**
+ * Memantau lalu lintas untuk pengguna PPPoE tertentu dengan menemukan antrian dinamisnya.
+ * Mencoba beberapa strategi untuk menemukan antrian yang benar.
+ * @param {string} username - Username PPPoE.
+ * @returns {Promise<Object>} Promise yang resolve dengan objek berisi { rx, tx } dalam bit per detik.
+ */
+const monitorTrafficForPppoeUser = async (username) => {
+    const conn = await connectToRouter();
+    if (!conn) throw new Error('Router sedang offline');
+
+    try {
+        // First, check if the user is actually online.
+        const activeUsers = await executeWriteWithTimeout(conn, '/ppp/active/print', [`?name=${username}`]);
+        if (!activeUsers || !Array.isArray(activeUsers) || activeUsers.length === 0) {
+            // User is not online, so traffic is zero.
+            return { rx: 0, tx: 0 };
+        }
+
+        // --- STRATEGY 1: Direct Interface Monitoring (Most Reliable) ---
+        // The dynamic interface for a PPPoE session is typically named `<pppoe-USERNAME>`.
+        const interfaceName = `<pppoe-${username}>`;
+        try {
+            const trafficResult = await executeWriteWithTimeout(conn, '/interface/monitor-traffic', [`=interface=${interfaceName}`, '=once=']);
+            if (trafficResult && Array.isArray(trafficResult) && trafficResult.length > 0) {
+                return {
+                    tx: parseInt(trafficResult[0]['tx-bits-per-second'], 10) || 0,
+                    rx: parseInt(trafficResult[0]['rx-bits-per-second'], 10) || 0,
+                };
+            }
+        } catch (interfaceError) {
+            // If this fails (e.g., interface name is different), we'll fall through to the queue method.
+            console.warn(`[Traffic Monitor] Direct interface monitor for '${interfaceName}' failed. Falling back to queue method. Error: ${interfaceError.message}`);
+        }
+
+        // --- STRATEGY 2: Simple Queue Monitoring (Fallback) ---
+        console.log(`[Traffic Monitor] Using fallback queue method for ${username}.`);
+        const userIp = activeUsers[0].address;
+        const allSimpleQueues = await executeWriteWithTimeout(conn, '/queue/simple/print');
+        if (!Array.isArray(allSimpleQueues)) {
+            return { rx: 0, tx: 0 };
+        }
+        
+        // Find by target IP
+        const targetQueue = allSimpleQueues.find(q => q.target && q.target.startsWith(userIp));
+        if (targetQueue && targetQueue.rate) {
+            const [txBps, rxBps] = targetQueue.rate.split('/');
+            return { rx: parseInt(rxBps, 10) || 0, tx: parseInt(txBps, 10) || 0 };
+        }
+
+        // Find by dynamic name <pppoe-username>
+        const dynamicNameQueue = allSimpleQueues.find(q => q.name === interfaceName); // Re-use interfaceName
+        if (dynamicNameQueue && dynamicNameQueue.rate) {
+            const [txBps, rxBps] = dynamicNameQueue.rate.split('/');
+            return { rx: parseInt(rxBps, 10) || 0, tx: parseInt(txBps, 10) || 0 };
+        }
+        
+        // Find by static name
+        const namedQueue = allSimpleQueues.find(q => q.name === username);
+        if (namedQueue && namedQueue.rate) {
+            const [txBps, rxBps] = namedQueue.rate.split('/');
+            return { rx: parseInt(rxBps, 10) || 0, tx: parseInt(txBps, 10) || 0 };
+        }
+
+        // If all methods fail, return zero.
+        return { rx: 0, tx: 0 };
+
+    } catch (error) {
+        console.error(`Gagal memantau lalu lintas untuk ${username}, mengembalikan nol:`, error.message);
+        return { rx: 0, tx: 0 };
+    } finally {
+        if (conn) conn.close();
+    }
+};
+
+/**
+ * Mengambil semua pppoe secret dan koneksi aktif untuk menentukan status langsung.
+ * @returns {Promise<Array<Object>>} Promise yang resolve dengan array pengguna PPPoE dengan status langsung.
+ */
+const fetchPppoeUsers = async ({ includeActive = true } = {}) => {
+    const conn = await connectToRouter();
+    if (!conn) return [];
+    try {
+        const secrets = await executeWriteWithTimeout(conn, '/ppp/secret/print');
+        const safeSecrets = Array.isArray(secrets) ? secrets : [];
+        let activeUsernames = new Set();
+
+        if (includeActive) {
+            const activeConnections = await executeWriteWithTimeout(conn, '/ppp/active/print');
+            const safeActiveConnections = Array.isArray(activeConnections) ? activeConnections : [];
+            activeUsernames = new Set(safeActiveConnections.map(c => c.name));
+        }
+
+        return safeSecrets.map(secret => ({
+            id: secret['.id'],
+            name: secret.name,
+            password: secret.password,
+            service: secret.service,
+            profile: secret.profile,
+            comment: secret.comment || '',
+            disabled: secret.disabled === 'true',
+            active: activeUsernames.has(secret.name)
+        }));
+    } catch (error) {
+        console.error("Gagal mengambil pengguna PPPoE, mengembalikan array kosong:", error.message);
+        return [];
+    } finally {
+        conn.close();
+    }
+};
+
+/**
+ * Mengambil hanya koneksi PPPoE aktif dari router.
+ * @returns {Promise<Array<Object>>} Promise yang resolve dengan array koneksi PPPoE aktif.
+ */
+const fetchActivePppoeConnections = async () => {
+    const conn = await connectToRouter();
+    if (!conn) return [];
+    try {
+        const connections = await executeWriteWithTimeout(conn, '/ppp/active/print');
+        return Array.isArray(connections) ? connections : [];
+    } catch (error) {
+        console.error("Gagal mengambil koneksi PPPoE aktif, mengembalikan array kosong:", error.message);
+        return [];
+    } finally {
+        if (conn) conn.close();
+    }
+};
+
+/**
+ * Menghapus sesi PPPoE aktif berdasarkan .id koneksi aktif.
+ * @param {string} activeId - .id dari sesi aktif PPPoE.
+ * @returns {Promise<{success: boolean}>}
+ */
+const removeActivePppoeConnection = async (activeId) => {
+    const conn = await connectToRouter();
+    if (!conn) throw new Error("Router Mikrotik sedang offline. Tidak dapat menghapus koneksi PPPoE aktif.");
+    try {
+        await executeWriteWithTimeout(conn, ['/ppp/active/remove', `=.id=${activeId}`]);
+        return { success: true };
+    } finally {
+        if (conn) conn.close();
+    }
+};
+
+/**
+ * Memperbarui pppoe secret pengguna yang ada di router dengan hanya mengubah field yang disediakan.
+ * @param {string} userId - .id pengguna dari router.
+ * @param {object} userData - Objek yang hanya berisi field yang akan diperbarui.
+ * @returns {Promise<object>}
+ */
+const updatePppoeUser = async (userId, userData) => {
+    const conn = await connectToRouter();
+    if (!conn) throw new Error("Router Mikrotik sedang offline. Tidak dapat memperbarui pengguna.");
+    try {
+        const command = ['/ppp/secret/set', `=.id=${userId}`];
+        if (userData.name) command.push(`=name=${userData.name}`);
+        if (userData.password) command.push(`=password=${userData.password}`);
+        if (userData.profile) command.push(`=profile=${userData.profile}`);
+        if (typeof userData.comment !== 'undefined') command.push(`=comment=${userData.comment}`);
+        return await executeWriteWithTimeout(conn, command);
+    } finally {
+        if (conn) conn.close();
+    }
+};
+
+/**
+ * Menonaktifkan pengguna PPPoE di router.
+ * @param {string} userId - .id pengguna dari router.
+ * @returns {Promise<{success: boolean}>}
+ */
+const disablePppoeUser = async (userId) => {
+    const conn = await connectToRouter();
+    if (!conn) throw new Error("Router Mikrotik sedang offline. Tidak dapat menonaktifkan pengguna.");
+    try {
+        await executeWriteWithTimeout(conn, ['/ppp/secret/set', '=disabled=yes', `=.id=${userId}`]);
+        return { success: true };
+    } finally {
+        if (conn) conn.close();
+    }
+};
+
+/**
+ * Mengaktifkan pengguna PPPoE di router.
+ * @param {string} userId - .id pengguna dari router.
+ * @returns {Promise<{success: boolean}>}
+ */
+const enablePppoeUser = async (userId) => {
+    const conn = await connectToRouter();
+    if (!conn) throw new Error("Router Mikrotik sedang offline. Tidak dapat mengaktifkan pengguna.");
+    try {
+        await executeWriteWithTimeout(conn, ['/ppp/secret/set', '=disabled=no', `=.id=${userId}`]);
+        return { success: true };
+    } finally {
+        if (conn) conn.close();
+    }
+};
+
+/**
+ * Menghubungkan kembali pengguna PPPoE dengan memutus sesi aktif mereka.
+ * @param {string} username - Username pengguna yang akan dihubungkan kembali.
+ * @returns {Promise<{success: boolean}>}
+ */
+const reconnectPppoeUser = async (username) => {
+    const conn = await connectToRouter();
+    if (!conn) throw new Error("Router Mikrotik sedang offline. Tidak dapat menghubungkan kembali pengguna.");
+    try {
+        const activeConnections = await executeWriteWithTimeout(conn, ['/ppp/active/print', `?name=${username}`]);
+        if (activeConnections && Array.isArray(activeConnections) && activeConnections.length > 0) {
+            const connectionId = activeConnections[0]['.id'];
+            await executeWriteWithTimeout(conn, ['/ppp/active/remove', `=.id=${connectionId}`]);
+        }
+        return { success: true };
+    } finally {
+        if (conn) conn.close();
+    }
+};
+
+/**
+ * Menghapus pppoe secret pengguna dari router.
+ * @param {string} userId - .id dari pppoe secret yang akan dihapus.
+ * @returns {Promise<object>} Hasil dari router.
+ */
+const deletePppoeUser = async (userId) => {
+    const conn = await connectToRouter();
+    if (!conn) throw new Error("Router Mikrotik sedang offline. Tidak dapat menghapus pengguna.");
+    try {
+        // Cek dulu apakah secret ada di router
+        const secrets = await executeWriteWithTimeout(conn, ['/ppp/secret/print', `?.id=${userId}`]);
+        
+        // Hanya lanjutkan jika secret benar-benar ada.
+        if (secrets && Array.isArray(secrets) && secrets.length > 0) {
+            const username = secrets[0].name;
+            // Hapus koneksi aktif jika ada
+            const activeConnections = await executeWriteWithTimeout(conn, ['/ppp/active/print', `?name=${username}`]);
+            if (activeConnections && Array.isArray(activeConnections) && activeConnections.length > 0) {
+                await executeWriteWithTimeout(conn, ['/ppp/active/remove', `=.id=${activeConnections[0]['.id']}`]);
+            }
+            // Hapus secret itu sendiri
+            await executeWriteWithTimeout(conn, ['/ppp/secret/remove', `=.id=${userId}`]);
+        }
+        // Jika secret tidak ditemukan, anggap sukses karena tujuan akhir tercapai.
+        return { success: true };
+    } finally {
+        if (conn) conn.close();
+    }
+};
+
+/**
+ * Menambahkan pppoe secret pengguna baru ke router.
+ * @param {object} userData - Data untuk pengguna baru.
+ * @returns {Promise<object>}
+ */
+const addPppoeUser = async (userData) => {
+    const conn = await connectToRouter();
+    if (!conn) throw new Error("Router Mikrotik sedang offline. Tidak dapat menambahkan pengguna.");
+    try {
+        const command = [
+            '/ppp/secret/add',
+            `=name=${userData.name}`,
+            `=password=${userData.password}`,
+            `=service=pppoe`,
+            `=profile=${userData.profile}`,
+            `=comment=${userData.comment || ''}`,
+        ];
+        return await executeWriteWithTimeout(conn, command);
+    } finally {
+        if (conn) conn.close();
+    }
+};
+
+/**
+ * Menemukan pengguna PPPoE berdasarkan nama dan memperbarui field komentar mereka.
+ * @param {string} username - Nama pengguna yang akan diperbarui.
+ * @param {string} comment - Komentar baru yang akan diatur.
+ * @returns {Promise<void>}
+ */
+const updatePppoeUserCommentByName = async (username, comment) => {
+    if (!username) return;
+    const conn = await connectToRouter();
+    if (!conn) {
+        console.warn(`[Mikrotik API] Melewati pembaruan komentar untuk ${username}: router sedang offline.`);
+        return;
+    }
+    try {
+        const users = await executeWriteWithTimeout(conn, ['/ppp/secret/print', `?name=${username}`]);
+        if (users && Array.isArray(users) && users.length > 0) {
+            const userId = users[0]['.id'];
+            await executeWriteWithTimeout(conn, ['/ppp/secret/set', `=.id=${userId}`, `=comment=${comment || ''}`]);
+        }
+    } finally {
+        if (conn) conn.close();
+    }
+};
+
+/**
+ * Mengambil semua pengguna Hotspot dari router.
+ * @returns {Promise<Array<Object>>}
+ */
+const fetchHotspotUsers = async () => {
+    const conn = await connectToRouter();
+    if (!conn) return [];
+    try {
+        const users = await executeWriteWithTimeout(conn, '/ip/hotspot/user/print');
+        if (!Array.isArray(users)) return [];
+        return users.map(user => ({
+            id: user['.id'],
+            name: user.name,
+            password: user.password,
+            profile: user.profile,
+            comment: user.comment || '',
+            disabled: user.disabled === 'true',
+            totalUptime: user.uptime,
+        }));
+    } catch (error) {
+        console.error("Gagal mengambil pengguna Hotspot, mengembalikan array kosong:", error.message);
+        return [];
+    } finally {
+        if (conn) conn.close();
+    }
+};
+
+/**
+ * Mengambil hanya sesi Hotspot aktif dari router.
+ * @returns {Promise<Array<Object>>} Promise yang resolve dengan array sesi Hotspot aktif.
+ */
+const fetchActiveHotspotConnections = async () => {
+    const conn = await connectToRouter();
+    if (!conn) return [];
+    try {
+        const connections = await executeWriteWithTimeout(conn, '/ip/hotspot/active/print');
+        return Array.isArray(connections) ? connections : [];
+    } catch (error) {
+        console.error("Gagal mengambil koneksi Hotspot aktif, mengembalikan array kosong:", error.message);
+        return [];
+    } finally {
+        if (conn) conn.close();
+    }
+};
+
+/**
+ * Menambahkan pengguna Hotspot baru ke router.
+ * @param {object} userData - Data untuk pengguna baru.
+ * @returns {Promise<{id: string}|null>} Objek yang berisi ID pengguna baru, atau null jika gagal.
+ */
+const addHotspotUser = async (userData) => {
+    const conn = await connectToRouter();
+    if (!conn) throw new Error("Router Mikrotik sedang offline. Tidak dapat menambahkan pengguna hotspot.");
+    try {
+        const command = [
+            '/ip/hotspot/user/add',
+            `=name=${userData.name}`,
+            `=password=${userData.password}`,
+            `=profile=${userData.profile}`,
+            `=comment=${userData.comment || ''}`,
+        ];
+        // Tambahkan parameter 'disabled' jika disediakan, untuk membuat pengguna nonaktif secara default
+        if (userData.disabled) {
+            command.push(`=disabled=${userData.disabled}`);
+        }
+        const result = await executeWriteWithTimeout(conn, command);
+        if (result && Array.isArray(result) && result.length > 0 && result[0].ret) {
+            return { id: result[0].ret };
+        }
+        throw new Error('API MikroTik tidak mengembalikan ID yang valid untuk pengguna hotspot baru.');
+    } finally {
+        if (conn) conn.close();
+    }
+};
+
+/**
+ * Menghapus sesi Hotspot aktif.
+ * @param {string} activeId - .id dari sesi aktif yang akan dihapus.
+ * @returns {Promise<object>}
+ */
+const removeActiveHotspotUser = async (activeId) => {
+    const conn = await connectToRouter();
+    if (!conn) throw new Error("Router Mikrotik sedang offline. Tidak dapat menghapus pengguna aktif.");
+    try {
+        return await executeWriteWithTimeout(conn, ['/ip/hotspot/active/remove', `=.id=${activeId}`]);
+    } finally {
+        if (conn) conn.close();
+    }
+};
+
+/**
+ * Menghapus pengguna Hotspot dari router.
+ * @param {string} userId - .id pengguna yang akan dihapus.
+ * @returns {Promise<object>}
+ */
+const deleteHotspotUser = async (userId) => {
+    const conn = await connectToRouter();
+    if (!conn) throw new Error("Router Mikrotik sedang offline. Tidak dapat menghapus pengguna hotspot.");
+    try {
+        const users = await executeWriteWithTimeout(conn, ['/ip/hotspot/user/print', `?.id=${userId}`]);
+        if (users && Array.isArray(users) && users.length > 0) {
+            const username = users[0].name;
+            const activeUsers = await executeWriteWithTimeout(conn, ['/ip/hotspot/active/print', `?user=${username}`]);
+            if (activeUsers && Array.isArray(activeUsers) && activeUsers.length > 0) {
+                // gunakan koneksi yang ada alih-alih memanggil removeActiveHotspotUser
+                await executeWriteWithTimeout(conn, ['/ip/hotspot/active/remove', `=.id=${activeUsers[0]['.id']}`]);
+            }
+            await executeWriteWithTimeout(conn, ['/ip/hotspot/user/remove', `=.id=${userId}`]);
+        }
+        return { success: true };
+    } finally {
+        if (conn) conn.close();
+    }
+};
+
+/**
+ * Menonaktifkan pengguna Hotspot di router.
+ * @param {string} userId - .id pengguna dari router.
+ * @returns {Promise<{success: boolean}>}
+ */
+const disableHotspotUser = async (userId) => {
+    const conn = await connectToRouter();
+    if (!conn) throw new Error("Router Mikrotik sedang offline. Tidak dapat menonaktifkan pengguna hotspot.");
+    try {
+        await executeWriteWithTimeout(conn, ['/ip/hotspot/user/set', '=disabled=yes', `=.id=${userId}`]);
+        return { success: true };
+    } finally {
+        if (conn) conn.close();
+    }
+};
+
+/**
+ * Mengaktifkan pengguna Hotspot di router.
+ * @param {string} userId - .id pengguna dari router.
+ * @returns {Promise<{success: boolean}>}
+ */
+const enableHotspotUser = async (userId) => {
+    const conn = await connectToRouter();
+    if (!conn) throw new Error("Router Mikrotik sedang offline. Tidak dapat mengaktifkan pengguna hotspot.");
+    try {
+        await executeWriteWithTimeout(conn, ['/ip/hotspot/user/set', '=disabled=no', `=.id=${userId}`]);
+        return { success: true };
+    } finally {
+        if (conn) conn.close();
+    }
+};
+
+
+/**
+ * Mengambil semua profil pengguna Hotspot dari router.
+ * @returns {Promise<Array<Object>>}
+ */
+const fetchHotspotProfiles = async () => {
+    const conn = await connectToRouter();
+    if (!conn) return [];
+    try {
+        const profiles = await executeWriteWithTimeout(conn, '/ip/hotspot/user/profile/print');
+        if (!Array.isArray(profiles)) return [];
+        return profiles.map(profile => ({
+            id: profile['.id'],
+            name: profile.name,
+            rateLimit: profile['rate-limit'] || '',
+            sharedUsers: profile['shared-users'] ? parseInt(profile['shared-users'], 10) : 1,
+        }));
+    } catch (error) {
+        console.error("Gagal mengambil profil Hotspot, mengembalikan array kosong:", error.message);
+        return [];
+    } finally {
+        if (conn) conn.close();
+    }
+};
+
+/**
+ * Mengambil semua profil PPP dari router.
+ * @returns {Promise<Array<PppoeProfile>>}
+ */
+const fetchPppoeProfiles = async () => {
+    const conn = await connectToRouter();
+    if (!conn) return [];
+    try {
+        const profiles = await executeWriteWithTimeout(conn, '/ppp/profile/print');
+        if (!Array.isArray(profiles)) return [];
+        return profiles.map(profile => ({
+            id: profile['.id'],
+            name: profile.name,
+            localAddress: profile['local-address'] || '',
+            remoteAddressPool: profile['remote-address'] || '',
+            rateLimit: profile['rate-limit'] || '',
+        }));
+    } catch (error) {
+        console.error("Gagal mengambil profil PPPoE, mengembalikan array kosong:", error.message);
+        return [];
+    }
+    finally {
+        if (conn) conn.close();
+    }
+};
+
+const addHotspotProfile = async (profileData) => {
+    const conn = await connectToRouter();
+    if (!conn) throw new Error("Router Mikrotik sedang offline.");
+    try {
+        return await executeWriteWithTimeout(conn, ['/ip/hotspot/user/profile/add', `=name=${profileData.name}`, `=rate-limit=${profileData.rateLimit || ''}`, `=shared-users=${profileData.sharedUsers || 1}`]);
+    } finally {
+        if (conn) conn.close();
+    }
+};
+
+const updateHotspotProfile = async (profileId, profileData) => {
+    const conn = await connectToRouter();
+    if (!conn) throw new Error("Router Mikrotik sedang offline.");
+    try {
+        const command = ['/ip/hotspot/user/profile/set', `=.id=${profileId}`];
+        if (profileData.name) command.push(`=name=${profileData.name}`);
+        if (typeof profileData.rateLimit !== 'undefined') command.push(`=rate-limit=${profileData.rateLimit}`);
+        if (profileData.sharedUsers) command.push(`=shared-users=${profileData.sharedUsers}`);
+        return await executeWriteWithTimeout(conn, command);
+    } finally {
+        if (conn) conn.close();
+    }
+};
+
+const deleteHotspotProfile = async (profileId) => {
+    const conn = await connectToRouter();
+    if (!conn) throw new Error("Router Mikrotik sedang offline.");
+    try {
+        const profileResult = await executeWriteWithTimeout(conn, ['/ip/hotspot/user/profile/print', `?.id=${profileId}`]);
+        if (!profileResult || !Array.isArray(profileResult) || profileResult.length === 0) throw new Error('Profil tidak ditemukan.');
+        const usersOnProfile = await executeWriteWithTimeout(conn, ['/ip/hotspot/user/print', `?profile=${profileResult[0].name}`]);
+        if (Array.isArray(usersOnProfile) && usersOnProfile.length > 0) throw new Error(`Tidak dapat menghapus profil: digunakan oleh ${usersOnProfile.length} pengguna.`);
+        return await executeWriteWithTimeout(conn, ['/ip/hotspot/user/profile/remove', `=.id=${profileId}`]);
+    } finally {
+        if (conn) conn.close();
+    }
+};
+
+const addPppoeProfile = async (profileData) => {
+    const conn = await connectToRouter();
+    if (!conn) throw new Error("Router Mikrotik sedang offline.");
+    try {
+        const command = ['/ppp/profile/add', `=name=${profileData.name}`];
+        if (profileData.localAddress) command.push(`=local-address=${profileData.localAddress}`);
+        if (profileData.remoteAddressPool) command.push(`=remote-address=${profileData.remoteAddressPool}`);
+        if (profileData.rateLimit) command.push(`=rate-limit=${profileData.rateLimit}`);
+        return await executeWriteWithTimeout(conn, command);
+    } finally {
+        if (conn) conn.close();
+    }
+};
+
+const updatePppoeProfile = async (profileId, profileData) => {
+    const conn = await connectToRouter();
+    if (!conn) throw new Error("Router Mikrotik sedang offline.");
+    try {
+        const command = ['/ppp/profile/set', `=.id=${profileId}`];
+        if (profileData.name) command.push(`=name=${profileData.name}`);
+        if (typeof profileData.localAddress !== 'undefined') command.push(`=local-address=${profileData.localAddress}`);
+        if (typeof profileData.remoteAddressPool !== 'undefined') command.push(`=remote-address=${profileData.remoteAddressPool}`);
+        if (typeof profileData.rateLimit !== 'undefined') command.push(`=rate-limit=${profileData.rateLimit}`);
+        return await executeWriteWithTimeout(conn, command);
+    } finally {
+        if (conn) conn.close();
+    }
+};
+
+const deletePppoeProfile = async (profileId) => {
+    const conn = await connectToRouter();
+    if (!conn) throw new Error("Router Mikrotik sedang offline.");
+    try {
+        const profileResult = await executeWriteWithTimeout(conn, ['/ppp/profile/print', `?.id=${profileId}`]);
+        if (!profileResult || !Array.isArray(profileResult) || profileResult.length === 0) throw new Error('Profil tidak ditemukan.');
+        const usersOnProfile = await executeWriteWithTimeout(conn, ['/ppp/secret/print', `?profile=${profileResult[0].name}`]);
+        if (Array.isArray(usersOnProfile) && usersOnProfile.length > 0) throw new Error(`Tidak dapat menghapus profil: digunakan oleh ${usersOnProfile.length} pengguna.`);
+        return await executeWriteWithTimeout(conn, ['/ppp/profile/remove', `=.id=${profileId}`]);
+    } finally {
+        if (conn) conn.close();
+    }
+};
+
+const setupRemoteOntNatRule = async (mikrotikSettings) => {
+    const conn = await connectToRouter();
+    if (!conn) {
+        if (mikrotikSettings.enableDynamicNat) {
+            throw new Error("Router sedang offline. Tidak dapat mengatur aturan NAT.");
+        }
+        return;
+    }
+    try {
+        const existingRules = await executeWriteWithTimeout(conn, '/ip/firewall/nat/print', [`?comment=${NAT_RULE_COMMENT}`]);
+        if (Array.isArray(existingRules) && existingRules.length > 0) {
+            await executeWriteWithTimeout(conn, '/ip/firewall/nat/remove', [`=.id=${existingRules[0]['.id']}`]);
+            console.log(`[NAT Setup] Menghapus aturan yang ada: ${existingRules[0]['.id']}`);
+        }
+
+        if (mikrotikSettings.enableDynamicNat) {
+            const { natInInterface, natPublicPort, natOntPort } = mikrotikSettings;
+            
+            // Validasi port, tapi bukan in-interface
+            if (!natPublicPort || !natOntPort) {
+                throw new Error("Public Port and ONT Port are required for dynamic NAT.");
+            }
+            
+            const newRule = {
+                chain: 'dstnat',
+                protocol: 'tcp',
+                'dst-port': natPublicPort,
+                action: 'dst-nat',
+                'to-addresses': '0.0.0.0', // Placeholder
+                'to-ports': natOntPort,
+                comment: NAT_RULE_COMMENT,
+            };
+
+            // Tambahkan 'in-interface' secara kondisional jika ada
+            if (natInInterface) {
+                newRule['in-interface'] = natInInterface;
+                console.log(`[NAT Setup] Membuat aturan NAT dinamis dengan In-Interface: ${natInInterface}.`);
+            } else {
+                console.log(`[NAT Setup] Membuat aturan NAT dinamis tanpa In-Interface spesifik.`);
+            }
+
+            const command = ['/ip/firewall/nat/add'];
+            for (const key in newRule) {
+                command.push(`=${key}=${newRule[key]}`);
+            }
+            await executeWriteWithTimeout(conn, command);
+            console.log(`[NAT Setup] Berhasil membuat aturan NAT dinamis.`);
+        }
+    } finally {
+        conn.close();
+    }
+};
+
+const updateRemoteOntNatTarget = async (targetIp) => {
+    const conn = await connectToRouter();
+    if (!conn) throw new Error("Router sedang offline. Tidak dapat memperbarui target NAT.");
+    try {
+        const rules = await executeWriteWithTimeout(conn, '/ip/firewall/nat/print', [`?comment=${NAT_RULE_COMMENT}`]);
+        if (!rules || !Array.isArray(rules) || rules.length === 0) {
+            throw new Error(`Aturan NAT dinamis dengan komentar '${NAT_RULE_COMMENT}' tidak ditemukan di router. Harap konfigurasikan di pengaturan.`);
+        }
+        const ruleId = rules[0]['.id'];
+        await executeWriteWithTimeout(conn, '/ip/firewall/nat/set', [`=.id=${ruleId}`, `=to-addresses=${targetIp}`]);
+        console.log(`[NAT Update] Memperbarui aturan ${ruleId} untuk menargetkan IP: ${targetIp}`);
+    } finally {
+        if (conn) conn.close();
+    }
+};
+
+export default {
+    testMikrotikConnection,
+    fetchInterfaces,
+    monitorInterfaceTraffic,
+    fetchSimpleQueues,
+    monitorQueueTraffic,
+    monitorTrafficForPppoeUser,
+    fetchPppoeUsers,
+    updatePppoeUser,
+    addPppoeUser,
+    disablePppoeUser,
+    enablePppoeUser,
+    reconnectPppoeUser,
+    deletePppoeUser,
+    updatePppoeUserCommentByName,
+    fetchHotspotUsers,
+    addHotspotUser,
+    deleteHotspotUser,
+    disableHotspotUser,
+    enableHotspotUser,
+    removeActiveHotspotUser,
+    fetchHotspotProfiles,
+    addHotspotProfile,
+    updateHotspotProfile,
+    deleteHotspotProfile,
+    fetchPppoeProfiles,
+    addPppoeProfile,
+    updatePppoeProfile,
+    deletePppoeProfile,
+    fetchActivePppoeConnections,
+    removeActivePppoeConnection,
+    fetchActiveHotspotConnections,
+    setupRemoteOntNatRule,
+    updateRemoteOntNatTarget,
+};

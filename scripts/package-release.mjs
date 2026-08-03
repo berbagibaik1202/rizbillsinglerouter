@@ -17,6 +17,7 @@ const sourceReleaseManifestPath = path.join(rootDir, 'release-manifest.json');
 const rootFilesToCopy = [
     'package.json',
     'package-lock.json',
+    'server.js',
     'install-vps.sh',
     'docker-entrypoint.js',
     'docker-compose.vps.yml',

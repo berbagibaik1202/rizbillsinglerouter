@@ -1,6 +1,9 @@
 
 
 import express from "express";
+import { spawn } from "child_process";
+import { fileURLToPath } from "url";
+import path from "path";
 import { randomUUID } from "crypto";
 import pool from "../db.js";
 import { getSettings, toMySQLDatetime, dbDateToISO } from "../utils.js";
@@ -10,61 +13,62 @@ import { sanitizeAcs } from "../utils/sanitizeAcs.js";
 import levenshtein from "js-levenshtein"; 
 
 const router = express.Router();
-const ACS_API_TIMEOUT = 30000; // Timeout 30 detik untuk permintaan ACS
-const ACS_SYNC_YIELD_EVERY = 5;
-const ACS_SYNC_BATCH_DELAY_MS = 25;
-const ACS_SYNC_DEVICE_PROJECTION = "_id,_lastInform,summary,_deviceId";
-
-let activeSyncJob = null;
-
-const nowIso = () => new Date().toISOString();
-const delay = (ms = 0) => new Promise((resolve) => setTimeout(resolve, ms));
-
-const formatSyncJob = (job) => {
-    if (!job) return null;
-    return {
-        ...job,
-    };
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const ACS_SYNC_WORKER_PATH = path.join(__dirname, '../jobs/acsSyncWorker.js');
+const ACS_API_TIMEOUT = 30000; // Timeout default 30 detik untuk request ACS biasa
+const ACS_SYNC_LIST_TIMEOUT = 60000; // Sync penuh boleh lebih lama daripada request biasa
+const ACS_LIST_PAGE_RETRIES = 2;
+const ACS_LIST_RETRY_DELAY_MS = 1500;
+const ACS_SYNC_JOB_POLL_INTERVAL_MS = 5000;
+const ACS_LIVE_REFRESH_STATUS_RETENTION_MS = Number(process.env.ACS_LIVE_REFRESH_STATUS_RETENTION_MS || 30000);
+const ACS_SYNC_MINIMAL_PROJECTION = "_id,_lastInform,summary,Device.DeviceInfo.ModelName,Device.DeviceInfo.ProductClass,InternetGatewayDevice.DeviceInfo.ModelName,InternetGatewayDevice.DeviceInfo.ProductClass";
+const ACS_SYNC_PAGE_LIMIT = Number(process.env.ACS_SYNC_PAGE_LIMIT || 25);
+const ACS_SYNC_PAGE_PAUSE_MS = Number(process.env.ACS_SYNC_PAGE_PAUSE_MS || 50);
+const ACS_SYNC_PROGRESS_UPDATE_EVERY_PAGES = Math.max(1, Number(process.env.ACS_SYNC_PROGRESS_UPDATE_EVERY_PAGES || 5));
+const ACS_SYNC_JOB_STATUSES = {
+    QUEUED: 'queued',
+    RUNNING: 'running',
+    COMPLETED: 'completed',
+    FAILED: 'failed',
+    CANCELLED: 'cancelled',
 };
+const ACS_SYNC_CANCELLED_MESSAGE = 'ACS sync job cancelled by user.';
 
-const isSyncJobActive = (job) => !!job && ['queued', 'running'].includes(job.status);
+const parseAcsLastInform = (value) => {
+    if (value == null) return null;
 
-const getActiveSyncJob = () => (isSyncJobActive(activeSyncJob) ? activeSyncJob : null);
-
-const createSyncJob = () => ({
-    id: randomUUID(),
-    status: 'queued',
-    processed_count: 0,
-    total_count: 0,
-    progress_percent: 0,
-    message: 'ACS sync job queued.',
-    error_message: null,
-    started_at: null,
-    finished_at: null,
-    created_at: nowIso(),
-    updated_at: nowIso(),
-    cancel_requested: false,
-});
-
-const updateSyncJob = (job, patch = {}) => {
-    if (!job) return null;
-    Object.assign(job, patch);
-    job.updated_at = nowIso();
-    return job;
-};
-
-const setSyncJobProgress = (job, progress, message, extraPatch = {}) => {
-    if (!job) return null;
-    job.progress_percent = Math.max(0, Math.min(100, Number(progress || 0)));
-    if (message !== undefined) {
-        job.message = String(message || '').trim() || job.message;
+    if (value instanceof Date) {
+        return Number.isNaN(value.getTime()) ? null : new Date(value.getTime());
     }
-    Object.assign(job, extraPatch);
-    job.updated_at = nowIso();
-    return job;
+
+    if (typeof value === 'number') {
+        const parsed = new Date(value);
+        return Number.isNaN(parsed.getTime()) ? null : parsed;
+    }
+
+    const raw = String(value).trim();
+    if (!raw) return null;
+
+    const mysqlLike = raw.match(/^(\d{4})-(\d{2})-(\d{2})[ T](\d{2}):(\d{2}):(\d{2})(?:\.\d+)?$/);
+    if (mysqlLike) {
+        const [, year, month, day, hour, minute, second] = mysqlLike;
+        const parsed = new Date(Number(year), Number(month) - 1, Number(day));
+        parsed.setHours(Number(hour), Number(minute), Number(second), 0);
+        return Number.isNaN(parsed.getTime()) ? null : parsed;
+    }
+
+    const fallback = new Date(raw.includes(' ') ? raw.replace(' ', 'T') : raw);
+    return Number.isNaN(fallback.getTime()) ? null : fallback;
 };
 
-const syncJobResponse = (job) => formatSyncJob(job);
+let acsSyncSchedulerStarted = false;
+let acsSyncWorkerRunning = false;
+let acsLiveRefreshState = null;
+let acsLiveRefreshCleanupTimer = null;
+const isLightweightRuntime = process.env.CPANEL_LIGHTWEIGHT === 'true'
+    || process.env.DISABLE_BACKGROUND_SERVICES === 'true'
+    || process.env.DISABLE_ACS_BACKGROUND_REFRESH === 'true';
 
 router.use((req, res, next) => {
     const originalJson = res.json.bind(res);
@@ -129,17 +133,646 @@ const handleAcsFetchError = (error, res, action, apiUrl) => {
     });
 };
 
-const fetchAllAcsDevices = async (acsSettings, projection = null) => {
+const formatAcsSyncJob = (job) => {
+    if (!job) return null;
+    return {
+        ...job,
+        progress_percent: Number(job.progress_percent || 0),
+        created_at: job.created_at ? dbDateToISO(job.created_at) : null,
+        updated_at: job.updated_at ? dbDateToISO(job.updated_at) : null,
+        started_at: job.started_at ? dbDateToISO(job.started_at) : null,
+        finished_at: job.finished_at ? dbDateToISO(job.finished_at) : null,
+    };
+};
+
+const formatAcsLiveRefreshState = (state = acsLiveRefreshState) => {
+    if (!state) return null;
+    return {
+        id: state.id || null,
+        active: Boolean(state.active),
+        processed_count: Number(state.processed_count || 0),
+        message: state.message || null,
+        error_message: state.error_message || null,
+        started_at: state.started_at ? dbDateToISO(state.started_at) : null,
+        finished_at: state.finished_at ? dbDateToISO(state.finished_at) : null,
+        updated_at: state.updated_at ? dbDateToISO(state.updated_at) : null,
+    };
+};
+
+const formatAcsCachedDeviceRow = (device) => ({
+    ...device,
+    isOnline: device.isOnline === 1,
+    lastInform: dbDateToISO(device.lastInform),
+});
+
+const fetchAcsCachedDeviceRows = async ({ includeCustomerJoin = true, serialNumbers = null } = {}) => {
+    const customerJoin = includeCustomerJoin
+        ? "LEFT JOIN customers c ON c.acsSerialNumber = d.serialNumber"
+        : "";
+    const selectColumns = [
+        "d.serialNumber as id",
+        "d.serialNumber",
+        "d.productClass",
+        "d.ipAddress",
+        "d.pppoeUsername",
+        "d.rxPower",
+        "d.lastInform",
+        "d.isOnline",
+        "d.ssid1",
+        "d.ssid5",
+        "d.ssid1Connected",
+        "d.ssid5Connected",
+        includeCustomerJoin
+            ? "c.id as customerId"
+            : "NULL as customerId",
+        includeCustomerJoin
+            ? "c.name as customerName"
+            : "NULL as customerName",
+    ];
+    const whereClause = Array.isArray(serialNumbers) && serialNumbers.length > 0
+        ? `WHERE d.serialNumber IN (${serialNumbers.map(() => '?').join(', ')})`
+        : '';
+    const queryParams = Array.isArray(serialNumbers) && serialNumbers.length > 0 ? serialNumbers : [];
+
+    const [rows] = await pool.query(`
+        SELECT ${selectColumns.join(", ")}
+        FROM acs_devices d
+        ${customerJoin}
+        ${whereClause}
+        ORDER BY d.lastInform DESC
+    `, queryParams);
+
+    return Array.isArray(rows) ? rows : [];
+};
+
+const fetchAcsCachedLastSyncTime = async () => {
+    const [rows] = await pool.query("SELECT MAX(last_sync_at) as lastSyncTime FROM acs_devices");
+    return Array.isArray(rows) && rows.length > 0 ? rows[0]?.lastSyncTime || null : null;
+};
+
+const getAcsCachedDevicesResponse = async ({ fast = false } = {}) => {
+    let rows = [];
+    let lastSyncTime = null;
+
+    try {
+        rows = await fetchAcsCachedDeviceRows({ includeCustomerJoin: true });
+    } catch (error) {
+        console.warn(`[ACS Cached${fast ? " Fast" : ""}] Customer join failed, retrying without customer metadata:`, error);
+        try {
+            rows = await fetchAcsCachedDeviceRows({ includeCustomerJoin: false });
+        } catch (fallbackError) {
+            console.error(`[ACS Cached${fast ? " Fast" : ""}] Cache query failed, returning empty list:`, fallbackError);
+            rows = [];
+        }
+    }
+
+    try {
+        lastSyncTime = await fetchAcsCachedLastSyncTime();
+    } catch (error) {
+        console.warn(`[ACS Cached${fast ? " Fast" : ""}] Failed to read last sync timestamp:`, error);
+    }
+
+    return {
+        devices: rows.map(formatAcsCachedDeviceRow),
+        lastSyncTime: dbDateToISO(lastSyncTime),
+    };
+};
+
+const scheduleAcsLiveRefreshCleanup = () => {
+    if (acsLiveRefreshCleanupTimer) {
+        clearTimeout(acsLiveRefreshCleanupTimer);
+        acsLiveRefreshCleanupTimer = null;
+    }
+
+    if (!acsLiveRefreshState || acsLiveRefreshState.active) {
+        return;
+    }
+
+    acsLiveRefreshCleanupTimer = setTimeout(() => {
+        acsLiveRefreshState = null;
+        acsLiveRefreshCleanupTimer = null;
+    }, ACS_LIVE_REFRESH_STATUS_RETENTION_MS);
+
+    if (typeof acsLiveRefreshCleanupTimer.unref === 'function') {
+        acsLiveRefreshCleanupTimer.unref();
+    }
+};
+
+const setAcsLiveRefreshState = (fields = {}) => {
+    const nextState = {
+        id: fields.id ?? acsLiveRefreshState?.id ?? randomUUID(),
+        active: typeof fields.active === 'boolean' ? fields.active : Boolean(acsLiveRefreshState?.active),
+        processed_count: fields.processed_count !== undefined
+            ? Number(fields.processed_count || 0)
+            : Number(acsLiveRefreshState?.processed_count || 0),
+        message: fields.message !== undefined ? fields.message : (acsLiveRefreshState?.message ?? null),
+        error_message: fields.error_message !== undefined ? fields.error_message : (acsLiveRefreshState?.error_message ?? null),
+        started_at: fields.started_at !== undefined ? fields.started_at : (acsLiveRefreshState?.started_at ?? null),
+        finished_at: fields.finished_at !== undefined ? fields.finished_at : (acsLiveRefreshState?.finished_at ?? null),
+        updated_at: fields.updated_at || new Date(),
+    };
+
+    acsLiveRefreshState = nextState;
+    scheduleAcsLiveRefreshCleanup();
+    return nextState;
+};
+
+const clearAcsLiveRefreshState = () => {
+    if (acsLiveRefreshCleanupTimer) {
+        clearTimeout(acsLiveRefreshCleanupTimer);
+        acsLiveRefreshCleanupTimer = null;
+    }
+    acsLiveRefreshState = null;
+};
+
+const getActiveAcsWork = async () => {
+    const [syncJob] = await Promise.all([
+        getActiveAcsSyncJob(),
+    ]);
+
+    return {
+        syncJob,
+        liveRefresh: acsLiveRefreshState?.active ? acsLiveRefreshState : null,
+    };
+};
+
+const getActiveAcsWorkSnapshot = async () => {
+    const { syncJob, liveRefresh } = await getActiveAcsWork();
+    return {
+        syncJob: syncJob ? formatAcsSyncJob(syncJob) : null,
+        liveRefresh: liveRefresh ? formatAcsLiveRefreshState(liveRefresh) : null,
+    };
+};
+
+const buildActiveAcsWorkConflict = async (message = 'Another ACS job is already active. Please wait until it finishes.') => {
+    const snapshot = await getActiveAcsWorkSnapshot();
+    if (!snapshot.syncJob && !snapshot.liveRefresh?.active) {
+        return null;
+    }
+
+    return {
+        status: 409,
+        body: {
+            success: false,
+            message,
+            job: snapshot.syncJob,
+            liveRefresh: snapshot.liveRefresh,
+        },
+    };
+};
+
+const getAcsSyncJobById = async (jobId) => {
+    const [rows] = await pool.query(
+        `SELECT * FROM acs_sync_jobs WHERE id = ? LIMIT 1`,
+        [jobId]
+    );
+    return rows.length > 0 ? rows[0] : null;
+};
+
+const getActiveAcsSyncJob = async () => {
+    const [rows] = await pool.query(
+        `SELECT * FROM acs_sync_jobs
+         WHERE status IN (?, ?)
+         ORDER BY created_at DESC
+         LIMIT 1`,
+        [ACS_SYNC_JOB_STATUSES.QUEUED, ACS_SYNC_JOB_STATUSES.RUNNING]
+    );
+    return rows.length > 0 ? rows[0] : null;
+};
+
+const getNextQueuedAcsSyncJob = async () => {
+    const [rows] = await pool.query(
+        `SELECT * FROM acs_sync_jobs
+         WHERE status = ?
+         ORDER BY created_at ASC
+         LIMIT 1`,
+        [ACS_SYNC_JOB_STATUSES.QUEUED]
+    );
+    return rows.length > 0 ? rows[0] : null;
+};
+
+const createAcsSyncJob = async () => {
+    const id = randomUUID();
+    await pool.query(
+        `INSERT INTO acs_sync_jobs (id, status, processed_count, progress_percent, message)
+         VALUES (?, ?, 0, 0, ?)`,
+        [id, ACS_SYNC_JOB_STATUSES.QUEUED, 'Queued for processing']
+    );
+    return getAcsSyncJobById(id);
+};
+
+const updateAcsSyncJob = async (jobId, fields = {}) => {
+    const keys = Object.keys(fields);
+    if (keys.length === 0) return;
+
+    const assignments = keys.map((key) => `\`${key}\` = ?`).join(', ');
+    const values = keys.map((key) => fields[key]);
+    values.push(jobId);
+
+    await pool.query(
+        `UPDATE acs_sync_jobs SET ${assignments} WHERE id = ?`,
+        values
+    );
+};
+
+const finalizeAcsSyncJob = async (jobId, status, fields = {}) => {
+    await updateAcsSyncJob(jobId, {
+        status,
+        progress_percent: status === ACS_SYNC_JOB_STATUSES.COMPLETED ? 100 : Number(fields.progress_percent || 0),
+        finished_at: fields.finished_at || new Date(),
+        updated_at: new Date(),
+        ...fields,
+    });
+};
+
+const isAcsSyncJobCancelled = async (jobId) => {
+    const job = await getAcsSyncJobById(jobId);
+    return job?.status === ACS_SYNC_JOB_STATUSES.CANCELLED;
+};
+
+const cancelAcsSyncJob = async (jobId) => {
+    const [result] = await pool.query(
+        `UPDATE acs_sync_jobs
+         SET status = ?, message = ?, error_message = NULL, finished_at = COALESCE(finished_at, NOW()), updated_at = NOW()
+         WHERE id = ? AND status IN (?, ?)`,
+        [ACS_SYNC_JOB_STATUSES.CANCELLED, ACS_SYNC_CANCELLED_MESSAGE, jobId, ACS_SYNC_JOB_STATUSES.QUEUED, ACS_SYNC_JOB_STATUSES.RUNNING]
+    );
+
+    return result.affectedRows > 0;
+};
+
+const claimAcsSyncJob = async (jobId) => {
+    const [result] = await pool.query(
+        `UPDATE acs_sync_jobs
+         SET status = ?, started_at = COALESCE(started_at, NOW()), message = ?, updated_at = NOW()
+         WHERE id = ? AND status = ?`,
+        [ACS_SYNC_JOB_STATUSES.RUNNING, 'ACS sync worker starting...', jobId, ACS_SYNC_JOB_STATUSES.QUEUED]
+    );
+
+    return result.affectedRows > 0;
+};
+
+const launchAcsSyncWorker = (jobId) => {
+    const child = spawn(process.execPath, [ACS_SYNC_WORKER_PATH, jobId], {
+        detached: true,
+        stdio: 'ignore',
+        windowsHide: true,
+    });
+
+    child.unref();
+    return child;
+};
+
+const processAcsSyncQueue = async () => {
+    if (acsSyncWorkerRunning) return;
+
+    const nextJob = await getNextQueuedAcsSyncJob();
+    if (!nextJob) {
+        return;
+    }
+
+    acsSyncWorkerRunning = true;
+    try {
+        const claimed = await claimAcsSyncJob(nextJob.id);
+        if (!claimed) {
+            return;
+        }
+
+        launchAcsSyncWorker(nextJob.id);
+    } catch (error) {
+        console.error('[ACS Job] Failed to launch sync worker:', error);
+        await finalizeAcsSyncJob(nextJob.id, ACS_SYNC_JOB_STATUSES.FAILED, {
+            error_message: error.message || 'Failed to launch ACS sync worker.',
+            message: error.message || 'Failed to launch ACS sync worker.',
+        });
+    } finally {
+        acsSyncWorkerRunning = false;
+    }
+};
+
+export const startAcsSyncJobScheduler = () => {
+    if (isLightweightRuntime) {
+        console.warn('[ACS Job] ACS sync scheduler disabled by runtime flag.');
+        return;
+    }
+
+    if (acsSyncSchedulerStarted) return;
+    acsSyncSchedulerStarted = true;
+
+    pool.query(
+        `UPDATE acs_sync_jobs
+         SET status = ?, message = ?, updated_at = NOW()
+         WHERE status = ?`,
+        [ACS_SYNC_JOB_STATUSES.QUEUED, 'Recovered after service restart', ACS_SYNC_JOB_STATUSES.RUNNING]
+    ).catch((error) => {
+        console.error('[ACS Job] Failed to recover running jobs on startup:', error);
+    });
+
+    const tick = () => {
+        processAcsSyncQueue().catch((error) => {
+            console.error('[ACS Job] Scheduler tick failed:', error);
+        });
+    };
+
+    tick();
+    setInterval(tick, ACS_SYNC_JOB_POLL_INTERVAL_MS);
+};
+
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+const fetchJsonWithTimeout = async (url, { headers = {}, timeoutMs, label, shouldStop = null }) => {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+    let stopPollId = null;
+
+    if (typeof shouldStop === 'function') {
+        stopPollId = setInterval(() => {
+            Promise.resolve(shouldStop())
+                .then((shouldAbort) => {
+                    if (shouldAbort) {
+                        controller.abort();
+                    }
+                })
+                .catch(() => {});
+        }, 500);
+    }
+
+    try {
+        const response = await fetch(url, { headers, signal: controller.signal });
+        if (!response.ok) {
+            const responseError = new Error(`ACS API responded with status ${response.status} while ${label}.`);
+            responseError.status = response.status;
+            throw responseError;
+        }
+
+        return await response.json();
+    } catch (error) {
+        if (controller.signal.aborted && typeof shouldStop === 'function') {
+            const cancelledError = new Error(ACS_SYNC_CANCELLED_MESSAGE);
+            cancelledError.name = 'AbortError';
+            cancelledError.code = 'ACS_SYNC_CANCELLED';
+            throw cancelledError;
+        }
+
+        if (error.name === 'AbortError') {
+            const timeoutError = new Error(`${label} timed out after ${Math.round(timeoutMs / 1000)}s`);
+            timeoutError.name = 'AbortError';
+            throw timeoutError;
+        }
+
+        throw error;
+    } finally {
+        clearTimeout(timeoutId);
+        if (stopPollId) clearInterval(stopPollId);
+    }
+};
+
+const isRetryableAcsPageError = (error) => {
+    const status = error?.status;
+    const message = String(error?.message || "");
+
+    return (
+        (error?.code !== 'ACS_SYNC_CANCELLED' && error?.name === 'AbortError') ||
+        status === 429 ||
+        (typeof status === 'number' && status >= 500) ||
+        /ECONNRESET|ETIMEDOUT|EAI_AGAIN|fetch failed|network/i.test(message)
+    );
+};
+
+const unwrapAcsScalar = (value, depth = 0) => {
+    if (value === null || value === undefined || depth > 4) return value;
+
+    if (Array.isArray(value)) {
+        return value.length > 0 ? unwrapAcsScalar(value[0], depth + 1) : undefined;
+    }
+
+    if (typeof value === 'object') {
+        if (value._value !== undefined) return unwrapAcsScalar(value._value, depth + 1);
+        if (value.value !== undefined) return unwrapAcsScalar(value.value, depth + 1);
+        if (value.$value !== undefined) return unwrapAcsScalar(value.$value, depth + 1);
+    }
+
+    return value;
+};
+
+const pickAcsScalar = (...values) => {
+    for (const candidate of values) {
+        const value = unwrapAcsScalar(candidate);
+        if (typeof value === 'string') {
+            const trimmed = value.trim();
+            if (trimmed && trimmed !== 'N/A') return trimmed;
+        }
+        if (typeof value === 'number' && Number.isFinite(value)) {
+            return String(value);
+        }
+    }
+    return null;
+};
+
+const resolveAcsDeviceModel = (device, parsed = null) => {
+    return pickAcsScalar(
+        parsed?.general?.model,
+        device?.summary?.modelName,
+        device?.summary?.productClass,
+        device?.summary?.model,
+        device?.DeviceID?.ModelName,
+        device?.DeviceID?.ProductClass,
+        device?._deviceId?.ModelName,
+        device?._deviceId?.ProductClass,
+        device?._deviceId?._ProductClass,
+        device?.Device?.DeviceInfo?.ModelName,
+        device?.Device?.DeviceInfo?.ProductClass,
+        device?.InternetGatewayDevice?.DeviceInfo?.ModelName,
+        device?.InternetGatewayDevice?.DeviceInfo?.ProductClass,
+        device?.DeviceInfo?.ModelName,
+        device?.DeviceInfo?.ProductClass,
+        device?.DeviceID?.ManufacturerOUI
+    ) || 'N/A';
+};
+
+const buildAcsDeviceCacheRow = (device) => {
+    if (!device?._id) return null;
+
+    const parsed = parseDeviceDetails(device, false);
+    const lastInform = parseAcsLastInform(device._lastInform);
+    const isOnline = lastInform && (Date.now() - lastInform.getTime() < 10 * 60 * 1000);
+
+    const wlan1 = parsed.wlan.find(w => w.ssidPath && (w.ssidPath.includes('.WLANConfiguration.1.') || w.ssidPath.includes('.SSID.1.')));
+    const wlan5 = parsed.wlan.find(w => w.ssidPath && (w.ssidPath.includes('.WLANConfiguration.5.') || w.ssidPath.includes('.SSID.5.')));
+
+    const validWan = parsed.wan.find(w => w.ip && w.ip !== '0.0.0.0' && w.ip !== 'N/A') || parsed.wan[0];
+    const validPppoe = parsed.wan.find(w => w.username && w.username !== 'N/A') || parsed.wan[0];
+    const validRx = parsed.wan.find(w => w.rxPower !== 'N/A') || parsed.wan[0];
+
+    return {
+        serialNumber: device._id,
+        productClass: resolveAcsDeviceModel(device, parsed),
+        ipAddress: validWan?.ip || null,
+        pppoeUsername: validPppoe?.username || null,
+        rxPower: validRx?.rxPower ? String(validRx.rxPower) : 'N/A',
+        lastInform: lastInform ? toMySQLDatetime(lastInform) : null,
+        isOnline: isOnline ? 1 : 0,
+        ssid1: wlan1?.ssid || null,
+        ssid5: wlan5?.ssid || null,
+        ssid1Connected: wlan1?.associatedDevices?.length || 0,
+        ssid5Connected: wlan5?.associatedDevices?.length || 0,
+    };
+};
+
+const buildMinimalAcsDeviceCacheRow = (device) => {
+    if (!device?._id) return null;
+
+    const lastInform = parseAcsLastInform(device._lastInform);
+    const isOnline = lastInform && (Date.now() - lastInform.getTime() < 10 * 60 * 1000);
+    const productClass = resolveAcsDeviceModel(device);
+
+    return {
+        serialNumber: device._id,
+        productClass,
+        lastInform: lastInform ? toMySQLDatetime(lastInform) : null,
+        isOnline: isOnline ? 1 : 0,
+    };
+};
+
+const upsertAcsDevicesBatch = async (devices, { minimal = false } = {}) => {
+    const rows = [];
+    const serialNumbers = [];
+
+    for (const device of devices) {
+        try {
+            const row = minimal ? buildMinimalAcsDeviceCacheRow(device) : buildAcsDeviceCacheRow(device);
+            if (!row) continue;
+
+            serialNumbers.push(row.serialNumber);
+            if (minimal) {
+                rows.push([
+                    row.serialNumber,
+                    row.productClass,
+                    row.lastInform,
+                    row.isOnline,
+                ]);
+            } else {
+                rows.push([
+                    row.serialNumber,
+                    row.productClass,
+                    row.ipAddress,
+                    row.pppoeUsername,
+                    row.rxPower,
+                    row.lastInform,
+                    row.isOnline,
+                    row.ssid1,
+                    row.ssid5,
+                    row.ssid1Connected,
+                    row.ssid5Connected,
+                ]);
+            }
+        } catch (err) {
+            console.error(`[ACS Sync] Failed parsing device ${device?._id}:`, err);
+        }
+    }
+
+    if (rows.length === 0) {
+        return { processedCount: 0, serialNumbers: [] };
+    }
+
+    const placeholders = minimal
+        ? rows.map(() => "(?, ?, ?, ?)").join(", ")
+        : rows.map(() => "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)").join(", ");
+    const values = rows.flat();
+
+    if (minimal) {
+        await pool.query(`
+            INSERT INTO acs_devices (serialNumber, productClass, lastInform, isOnline)
+            VALUES ${placeholders}
+            ON DUPLICATE KEY UPDATE
+                productClass = VALUES(productClass),
+                lastInform = VALUES(lastInform),
+                isOnline = VALUES(isOnline)
+        `, values);
+    } else {
+        await pool.query(`
+            INSERT INTO acs_devices (serialNumber, productClass, ipAddress, pppoeUsername, rxPower, lastInform, isOnline, ssid1, ssid5, ssid1Connected, ssid5Connected)
+            VALUES ${placeholders}
+            ON DUPLICATE KEY UPDATE
+                productClass = VALUES(productClass),
+                ipAddress = VALUES(ipAddress),
+                pppoeUsername = VALUES(pppoeUsername),
+                rxPower = VALUES(rxPower),
+                lastInform = VALUES(lastInform),
+                isOnline = VALUES(isOnline),
+                ssid1 = VALUES(ssid1),
+                ssid5 = VALUES(ssid5),
+                ssid1Connected = VALUES(ssid1Connected),
+                ssid5Connected = VALUES(ssid5Connected)
+        `, values);
+    }
+
+    return { processedCount: rows.length, serialNumbers };
+};
+
+const upsertAcsDeviceRow = async (row) => {
+    if (!row?.serialNumber) {
+        return false;
+    }
+
+    await pool.query(`
+        INSERT INTO acs_devices (serialNumber, productClass, ipAddress, pppoeUsername, rxPower, lastInform, isOnline, ssid1, ssid5, ssid1Connected, ssid5Connected)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ON DUPLICATE KEY UPDATE
+            productClass = VALUES(productClass),
+            ipAddress = VALUES(ipAddress),
+            pppoeUsername = VALUES(pppoeUsername),
+            rxPower = VALUES(rxPower),
+            lastInform = VALUES(lastInform),
+            isOnline = VALUES(isOnline),
+            ssid1 = VALUES(ssid1),
+            ssid5 = VALUES(ssid5),
+            ssid1Connected = VALUES(ssid1Connected),
+            ssid5Connected = VALUES(ssid5Connected)
+    `, [
+        row.serialNumber,
+        row.productClass ?? null,
+        row.ipAddress ?? null,
+        row.pppoeUsername ?? null,
+        row.rxPower ?? 'N/A',
+        row.lastInform ?? null,
+        row.isOnline ? 1 : 0,
+        row.ssid1 ?? null,
+        row.ssid5 ?? null,
+        row.ssid1Connected ?? 0,
+        row.ssid5Connected ?? 0,
+    ]);
+
+    return true;
+};
+
+const estimateAcsSyncProgress = ({ processedCount, pageCount, pageSize }) => {
+    const base = Math.max(100, pageSize * 10);
+    const estimated = Math.round((processedCount / (processedCount + base)) * 100);
+    if (!Number.isFinite(estimated)) {
+        return Math.min(99, pageCount * 10);
+    }
+
+    return Math.max(1, Math.min(99, estimated));
+};
+
+const fetchAllAcsDevices = async (acsSettings, projection = null, options = {}) => {
     const headers = {};
     if (acsSettings.username && acsSettings.password) {
         headers["Authorization"] = "Basic " + Buffer.from(`${acsSettings.username}:${acsSettings.password}`).toString("base64");
     }
 
     const apiUrl = acsSettings.apiUrl.replace(/\/$/, "");
+    const timeoutMs = options.timeoutMs ?? ACS_API_TIMEOUT;
+    const maxRetries = options.maxRetries ?? ACS_LIST_PAGE_RETRIES;
+    const limit = options.limit ?? ACS_SYNC_PAGE_LIMIT;
+    const pagePauseMs = options.pagePauseMs ?? 0;
+    const collectAll = options.collectAll !== false;
+    const onPage = typeof options.onPage === 'function' ? options.onPage : null;
+    const shouldStop = typeof options.shouldStop === 'function' ? options.shouldStop : null;
     const allDevices = [];
     const seenSerialNumbers = new Set();
     let skip = 0;
-    const limit = 100;
     let hasMore = true;
     let pageCount = 0;
     const MAX_PAGES = 50; 
@@ -147,350 +780,101 @@ const fetchAllAcsDevices = async (acsSettings, projection = null) => {
     console.log(`[ACS Helper] Starting paginated fetch for all devices with projection: ${projection || 'none'}`);
 
     while (hasMore && pageCount < MAX_PAGES) {
+        if (shouldStop && await shouldStop()) {
+            throw new Error(ACS_SYNC_CANCELLED_MESSAGE);
+        }
+
         pageCount++;
         let url = `${apiUrl}/devices/?limit=${limit}&skip=${skip}`;
         if (projection) {
             url += `&projection=${encodeURIComponent(projection)}`;
         }
-        
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), ACS_API_TIMEOUT);
 
-        try {
-            const response = await fetch(url, { headers, signal: controller.signal });
+        let devicesOnPage = null;
+        let lastError = null;
 
-            if (!response.ok) {
-                throw new Error(`ACS API responded with status ${response.status} while fetching page.`);
+        for (let attempt = 1; attempt <= maxRetries + 1; attempt++) {
+            if (shouldStop && await shouldStop()) {
+                throw new Error(ACS_SYNC_CANCELLED_MESSAGE);
             }
 
-            const devicesOnPage = await response.json();
-            if (!Array.isArray(devicesOnPage)) {
-                throw new Error("Received unexpected data format from ACS server during pagination.");
-            }
-            
-            if (devicesOnPage.length === 0) {
-                hasMore = false;
-                continue;
-            }
+            try {
+                console.log(`[ACS Helper] Fetching page skip=${skip}, limit=${limit}, attempt=${attempt}/${maxRetries + 1}`);
+                devicesOnPage = await fetchJsonWithTimeout(url, {
+                    headers,
+                    timeoutMs,
+                    label: `fetching page skip=${skip}`,
+                    shouldStop,
+                });
 
-            let isDuplicatePage = true;
-            const newDevicesOnPage = [];
-
-            for (const device of devicesOnPage) {
-                if (device?._id && !seenSerialNumbers.has(device._id)) {
-                    isDuplicatePage = false;
-                    seenSerialNumbers.add(device._id);
-                    newDevicesOnPage.push(device);
+                if (!Array.isArray(devicesOnPage)) {
+                    throw new Error("Received unexpected data format from ACS server during pagination.");
                 }
-            }
 
-            if (isDuplicatePage && devicesOnPage.length > 0) {
-                console.warn(`[ACS Helper] Detected a duplicate page from ACS server at skip=${skip}. Terminating fetch loop.`);
-                hasMore = false;
-            } else {
-                allDevices.push(...newDevicesOnPage);
-                if (devicesOnPage.length < limit) {
-                    hasMore = false;
-                } else {
-                    skip += limit;
+                lastError = null;
+                break;
+            } catch (error) {
+                lastError = error;
+
+                const shouldRetry = attempt <= maxRetries && isRetryableAcsPageError(error);
+                if (shouldRetry) {
+                    console.warn(`[ACS Helper] Error on page skip=${skip} (attempt ${attempt}/${maxRetries + 1}): ${error.message}. Retrying in ${ACS_LIST_RETRY_DELAY_MS}ms...`);
+                    await sleep(ACS_LIST_RETRY_DELAY_MS);
+                    continue;
                 }
+
+                throw error;
             }
-        } finally {
-            clearTimeout(timeoutId);
         }
 
-        if (hasMore) {
-            await delay(0);
+        if (lastError) {
+            throw lastError;
+        }
+
+        if (devicesOnPage.length === 0) {
+            hasMore = false;
+            continue;
+        }
+
+        let isDuplicatePage = true;
+        const newDevicesOnPage = [];
+
+        for (const device of devicesOnPage) {
+            if (device?._id && !seenSerialNumbers.has(device._id)) {
+                isDuplicatePage = false;
+                seenSerialNumbers.add(device._id);
+                newDevicesOnPage.push(device);
+            }
+        }
+
+        if (isDuplicatePage && devicesOnPage.length > 0) {
+            console.warn(`[ACS Helper] Detected a duplicate page from ACS server at skip=${skip}. Terminating fetch loop.`);
+            hasMore = false;
+        } else {
+            if (onPage) {
+                if (shouldStop && await shouldStop()) {
+                    throw new Error(ACS_SYNC_CANCELLED_MESSAGE);
+                }
+                await onPage(newDevicesOnPage, { skip, limit, pageCount });
+            }
+            if (collectAll) {
+                allDevices.push(...newDevicesOnPage);
+            }
+            if (devicesOnPage.length < limit) {
+                hasMore = false;
+            } else {
+                skip += limit;
+            }
+
+            if (pagePauseMs > 0) {
+                await sleep(pagePauseMs);
+            } else {
+                await sleep(0);
+            }
         }
     }
     
     return allDevices;
-};
-
-const getDeviceSummaryLabel = (device) => {
-    const summary = device?.summary && typeof device.summary === 'object' ? device.summary : {};
-    const deviceId = device?._deviceId && typeof device._deviceId === 'object' ? device._deviceId : {};
-
-    return summary.modelName
-        || summary.productClass
-        || summary.name
-        || deviceId.ProductClass
-        || deviceId._ProductClass
-        || deviceId.ModelName
-        || 'N/A';
-};
-
-const getCachedAcsDevices = async (includeWifi5 = true) => {
-    const ssid5Result = includeWifi5
-        ? ", d.ssid5, d.ssid5Connected"
-        : "";
-
-    const [cachedDevices, syncTimeRows] = await Promise.all([
-        pool.query(`
-            SELECT 
-                d.serialNumber as id, d.serialNumber, d.productClass, d.ipAddress,
-                d.pppoeUsername, d.rxPower, d.lastInform, d.isOnline, d.ssid1, d.ssid1Connected${ssid5Result},
-                c.id as customerId, c.name as customerName
-            FROM acs_devices d
-            LEFT JOIN customers c ON d.serialNumber = c.acsSerialNumber
-        `),
-        pool.query("SELECT MAX(last_sync_at) as lastSyncTime FROM acs_devices"),
-    ]);
-
-    return {
-        devices: cachedDevices[0].map((d) => ({
-            ...d,
-            isOnline: d.isOnline === 1,
-            lastInform: dbDateToISO(d.lastInform),
-        })),
-        lastSyncTime: dbDateToISO(syncTimeRows[0][0]?.lastSyncTime || null),
-    };
-};
-
-const triggerBackgroundSummon = async (acsData, acsSettings, job = null) => {
-    const headers = {};
-    if (acsSettings.username && acsSettings.password) {
-        headers["Authorization"] = "Basic " + Buffer.from(`${acsSettings.username}:${acsSettings.password}`).toString("base64");
-    }
-    const apiUrl = acsSettings.apiUrl.replace(/\/$/, "");
-    
-    const taskPayload = { 
-        name: "getParameterValues", 
-        parameterNames: [
-            "InternetGatewayDevice.DeviceInfo.SerialNumber",
-            "Device.DeviceInfo.SerialNumber",
-            "InternetGatewayDevice.LANDevice.*.WLANConfiguration",
-             "InternetGatewayDevice.LANInterfaces.WLANConfiguration",
-            "VirtualParameters.pppIP",
-            "VirtualParameters.pppUsername",
-            "VirtualParameters.uptimeDevice",
-            "VirtualParameters.temp",
-            "VirtualParameters.MacAddress",
-            "VirtualParameters.PonMode",
-            "VirtualParameters.redaman",
-            "VirtualParameters.WebSuperUser",
-            "VirtualParameters.PasswordSuperUser",
-            "VirtualParameters.softwareVersion",
-            "VirtualParameters.userconnected",
-            "InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.SSID",
-            "InternetGatewayDevice.LANDevice.1.WLANConfiguration.2.SSID",
-            "InternetGatewayDevice.ManagementServer.URL",
-            "InternetGatewayDevice.ManagementServer.Username",
-            "InternetGatewayDevice.ManagementServer.Password"
-        ] 
-    };
-
-    const BATCH_SIZE = 5;
-    let triggeredCount = 0;
-
-    for (let i = 0; i < acsData.length; i += BATCH_SIZE) {
-        if (job?.cancel_requested) {
-            break;
-        }
-
-        const chunk = acsData.slice(i, i + BATCH_SIZE);
-        await Promise.all(chunk.map(async (device) => {
-            if (!device?._id || job?.cancel_requested) return;
-            try {
-                const taskUrl = `${apiUrl}/devices/${encodeURIComponent(device._id)}/tasks?connection_request`;
-                await fetch(taskUrl, {
-                    method: 'POST',
-                    headers: { ...headers, 'Content-Type': 'application/json' },
-                    body: JSON.stringify(taskPayload)
-                });
-                triggeredCount++;
-            } catch (e) { 
-                console.warn(`[ACS Background] Failed to summon ${device._id}:`, e.message);
-            }
-        }));
-
-        if (job) {
-            const summonProgress = acsData.length > 0
-                ? 70 + Math.round((Math.min(i + BATCH_SIZE, acsData.length) / acsData.length) * 30)
-                : 100;
-            setSyncJobProgress(job, Math.min(99, summonProgress), `Refreshing devices in background (${Math.min(i + BATCH_SIZE, acsData.length)}/${acsData.length})...`, {
-                processed_count: Math.min(i + BATCH_SIZE, acsData.length),
-            });
-        }
-
-        await delay(500);
-        await delay(0);
-    }
-    console.log(`[ACS Background] Finished summoning. Sent commands to ${triggeredCount} devices.`);
-};
-
-const runAcsSyncJob = async (job, acsSettings) => {
-    try {
-        if (!acsSettings?.apiUrl) {
-            throw new Error("ACS API URL is not configured.");
-        }
-
-        updateSyncJob(job, {
-            status: 'running',
-            started_at: nowIso(),
-            message: 'Fetching devices from ACS server...',
-            error_message: null,
-            progress_percent: 1,
-        });
-
-        const projection = ACS_SYNC_DEVICE_PROJECTION;
-        const acsData = await fetchAllAcsDevices(acsSettings, projection);
-
-        if (job.cancel_requested) {
-            updateSyncJob(job, {
-                status: 'cancelled',
-                finished_at: nowIso(),
-                message: 'ACS sync job cancelled.',
-                progress_percent: 0,
-            });
-            return;
-        }
-
-        const totalCount = acsData.length;
-        let updatedCount = 0;
-        const liveSerialNumbers = new Set();
-        const cachedSnapshot = await pool.query("SELECT serialNumber, productClass, ipAddress, pppoeUsername, rxPower, lastInform, isOnline, ssid1, ssid5, ssid1Connected, ssid5Connected FROM acs_devices");
-        const cachedMap = new Map(cachedSnapshot[0].map((row) => [row.serialNumber, row]));
-
-        updateSyncJob(job, {
-            total_count: totalCount,
-            processed_count: 0,
-            message: totalCount > 0 ? `Fetched ${totalCount} ACS devices. Updating local cache...` : 'No ACS devices found.',
-            progress_percent: totalCount > 0 ? 5 : 100,
-        });
-
-        for (let index = 0; index < acsData.length; index++) {
-            if (job.cancel_requested) {
-                updateSyncJob(job, {
-                    status: 'cancelled',
-                    finished_at: nowIso(),
-                    message: 'ACS sync job cancelled.',
-                });
-                return;
-            }
-
-            const device = acsData[index];
-            try {
-                if (!device?._id) {
-                    continue;
-                }
-
-                liveSerialNumbers.add(device._id);
-                const cached = cachedMap.get(device._id) || null;
-
-                const lastInform = device._lastInform ? new Date(device._lastInform) : null;
-                const isOnline = lastInform && (Date.now() - lastInform.getTime() < 10 * 60 * 1000);
-
-                const deviceToCache = {
-                    serialNumber: device._id,
-                    productClass: getDeviceSummaryLabel(device) || cached?.productClass || 'N/A',
-                    ipAddress: cached?.ipAddress || null,
-                    pppoeUsername: cached?.pppoeUsername || null,
-                    rxPower: cached?.rxPower || 'N/A',
-                    lastInform: lastInform ? toMySQLDatetime(lastInform) : null,
-                    isOnline: isOnline ? 1 : 0,
-                    ssid1: cached?.ssid1 || null,
-                    ssid5: cached?.ssid5 || null,
-                    ssid1Connected: cached?.ssid1Connected || 0,
-                    ssid5Connected: cached?.ssid5Connected || 0,
-                };
-
-                const values = [
-                    deviceToCache.serialNumber,
-                    deviceToCache.productClass,
-                    deviceToCache.ipAddress,
-                    deviceToCache.pppoeUsername,
-                    deviceToCache.rxPower,
-                    deviceToCache.lastInform,
-                    deviceToCache.isOnline,
-                    deviceToCache.ssid1,
-                    deviceToCache.ssid5,
-                    deviceToCache.ssid1Connected,
-                    deviceToCache.ssid5Connected,
-                ];
-
-                const [result] = await pool.query(`
-                    INSERT INTO acs_devices (serialNumber, productClass, ipAddress, pppoeUsername, rxPower, lastInform, isOnline, ssid1, ssid5, ssid1Connected, ssid5Connected) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) 
-                    ON DUPLICATE KEY UPDATE 
-                    productClass = VALUES(productClass), 
-                    ipAddress = VALUES(ipAddress), 
-                        pppoeUsername = VALUES(pppoeUsername), 
-                        rxPower = VALUES(rxPower), 
-                        lastInform = VALUES(lastInform), 
-                        isOnline = VALUES(isOnline), 
-                    ssid1 = VALUES(ssid1),
-                    ssid5 = VALUES(ssid5),
-                    ssid1Connected = VALUES(ssid1Connected),
-                    ssid5Connected = VALUES(ssid5Connected)
-                `, values);
-
-                if (result.affectedRows > 0) updatedCount++;
-            } catch (loopErr) {
-                console.error(`[ACS Sync] Failed processing device ${device?._id}:`, loopErr);
-            }
-
-            const processedCount = index + 1;
-            const progressPercent = totalCount > 0
-                ? Math.min(70, Math.round((processedCount / totalCount) * 70))
-                : 70;
-            updateSyncJob(job, {
-                processed_count: processedCount,
-                progress_percent: progressPercent,
-                message: `Updating local cache (${processedCount}/${totalCount})...`,
-            });
-
-            if (processedCount % ACS_SYNC_YIELD_EVERY === 0) {
-                await delay(ACS_SYNC_BATCH_DELAY_MS);
-            }
-        }
-
-        updateSyncJob(job, {
-            message: 'Cleaning up stale cache entries...',
-            progress_percent: Math.max(job.progress_percent, 72),
-        });
-
-        const [cachedDevices] = await pool.query("SELECT serialNumber FROM acs_devices");
-        const cachedSerialNumbers = cachedDevices.map(d => d.serialNumber);
-        const numbersToDelete = cachedSerialNumbers.filter(sn => !liveSerialNumbers.has(sn));
-
-        if (numbersToDelete.length > 0) {
-            await pool.query('DELETE FROM acs_devices WHERE serialNumber IN (?)', [numbersToDelete]);
-        }
-
-        if (job.cancel_requested) {
-            updateSyncJob(job, {
-                status: 'cancelled',
-                finished_at: nowIso(),
-                message: 'ACS sync job cancelled.',
-                progress_percent: 0,
-            });
-            return;
-        }
-
-        updateSyncJob(job, {
-            status: 'completed',
-            finished_at: nowIso(),
-            message: `Database synced with ${updatedCount} devices.`,
-            progress_percent: 100,
-            processed_count: totalCount,
-        });
-    } catch (error) {
-        console.error('[ACS Sync] Fatal error during sync job:', error);
-        updateSyncJob(job, {
-            status: 'failed',
-            finished_at: nowIso(),
-            error_message: error.message || 'ACS sync failed.',
-            message: error.message || 'ACS sync failed.',
-            progress_percent: job.progress_percent || 0,
-        });
-    } finally {
-        if (activeSyncJob?.id === job.id) {
-            if (job.status === 'completed' || job.status === 'failed' || job.status === 'cancelled') {
-                activeSyncJob = job;
-            }
-        }
-    }
 };
 
 const buildDeviceIdCandidates = (rawId) => {
@@ -707,7 +1091,6 @@ const buildCachedDeviceDetails = (cached) => {
     };
 };
 
-
 /* ============================================================
    MAIN ROUTES
 ============================================================ */
@@ -744,7 +1127,7 @@ router.get("/devices", async (req, res) => {
             const parsed = parseDeviceDetails(device, false); 
             const customer = customerMap.get(device._id);
             
-            const lastInformRaw = device._lastInform ? new Date(device._lastInform) : null;
+            const lastInformRaw = parseAcsLastInform(device._lastInform);
             const isOnline = lastInformRaw && (Date.now() - lastInformRaw.getTime() < 10 * 60 * 1000);
             
             // WLAN Logic (Try live, fallback to cache)
@@ -781,7 +1164,9 @@ router.get("/devices", async (req, res) => {
             }
             
             // Check if lastInform is very old or missing in live data (unlikely but possible)
-            const finalLastInform = lastInformRaw ? dbDateToISO(lastInformRaw) : (cached.lastInform ? dbDateToISO(cached.lastInform) : null);
+            const finalLastInform = lastInformRaw
+                ? dbDateToISO(lastInformRaw)
+                : (cached.lastInform ? dbDateToISO(cached.lastInform) : null);
 
             return {
                 id: device._id, serialNumber: device._id,
@@ -828,6 +1213,7 @@ router.get("/devices", async (req, res) => {
     (async () => {
         try {
             for (const d of merged) {
+                const lastInformForDb = parseAcsLastInform(d.lastInform);
                 await pool.query(`
                     INSERT INTO acs_devices (serialNumber, productClass, ipAddress, pppoeUsername, rxPower, lastInform, isOnline, ssid1, ssid5, ssid1Connected, ssid5Connected) 
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) 
@@ -842,7 +1228,7 @@ router.get("/devices", async (req, res) => {
                     ssid5 = VALUES(ssid5),
                     ssid1Connected = VALUES(ssid1Connected),
                     ssid5Connected = VALUES(ssid5Connected)
-                `, [d.serialNumber, d.productClass, d.ipAddress, d.pppoeUsername, d.rxPower, d.lastInform ? toMySQLDatetime(new Date(d.lastInform)) : null, d.isOnline ? 1 : 0, d.ssid1, d.ssid5, d.ssid1Connected, d.ssid5Connected]);
+                `, [d.serialNumber, d.productClass, d.ipAddress, d.pppoeUsername, d.rxPower, lastInformForDb ? toMySQLDatetime(lastInformForDb) : null, d.isOnline ? 1 : 0, d.ssid1, d.ssid5, d.ssid1Connected, d.ssid5Connected]);
             }
         } catch (bgErr) {
             console.error("[ACS Live] Background cache update failed:", bgErr);
@@ -856,134 +1242,439 @@ router.get("/devices", async (req, res) => {
   }
 });
 
-const sendCachedAcsDevices = async (res, includeWifi5 = true) => {
-    try {
-        const data = await getCachedAcsDevices(includeWifi5);
-        return res.json(data);
-    } catch (error) {
-        console.error('[ACS Cached] Error fetching from database cache:', error);
-        return res.status(500).json({ message: 'Failed to retrieve cached device data.' });
-    }
-};
-
 // GET devices from local DB CACHE
 router.get("/devices/cached", async (req, res) => {
     console.log('[ACS Cached] Fetching cached device list from database...');
-    return sendCachedAcsDevices(res, true);
+    try {
+        const response = await getAcsCachedDevicesResponse({ fast: false });
+        res.json(response);
+    } catch (error) {
+        console.error('[ACS Cached] Error fetching from database cache:', error);
+        res.json({ devices: [], lastSyncTime: null, warning: 'Failed to retrieve cached device data.' });
+    }
 });
 
 router.get("/devices/cached/fast", async (req, res) => {
     console.log('[ACS Cached Fast] Fetching lightweight cached device list from database...');
-    return sendCachedAcsDevices(res, false);
+    try {
+        const activeWork = await buildActiveAcsWorkConflict('Another ACS job is already active. Please wait until it finishes.');
+        if (activeWork) {
+            return res.status(activeWork.status).json(activeWork.body);
+        }
+        const response = await getAcsCachedDevicesResponse({ fast: true });
+        res.json(response);
+    } catch (error) {
+        console.error('[ACS Cached Fast] Error fetching lightweight cache:', error);
+        res.json({ devices: [], lastSyncTime: null, warning: 'Failed to retrieve cached device data.' });
+    }
 });
 
-
-// POST to trigger a sync job from ACS server to local DB
-router.post("/sync", async (req, res) => {
-    console.log('[ACS Sync] Queueing sync job...');
-    const settings = await getSettings();
-    const acsSettings = settings.acs;
-
+router.get("/devices/cached/rows", async (req, res) => {
+    console.log('[ACS Cached Rows] Fetching selected cached device rows from database...');
     try {
-        if (!acsSettings?.apiUrl) {
-            return res.status(409).json({ message: "ACS API URL is not configured.", job: null });
+        const idsParam = String(req.query.ids || '').trim();
+        const serialNumbers = idsParam
+            ? [...new Set(idsParam.split(',').map((id) => decodeURIComponent(id).trim()).filter(Boolean))]
+            : [];
+
+        if (serialNumbers.length === 0) {
+            return res.json({ devices: [], lastSyncTime: null });
         }
 
-        const currentJob = getActiveSyncJob();
-        if (currentJob) {
-            return res.status(409).json({
-                success: false,
-                message: 'Ada job ACS yang masih aktif. Tunggu sampai selesai sebelum menjalankan sync baru.',
-                job: syncJobResponse(currentJob),
-            });
-        }
+        const [devices, lastSyncTime] = await Promise.all([
+            fetchAcsCachedDeviceRows({ includeCustomerJoin: true, serialNumbers }),
+            fetchAcsCachedLastSyncTime(),
+        ]);
 
-        const job = createSyncJob();
-        activeSyncJob = job;
-
-        void runAcsSyncJob(job, acsSettings);
-
-        return res.status(202).json({
-            success: true,
-            message: 'ACS sync job queued.',
-            job: syncJobResponse(job),
+        return res.json({
+            devices: devices.map(formatAcsCachedDeviceRow),
+            lastSyncTime: dbDateToISO(lastSyncTime),
         });
     } catch (error) {
-        console.error('[ACS Sync] Failed to queue sync job:', error);
+        console.error('[ACS Cached Rows] Error fetching selected cache rows:', error);
         return res.status(500).json({
-            success: false,
-            message: error.message || 'Failed to queue ACS sync job.',
-            job: null,
+            message: 'Failed to retrieve selected cached device rows.',
+            devices: [],
+            lastSyncTime: null,
         });
     }
 });
 
+
 router.get("/sync/jobs/active", async (req, res) => {
-    const job = getActiveSyncJob();
-    return res.json({
-        success: true,
-        job: job ? syncJobResponse(job) : null,
-    });
+    try {
+        const job = await getActiveAcsSyncJob();
+        return res.json({
+            success: true,
+            job: job ? formatAcsSyncJob(job) : null,
+            liveRefresh: formatAcsLiveRefreshState(),
+        });
+    } catch (error) {
+        console.error('[ACS Sync] Error fetching active job:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Failed to fetch active ACS sync job.',
+        });
+    }
 });
 
 router.get("/sync/jobs/:jobId", async (req, res) => {
-    const jobId = String(req.params.jobId || '').trim();
-    const job = activeSyncJob?.id === jobId ? activeSyncJob : null;
+    try {
+        const { jobId } = req.params;
+        const job = await getAcsSyncJobById(jobId);
 
-    if (!job) {
-        return res.status(404).json({
+        if (!job) {
+            return res.status(404).json({
+                success: false,
+                message: 'ACS sync job not found.',
+            });
+        }
+
+        return res.json({ success: true, job: formatAcsSyncJob(job) });
+    } catch (error) {
+        console.error('[ACS Sync] Error fetching job status:', error);
+        return res.status(500).json({
             success: false,
-            message: 'ACS sync job not found.',
-            job: null,
+            message: 'Failed to fetch ACS sync job status.',
         });
     }
-
-    return res.json({
-        success: true,
-        job: syncJobResponse(job),
-    });
 });
 
 router.post("/sync/jobs/:jobId/cancel", async (req, res) => {
-    const jobId = String(req.params.jobId || '').trim();
-    const job = activeSyncJob?.id === jobId ? activeSyncJob : null;
+    try {
+        const { jobId } = req.params;
+        const job = await getAcsSyncJobById(jobId);
 
-    if (!job) {
-        return res.status(404).json({
-            success: false,
-            message: 'ACS sync job not found.',
-            job: null,
-        });
-    }
+        if (!job) {
+            return res.status(404).json({
+                success: false,
+                message: 'ACS sync job not found.',
+            });
+        }
 
-    if (!isSyncJobActive(job)) {
+        if (job.status === ACS_SYNC_JOB_STATUSES.CANCELLED) {
+            return res.json({
+                success: true,
+                message: ACS_SYNC_CANCELLED_MESSAGE,
+                job: formatAcsSyncJob(job),
+            });
+        }
+
+        if (![ACS_SYNC_JOB_STATUSES.QUEUED, ACS_SYNC_JOB_STATUSES.RUNNING].includes(job.status)) {
+            return res.status(409).json({
+                success: false,
+                message: `ACS sync job cannot be cancelled because it is already ${job.status}.`,
+                job: formatAcsSyncJob(job),
+            });
+        }
+
+        const cancelled = await cancelAcsSyncJob(jobId);
+        if (!cancelled) {
+            const latestJob = await getAcsSyncJobById(jobId);
+            return res.status(409).json({
+                success: false,
+                message: 'ACS sync job could not be cancelled.',
+                job: formatAcsSyncJob(latestJob),
+            });
+        }
+
+        const updatedJob = await getAcsSyncJobById(jobId);
         return res.json({
             success: true,
-            message: 'ACS sync job is already finished.',
-            job: syncJobResponse(job),
+            message: ACS_SYNC_CANCELLED_MESSAGE,
+            job: formatAcsSyncJob(updatedJob),
+        });
+    } catch (error) {
+        console.error('[ACS Sync] Error cancelling job:', error);
+        return res.status(500).json({
+            success: false,
+            message: error.message || 'Failed to cancel ACS sync job.',
         });
     }
-
-    job.cancel_requested = true;
-    updateSyncJob(job, {
-        message: 'ACS sync cancellation requested.',
-    });
-
-    if (job.status === 'queued') {
-        updateSyncJob(job, {
-            status: 'cancelled',
-            finished_at: nowIso(),
-            progress_percent: 0,
-            message: 'ACS sync job cancelled.',
-        });
-    }
-
-    return res.json({
-        success: true,
-        message: 'ACS sync job cancellation requested.',
-        job: syncJobResponse(job),
-    });
 });
+
+// POST to enqueue a sync job from ACS server to local DB
+router.post("/sync", async (req, res) => {
+    console.log('[ACS Sync] Enqueue sync job request...');
+    try {
+        const settings = await getSettings();
+        const acsSettings = settings.acs;
+
+        if (!acsSettings?.apiUrl) {
+            return res.status(409).json({ success: false, message: "ACS API URL is not configured." });
+        }
+
+        const activeWork = await buildActiveAcsWorkConflict('Another ACS job is already active. Please wait until it finishes.');
+        if (activeWork) {
+            return res.status(activeWork.status).json(activeWork.body);
+        }
+
+        const job = await createAcsSyncJob();
+
+        setImmediate(() => {
+            processAcsSyncQueue().catch((err) => {
+                console.error('[ACS Sync] Error while starting queued job:', err);
+            });
+        });
+
+        return res.status(202).json({
+            success: true,
+            started: true,
+            message: 'ACS sync job queued and will run in the background.',
+            job: formatAcsSyncJob(job),
+        });
+    } catch (error) {
+        console.error('[ACS Sync] Fatal error while enqueueing sync job:', error);
+        return res.status(500).json({
+            success: false,
+            message: error.message || 'Failed to enqueue ACS sync job.',
+        });
+    }
+});
+
+export const runAcsSyncJob = async (jobId) => {
+    const job = await getAcsSyncJobById(jobId);
+    if (!job) {
+        return;
+    }
+
+    if (job.status === ACS_SYNC_JOB_STATUSES.CANCELLED) {
+        return;
+    }
+
+    if (![ACS_SYNC_JOB_STATUSES.QUEUED, ACS_SYNC_JOB_STATUSES.RUNNING].includes(job.status)) {
+        return;
+    }
+
+    const settings = await getSettings();
+    const acsSettings = settings.acs;
+    if (!acsSettings?.apiUrl) {
+        await finalizeAcsSyncJob(jobId, ACS_SYNC_JOB_STATUSES.FAILED, {
+            error_message: 'ACS API URL is not configured.',
+            message: 'ACS API URL is not configured.',
+        });
+        return;
+    }
+
+    await updateAcsSyncJob(jobId, {
+        status: ACS_SYNC_JOB_STATUSES.RUNNING,
+        started_at: job.started_at || new Date(),
+        processed_count: Number(job.processed_count || 0),
+        error_message: null,
+        message: 'Fetching device pages from ACS server...',
+        updated_at: new Date(),
+    });
+
+    if (await isAcsSyncJobCancelled(jobId)) {
+        await finalizeAcsSyncJob(jobId, ACS_SYNC_JOB_STATUSES.CANCELLED, {
+            processed_count: Number(job.processed_count || 0),
+            progress_percent: Number(job.progress_percent || 0),
+            message: ACS_SYNC_CANCELLED_MESSAGE,
+        });
+        return;
+    }
+
+    const projection = ACS_SYNC_MINIMAL_PROJECTION;
+    const liveSerialNumbers = new Set();
+    let processedCount = Number(job.processed_count || 0);
+    let currentProgressPercent = Number(job.progress_percent || 0);
+
+    try {
+    await fetchAllAcsDevices(acsSettings, projection, {
+            timeoutMs: ACS_SYNC_LIST_TIMEOUT,
+            maxRetries: ACS_LIST_PAGE_RETRIES,
+            limit: ACS_SYNC_PAGE_LIMIT,
+            pagePauseMs: ACS_SYNC_PAGE_PAUSE_MS,
+            collectAll: false,
+            shouldStop: () => isAcsSyncJobCancelled(jobId),
+            onPage: async (devicesOnPage, { skip, pageCount }) => {
+                if (await isAcsSyncJobCancelled(jobId)) {
+                    throw new Error(ACS_SYNC_CANCELLED_MESSAGE);
+                }
+
+                if (!Array.isArray(devicesOnPage) || devicesOnPage.length === 0) {
+                    return;
+                }
+
+                const { processedCount: pageProcessed, serialNumbers } = await upsertAcsDevicesBatch(devicesOnPage, { minimal: true });
+                processedCount += pageProcessed;
+                serialNumbers.forEach((sn) => liveSerialNumbers.add(sn));
+                const progressPercent = estimateAcsSyncProgress({
+                    processedCount,
+                    pageCount,
+                    pageSize: devicesOnPage.length,
+                });
+                currentProgressPercent = progressPercent;
+
+                if (pageCount % ACS_SYNC_PROGRESS_UPDATE_EVERY_PAGES === 0 || progressPercent >= 99) {
+                    await updateAcsSyncJob(jobId, {
+                        processed_count: processedCount,
+                        progress_percent: progressPercent,
+                        message: `Processed ${processedCount} device(s).`,
+                        updated_at: new Date(),
+                    });
+                }
+
+                if (await isAcsSyncJobCancelled(jobId)) {
+                    throw new Error(ACS_SYNC_CANCELLED_MESSAGE);
+                }
+            },
+        });
+
+        if (await isAcsSyncJobCancelled(jobId)) {
+            await finalizeAcsSyncJob(jobId, ACS_SYNC_JOB_STATUSES.CANCELLED, {
+                processed_count: processedCount,
+                progress_percent: currentProgressPercent,
+                message: ACS_SYNC_CANCELLED_MESSAGE,
+            });
+            return;
+        }
+
+        await updateAcsSyncJob(jobId, {
+            message: 'Cleaning up stale ACS cache entries...',
+            updated_at: new Date(),
+        });
+
+        if (await isAcsSyncJobCancelled(jobId)) {
+            await finalizeAcsSyncJob(jobId, ACS_SYNC_JOB_STATUSES.CANCELLED, {
+                processed_count: processedCount,
+                progress_percent: currentProgressPercent,
+                message: ACS_SYNC_CANCELLED_MESSAGE,
+            });
+            return;
+        }
+
+        const [cachedDevices] = await pool.query("SELECT serialNumber FROM acs_devices");
+        const cachedSerialNumbers = cachedDevices.map((d) => d.serialNumber);
+        const numbersToDelete = cachedSerialNumbers.filter((sn) => !liveSerialNumbers.has(sn));
+
+        if (numbersToDelete.length > 0) {
+            await pool.query('DELETE FROM acs_devices WHERE serialNumber IN (?)', [numbersToDelete]);
+        }
+
+        if (await isAcsSyncJobCancelled(jobId)) {
+            await finalizeAcsSyncJob(jobId, ACS_SYNC_JOB_STATUSES.CANCELLED, {
+                processed_count: processedCount,
+                progress_percent: currentProgressPercent,
+                message: ACS_SYNC_CANCELLED_MESSAGE,
+            });
+            return;
+        }
+
+        await finalizeAcsSyncJob(jobId, ACS_SYNC_JOB_STATUSES.COMPLETED, {
+            processed_count: processedCount,
+            progress_percent: 100,
+            message: isLightweightRuntime
+                ? `Database synced with ${processedCount} device(s). Minimal sync mode is active.`
+                : `Database synced with ${processedCount} device(s) using minimal payload.`,
+        });
+    } catch (error) {
+        if (error.message === ACS_SYNC_CANCELLED_MESSAGE) {
+            await finalizeAcsSyncJob(jobId, ACS_SYNC_JOB_STATUSES.CANCELLED, {
+                processed_count: processedCount,
+                progress_percent: currentProgressPercent,
+                message: ACS_SYNC_CANCELLED_MESSAGE,
+            });
+            return;
+        }
+
+        console.error(`[ACS Job] Sync job ${jobId} failed:`, error);
+        await finalizeAcsSyncJob(jobId, ACS_SYNC_JOB_STATUSES.FAILED, {
+            error_message: error.message || 'Unknown ACS sync job error',
+            message: error.message || 'ACS sync job failed.',
+            progress_percent: currentProgressPercent,
+        });
+    }
+};
+
+const triggerBackgroundSummon = async (deviceIds, acsSettings, jobId = null) => {
+    const headers = {};
+    if (acsSettings.username && acsSettings.password) {
+        headers["Authorization"] = "Basic " + Buffer.from(`${acsSettings.username}:${acsSettings.password}`).toString("base64");
+    }
+    const apiUrl = acsSettings.apiUrl.replace(/\/$/, "");
+    
+    const taskPayload = { 
+        name: "getParameterValues", 
+        parameterNames: [
+            "InternetGatewayDevice.DeviceInfo.SerialNumber",
+            "Device.DeviceInfo.SerialNumber",
+            "InternetGatewayDevice.LANDevice.*.WLANConfiguration",
+             "InternetGatewayDevice.LANInterfaces.WLANConfiguration",
+            "VirtualParameters.pppIP",
+            "VirtualParameters.pppUsername",
+            "VirtualParameters.uptimeDevice",
+            "VirtualParameters.temp",
+            "VirtualParameters.MacAddress",
+            "VirtualParameters.PonMode",
+            "VirtualParameters.redaman",
+            "VirtualParameters.WebSuperUser",
+            "VirtualParameters.PasswordSuperUser",
+            "VirtualParameters.softwareVersion",
+            "VirtualParameters.userconnected",
+            "InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.SSID",
+            "InternetGatewayDevice.LANDevice.1.WLANConfiguration.2.SSID",
+            "InternetGatewayDevice.ManagementServer.URL",
+            "InternetGatewayDevice.ManagementServer.Username",
+            "InternetGatewayDevice.ManagementServer.Password"
+        ] 
+    };
+
+    const parsePositiveInt = (value, fallback) => {
+        const parsed = Number.parseInt(String(value ?? '').trim(), 10);
+        return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
+    };
+
+    const BATCH_SIZE = parsePositiveInt(process.env.ACS_BACKGROUND_SUMMON_BATCH_SIZE, 10);
+    const BATCH_DELAY_MS = parsePositiveInt(process.env.ACS_BACKGROUND_SUMMON_DELAY_MS, 100);
+    const REQUEST_TIMEOUT_MS = parsePositiveInt(process.env.ACS_BACKGROUND_SUMMON_REQUEST_TIMEOUT_MS, 12000);
+    let triggeredCount = 0;
+    const ids = Array.isArray(deviceIds) ? deviceIds.filter(Boolean) : [];
+
+    console.log(
+        `[ACS Background] Starting summon for ${ids.length} device(s) with batchSize=${BATCH_SIZE}, delay=${BATCH_DELAY_MS}ms, timeout=${REQUEST_TIMEOUT_MS}ms.`
+    );
+
+    for (let i = 0; i < ids.length; i += BATCH_SIZE) {
+        if (jobId && await isAcsSyncJobCancelled(jobId)) {
+            throw new Error(ACS_SYNC_CANCELLED_MESSAGE);
+        }
+
+        const chunk = ids.slice(i, i + BATCH_SIZE);
+        await Promise.all(chunk.map(async (deviceId) => {
+            if (jobId && await isAcsSyncJobCancelled(jobId)) {
+                throw new Error(ACS_SYNC_CANCELLED_MESSAGE);
+            }
+
+            if (!deviceId) return;
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+            try {
+                const taskUrl = `${apiUrl}/devices/${encodeURIComponent(deviceId)}/tasks?connection_request`;
+                await fetch(taskUrl, {
+                    method: 'POST',
+                    headers: { ...headers, 'Content-Type': 'application/json' },
+                    body: JSON.stringify(taskPayload),
+                    signal: controller.signal
+                });
+                triggeredCount++;
+            } catch (e) { 
+                console.warn(`[ACS Background] Failed to summon ${deviceId}:`, e.message);
+            } finally {
+                clearTimeout(timeoutId);
+            }
+        }));
+
+        if (jobId && await isAcsSyncJobCancelled(jobId)) {
+            throw new Error(ACS_SYNC_CANCELLED_MESSAGE);
+        }
+
+        if (i + BATCH_SIZE < ids.length && BATCH_DELAY_MS > 0) {
+            await new Promise(resolve => setTimeout(resolve, BATCH_DELAY_MS));
+        }
+    }
+    console.log(`[ACS Background] Finished summoning. Sent commands to ${triggeredCount} devices.`);
+};
 
 
 router.post("/devices/:id(*)/summon", async (req, res) => {
@@ -1714,6 +2405,7 @@ router.post("/customer-device/debug-refresh", async (req, res) => {
 // Di file API backend (misal: /api/acs.js atau routes/acs.js)
 router.get("/devices/:id(*)/details", async (req, res) => {
     const rawId = req.deviceId;
+    const shouldRefreshCache = ['true', '1', 'yes'].includes(String(req.query.refreshCache || '').toLowerCase());
     const settings = await getSettings();
     const acsSettings = settings.acs;
 
@@ -1761,6 +2453,30 @@ router.get("/devices/:id(*)/details", async (req, res) => {
         
         const device = arr[0];
         const parsed = parseDeviceDetails(device);
+        if (shouldRefreshCache) {
+            const cacheRow = buildAcsDeviceCacheRow(device);
+            if (cacheRow) {
+                await upsertAcsDeviceRow(cacheRow);
+                return res.json({
+                    ...parsed,
+                    cacheRow: {
+                        id: cacheRow.serialNumber,
+                        serialNumber: cacheRow.serialNumber,
+                        productClass: cacheRow.productClass || 'N/A',
+                        ipAddress: cacheRow.ipAddress || 'N/A',
+                        pppoeUsername: cacheRow.pppoeUsername || 'N/A',
+                        rxPower: cacheRow.rxPower || 'N/A',
+                        lastInform: dbDateToISO(cacheRow.lastInform),
+                        isOnline: cacheRow.isOnline === 1,
+                        ssid1: cacheRow.ssid1 || null,
+                        ssid5: cacheRow.ssid5 || null,
+                        ssid1Connected: cacheRow.ssid1Connected || 0,
+                        ssid5Connected: cacheRow.ssid5Connected || 0,
+                    },
+                });
+            }
+        }
+
         return res.json(parsed);
 
     } catch (err) {

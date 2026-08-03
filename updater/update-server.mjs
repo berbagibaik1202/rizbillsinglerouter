@@ -199,10 +199,10 @@ const performUpdate = async (job) => {
             commandLabel: 'resetting workspace',
         });
 
-        setJobProgress(job, 65, 'Cleaning', 'Cleaning untracked files while preserving database and uploads.');
+        setJobProgress(job, 65, 'Cleaning', 'Cleaning generated and untracked files while preserving database and uploads.');
         await runCommand(job, 'git clean', 'git', [
             'clean',
-            '-fd',
+            '-fdx',
             '-e',
             ENV_FILE,
             '-e',

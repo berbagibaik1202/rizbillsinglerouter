@@ -12,6 +12,18 @@ Aturan pakai:
 - Jangan campur source React penuh ke branch release kalau tujuanmu hanya distribusi build.
 - Update aplikasi berjalan cukup tarik branch `release-push` dari repo yang sama.
 
+## Skema Repo
+
+Repo ini dipakai sebagai satu URL dengan dua branch:
+
+- `main` untuk source asli dan pengembangan
+- `release-push` untuk hasil build siap deploy
+
+Aturan pakai:
+
+- Jangan campur source React penuh ke branch release kalau tujuanmu hanya distribusi build.
+- Update aplikasi berjalan cukup tarik branch `release-push` dari repo yang sama.
+
 ## Install Cepat
 
 Kalau ingin pasang package release siap pakai, jalankan 3 perintah ini:
@@ -57,6 +69,22 @@ git pull origin release-push
 
 Untuk build release dari source, pakai workflow build yang sudah ada di `package.json`, lalu publish hasilnya ke branch `release-push` di repo yang sama.
 
+## Ganti URL Origin Repo Lama
+
+Kalau ada aplikasi lama yang masih menunjuk ke URL repo lama, jalankan ini di folder aplikasinya:
+
+```bash
+git config --global --add safe.directory /workspace
+git remote set-url origin https://github.com/berbagibaik1202/rizbillsinglerouter.git
+git fetch origin
+git checkout release-push
+git pull origin release-push
+git branch -vv
+git remote -v
+```
+
+Kalau `checkout` gagal karena ada perubahan lokal pada file config, cek dulu file yang berubah lalu restore atau stash file yang memang tidak perlu dipertahankan.
+
 ## Reset Total dan Build Ulang
 
 Kalau kamu mau mematikan semua container stack ini lalu membangun ulang termasuk database MariaDB, pakai urutan berikut:
@@ -72,11 +100,13 @@ Untuk restart/update deployment manual, pakai urutan aman ini:
 
 ```bash
 git fetch origin
-git reset --hard origin/main
-git clean -fd -e docker.env -e backend/uploads -e backend/whatsapp_session
+git reset --hard origin/release-push
+git clean -fdx -e docker.env -e backend/uploads -e backend/whatsapp_session
 docker compose --env-file docker.env -f docker-compose.vps.yml down
 docker compose --env-file docker.env -f docker-compose.vps.yml up -d --build
 ```
+
+`git clean -fdx` akan ikut menghapus file hasil generate seperti `assets/`, cache build, dan file sementara lain yang tidak perlu dibawa ke release berikutnya.
 
 ## Backup Database Langsung
 

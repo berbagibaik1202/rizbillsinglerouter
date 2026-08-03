@@ -1,10 +1,34 @@
 // whatsappService.js (Robust, Multi-Device Ready Implementation)
 import path from 'path';
 import os from 'os';
-import fs from 'fs/promises';
+import fsp from 'fs/promises';
+import fs from 'fs';
 import qrcode from 'qrcode';
 import { fileURLToPath } from 'url';
 import { Boom } from '@hapi/boom';
+
+// --- Start WhatsApp Session Directory Validation ---
+// Added to prevent crashes from invalid/unwritable WA_SESSION_BASE_DIR in .env
+const sessionBaseDir = process.env.WA_SESSION_BASE_DIR;
+if (sessionBaseDir) {
+    try {
+        const resolvedPath = path.resolve(sessionBaseDir);
+
+        if (sessionBaseDir.trim() === '/') {
+            throw new Error('Using the root directory ("/") for WA_SESSION_BASE_DIR is not allowed for security reasons.');
+        }
+        
+        fs.mkdirSync(resolvedPath, { recursive: true });
+        fs.accessSync(resolvedPath, fs.constants.W_OK);
+
+    } catch (err) {
+        throw new Error(
+            `[Fatal] Invalid or non-writable WA_SESSION_BASE_DIR: "${sessionBaseDir}". ` +
+            `Please ensure this directory exists and is writable by the application. Underlying error: ${err.message}`
+        );
+    }
+}
+// --- End WhatsApp Session Directory Validation ---
 
 let sock = null;
 let qrCode = null;
@@ -13,7 +37,26 @@ let connectedUser = null;
 let reconnectAttempts = 0;
 let heartbeatFailures = 0;
 let standbyEnabled = false;
-let manualDisconnectRequested = false;
+let baileysConnectArmed = false;
+let runtimeSettings = {
+  whatsapp: {
+    deliveryMode: 'baileys',
+    customGateway: {
+      apiKey: '',
+      timeoutMs: 20000,
+    },
+    fonnteGateway: {
+      apiKey: '',
+      countryCode: '0',
+      timeoutMs: 20000,
+      preview: false,
+      typing: false,
+    },
+  },
+};
+const KIRIMDEV_BASE_URL = 'https://api.kirimdev.com';
+const kirimdevPhoneNumberCache = new Map();
+const FONNTE_BASE_URL = 'https://api.fonnte.com';
 // This handler will be injected from cronJobs.js to handle incoming messages
 let messageHandler = () => console.warn('[WhatsApp] Message handler has not been initialized.');
 
@@ -29,7 +72,6 @@ const SESSION_DIR = (() => {
     : path.join(os.homedir(), 'whatsapp_sessions');
 
   const rawNamespace = process.env.WA_SESSION_NAMESPACE
-    || process.env.APP_INSTANCE_NAME
     || process.env.APP_SUBDOMAIN
     || process.env.SUBDOMAIN
     || process.env.HOSTNAME
@@ -56,8 +98,13 @@ const userAgents = [
 /** Format phone number to 62... */
 const formatPhoneNumber = (number) => {
   let cleaned = ('' + number).replace(/\D/g, '');
+  if (cleaned.startsWith('62')) {
+    return cleaned;
+  }
   if (cleaned.startsWith('0')) {
     cleaned = '62' + cleaned.substring(1);
+  } else if (cleaned.startsWith('8')) {
+    cleaned = '62' + cleaned;
   }
   return cleaned;
 };
@@ -77,15 +124,610 @@ const extractMessageBody = (messageContent) => (
   ''
 );
 
-/** 
- * Send a simple message. Returns an object indicating success or failure.
- * @returns {Promise<{success: boolean, error?: string}>}
- */
-const sendMessage = async (phoneNumber, message) => {
-  if (standbyEnabled || process.env.DISABLE_WHATSAPP === 'true') {
-    console.warn('[WhatsApp] Cannot send message. Service is in standby mode.');
-    return { success: false, error: 'WhatsApp service is in standby mode.' };
+const normalizeCustomGatewayConfig = (gateway = {}) => ({
+  apiKey: String(gateway.apiKey || '').trim(),
+  timeoutMs: Math.max(1000, Number(gateway.timeoutMs ?? 20000)),
+  phoneNumberId: String(gateway.phoneNumberId || '').trim(),
+  outsideWindowTemplateName: String(gateway.outsideWindowTemplateName || '').trim(),
+  outsideWindowTemplateLanguage: String(gateway.outsideWindowTemplateLanguage || 'id').trim() || 'id',
+});
+
+const normalizeFonnteGatewayConfig = (gateway = {}) => ({
+  apiKey: String(gateway.apiKey || '').trim(),
+  countryCode: String(gateway.countryCode ?? '0').trim() || '0',
+  timeoutMs: Math.max(1000, Number(gateway.timeoutMs ?? 20000)),
+  preview: Boolean(gateway.preview),
+  typing: Boolean(gateway.typing),
+});
+
+const normalizeDeliveryMode = (value) => {
+  const mode = String(value || 'baileys').toLowerCase();
+  if (mode === 'kirimdev') return 'custom';
+  if (mode === 'wa') return 'fonnte';
+  if (mode === 'baileys' || mode === 'custom' || mode === 'fonnte') {
+    return mode;
   }
+  return 'baileys';
+};
+
+const formatFonnteTarget = (phoneNumber, countryCode = '0') => {
+  const cleaned = formatPhoneNumber(phoneNumber);
+  const normalizedCountryCode = String(countryCode || '0').trim();
+
+  if (!cleaned) {
+    return '';
+  }
+
+  if (!normalizedCountryCode || normalizedCountryCode === '0') {
+    return cleaned;
+  }
+
+  if (cleaned.startsWith(normalizedCountryCode)) {
+    return cleaned.slice(normalizedCountryCode.length);
+  }
+
+  if (normalizedCountryCode === '62' && cleaned.startsWith('0')) {
+    return cleaned.slice(1);
+  }
+
+  return cleaned;
+};
+
+const buildKirimdevPayload = (gateway, phoneNumber, message) => ({
+  messaging_product: 'whatsapp',
+  to: formatPhoneNumber(phoneNumber),
+  type: 'text',
+  text: {
+    body: message,
+  },
+  recipient_type: 'individual',
+});
+
+const buildKirimdevTemplatePayload = (phoneNumber, templateName, templateLanguage, message) => ({
+  messaging_product: 'whatsapp',
+  to: formatPhoneNumber(phoneNumber),
+  type: 'template',
+  template: {
+    name: templateName,
+    language: templateLanguage || 'id',
+    components: [
+      {
+        type: 'body',
+        parameters: [
+          {
+            type: 'text',
+            text: message,
+          },
+        ],
+      },
+    ],
+  },
+});
+
+const normalizeResponseText = async (response) => {
+  try {
+    return await response.text();
+  } catch {
+    return '';
+  }
+};
+
+const extractKirimdevFailureDetails = (responseData, responseText, statusCode = null) => {
+  const errorObject = typeof responseData === 'object' && responseData !== null
+    ? (responseData.error || responseData)
+    : null;
+
+  const providerCode = Number(
+    errorObject?.provider_code
+    ?? errorObject?.providerCode
+    ?? responseData?.provider_code
+    ?? responseData?.providerCode
+  );
+
+  const errorCode = String(
+    errorObject?.code
+    || responseData?.code
+    || errorObject?.error_code
+    || responseData?.error_code
+    || ''
+  ).trim();
+
+  const message = String(
+    errorObject?.message
+    || responseData?.message
+    || responseText
+    || 'Failed to send WhatsApp message.'
+  ).trim();
+
+  return {
+    error: message,
+    errorCode: errorCode || null,
+    providerCode: Number.isFinite(providerCode) ? providerCode : null,
+    statusCode: Number.isFinite(Number(statusCode)) ? Number(statusCode) : null,
+    rawResponse: typeof responseData === 'object' ? responseData : null,
+  };
+};
+
+const isOutside24hWindowFailure = (result = {}) => {
+  const normalizedCode = String(result.errorCode || '').toLowerCase();
+  const normalizedMessage = String(result.error || '').toLowerCase();
+  const providerCode = Number(result.providerCode);
+
+  return (
+    normalizedCode === 'outside_24h_window'
+    || providerCode === 131047
+    || normalizedMessage.includes('outside_24h_window')
+    || normalizedMessage.includes('131047')
+    || normalizedMessage.includes('outside the 24-hour')
+  );
+};
+
+const normalizeKirimdevCollection = (payload) => {
+  if (Array.isArray(payload?.data)) {
+    return payload.data;
+  }
+
+  if (Array.isArray(payload?.items)) {
+    return payload.items;
+  }
+
+  if (Array.isArray(payload)) {
+    return payload;
+  }
+
+  return [];
+};
+
+const clampKirimdevLimit = (value, fallback = 100) => {
+  const parsed = Number(value);
+  if (!Number.isFinite(parsed)) {
+    return Math.max(1, Math.min(fallback, 100));
+  }
+
+  return Math.max(1, Math.min(Math.trunc(parsed), 100));
+};
+
+const kirimdevApiRequest = async (gateway, path, options = {}) => {
+  const apiKey = String(gateway?.apiKey || '').trim();
+  if (!apiKey) {
+    throw new Error('Kirimdev API key is required.');
+  }
+
+  const requestUrl = new URL(`${KIRIMDEV_BASE_URL}/v1${path}`);
+  const query = options.query || {};
+  Object.entries(query).forEach(([key, value]) => {
+    if (value !== undefined && value !== null && String(value).trim() !== '') {
+      requestUrl.searchParams.set(key, String(value));
+    }
+  });
+
+  const init = {
+    method: options.method || 'GET',
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      Accept: 'application/json',
+    },
+  };
+
+  if (options.body !== undefined) {
+    init.headers['Content-Type'] = 'application/json';
+    init.body = JSON.stringify(options.body);
+  }
+
+  const response = await fetch(requestUrl, init);
+  const responseText = await normalizeResponseText(response);
+  let data = null;
+
+  if (responseText) {
+    try {
+      data = JSON.parse(responseText);
+    } catch {
+      data = responseText;
+    }
+  }
+
+  if (!response.ok) {
+    const message = typeof data === 'object' && data?.error?.message
+      ? data.error.message
+      : responseText;
+    throw new Error(`Kirimdev request failed (HTTP ${response.status})${message ? `: ${message}` : ''}`);
+  }
+
+  return { response, data };
+};
+
+const resolveKirimdevPhoneNumberId = async (gateway) => {
+  const apiKey = String(gateway.apiKey || '').trim();
+  const cacheKey = `${KIRIMDEV_BASE_URL}|${apiKey}`;
+
+  if (kirimdevPhoneNumberCache.has(cacheKey)) {
+    return kirimdevPhoneNumberCache.get(cacheKey);
+  }
+
+  const { data } = await kirimdevApiRequest(gateway, '/accounts', {
+    query: { status: 'connected' },
+  });
+  const accounts = normalizeKirimdevCollection(data);
+
+  const selected = accounts.find((account) => String(account?.status || '').toLowerCase() === 'connected')
+    || accounts[0]
+    || null;
+
+  const phoneNumberId = String(selected?.phone_number_id || '').trim();
+  if (!phoneNumberId) {
+    throw new Error('No connected Kirimdev WhatsApp account found.');
+  }
+
+  kirimdevPhoneNumberCache.set(cacheKey, phoneNumberId);
+  return phoneNumberId;
+};
+
+const resolveKirimdevConversationContact = (conversation = {}) => {
+  const candidate =
+    conversation?.contact?.phone_number ||
+    conversation?.contact?.phone ||
+    conversation?.phone_number ||
+    conversation?.phone ||
+    conversation?.participant?.phone_number ||
+    conversation?.participant?.phone ||
+    conversation?.customer?.phone ||
+    conversation?.customer?.phone_number ||
+    '';
+
+  return formatPhoneNumber(candidate);
+};
+
+const normalizeKirimdevConversation = (conversation = {}) => ({
+  id: String(conversation?.id || '').trim(),
+  name: String(
+    conversation?.contact?.name ||
+    conversation?.customer?.name ||
+    conversation?.name ||
+    conversation?.title ||
+    conversation?.subject ||
+    resolveKirimdevConversationContact(conversation) ||
+    'Unknown'
+  ).trim(),
+  phoneNumber: resolveKirimdevConversationContact(conversation),
+  lastMessage: String(
+    conversation?.last_message?.content ||
+    conversation?.lastMessage?.content ||
+    conversation?.last_message?.text?.body ||
+    conversation?.last_message?.body ||
+    conversation?.lastMessage?.text?.body ||
+    conversation?.lastMessage?.body ||
+    conversation?.preview ||
+    conversation?.snippet ||
+    conversation?.last_message_preview ||
+    ''
+  ).trim(),
+  updatedAt: conversation?.updated_at || conversation?.last_message_at || conversation?.last_activity_at || conversation?.created_at || null,
+  unreadCount: Number(conversation?.unread_count ?? conversation?.unreadCount ?? 0),
+  status: conversation?.status || null,
+  raw: conversation,
+});
+
+const extractKirimdevMessageText = (message = {}) => {
+  const content = message?.content;
+  const messageContent = message?.message?.content;
+
+  const text = (
+    (typeof content === 'string' ? content : '') ||
+    message?.text?.body ||
+    message?.body ||
+    (content && typeof content === 'object' ? content.text || content.body || content.message || '' : '') ||
+    (typeof messageContent === 'string' ? messageContent : '') ||
+    (messageContent && typeof messageContent === 'object' ? messageContent.text || messageContent.body || '' : '') ||
+    message?.message?.text?.body ||
+    message?.message?.body ||
+    extractMessageBody(message) ||
+    ''
+  );
+
+  return String(text).trim();
+};
+
+const extractKirimdevMessageNumber = (message = {}, directionHint = '') => {
+  const candidates = [
+    message?.from,
+    message?.sender?.phone_number,
+    message?.sender?.phone,
+    message?.author?.phone_number,
+    message?.to,
+    message?.recipient?.phone_number,
+    message?.recipient?.phone,
+    message?.contact?.phone_number,
+    message?.contact?.phone,
+  ].filter(Boolean);
+
+  const normalized = candidates.map((candidate) => formatPhoneNumber(candidate)).filter(Boolean);
+  if (normalized.length === 0) return '';
+
+  const hint = String(directionHint || message?.direction || message?.type || '').toLowerCase();
+  if (hint.includes('in') || hint.includes('recv') || hint.includes('incoming')) {
+    return normalized[0];
+  }
+
+  if (hint.includes('out') || hint.includes('sent') || hint.includes('outgoing')) {
+    return normalized[0];
+  }
+
+  return normalized[0];
+};
+
+const normalizeKirimdevMessage = (message = {}) => ({
+  id: String(message?.id || message?.message_id || message?.uuid || '').trim(),
+  conversationId: String(
+    message?.conversation_id ||
+    message?.conversation?.id ||
+    message?.thread_id ||
+    message?.chat_id ||
+    ''
+  ).trim(),
+  direction: String(message?.direction || message?.type || '').toLowerCase(),
+  from: formatPhoneNumber(message?.from || message?.sender?.phone_number || message?.sender?.phone || message?.author?.phone_number || ''),
+  to: formatPhoneNumber(message?.to || message?.recipient?.phone_number || message?.recipient?.phone || ''),
+  contactPhone: extractKirimdevMessageNumber(message, message?.direction || message?.type || ''),
+  text: extractKirimdevMessageText(message),
+  content: typeof message?.content === 'string' ? message.content.trim() : null,
+  mediaUrl: message?.media_url || message?.mediaUrl || null,
+  status: String(message?.status || message?.delivery_status || '').toLowerCase(),
+  createdAt: message?.created_at || message?.sent_at || message?.timestamp || message?.date || null,
+  raw: message,
+});
+
+const listKirimdevConversations = async (gateway, options = {}) => {
+  const phoneNumberId = String(options.phoneNumberId || '').trim() || await resolveKirimdevPhoneNumberId(gateway);
+  const { data } = await kirimdevApiRequest(gateway, `/${encodeURIComponent(phoneNumberId)}/conversations`, {
+    query: {
+      limit: clampKirimdevLimit(options.limit ?? 50, 50),
+      cursor: options.cursor,
+    },
+  });
+
+  const conversations = normalizeKirimdevCollection(data).map(normalizeKirimdevConversation);
+  return {
+    phoneNumberId,
+    conversations,
+    meta: {
+      hasMore: Boolean(data?.has_more),
+      nextCursor: data?.next_cursor || null,
+    },
+    raw: data,
+  };
+};
+
+const listKirimdevMessages = async (gateway, options = {}) => {
+  const phoneNumberId = String(options.phoneNumberId || '').trim() || await resolveKirimdevPhoneNumberId(gateway);
+  const { data } = await kirimdevApiRequest(gateway, `/${encodeURIComponent(phoneNumberId)}/messages`, {
+    query: {
+      limit: clampKirimdevLimit(options.limit ?? 100, 100),
+      cursor: options.cursor,
+    },
+  });
+
+  const messages = normalizeKirimdevCollection(data).map(normalizeKirimdevMessage);
+  return {
+    phoneNumberId,
+    messages,
+    meta: {
+      hasMore: Boolean(data?.has_more),
+      nextCursor: data?.next_cursor || null,
+    },
+    raw: data,
+  };
+};
+
+const fetchKirimdevConversation = async (gateway, conversationId, options = {}) => {
+  const phoneNumberId = String(options.phoneNumberId || '').trim() || await resolveKirimdevPhoneNumberId(gateway);
+  const { data } = await kirimdevApiRequest(gateway, `/${encodeURIComponent(phoneNumberId)}/conversations/${encodeURIComponent(conversationId)}`);
+  return {
+    phoneNumberId,
+    conversation: normalizeKirimdevConversation(data?.data || data),
+    raw: data,
+  };
+};
+
+const sendViaCustomGatewayPayload = async (gateway, payload) => {
+  const timeoutMs = Math.max(1000, Number(gateway.timeoutMs ?? 20000));
+  const controller = new AbortController();
+  const timeoutHandle = setTimeout(() => controller.abort(new Error('Kirimdev timeout')), timeoutMs);
+
+  try {
+    const phoneNumberId = String(gateway.phoneNumberId || '').trim() || await resolveKirimdevPhoneNumberId(gateway);
+    const requestUrl = `${KIRIMDEV_BASE_URL}/v1/${encodeURIComponent(phoneNumberId)}/messages`;
+    const requestInit = {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${String(gateway.apiKey || '').trim()}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      signal: controller.signal,
+      body: JSON.stringify(payload),
+    };
+
+    const response = await fetch(requestUrl, requestInit);
+    const responseText = await normalizeResponseText(response);
+    let responseData = null;
+    if (responseText) {
+      try {
+        responseData = JSON.parse(responseText);
+      } catch {
+        responseData = responseText;
+      }
+    }
+
+    if (!response.ok) {
+      return {
+        success: false,
+        ...extractKirimdevFailureDetails(responseData, responseText, response.status),
+      };
+    }
+
+    return {
+      success: true,
+      transport: 'custom',
+      providerMessageId: typeof responseData === 'object'
+        ? String(responseData?.data?.id || responseData?.id || responseData?.message_id || responseData?.messageId || '').trim() || null
+        : null,
+      gatewayMessage: typeof responseData === 'object' ? responseData : null,
+    };
+  } catch (err) {
+    const errorMessage = err instanceof Error ? err.message : 'Failed to send message via Kirimdev.';
+    return { success: false, error: errorMessage };
+  } finally {
+    clearTimeout(timeoutHandle);
+  }
+};
+
+const sendViaCustomGateway = async (phoneNumber, message) => {
+  const gateway = normalizeCustomGatewayConfig(runtimeSettings?.whatsapp?.customGateway);
+  if (!String(gateway.apiKey || '').trim()) {
+    return { success: false, error: 'Kirimdev API key is required.' };
+  }
+
+  return sendViaCustomGatewayPayload(gateway, buildKirimdevPayload(gateway, phoneNumber, message));
+};
+
+const sendViaCustomGatewayTemplate = async (phoneNumber, message, templateName, templateLanguage) => {
+  const gateway = normalizeCustomGatewayConfig(runtimeSettings?.whatsapp?.customGateway);
+  if (!String(gateway.apiKey || '').trim()) {
+    return { success: false, error: 'Kirimdev API key is required.' };
+  }
+
+  const name = String(templateName || gateway.outsideWindowTemplateName || '').trim();
+  const language = String(templateLanguage || gateway.outsideWindowTemplateLanguage || 'id').trim() || 'id';
+  if (!name) {
+    return { success: false, error: 'Kirimdev fallback template is not configured.' };
+  }
+
+  const result = await sendViaCustomGatewayPayload(
+    gateway,
+    buildKirimdevTemplatePayload(phoneNumber, name, language, message),
+  );
+
+  if (result.success) {
+    return {
+      ...result,
+      messageKind: 'template',
+    };
+  }
+
+  return result;
+};
+
+const extractFonnteFailureDetails = (responseData, responseText, statusCode = null) => {
+  const responseObject = typeof responseData === 'object' && responseData !== null ? responseData : null;
+  const message = String(
+    responseObject?.reason ||
+    responseObject?.detail ||
+    responseObject?.message ||
+    responseText ||
+    'Failed to send WhatsApp message via Fonnte.'
+  ).trim();
+
+  return {
+    error: message,
+    statusCode: Number.isFinite(Number(statusCode)) ? Number(statusCode) : null,
+    rawResponse: responseObject,
+  };
+};
+
+const isFonnteSuccess = (responseData) => {
+  const statusValue = responseData?.status ?? responseData?.Status;
+  if (typeof statusValue === 'boolean') {
+    return statusValue;
+  }
+
+  if (typeof statusValue === 'string') {
+    return statusValue.toLowerCase() === 'true';
+  }
+
+  return Boolean(responseData?.detail || responseData?.id);
+};
+
+const buildFonntePayload = (phoneNumber, message, gateway = {}) => {
+  const payload = new FormData();
+  const target = formatFonnteTarget(phoneNumber, gateway.countryCode);
+
+  payload.append('target', target);
+  payload.append('message', String(message || ''));
+  payload.append('countryCode', String(gateway.countryCode || '0'));
+  payload.append('preview', String(Boolean(gateway.preview)));
+  payload.append('typing', String(Boolean(gateway.typing)));
+
+  return payload;
+};
+
+const sendViaFonnte = async (phoneNumber, message) => {
+  const gateway = normalizeFonnteGatewayConfig(runtimeSettings?.whatsapp?.fonnteGateway);
+  if (!String(gateway.apiKey || '').trim()) {
+    return { success: false, error: 'Fonnte API key is required.' };
+  }
+
+  const controller = new AbortController();
+  const timeoutHandle = setTimeout(() => controller.abort(new Error('Fonnte timeout')), gateway.timeoutMs);
+
+  try {
+    const requestBody = buildFonntePayload(phoneNumber, message, gateway);
+    const response = await fetch(`${FONNTE_BASE_URL}/send`, {
+      method: 'POST',
+      headers: {
+        Authorization: gateway.apiKey,
+        Accept: 'application/json',
+      },
+      body: requestBody,
+      signal: controller.signal,
+    });
+
+    const responseText = await normalizeResponseText(response);
+    let responseData = null;
+    if (responseText) {
+      try {
+        responseData = JSON.parse(responseText);
+      } catch {
+        responseData = responseText;
+      }
+    }
+
+    if (!response.ok) {
+      return {
+        success: false,
+        ...extractFonnteFailureDetails(responseData, responseText, response.status),
+      };
+    }
+
+    if (!isFonnteSuccess(responseData)) {
+      return {
+        success: false,
+        ...extractFonnteFailureDetails(responseData, responseText, response.status),
+      };
+    }
+
+    const providerMessageId = Array.isArray(responseData?.id)
+      ? String(responseData.id[0] || '').trim() || null
+      : String(responseData?.id || responseData?.requestid || '').trim() || null;
+
+    return {
+      success: true,
+      transport: 'fonnte',
+      providerMessageId,
+      gatewayMessage: typeof responseData === 'object' ? responseData : null,
+    };
+  } catch (err) {
+    const errorMessage = err instanceof Error ? err.message : 'Failed to send message via Fonnte.';
+    return { success: false, error: errorMessage };
+  } finally {
+    clearTimeout(timeoutHandle);
+  }
+};
+
+const sendViaBaileys = async (phoneNumber, message) => {
+  if (standbyEnabled) {
+    return { success: false, error: 'WhatsApp Web service is in standby mode.' };
+  }
+
   if (!sock || connectionStatus !== 'connected') {
     const errorMsg = `[WhatsApp] Cannot send message. Connection status: ${connectionStatus}`;
     console.warn(errorMsg);
@@ -104,26 +746,148 @@ const sendMessage = async (phoneNumber, message) => {
         return { success: false, error: 'Number is not on WhatsApp.' };
     }
 
-    // Append random string to the message to make it unique and more natural
     const randomLength = Math.floor(Math.random() * 21) + 20; // 20 to 40 chars
     const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     let randomSuffix = '';
     for (let i = 0; i < randomLength; i++) {
         randomSuffix += chars.charAt(Math.floor(Math.random() * chars.length));
     }
-    // Add a few newlines to simulate more human-like behavior
     const messageToSend = `${message}\n\n\n${randomSuffix}`;
 
-
-    // console.log(`[WhatsApp] SENDING to ${jid}: "${messageToSend}"`);
-    await sock.sendMessage(jid, { text: messageToSend });
-    // console.log(`[WhatsApp] SUCCESS sending to ${jid}`);
-    return { success: true };
+    const sendResult = await sock.sendMessage(jid, { text: messageToSend });
+    return {
+      success: true,
+      transport: 'baileys',
+      providerMessageId: String(sendResult?.key?.id || sendResult?.messageId || '').trim() || null,
+      gatewayMessage: sendResult || null,
+    };
   } catch (err) {
     const errorMessage = err instanceof Error ? err.message : 'Failed to send message via baileys.';
     console.error(`[WhatsApp] FAILED sending to ${jid}:`, err);
     return { success: false, error: errorMessage };
   }
+};
+
+const resolveTransportOrder = () => {
+  const mode = normalizeDeliveryMode(runtimeSettings?.whatsapp?.deliveryMode || 'baileys');
+  if (mode === 'fonnte') return ['fonnte'];
+  if (mode === 'custom') return ['custom', 'fonnte', 'baileys'];
+  return ['baileys', 'fonnte', 'custom'];
+};
+
+const applySettings = (settings = {}) => {
+  const nextCustomGateway = normalizeCustomGatewayConfig(settings?.whatsapp?.customGateway);
+  const nextFonnteGateway = normalizeFonnteGatewayConfig(settings?.whatsapp?.fonnteGateway);
+  runtimeSettings = {
+    ...runtimeSettings,
+    whatsapp: {
+      ...runtimeSettings.whatsapp,
+      ...(settings?.whatsapp || {}),
+      deliveryMode: normalizeDeliveryMode(settings?.whatsapp?.deliveryMode || runtimeSettings?.whatsapp?.deliveryMode),
+      customGateway: nextCustomGateway,
+      fonnteGateway: nextFonnteGateway,
+    },
+  };
+
+  standbyEnabled = Boolean(settings?.whatsapp?.standbyEnabled);
+  return runtimeSettings;
+};
+
+/** 
+ * Send a simple message. Returns an object indicating success or failure.
+ * @returns {Promise<{success: boolean, error?: string}>}
+ */
+const sendMessage = async (phoneNumber, message) => {
+  if (standbyEnabled || process.env.DISABLE_WHATSAPP === 'true') {
+    console.warn('[WhatsApp] Cannot send message. Service is in standby mode.');
+    return { success: false, error: 'WhatsApp service is in standby mode.' };
+  }
+
+  const transportOrder = resolveTransportOrder();
+  let lastError = null;
+
+  for (const transport of transportOrder) {
+    if (transport === 'fonnte') {
+      const gateway = normalizeFonnteGatewayConfig(runtimeSettings?.whatsapp?.fonnteGateway);
+      if (!gateway.apiKey) {
+        lastError = lastError || 'Fonnte API key is not configured.';
+        continue;
+      }
+
+      const result = await sendViaFonnte(phoneNumber, message);
+      if (result.success) {
+        return result;
+      }
+
+      lastError = result.error || lastError;
+      continue;
+    }
+
+    if (transport === 'custom') {
+      const gateway = normalizeCustomGatewayConfig(runtimeSettings?.whatsapp?.customGateway);
+      if (!gateway.apiKey) {
+        lastError = lastError || 'Kirimdev API key is not configured.';
+        continue;
+      }
+
+      const result = await sendViaCustomGateway(phoneNumber, message);
+      if (result.success) {
+        return result;
+      }
+
+      if (isOutside24hWindowFailure(result)) {
+        const fallbackTemplateName = String(gateway.outsideWindowTemplateName || '').trim();
+        if (fallbackTemplateName) {
+          console.warn(`[WhatsApp] Kirimdev rejected free-form message outside 24h window. Falling back to template "${fallbackTemplateName}".`);
+          const templateResult = await sendViaCustomGatewayTemplate(
+            phoneNumber,
+            message,
+            fallbackTemplateName,
+            gateway.outsideWindowTemplateLanguage || 'id',
+          );
+
+          if (templateResult.success) {
+            return {
+              ...templateResult,
+              fallbackUsed: true,
+              fallbackReason: 'outside_24h_window',
+              messageKind: 'template',
+            };
+          }
+
+          lastError = templateResult.error || result.error || lastError;
+          continue;
+        }
+      }
+
+      lastError = result.error || lastError;
+      continue;
+    }
+
+    if (transport === 'baileys') {
+      if (standbyEnabled) {
+        lastError = lastError || 'WhatsApp Web service is in standby mode.';
+        continue;
+      }
+
+      if (!sock || connectionStatus !== 'connected') {
+        lastError = lastError || 'WhatsApp service is not connected.';
+        continue;
+      }
+
+      const result = await sendViaBaileys(phoneNumber, message);
+      if (result.success) {
+        return result;
+      }
+
+      lastError = result.error || lastError;
+    }
+  }
+
+  return {
+    success: false,
+    error: lastError || 'No WhatsApp transport is available.',
+  };
 };
 
 
@@ -132,6 +896,15 @@ const sendMessage = async (phoneNumber, message) => {
  * @param {Function} handler - The function to handle incoming messages.
  */
 const connectToWhatsApp = async (handler) => {
+    const mode = normalizeDeliveryMode(runtimeSettings?.whatsapp?.deliveryMode || 'baileys');
+    if (mode !== 'baileys') {
+        connectionStatus = 'standby';
+        qrCode = null;
+        connectedUser = null;
+        console.warn('[WhatsApp] Non-Baileys mode is active. Skipping WhatsApp Web connection.');
+        return;
+    }
+
     if (standbyEnabled || process.env.DISABLE_WHATSAPP === 'true') {
         connectionStatus = 'standby';
         qrCode = null;
@@ -149,12 +922,11 @@ const connectToWhatsApp = async (handler) => {
     if(typeof handler === 'function') {
         messageHandler = handler;
     }
-    manualDisconnectRequested = false;
 
     try {
         const { default: makeWASocket, useMultiFileAuthState, fetchLatestBaileysVersion, DisconnectReason } = await import('@whiskeysockets/baileys');
         
-        await fs.mkdir(SESSION_DIR, { recursive: true });
+        await fsp.mkdir(SESSION_DIR, { recursive: true });
         
         console.log('[WhatsApp] Starting new connection attempt...');
         connectionStatus = 'connecting';
@@ -244,21 +1016,6 @@ const connectToWhatsApp = async (handler) => {
                 const statusCode = lastDisconnect?.error instanceof Boom ? lastDisconnect.error.output.statusCode : 500;
                 console.error(`[WhatsApp] Connection closed. Full details:`, lastDisconnect);
 
-                if (manualDisconnectRequested) {
-                    manualDisconnectRequested = false;
-                    console.log('[WhatsApp] Manual disconnect completed. Waiting for Connect button.');
-                    try {
-                        sock?.ev.removeAllListeners();
-                        await fs.rm(SESSION_DIR, { recursive: true, force: true });
-                        console.log('[WhatsApp] Session directory cleared.');
-                    } catch (e) {
-                        if (e.code !== 'ENOENT') {
-                            console.error('[WhatsApp] Failed to clear session directory:', e);
-                        }
-                    }
-                    return;
-                }
-
                 if (standbyEnabled || process.env.DISABLE_WHATSAPP === 'true') {
                     connectionStatus = 'standby';
                     console.warn('[WhatsApp] Standby is enabled. Reconnect skipped.');
@@ -299,7 +1056,7 @@ const connectToWhatsApp = async (handler) => {
                     reconnectAttempts = 0; // Reset attempts for the next manual/automatic restart
                     try {
                         sock?.ev.removeAllListeners();
-                        await fs.rm(SESSION_DIR, { recursive: true, force: true });
+                        await fsp.rm(SESSION_DIR, { recursive: true, force: true });
                         console.log('[WhatsApp] Session directory cleared.');
                     } catch (e) {
                         if (e.code !== 'ENOENT') {
@@ -385,21 +1142,20 @@ const connectToWhatsApp = async (handler) => {
 };
 
 const getStatus = () => ({
-    status: (standbyEnabled || process.env.DISABLE_WHATSAPP === 'true') ? 'standby' : connectionStatus,
-    user: (standbyEnabled || process.env.DISABLE_WHATSAPP === 'true') ? null : connectedUser
+    status: (standbyEnabled || process.env.DISABLE_WHATSAPP === 'true' || normalizeDeliveryMode(runtimeSettings?.whatsapp?.deliveryMode || 'baileys') !== 'baileys')
+      ? 'standby'
+      : connectionStatus,
+    user: (standbyEnabled || process.env.DISABLE_WHATSAPP === 'true' || normalizeDeliveryMode(runtimeSettings?.whatsapp?.deliveryMode || 'baileys') !== 'baileys') ? null : connectedUser,
+    providerMode: normalizeDeliveryMode(runtimeSettings?.whatsapp?.deliveryMode || 'baileys'),
+    customGatewayEnabled: Boolean(runtimeSettings?.whatsapp?.customGateway?.apiKey),
+    fonnteEnabled: Boolean(runtimeSettings?.whatsapp?.fonnteGateway?.apiKey),
+    baileysConnectArmed,
 });
 const getQrCode = () => ({ qr: qrCode });
-
-const setMessageHandler = (handler) => {
-    if (typeof handler === 'function') {
-        messageHandler = handler;
-    }
-};
 
 const logout = async () => {
     if (sock) {
         console.log('[WhatsApp] User requested logout.');
-        manualDisconnectRequested = true;
         if (heartbeatInterval) {
             clearInterval(heartbeatInterval);
             heartbeatInterval = null;
@@ -411,18 +1167,20 @@ const logout = async () => {
     connectionStatus = (standbyEnabled || process.env.DISABLE_WHATSAPP === 'true') ? 'standby' : 'disconnected';
     connectedUser = null;
     qrCode = null;
+    baileysConnectArmed = false;
 };
 
 const setStandby = async (enabled) => {
     const forcedStandby = process.env.DISABLE_WHATSAPP === 'true';
     const nextValue = forcedStandby ? true : Boolean(enabled);
-    if (standbyEnabled === nextValue) {
+    if (standbyEnabled === nextValue && !(nextValue && sock)) {
         return;
     }
     standbyEnabled = nextValue;
 
     if (standbyEnabled) {
         console.warn('[WhatsApp] Standby enabled. Disconnecting active session...');
+        baileysConnectArmed = false;
         if (heartbeatInterval) {
             clearInterval(heartbeatInterval);
             heartbeatInterval = null;
@@ -441,17 +1199,81 @@ const setStandby = async (enabled) => {
         return;
     }
 
-    console.log('[WhatsApp] Standby disabled. Reconnecting...');
+    console.log('[WhatsApp] Standby disabled. Waiting for manual Baileys connection request...');
     connectionStatus = 'disconnected';
-    setTimeout(() => connectToWhatsApp(messageHandler), 1000);
+    qrCode = null;
+    connectedUser = null;
+};
+
+const requestBaileysConnection = async (handler = messageHandler) => {
+    if (typeof handler === 'function') {
+        messageHandler = handler;
+    }
+
+    const mode = normalizeDeliveryMode(runtimeSettings?.whatsapp?.deliveryMode || 'baileys');
+    if (mode !== 'baileys') {
+        return { mode, connected: false, armed: false };
+    }
+
+    baileysConnectArmed = true;
+    standbyEnabled = false;
+    connectionStatus = 'disconnected';
+    qrCode = null;
+    connectedUser = null;
+
+    return ensureInboundTransport(handler);
+};
+
+const ensureInboundTransport = async (handler = messageHandler) => {
+    if (typeof handler === 'function') {
+        messageHandler = handler;
+    }
+
+    const mode = normalizeDeliveryMode(runtimeSettings?.whatsapp?.deliveryMode || 'baileys');
+    const forcedStandby = process.env.DISABLE_WHATSAPP === 'true';
+
+    if (forcedStandby || standbyEnabled || mode !== 'baileys') {
+        if (sock) {
+            try {
+                await logout();
+            } catch (err) {
+                console.warn('[WhatsApp] Failed to disconnect Baileys while switching to standby mode:', err?.message || err);
+            }
+        }
+        connectionStatus = 'standby';
+        qrCode = null;
+        connectedUser = null;
+        return { mode: 'standby', connected: false };
+    }
+
+    if (connectionStatus === 'connected' || connectionStatus === 'connecting' || connectionStatus === 'qr') {
+        return { mode: 'baileys', connected: connectionStatus === 'connected' };
+    }
+
+    if (!baileysConnectArmed) {
+        connectionStatus = 'disconnected';
+        qrCode = null;
+        connectedUser = null;
+        return { mode: 'baileys', connected: false, armed: false };
+    }
+
+    await connectToWhatsApp(messageHandler);
+    return { mode: 'baileys', connected: true };
 };
 
 export default {
   connectToWhatsApp,
   sendMessage,
+  sendTemplateMessage: sendViaCustomGatewayTemplate,
+  applySettings,
   getStatus,
   getQrCode,
   logout,
   setStandby,
-  setMessageHandler,
+  requestBaileysConnection,
+  ensureInboundTransport,
+  resolveKirimdevPhoneNumberId,
+  listKirimdevConversations,
+  listKirimdevMessages,
+  fetchKirimdevConversation,
 };
