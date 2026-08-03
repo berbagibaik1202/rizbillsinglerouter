@@ -21,8 +21,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      provenance: false
-      sbom: false
     restart: unless-stopped
     env_file:
       - ./docker.env
@@ -79,8 +77,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.updater
-      provenance: false
-      sbom: false
     restart: unless-stopped
     env_file:
       - ./docker.env
