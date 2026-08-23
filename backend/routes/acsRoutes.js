@@ -22,7 +22,7 @@ const ACS_LIST_PAGE_RETRIES = 2;
 const ACS_LIST_RETRY_DELAY_MS = 1500;
 const ACS_SYNC_JOB_POLL_INTERVAL_MS = 5000;
 const ACS_LIVE_REFRESH_STATUS_RETENTION_MS = Number(process.env.ACS_LIVE_REFRESH_STATUS_RETENTION_MS || 30000);
-const ACS_SYNC_MINIMAL_PROJECTION = "_id,_lastInform,summary,Device.DeviceInfo.ModelName,Device.DeviceInfo.ProductClass,InternetGatewayDevice.DeviceInfo.ModelName,InternetGatewayDevice.DeviceInfo.ProductClass";
+const ACS_SYNC_MINIMAL_PROJECTION = "_id,_lastInform,summary,Device.DeviceInfo.ModelName,Device.DeviceInfo.ProductClass,InternetGatewayDevice.DeviceInfo.ModelName,InternetGatewayDevice.DeviceInfo.ProductClass,InternetGatewayDevice.WANDevice.*.WANConnectionDevice.*.WANPPPConnection.*.Username,Device.PPP.Interface.*.Username";
 const ACS_SYNC_PAGE_LIMIT = Number(process.env.ACS_SYNC_PAGE_LIMIT || 25);
 const ACS_SYNC_PAGE_PAUSE_MS = Number(process.env.ACS_SYNC_PAGE_PAUSE_MS || 50);
 const ACS_SYNC_PROGRESS_UPDATE_EVERY_PAGES = Math.max(1, Number(process.env.ACS_SYNC_PROGRESS_UPDATE_EVERY_PAGES || 5));
@@ -619,16 +619,48 @@ const buildAcsDeviceCacheRow = (device) => {
     };
 };
 
+const extractPppoeUsernameFromDevice = (device) => {
+    const usernames = [];
+
+    const igdWan = device?.InternetGatewayDevice?.WANDevice;
+    if (igdWan && typeof igdWan === 'object') {
+        Object.values(igdWan).forEach((wan) => {
+            const connectionDevices = wan?.WANConnectionDevice;
+            if (connectionDevices && typeof connectionDevices === 'object') {
+                Object.values(connectionDevices).forEach((conn) => {
+                    const pppConnections = conn?.WANPPPConnection;
+                    if (pppConnections && typeof pppConnections === 'object') {
+                        Object.values(pppConnections).forEach((ppp) => {
+                            usernames.push(unwrapAcsScalar(ppp?.Username));
+                        });
+                    }
+                });
+            }
+        });
+    }
+
+    const devicePpp = device?.Device?.PPP?.Interface;
+    if (devicePpp && typeof devicePpp === 'object') {
+        Object.values(devicePpp).forEach((ppp) => {
+            usernames.push(unwrapAcsScalar(ppp?.Username));
+        });
+    }
+
+    return pickAcsScalar(...usernames);
+};
+
 const buildMinimalAcsDeviceCacheRow = (device) => {
     if (!device?._id) return null;
 
     const lastInform = parseAcsLastInform(device._lastInform);
     const isOnline = lastInform && (Date.now() - lastInform.getTime() < 10 * 60 * 1000);
     const productClass = resolveAcsDeviceModel(device);
+    const pppoeUsername = extractPppoeUsernameFromDevice(device);
 
     return {
         serialNumber: device._id,
         productClass,
+        pppoeUsername,
         lastInform: lastInform ? toMySQLDatetime(lastInform) : null,
         isOnline: isOnline ? 1 : 0,
     };
@@ -648,6 +680,7 @@ const upsertAcsDevicesBatch = async (devices, { minimal = false } = {}) => {
                 rows.push([
                     row.serialNumber,
                     row.productClass,
+                    row.pppoeUsername,
                     row.lastInform,
                     row.isOnline,
                 ]);
@@ -676,16 +709,17 @@ const upsertAcsDevicesBatch = async (devices, { minimal = false } = {}) => {
     }
 
     const placeholders = minimal
-        ? rows.map(() => "(?, ?, ?, ?)").join(", ")
+        ? rows.map(() => "(?, ?, ?, ?, ?)").join(", ")
         : rows.map(() => "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)").join(", ");
     const values = rows.flat();
 
     if (minimal) {
         await pool.query(`
-            INSERT INTO acs_devices (serialNumber, productClass, lastInform, isOnline)
+            INSERT INTO acs_devices (serialNumber, productClass, pppoeUsername, lastInform, isOnline)
             VALUES ${placeholders}
             ON DUPLICATE KEY UPDATE
                 productClass = VALUES(productClass),
+                pppoeUsername = COALESCE(VALUES(pppoeUsername), pppoeUsername),
                 lastInform = VALUES(lastInform),
                 isOnline = VALUES(isOnline)
         `, values);
