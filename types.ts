@@ -96,6 +96,11 @@ export interface Customer {
   nextBillingStart?: string | null;
   previousPppoeProfile?: string;
   acsSerialNumber?: string; // Field baru untuk menautkan ke perangkat ACS
+  oltDeviceId?: string | null;
+  oltFrame?: number | null;
+  oltSlot?: number | null;
+  oltPort?: number | null;
+  oltOnuId?: number | null;
   voucher_balance?: number;
   billing_type?: 'postpaid' | 'fixed'; // Tipe tagihan baru
   currentMonthInvoiceStatus?: 'Paid' | 'Unpaid' | 'Overdue' | null;

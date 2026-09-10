@@ -86,6 +86,19 @@ const normalizeCustomerId = (value) => {
     return normalized || null;
 };
 
+const normalizeOltMapping = (data, fallback = {}) => {
+    const keys = ['oltDeviceId', 'oltFrame', 'oltSlot', 'oltPort', 'oltOnuId'];
+    const supplied = keys.some(key => Object.prototype.hasOwnProperty.call(data, key));
+    if (!supplied) return Object.fromEntries(keys.map(key => [key, fallback[key] ?? null]));
+    const deviceId = String(data.oltDeviceId || '').trim() || null;
+    const numbers = Object.fromEntries(keys.slice(1).map(key => [key, data[key] === '' || data[key] == null ? null : Number(data[key])]));
+    if (!deviceId && Object.values(numbers).every(value => value == null)) return { oltDeviceId: null, ...numbers };
+    if (!deviceId || Object.values(numbers).some(value => !Number.isInteger(value) || value < 0)) {
+        throw new Error('Mapping OLT harus berisi perangkat, frame, slot, port, dan ID ONU yang valid.');
+    }
+    return { oltDeviceId: deviceId, ...numbers };
+};
+
 async function syncPppoeCacheComment(queryable, username, comment) {
     const normalizedUsername = normalizePppoeUsername(username);
     if (!normalizedUsername) return;
@@ -460,6 +473,11 @@ router.get('/', async (req, res) => {
                     nextBillingStart,
                     previousPppoeProfile,
                     acsSerialNumber,
+                    oltDeviceId,
+                    oltFrame,
+                    oltSlot,
+                    oltPort,
+                    oltOnuId,
                     voucher_balance,
                     billing_type
                 FROM customers
@@ -589,6 +607,7 @@ router.post('/', async (req, res) => {
             activeDate: customerData.activeDate ? customerData.activeDate.replace('T', ' ') : new Date(),
             pppoeUsername: pppoeUsernameToSave,
             acsSerialNumber: customerData.acsSerialNumber || null,
+            ...normalizeOltMapping(customerData),
             billing_type: normalizeBillingType(customerData.billing_type),
             nextBillingStart: normalizeNextBillingStart(customerData.nextBillingStart, normalizeBillingType(customerData.billing_type)),
         };
@@ -700,6 +719,7 @@ router.put('/:id', async (req, res) => {
             pppoeUsername: pppoeUsernameToSave,
             activeDate: customerData.activeDate ? customerData.activeDate.replace('T', ' ') : new Date(),
             acsSerialNumber: customerData.acsSerialNumber || null,
+            ...normalizeOltMapping(customerData, oldCustomer),
             billing_type: normalizedBillingType,
             nextBillingStart: nextBillingStart,
         };

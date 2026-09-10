@@ -332,6 +332,11 @@ export const migrateDatabase = async () => {
                 nextBillingStart DATE,
                 previousPppoeProfile VARCHAR(255),
                 acsSerialNumber VARCHAR(255),
+                oltDeviceId VARCHAR(255),
+                oltFrame INT,
+                oltSlot INT,
+                oltPort INT,
+                oltOnuId INT,
                 voucher_balance DECIMAL(15, 2) DEFAULT 0.00,
                 billing_type ENUM('postpaid', 'fixed') DEFAULT 'postpaid'
             ) ${TABLE_ENGINE_AND_CHARSET}
@@ -481,7 +486,13 @@ export const migrateDatabase = async () => {
         await checkAndAddColumn(connection, 'customers', 'voucher_balance', 'DECIMAL(15, 2) DEFAULT 0.00');
         await checkAndAddColumn(connection, 'customers', 'nextBillingStart', 'DATE');
         await checkAndAddColumn(connection, 'customers', 'billing_type', "ENUM('postpaid', 'fixed') DEFAULT 'postpaid'");
+        await checkAndAddColumn(connection, 'customers', 'oltDeviceId', 'VARCHAR(255) NULL');
+        await checkAndAddColumn(connection, 'customers', 'oltFrame', 'INT NULL');
+        await checkAndAddColumn(connection, 'customers', 'oltSlot', 'INT NULL');
+        await checkAndAddColumn(connection, 'customers', 'oltPort', 'INT NULL');
+        await checkAndAddColumn(connection, 'customers', 'oltOnuId', 'INT NULL');
         await checkAndAddIndex(connection, 'customers', 'idx_customers_acsSerialNumber', 'acsSerialNumber');
+        await checkAndAddIndex(connection, 'customers', 'idx_customers_olt', 'oltDeviceId, oltFrame, oltSlot, oltPort, oltOnuId');
         await checkAndAddColumn(connection, 'topup_requests', 'user_id', 'VARCHAR(255) NULL');
         await checkAndAddColumn(connection, 'ppob_transactions', 'sn', 'VARCHAR(255) NULL');
         await checkAndAddColumn(connection, 'customers', 'nik', 'VARCHAR(100)');

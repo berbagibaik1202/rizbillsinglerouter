@@ -4,9 +4,14 @@ import { randomUUID } from 'node:crypto';
 import { normalizePhone, permissionsFor, hashToken, newToken, fail, createCache, acsStatus } from './core.js';
 
 const wrap = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);
-const fields = 'c.id, c.name, c.phone, c.status, c.pppoeUsername, c.acsSerialNumber, p.name AS packageName, p.speed AS packageSpeed';
+const fields = 'c.id, c.name, c.phone, c.status, c.pppoeUsername, c.acsSerialNumber, c.oltDeviceId, c.oltFrame, c.oltSlot, c.oltPort, c.oltOnuId, p.name AS packageName, p.speed AS packageSpeed, p.price AS packagePrice';
 const from = 'FROM customers c LEFT JOIN packages p ON p.id = c.packageId';
 const positive = (value, fallback) => Number.isFinite(Number(value)) && Number(value) > 0 ? Number(value) : fallback;
+const invoiceStatus = (status, dueDate) => {
+    if (String(status || '').toLowerCase() !== 'unpaid' || !dueDate) return status || 'UNKNOWN';
+    const due = new Date(`${String(dueDate).slice(0, 10)}T23:59:59`);
+    return Number.isFinite(due.getTime()) && due < new Date() ? 'OVERDUE' : 'UNPAID';
+};
 
 export function createWaExtensionRouter({ db, network, acs, env = process.env }) {
     const router = express.Router();
@@ -114,6 +119,17 @@ export function createWaExtensionRouter({ db, network, acs, env = process.env })
     }
     router.param('id', (req, _res, next, id) => { customer(id).then(row => { req.customer = row; next(); }, next); });
     router.get('/customer/:id/overview', (req, res) => res.json({ customer: req.customer }));
+    router.get('/customer/:id/billing', wrap(async (req, res) => {
+        const [invoices] = await db.query(
+            'SELECT i.id, i.dueDate, i.amount, i.status, i.billingPeriodStart, i.billingPeriodEnd FROM invoices i WHERE i.customerId = ? ORDER BY i.dueDate DESC LIMIT 12',
+            [req.customer.id],
+        );
+        res.json({
+            package: { name: req.customer.packageName, speed: req.customer.packageSpeed, price: req.customer.packagePrice },
+            customerStatus: req.customer.status,
+            invoices: invoices.map(invoice => ({ ...invoice, status: invoiceStatus(invoice.status, invoice.dueDate) })),
+        });
+    }));
 
     router.post('/customer/:id/link', need('map'), wrap(async (req, res) => {
         const phone = normalizePhone(req.body.phone);
@@ -153,6 +169,29 @@ export function createWaExtensionRouter({ db, network, acs, env = process.env })
         await provider(req, res, 'ACS', async () => {
             const data = await acs.read(req.customer.acsSerialNumber);
             return { ...data, status: acsStatus(data.lastInform, Date.now(), positive(env.WA_NOC_ACS_ONLINE_MINUTES, 10), positive(env.WA_NOC_ACS_STALE_MINUTES, 30)), sampledAt: new Date().toISOString() };
+        });
+    }));
+    router.get('/customer/:id/olt', wrap(async (req, res) => {
+        const { oltDeviceId, oltFrame, oltSlot, oltPort, oltOnuId } = req.customer;
+        if (!oltDeviceId || [oltFrame, oltSlot, oltPort, oltOnuId].some(value => !Number.isInteger(Number(value)))) {
+            return res.json({ status: 'UNLINKED' });
+        }
+        await provider(req, res, 'OLT', async () => {
+            const [[onu]] = await db.query(
+                'SELECT status, power_rx AS powerRx, serial, updated_at AS updatedAt FROM olt_ont_cache WHERE device_id = ? AND frame = ? AND slot = ? AND port = ? AND onu_id = ?',
+                [oltDeviceId, oltFrame, oltSlot, oltPort, oltOnuId],
+            );
+            if (!onu) throw new Error('ONU belum tersedia di cache OLT.');
+            return {
+                ...onu,
+                status: String(onu.status || 'UNKNOWN').toUpperCase(),
+                deviceId: oltDeviceId,
+                frame: oltFrame,
+                slot: oltSlot,
+                port: oltPort,
+                onuId: oltOnuId,
+                sampledAt: onu.updatedAt || new Date().toISOString(),
+            };
         });
     }));
 

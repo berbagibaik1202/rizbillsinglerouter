@@ -98,7 +98,7 @@ async function handle(message, sender) {
     if (op === 'lookup') return api(`/customer/by-phone/${encodeURIComponent(body.phone)}`);
     if (op === 'search') return api(`/customers?q=${encodeURIComponent(body.query)}`);
     if (typeof id !== 'string' || !id || id.length > 255) throw new Error('Pelanggan tidak valid.');
-    if (['overview', 'network', 'traffic', 'acs', 'wifi', 'history'].includes(op)) return api(`/customer/${encodeURIComponent(id)}/${op}`);
+    if (['overview', 'network', 'traffic', 'acs', 'wifi', 'olt', 'billing', 'history'].includes(op)) return api(`/customer/${encodeURIComponent(id)}/${op}`);
     if (['ping', 'reboot', 'link'].includes(op)) return api(`/customer/${encodeURIComponent(id)}/${op}`, { method: 'POST', body: { confirm: body?.confirm === true, ...(op === 'link' ? { phone: body?.phone } : {}) } });
     throw new Error('Operasi tidak dikenal.');
 }

@@ -62,7 +62,9 @@ Ini mengikuti [pemisahan akses storage Chrome](https://developer.chrome.com/docs
 - Sidebar terisolasi dengan Shadow DOM, dapat ditutup/dibuka, pencarian dan pemilihan pelanggan.
 - Normalisasi nomor Indonesia/internasional, pencocokan `customers.phone`, mapping nomor tambahan, penolakan hasil ambigu.
 - Informasi paket dan PPPoE, IP, uptime, traffic download/upload, ping dari router pelanggan.
+- Tab Billing menampilkan paket, harga paket, status pelanggan, dan hingga 12 invoice terbaru dengan status jatuh tempo yang dihitung saat dibaca.
 - ACS online/stale/offline berdasarkan last inform, model, serial, RX power, SSID tanpa password WiFi.
+- Panel OLT/ONU menampilkan status, serial, RX, dan jalur PON dari cache OLT terbaru bila pelanggan telah memiliki mapping OLT lengkap.
 - Restart ONU dengan konfirmasi nama/ID/perangkat, permission, rate limit dan audit sebelum dispatch.
 - History tindakan extension. Task restart ditampilkan `QUEUED`, bukan klaim ONU sudah berhasil restart.
 - Partial failure: provider gagal ditampilkan `UNAVAILABLE`, tidak dianggap pelanggan offline.
@@ -80,10 +82,12 @@ Semua path berikut berada di `/api/wa-extension`.
 | GET | `/customers?q=...` | view |
 | GET | `/customer/by-phone/:phone` | view |
 | GET | `/customer/:id/overview` | view |
+| GET | `/customer/:id/billing` | view |
 | GET | `/customer/:id/network` | view |
 | GET | `/customer/:id/traffic` | view |
 | GET | `/customer/:id/acs` | view |
 | GET | `/customer/:id/wifi` | view |
+| GET | `/customer/:id/olt` | view |
 | GET | `/customer/:id/history` | view + history |
 | POST | `/customer/:id/link` | view + map; `{ "phone": "628...", "confirm": true }` |
 | POST | `/customer/:id/ping` | view + ping |
@@ -110,7 +114,7 @@ Jangan menganggap `UNKNOWN` berarti aman mengulangi restart; periksa perangkat/h
 ## Batas tahap ini dan validasi
 
 - Transport MVP memakai REST polling (traffic tiap 5 detik) dengan cache/coalescing 3 detik di backend. WebSocket/Redis collector lintas proses belum dibuat. Polling berhenti saat panel ditutup, berganti pelanggan, atau tab browser tidak terlihat.
-- Integrasi MikroTik mengikuti satu konfigurasi router yang sudah digunakan billing. Multi-router/RADIUS dan OLT belum ditambahkan pada extension.
+- Integrasi MikroTik mengikuti satu konfigurasi router yang sudah digunakan billing. Multi-router/RADIUS belum ditambahkan pada extension. Mapping OLT opsional pelanggan disimpan sebagai `oltDeviceId`, `oltFrame`, `oltSlot`, `oltPort`, dan `oltOnuId`; isi kelima field tersebut bersama-sama melalui form pelanggan untuk mengaktifkan panel OLT/ONU. Data panel berasal dari `olt_ont_cache` backend, sehingga OLT perlu disinkronkan terlebih dahulu. Jika mapping atau cache belum ada, panel menampilkan `UNLINKED` atau `UNAVAILABLE`, bukan status perangkat yang ditebak.
 - ACS last inform bukan bukti langsung konektivitas ONU dari OLT. RX ditampilkan sebagai nilai, tanpa threshold vendor yang belum dikonfigurasi.
 - Adapter WhatsApp hanya membaca header percakapan aktif (`#main header span[title]`), tidak membaca isi pesan atau internal WhatsApp API. Perubahan DOM, kontak bernama, atau konteks ambigu memerlukan pencarian manual. Tidak ada pengiriman pesan otomatis.
 - Lookup menormalisasi kolom telepon lama saat membaca; performa pada database pelanggan besar belum diukur.

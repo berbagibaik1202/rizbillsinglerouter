@@ -308,6 +308,11 @@ const Customers: React.FC<CustomersProps> = ({ userRole = 'admin', customersApiB
             pppoeUsername: '',
             activeDate: toLocalISOString(new Date()),
             acsSerialNumber: '', // Initialize new field
+            oltDeviceId: '',
+            oltFrame: '',
+            oltSlot: '',
+            oltPort: '',
+            oltOnuId: '',
             billing_type: 'postpaid',
             createNewPppoe: false,
             newPppoeUsername: '',
@@ -531,6 +536,13 @@ const Customers: React.FC<CustomersProps> = ({ userRole = 'admin', customersApiB
                                         onChange={handleInputChange}
                                         className={inputClasses}
                                     />
+                                </div>
+                                <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-5 gap-4">
+                                    <input type="text" name="oltDeviceId" placeholder="OLT Device ID" value={formData.oltDeviceId || ''} onChange={handleInputChange} className={inputClasses} />
+                                    <input type="number" min="0" name="oltFrame" placeholder="OLT Frame" value={formData.oltFrame ?? ''} onChange={handleInputChange} className={inputClasses} />
+                                    <input type="number" min="0" name="oltSlot" placeholder="OLT Slot" value={formData.oltSlot ?? ''} onChange={handleInputChange} className={inputClasses} />
+                                    <input type="number" min="0" name="oltPort" placeholder="OLT Port" value={formData.oltPort ?? ''} onChange={handleInputChange} className={inputClasses} />
+                                    <input type="number" min="0" name="oltOnuId" placeholder="ONU ID" value={formData.oltOnuId ?? ''} onChange={handleInputChange} className={inputClasses} />
                                 </div>
                             </div>
 

@@ -7,11 +7,12 @@ import { hashToken } from '../../backend/wa-extension/core.js';
 
 async function fixture(t, options = {}) {
     const user = { id: 'u1', username: 'operator', role: options.role || 'admin', password: await bcrypt.hash('test-password', 4) };
-    const customers = [{ id: 'C1', name: 'Pelanggan Satu', phone: '081234567890', status: 'active', pppoeUsername: 'ppp-one', acsSerialNumber: 'onu-one' }, { id: 'C2', name: 'Pelanggan Dua', phone: options.duplicatePhone ? '+62 81234567890' : '089876543210', pppoeUsername: 'ppp-two', acsSerialNumber: 'onu-two' }];
+    const customers = [{ id: 'C1', name: 'Pelanggan Satu', phone: '081234567890', status: 'active', pppoeUsername: 'ppp-one', acsSerialNumber: 'onu-one', oltDeviceId: 'OLT-1', oltFrame: 1, oltSlot: 1, oltPort: 4, oltOnuId: 62 }, { id: 'C2', name: 'Pelanggan Dua', phone: options.duplicatePhone ? '+62 81234567890' : '089876543210', pppoeUsername: 'ppp-two', acsSerialNumber: 'onu-two' }];
     const sessions = [];
     const audits = [];
     const limits = new Map();
     const links = [];
+    const invoices = [{ id: 'INV-OVERDUE', customerId: 'C1', dueDate: '2000-01-01', amount: 150000, status: 'Unpaid' }, { id: 'INV-PAID', customerId: 'C1', dueDate: '2000-02-01', amount: 150000, status: 'Paid' }];
     let grants = options.grants || [];
     const query = async (sql, args = []) => {
         if (sql.startsWith('INSERT INTO extension_rate_limits')) { limits.set(args[0], (limits.get(args[0]) || 0) + 1); return [{}]; }
@@ -33,6 +34,8 @@ async function fixture(t, options = {}) {
         if (sql.startsWith('SELECT id, phone')) return [customers.map(({ id, phone }) => ({ id, phone }))];
         if (sql.startsWith('SELECT customer_id FROM customer_whatsapp_links')) return [links.filter(row => row.phone_number === args[0])];
         if (sql.startsWith('SELECT c.id')) return [sql.includes('WHERE c.id =') ? customers.filter(row => row.id === args[0]) : customers];
+        if (sql.startsWith('SELECT i.id')) return [invoices.filter(row => row.customerId === args[0])];
+        if (sql.startsWith('SELECT status, power_rx')) return [[{ status: 'Up', powerRx: -19.8, serial: 'onu-one', updatedAt: '2026-09-10T12:00:00.000Z' }]];
         if (sql.startsWith('INSERT INTO customer_whatsapp_links')) { links.push({ phone_number: args[0], customer_id: args[1] }); return [{}]; }
         if (sql.startsWith('INSERT INTO extension_audit_logs')) {
             if (options.auditFails) throw new Error('Audit unavailable');
@@ -99,6 +102,23 @@ test('provider failures remain UNAVAILABLE, customer and ACS panels still work',
     assert.equal(JSON.stringify(network).includes('secret router'), false);
     assert.equal((await f.call('/customer/C1/overview', 'GET', undefined, token)).data.customer.id, 'C1');
     assert.equal((await f.call('/customer/C1/acs', 'GET', undefined, token)).data.status, 'ONLINE');
+});
+
+test('billing returns package details and resolves overdue invoices', async t => {
+    const f = await fixture(t); const token = (await f.login()).data.accessToken;
+    const billing = await f.call('/customer/C1/billing', 'GET', undefined, token);
+    assert.equal(billing.status, 200);
+    assert.equal(billing.data.invoices[0].status, 'OVERDUE');
+    assert.equal(billing.data.invoices[1].status, 'Paid');
+});
+
+test('OLT status uses explicit customer mapping and cached ONU data', async t => {
+    const f = await fixture(t); const token = (await f.login()).data.accessToken;
+    const olt = await f.call('/customer/C1/olt', 'GET', undefined, token);
+    assert.equal(olt.status, 200);
+    assert.equal(olt.data.status, 'UP');
+    assert.equal(olt.data.onuId, 62);
+    assert.equal((await f.call('/customer/C2/olt', 'GET', undefined, token)).data.status, 'UNLINKED');
 });
 
 test('confirmed reboot records intent and queued result, rate limits repeated actions', async t => {
