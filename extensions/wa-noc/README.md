@@ -18,13 +18,13 @@ Access token berlaku 15 menit, refresh token dirotasi dan sesi berakhir maksimal
 
 ## Permission
 
-Akun `admin` mendapat `view`, `ping`, `reboot`, `wifi_write`, `map`, `history` secara default.
+Akun `admin` mendapat `view`, `ping`, `reboot`, `wifi_write`, `billing_write`, `map`, `history` secara default.
 Role lainnya tidak mendapat akses otomatis. Permission diperiksa ulang pada setiap request.
 Gunakan ID operator dari tabel `users` untuk memberikan izin granular melalui database:
 
 ```sql
 INSERT INTO extension_permissions (user_id, permission, allowed)
-VALUES ('ID-OPERATOR', 'view', 1), ('ID-OPERATOR', 'ping', 1), ('ID-OPERATOR', 'wifi_write', 1), ('ID-OPERATOR', 'history', 1)
+VALUES ('ID-OPERATOR', 'view', 1), ('ID-OPERATOR', 'ping', 1), ('ID-OPERATOR', 'wifi_write', 1), ('ID-OPERATOR', 'billing_write', 1), ('ID-OPERATOR', 'history', 1)
 ON DUPLICATE KEY UPDATE allowed = VALUES(allowed);
 ```
 
@@ -62,8 +62,9 @@ Ini mengikuti [pemisahan akses storage Chrome](https://developer.chrome.com/docs
 - Normalisasi nomor Indonesia/internasional, pencocokan `customers.phone`, mapping nomor tambahan, penolakan hasil ambigu.
 - Informasi paket dan PPPoE, IP, uptime, traffic download/upload, ping dari router pelanggan.
 - Tab Billing menampilkan paket, harga paket, status pelanggan, dan hingga 12 invoice terbaru dengan status jatuh tempo yang dihitung saat dibaca.
+- Operator berizin `billing_write` dapat menandai invoice `UNPAID` atau `OVERDUE` sebagai lunas setelah memilih metode `Cash` atau `Transfer`; payment record, cash mutation, dan audit extension dibuat dalam transaksi yang sama.
 - ACS online/stale/offline berdasarkan last inform, model, serial, RX power, SSID tanpa password WiFi.
-- Operator berizin `wifi_write` dapat mengirim perubahan SSID dan password WiFi dengan konfirmasi; password tidak ditampilkan atau ditulis ke log extension/backend.
+- Operator berizin `wifi_write` dapat memilih radio 2.4 GHz atau 5 GHz yang terdeteksi lalu mengirim perubahan SSID dan password dengan konfirmasi; password tidak ditampilkan atau ditulis ke log extension/backend.
 - Panel OLT/ONU menampilkan status, serial, RX, dan jalur PON dari cache OLT terbaru bila pelanggan telah memiliki mapping OLT lengkap.
 - Restart ONU dengan konfirmasi nama/ID/perangkat, permission, rate limit dan audit sebelum dispatch.
 - History tindakan extension. Task restart ditampilkan `QUEUED`, bukan klaim ONU sudah berhasil restart.
@@ -83,6 +84,7 @@ Semua path berikut berada di `/api/wa-extension`.
 | GET | `/customer/by-phone/:phone` | view |
 | GET | `/customer/:id/overview` | view |
 | GET | `/customer/:id/billing` | view |
+| POST | `/customer/:id/invoice/:invoiceId/pay` | view + billing_write; `{ "method": "Cash|Transfer", "confirm": true }` |
 | GET | `/customer/:id/network` | view |
 | GET | `/customer/:id/traffic` | view |
 | GET | `/customer/:id/acs` | view |
@@ -107,6 +109,7 @@ Provider mengembalikan status terstruktur; error autentikasi memakai HTTP 401/40
 | `WA_NOC_PING_LIMIT` | 10 per menit per operator |
 | `WA_NOC_REBOOT_LIMIT` | 3 per 10 menit per pelanggan |
 | `WA_NOC_WIFI_LIMIT` | 3 per jam per pelanggan |
+| `WA_NOC_PAYMENT_LIMIT` | 10 per jam per pelanggan |
 
 Rate limit menggunakan fixed windows di MySQL dan berlaku lintas proses backend.
 Read limit: 240 request/menit/operator; login: 10 request/menit/IP; refresh: 30 request/menit/IP.

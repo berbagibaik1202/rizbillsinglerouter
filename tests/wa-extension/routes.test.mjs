@@ -13,6 +13,8 @@ async function fixture(t, options = {}) {
     const limits = new Map();
     const links = [];
     const invoices = [{ id: 'INV-OVERDUE', customerId: 'C1', dueDate: '2000-01-01', amount: 150000, status: 'Unpaid' }, { id: 'INV-PAID', customerId: 'C1', dueDate: '2000-02-01', amount: 150000, status: 'Paid' }];
+    const payments = [];
+    const mutations = [];
     let grants = options.grants || [];
     const query = async (sql, args = []) => {
         if (sql.startsWith('INSERT INTO extension_rate_limits')) { limits.set(args[0], (limits.get(args[0]) || 0) + 1); return [{}]; }
@@ -35,7 +37,16 @@ async function fixture(t, options = {}) {
         if (sql.startsWith('SELECT customer_id FROM customer_whatsapp_links')) return [links.filter(row => row.phone_number === args[0])];
         if (sql.startsWith('SELECT c.id')) return [sql.includes('WHERE c.id =') ? customers.filter(row => row.id === args[0]) : customers];
         if (sql.startsWith('SELECT i.id')) return [invoices.filter(row => row.customerId === args[0])];
+        if (sql.startsWith('SELECT id, customerId, amount')) return [[...invoices.filter(row => row.id === args[0] && row.customerId === args[1])]];
         if (sql.startsWith('SELECT status, power_rx')) return [[{ status: 'Up', powerRx: -19.8, serial: 'onu-one', updatedAt: '2026-09-10T12:00:00.000Z' }]];
+        if (sql.startsWith('UPDATE invoices SET status')) {
+            const invoice = invoices.find(row => row.id === args[1] && row.customerId === args[2] && ['Unpaid', 'Overdue'].includes(row.status));
+            if (invoice) invoice.status = args[0];
+            return [{ affectedRows: invoice ? 1 : 0 }];
+        }
+        if (sql.startsWith('INSERT INTO payments SET')) { payments.push(args); return [{}]; }
+        if (sql.includes('FROM cash_mutations')) return [[]];
+        if (sql.startsWith('INSERT INTO cash_mutations SET')) { mutations.push(args); return [{}]; }
         if (sql.startsWith('INSERT INTO customer_whatsapp_links')) { links.push({ phone_number: args[0], customer_id: args[1] }); return [{}]; }
         if (sql.startsWith('INSERT INTO extension_audit_logs')) {
             if (options.auditFails) throw new Error('Audit unavailable');
@@ -48,6 +59,7 @@ async function fixture(t, options = {}) {
     const db = { query, getConnection: async () => ({ query, beginTransaction: async () => {}, commit: async () => {}, rollback: async () => {}, release() {} }) };
     let rebootCalls = 0;
     let wifiCalls = 0;
+    let wifiUpdate;
     const app = express(); app.use(express.json());
     app.use('/api/wa-extension', createWaExtensionRouter({ db, network: {
         async getNocSnapshot() { if (options.networkFails) throw new Error('secret router address'); return { status: 'OFFLINE', online: false, downloadMbps: 0, uploadMbps: 0 }; },
@@ -55,7 +67,7 @@ async function fixture(t, options = {}) {
     }, acs: {
         async read() { return { lastInform: new Date().toISOString(), wifi: [{ ssid: 'Customer Wifi' }] }; },
         async reboot() { rebootCalls++; if (options.rebootFails) throw new Error('private ACS credential'); return { status: 'QUEUED' }; },
-        async updateWifi() { wifiCalls++; return { taskId: 'wifi-task' }; },
+        async updateWifi(_customerId, updates) { wifiCalls++; wifiUpdate = updates; return { taskId: 'wifi-task' }; },
     }, env: { WA_NOC_REBOOT_LIMIT: 1 } }));
     const server = app.listen(0, '127.0.0.1'); await new Promise(resolve => server.once('listening', resolve));
     t.after(() => { server.closeAllConnections(); server.close(); });
@@ -64,7 +76,7 @@ async function fixture(t, options = {}) {
         return { status: response.status, data: await response.json() };
     };
     const login = () => call('/auth/login', 'POST', { username: 'operator', password: 'test-password' });
-    return { call, login, sessions, audits, rebootCalls: () => rebootCalls, wifiCalls: () => wifiCalls, setGrants: value => { grants = value; } };
+    return { call, login, sessions, audits, invoices, payments, mutations, rebootCalls: () => rebootCalls, wifiCalls: () => wifiCalls, wifiUpdate: () => wifiUpdate, setGrants: value => { grants = value; } };
 }
 
 test('requires dedicated token; customer/reseller role cannot log in implicitly', async t => {
@@ -128,10 +140,26 @@ test('WiFi updates require permission, confirmation, valid password, and are aud
     f.setGrants([{ permission: 'wifi_write', allowed: 0 }]);
     assert.equal((await f.call('/customer/C1/wifi', 'POST', { ssid: 'Baru' }, token)).status, 403);
     f.setGrants([{ permission: 'wifi_write', allowed: 1 }]);
-    assert.equal((await f.call('/customer/C1/wifi', 'POST', { ssid: 'Baru', confirm: true }, token)).data.status, 'QUEUED');
+    assert.equal((await f.call('/customer/C1/wifi', 'POST', { band: '2.4', ssid: 'Baru', confirm: true }, token)).data.status, 'QUEUED');
     assert.equal(f.wifiCalls(), 1);
+    assert.equal(f.wifiUpdate().band, '2.4');
     assert.equal(f.audits.at(-1).action, 'WIFI_UPDATE');
-    assert.equal((await f.call('/customer/C1/wifi', 'POST', { key: 'short', confirm: true }, token)).status, 400);
+    assert.equal((await f.call('/customer/C1/wifi', 'POST', { band: '5', key: 'short', confirm: true }, token)).status, 400);
+});
+
+test('unpaid invoices can be marked paid using Cash or Transfer with an audit trail', async t => {
+    const f = await fixture(t); const token = (await f.login()).data.accessToken;
+    f.setGrants([{ permission: 'billing_write', allowed: 0 }]);
+    assert.equal((await f.call('/customer/C1/invoice/INV-OVERDUE/pay', 'POST', { method: 'Cash', confirm: true }, token)).status, 403);
+    f.setGrants([{ permission: 'billing_write', allowed: 1 }]);
+    const paid = await f.call('/customer/C1/invoice/INV-OVERDUE/pay', 'POST', { method: 'Transfer', confirm: true }, token);
+    assert.equal(paid.status, 200);
+    assert.equal(paid.data.status, 'PAID');
+    assert.equal(f.invoices[0].status, 'Paid');
+    assert.equal(f.payments[0].method, 'Transfer');
+    assert.equal(f.mutations[0].method, 'Transfer');
+    assert.equal(f.audits.at(-1).action, 'MARK_INVOICE_PAID');
+    assert.equal((await f.call('/customer/C1/invoice/INV-OVERDUE/pay', 'POST', { method: 'Cash', confirm: true }, token)).status, 409);
 });
 
 test('confirmed reboot records intent and queued result, rate limits repeated actions', async t => {

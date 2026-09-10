@@ -2,6 +2,8 @@ import express from 'express';
 import bcrypt from 'bcryptjs';
 import { randomUUID } from 'node:crypto';
 import { normalizePhone, permissionsFor, hashToken, newToken, fail, createCache, acsStatus } from './core.js';
+import { recordCashMutation } from '../cashMutationService.js';
+import { toMySQLDatetime } from '../utils.js';
 
 const wrap = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);
 const fields = 'c.id, c.name, c.phone, c.status, c.pppoeUsername, c.acsSerialNumber, c.oltDeviceId, c.oltFrame, c.oltSlot, c.oltPort, c.oltOnuId, p.name AS packageName, p.speed AS packageSpeed, p.price AS packagePrice';
@@ -224,20 +226,48 @@ export function createWaExtensionRouter({ db, network, acs, env = process.env })
         if (req.body.confirm !== true) throw fail(400, 'Konfirmasi perubahan WiFi diperlukan.');
         const ssid = typeof req.body.ssid === 'string' ? req.body.ssid.trim() : '';
         const key = typeof req.body.key === 'string' ? req.body.key : '';
+        const band = String(req.body.band || '');
         if ((!ssid && !key) || ssid.length > 32 || (key && key.length < 8)) {
             throw fail(400, 'SSID maksimal 32 karakter dan password WiFi minimal 8 karakter.');
         }
+        if (!['2.4', '5'].includes(band)) throw fail(400, 'Pilih WiFi 2.4 GHz atau 5 GHz.');
         if (!req.customer.acsSerialNumber) throw fail(409, 'ONU belum terhubung ke ACS.');
         await limit(`wifi:${req.customer.id}`, positive(env.WA_NOC_WIFI_LIMIT, 3), 3600);
         const auditId = await audit(req, 'WIFI_UPDATE', 'PENDING');
         try {
-            const result = await acs.updateWifi(req.customer.id, { ...(ssid ? { ssid } : {}), ...(key ? { key } : {}) });
+            const result = await acs.updateWifi(req.customer.id, { band, ...(ssid ? { ssid } : {}), ...(key ? { key } : {}) });
             await db.query('UPDATE extension_audit_logs SET result = ? WHERE id = ?', ['QUEUED', auditId]);
             res.json({ status: 'QUEUED', message: 'Perubahan WiFi dikirim ke ACS. Tunggu perangkat melapor kembali.', taskId: result.taskId || null, auditId });
         } catch {
             await db.query('UPDATE extension_audit_logs SET result = ? WHERE id = ?', ['UNKNOWN', auditId]);
             throw fail(502, 'Hasil perubahan WiFi belum diketahui. Periksa perangkat sebelum mencoba lagi.');
         }
+    }));
+    router.post('/customer/:id/invoice/:invoiceId/pay', need('billing_write'), wrap(async (req, res) => {
+        if (req.body.confirm !== true) throw fail(400, 'Konfirmasi pembayaran diperlukan.');
+        const method = String(req.body.method || '');
+        if (!['Cash', 'Transfer'].includes(method)) throw fail(400, 'Metode pembayaran harus Cash atau Transfer.');
+        const [[invoice]] = await db.query('SELECT id, customerId, amount, status, dueDate FROM invoices WHERE id = ? AND customerId = ?', [req.params.invoiceId, req.customer.id]);
+        if (!invoice) throw fail(404, 'Tagihan pelanggan tidak ditemukan.');
+        if (!['Unpaid', 'Overdue'].includes(invoice.status)) throw fail(409, 'Tagihan ini sudah tidak dapat ditandai lunas.');
+        await limit(`payment:${req.customer.id}`, positive(env.WA_NOC_PAYMENT_LIMIT, 10), 3600);
+        const auditId = await audit(req, 'MARK_INVOICE_PAID', 'PENDING');
+        const payment = { id: `PAY-${Date.now()}-${invoice.id.slice(-4)}`, invoiceId: invoice.id, customerId: invoice.customerId, date: toMySQLDatetime(new Date()), amount: invoice.amount, method };
+        const connection = await db.getConnection();
+        try {
+            await connection.beginTransaction();
+            const [result] = await connection.query('UPDATE invoices SET status = ? WHERE id = ? AND customerId = ? AND status IN (?, ?)', ['Paid', invoice.id, req.customer.id, 'Unpaid', 'Overdue']);
+            if (result.affectedRows !== 1) throw fail(409, 'Tagihan sudah berubah. Muat ulang data billing.');
+            await connection.query('INSERT INTO payments SET ?', payment);
+            await recordCashMutation(connection, { date: payment.date, direction: 'in', category: 'invoice_payment', amount: payment.amount, method, description: `Pembayaran invoice ${invoice.id}`, reference_type: 'payment', reference_id: payment.id, customer_id: invoice.customerId, created_by: req.operator.id, source: 'system' });
+            await connection.query('UPDATE extension_audit_logs SET result = ? WHERE id = ?', ['SUCCESS', auditId]);
+            await connection.commit();
+        } catch (error) {
+            await connection.rollback();
+            await db.query('UPDATE extension_audit_logs SET result = ? WHERE id = ?', ['FAILED', auditId]);
+            throw error;
+        } finally { connection.release(); }
+        res.json({ status: 'PAID', invoiceId: invoice.id, method, auditId, message: `Tagihan ditandai lunas melalui ${method}.` });
     }));
     router.get('/customer/:id/history', need('history'), wrap(async (req, res) => {
         const [rows] = await db.query('SELECT id, action, result, created_at FROM extension_audit_logs WHERE customer_id = ? ORDER BY created_at DESC LIMIT 50', [req.customer.id]);

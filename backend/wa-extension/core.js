@@ -1,6 +1,6 @@
 import { createHash, randomBytes } from 'node:crypto';
 
-export const PERMISSIONS = ['view', 'ping', 'reboot', 'wifi_write', 'map', 'history'];
+export const PERMISSIONS = ['view', 'ping', 'reboot', 'wifi_write', 'billing_write', 'map', 'history'];
 export const hashToken = value => createHash('sha256').update(value).digest('hex');
 export const newToken = () => randomBytes(32).toString('hex');
 export const fail = (status, message) => Object.assign(new Error(message), { status });

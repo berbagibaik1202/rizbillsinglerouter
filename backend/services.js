@@ -530,21 +530,21 @@ export const updateCustomerWlan = async (customerId, updates) => {
         throw new Error("Customer ID and at least one update (ssid or key) are required.");
     }
 
+    if (!['2.4', '5'].includes(String(updates.band))) {
+        throw new Error("Pilih band WiFi 2.4 GHz atau 5 GHz.");
+    }
+
     if (updates.key && updates.key.length < 8) {
         throw new Error("Password Wi-Fi harus terdiri dari minimal 8 karakter.");
     }
 
-    console.log(`[WLAN Update] Starting for customer ${customerId}. SSID update=${Boolean(updates.ssid)}, password update=${Boolean(updates.key)}.`);
+    console.log(`[WLAN Update] Starting for customer ${customerId}, band=${updates.band}. SSID update=${Boolean(updates.ssid)}, password update=${Boolean(updates.key)}.`);
 
     try {
         // **PERUBAHAN: Gunakan getCustomerDeviceDetailsWithRefresh dengan forceRefresh**
         const deviceDetails = await getCustomerDeviceDetailsWithRefresh(customerId, true); // forceRefresh = true
         
-        console.log(`[WLAN Update] Device details after refresh:`, {
-            hasWlanConfigs: !!deviceDetails.wlanConfigs,
-            wlanConfigsCount: deviceDetails.wlanConfigs?.length,
-            wlanConfigs: deviceDetails.wlanConfigs
-        });
+        console.log(`[WLAN Update] Device details after refresh: hasWlanConfigs=${Boolean(deviceDetails.wlanConfigs)}, wlanConfigsCount=${deviceDetails.wlanConfigs?.length || 0}.`);
 
         if (!deviceDetails.wlanConfigs || deviceDetails.wlanConfigs.length === 0) {
             // Coba sekali lagi tanpa refresh, mungkin data sudah ada
@@ -692,7 +692,12 @@ const proceedWithWlanUpdate = async (customerId, updates, deviceDetails) => {
     const target24 = pickByIndex(prioritized, '1') || prioritized.find(n => n.band === '2.4') || prioritized[0];
     const target5 = pickByIndex(prioritized, '5') || prioritized.find(n => n.band === '5');
 
-    [target24, target5].forEach(config => {
+    const target = updates.band === '5' ? target5 : target24;
+    if (!target) {
+        throw new Error(`WiFi ${updates.band} GHz tidak tersedia pada perangkat pelanggan.`);
+    }
+
+    [target].forEach(config => {
         if (!config) return;
         if (updates.ssid && config.ssidPath) {
             parameters.push({ path: config.ssidPath, value: updates.ssid });

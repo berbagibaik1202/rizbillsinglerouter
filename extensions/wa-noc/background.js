@@ -83,7 +83,8 @@ async function handle(message, sender) {
     if (typeof id !== 'string' || !id || id.length > 255) throw new Error('Pelanggan tidak valid.');
     if (['overview', 'network', 'traffic', 'acs', 'wifi', 'olt', 'billing', 'history'].includes(op)) return api(`/customer/${encodeURIComponent(id)}/${op}`);
     if (['ping', 'reboot', 'link'].includes(op)) return api(`/customer/${encodeURIComponent(id)}/${op}`, { method: 'POST', body: { confirm: body?.confirm === true, ...(op === 'link' ? { phone: body?.phone } : {}) } });
-    if (op === 'wifiUpdate') return api(`/customer/${encodeURIComponent(id)}/wifi`, { method: 'POST', body: { confirm: body?.confirm === true, ssid: body?.ssid, key: body?.key } });
+    if (op === 'wifiUpdate') return api(`/customer/${encodeURIComponent(id)}/wifi`, { method: 'POST', body: { confirm: body?.confirm === true, band: body?.band, ssid: body?.ssid, key: body?.key } });
+    if (op === 'markInvoicePaid') return api(`/customer/${encodeURIComponent(id)}/invoice/${encodeURIComponent(body?.invoiceId || '')}/pay`, { method: 'POST', body: { confirm: body?.confirm === true, method: body?.method } });
     throw new Error('Operasi tidak dikenal.');
 }
 
