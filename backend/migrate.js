@@ -117,7 +117,10 @@ const checkAndAddIndex = async (connection, tableName, indexName, columnName) =>
     }
 
     console.log(`[DB Schema] Index '${indexName}' missing in '${tableName}'. Adding...`);
-    await connection.query(`ALTER TABLE \`${tableName}\` ADD INDEX \`${indexName}\` (\`${columnName}\`)`);
+    const columns = (Array.isArray(columnName) ? columnName : [columnName])
+        .map((column) => `\`${column}\``)
+        .join(', ');
+    await connection.query(`ALTER TABLE \`${tableName}\` ADD INDEX \`${indexName}\` (${columns})`);
 };
 
 const ensureColumnDefinitionContains = async (connection, tableName, columnName, columnDefinition, requiredSubstring) => {
@@ -492,7 +495,7 @@ export const migrateDatabase = async () => {
         await checkAndAddColumn(connection, 'customers', 'oltPort', 'INT NULL');
         await checkAndAddColumn(connection, 'customers', 'oltOnuId', 'INT NULL');
         await checkAndAddIndex(connection, 'customers', 'idx_customers_acsSerialNumber', 'acsSerialNumber');
-        await checkAndAddIndex(connection, 'customers', 'idx_customers_olt', 'oltDeviceId, oltFrame, oltSlot, oltPort, oltOnuId');
+        await checkAndAddIndex(connection, 'customers', 'idx_customers_olt', ['oltDeviceId', 'oltFrame', 'oltSlot', 'oltPort', 'oltOnuId']);
         await checkAndAddColumn(connection, 'topup_requests', 'user_id', 'VARCHAR(255) NULL');
         await checkAndAddColumn(connection, 'ppob_transactions', 'sn', 'VARCHAR(255) NULL');
         await checkAndAddColumn(connection, 'customers', 'nik', 'VARCHAR(100)');
