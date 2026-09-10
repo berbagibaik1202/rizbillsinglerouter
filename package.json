@@ -4,6 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "build:wa-extension": "tsc -p extensions/wa-noc/tsconfig.json && node extensions/wa-noc/build.mjs",
+    "test:wa-extension": "node --test tests/wa-extension/*.test.mjs",
     "dev": "concurrently \"npm:dev:backend\" \"vite\"",
     "db:migrate": "node backend/migrate-bootstrap.js",
     "migrate": "node backend/migrate-bootstrap.js",

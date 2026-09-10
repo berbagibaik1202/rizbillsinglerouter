@@ -13,6 +13,7 @@ const __dirname = path.dirname(__filename);
 
 import pool from './db.js';
 import bcrypt from 'bcryptjs';
+import { migrateWaExtension } from './wa-extension/schema.js';
 
 console.log(`[DB Migration] Module loaded at ${new Date().toISOString()}`);
 console.log(`[DB Migration] cwd: ${process.cwd()}`);
@@ -240,6 +241,7 @@ export const migrateDatabase = async () => {
         // --- PHASE 1: CREATE ALL TABLES IF THEY DON'T EXIST (IN DEPENDENCY ORDER) ---
         await connection.query(`CREATE TABLE IF NOT EXISTS packages (id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255) NOT NULL UNIQUE, speed INT NOT NULL, price INT NOT NULL, pppoeProfile VARCHAR(255), useTax TINYINT(1) DEFAULT 1) ${TABLE_ENGINE_AND_CHARSET}`);
         await connection.query(`CREATE TABLE IF NOT EXISTS users (id VARCHAR(255) PRIMARY KEY, username VARCHAR(255) NOT NULL UNIQUE, password VARCHAR(255) NOT NULL, role VARCHAR(50) NOT NULL, balance DECIMAL(15, 2) DEFAULT 0.00, phone VARCHAR(50)) ${TABLE_ENGINE_AND_CHARSET}`);
+        await migrateWaExtension(connection);
         await connection.query(`CREATE TABLE IF NOT EXISTS odps (id VARCHAR(255) PRIMARY KEY, name VARCHAR(255) NOT NULL, address TEXT, location JSON, parentId VARCHAR(255), lineColor VARCHAR(20), powerInput DECIMAL(5, 2), powerOutput DECIMAL(5, 2), totalPorts INT) ${TABLE_ENGINE_AND_CHARSET}`);
         await connection.query(`CREATE TABLE IF NOT EXISTS odcs (id VARCHAR(255) PRIMARY KEY, name VARCHAR(255) NOT NULL, address TEXT, location JSON, parentId VARCHAR(255), lineColor VARCHAR(20), powerInput DECIMAL(5, 2), powerOutput DECIMAL(5, 2), totalPorts INT) ${TABLE_ENGINE_AND_CHARSET}`);
         await connection.query(`CREATE TABLE IF NOT EXISTS pppoe_profiles (id VARCHAR(50) PRIMARY KEY, name VARCHAR(255) NOT NULL, localAddress VARCHAR(255), remoteAddressPool VARCHAR(255), rateLimit VARCHAR(255)) ${TABLE_ENGINE_AND_CHARSET}`);

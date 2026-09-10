@@ -929,7 +929,44 @@ const updateRemoteOntNatTarget = async (targetIp) => {
     }
 };
 
+// Strict NOC reads: a failed router must never be reported as an offline customer.
+const getNocSnapshot = async (username, withTraffic = false) => {
+    const conn = await connectToRouter();
+    if (!conn) throw new Error('Router unavailable');
+    try {
+        const sessions = await executeWriteWithTimeout(conn, '/ppp/active/print', [`?name=${username}`], 5000);
+        if (!Array.isArray(sessions)) throw new Error('Invalid router response');
+        const session = sessions[0];
+        if (!session) return { status: 'OFFLINE', online: false, ip: null, uptime: null, downloadMbps: 0, uploadMbps: 0 };
+        const result = { status: 'ONLINE', online: true, ip: session.address, uptime: session.uptime, callerId: session['caller-id'] };
+        if (withTraffic) {
+            const rows = await executeWriteWithTimeout(conn, '/interface/monitor-traffic', [`=interface=<pppoe-${username}>`, '=once='], 5000);
+            const tx = Number(rows?.[0]?.['tx-bits-per-second']);
+            const rx = Number(rows?.[0]?.['rx-bits-per-second']);
+            if (!Number.isFinite(tx) || !Number.isFinite(rx)) throw new Error('Traffic unavailable');
+            result.downloadMbps = tx / 1000000;
+            result.uploadMbps = rx / 1000000;
+        }
+        return result;
+    } finally { conn.close(); }
+};
+
+const pingNocCustomer = async username => {
+    const conn = await connectToRouter();
+    if (!conn) throw new Error('Router unavailable');
+    try {
+        const sessions = await executeWriteWithTimeout(conn, '/ppp/active/print', [`?name=${username}`], 5000);
+        const address = sessions?.[0]?.address;
+        if (!address) throw new Error('No active customer session');
+        const rows = await executeWriteWithTimeout(conn, '/ping', [`=address=${address}`, '=count=3', '=interval=300ms'], 5000);
+        if (!Array.isArray(rows) || !rows.length) throw new Error('Ping unavailable');
+        return { target: address, samples: rows.map(row => ({ time: row.time ?? null, status: row.status ?? null, sent: row.sent ?? null, received: row.received ?? null, packetLoss: row['packet-loss'] ?? null, average: row['avg-rtt'] ?? null })) };
+    } finally { conn.close(); }
+};
+
 export default {
+    getNocSnapshot,
+    pingNocCustomer,
     testMikrotikConnection,
     fetchInterfaces,
     monitorInterfaceTraffic,

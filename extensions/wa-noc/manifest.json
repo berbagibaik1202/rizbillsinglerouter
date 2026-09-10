@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "RizkiTech WA NOC",
+  "version": "1.0.0",
+  "description": "Informasi pelanggan dan pemeriksaan jaringan RizkiTech di WhatsApp Web.",
+  "minimum_chrome_version": "112",
+  "permissions": ["storage"],
+  "host_permissions": ["https://billing.rizki-tech.com/*"],
+  "optional_host_permissions": ["https://*/*", "http://localhost/*", "http://127.0.0.1/*"],
+  "background": { "service_worker": "background.js", "type": "module" },
+  "action": { "default_title": "Login / pengaturan RizkiTech WA NOC" },
+  "options_page": "options.html",
+  "content_scripts": [{ "matches": ["https://web.whatsapp.com/*"], "js": ["content.js"], "run_at": "document_idle" }]
+}

@@ -22,6 +22,6 @@
     }
   },
   "include": ["**/*.ts", "**/*.tsx", "*.txt"],
-  "exclude": ["vite.config.ts", "frontendmobil", "playervideo", "dist", "scripts"],
+  "exclude": ["vite.config.ts", "frontendmobil", "playervideo", "dist", "scripts", "extensions"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

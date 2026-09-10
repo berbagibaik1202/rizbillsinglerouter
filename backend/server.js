@@ -23,6 +23,7 @@ import { verifyWebhookSignature, InvalidSignatureError, SignatureExpiredError, M
 
 import { updateDigiflazzPingEvent } from './services/digiflazzWebhookState.js';
 import { handleWhatsAppStatusWebhook } from './services/whatsappLogService.js';
+import waExtensionRoutes from './wa-extension/providers.js';
 
 console.log('[Server] Static imports resolved. Entering server module initialization...');
 
@@ -508,6 +509,8 @@ const startServer = async () => {
     };
 
     app.use(cors());
+    // Dedicated opaque sessions cannot authenticate to the general billing API.
+    app.use('/api/wa-extension', waExtensionRoutes);
 
     // --- PUBLIC TRIPAY CALLBACK HANDLER ---
     // Ditangani di sini sebelum middleware otentikasi diterapkan.
