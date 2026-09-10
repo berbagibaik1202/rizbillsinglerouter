@@ -8,15 +8,8 @@ let authRevision = 0;
 let authQueue = Promise.resolve();
 chrome.action.onClicked.addListener(() => chrome.runtime.openOptionsPage());
 
-function backendUrl(value) {
-    const url = new URL(value);
-    const local = ['localhost', '127.0.0.1'].includes(url.hostname);
-    if ((url.protocol !== 'https:' && !(local && url.protocol === 'http:')) || url.username || url.password || url.pathname !== '/' || url.search || url.hash) throw new Error('Gunakan origin HTTPS, misalnya https://billing.rizki-tech.com');
-    return url.origin;
-}
-
-async function raw(path, { method = 'GET', body, token, backend = DEFAULT_BACKEND } = {}) {
-    const response = await fetch(`${backendUrl(backend)}/api/wa-extension${path}`, {
+async function raw(path, { method = 'GET', body, token } = {}) {
+    const response = await fetch(`${DEFAULT_BACKEND}/api/wa-extension${path}`, {
         method, headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
         ...(body ? { body: JSON.stringify(body) } : {}),
         signal: AbortSignal.timeout(25000), credentials: 'omit', redirect: 'error', cache: 'no-store',
@@ -32,7 +25,7 @@ async function api(path, options = {}) {
     if (!session) throw Object.assign(new Error('Login melalui pengaturan extension.'), { status: 401 });
     const assertSession = () => { if (revision !== authRevision) throw Object.assign(new Error('Sesi berubah. Muat ulang panel.'), { status: 401 }); };
     try {
-        const data = await raw(path, { ...options, token: session.accessToken, backend: session.backend });
+        const data = await raw(path, { ...options, token: session.accessToken });
         assertSession();
         return data;
     }
@@ -43,9 +36,8 @@ async function api(path, options = {}) {
             // Another request may have refreshed while this request was in flight.
             const current = (await chrome.storage.session.get('session')).session;
             if (current?.accessToken !== session.accessToken) return current;
-            const fresh = await raw('/auth/refresh', { method: 'POST', body: { refreshToken: session.refreshToken }, backend: session.backend });
+            const fresh = await raw('/auth/refresh', { method: 'POST', body: { refreshToken: session.refreshToken } });
             assertSession();
-            fresh.backend = session.backend;
             await chrome.storage.session.set({ session: fresh });
             return fresh;
         })().catch(async failure => {
@@ -55,7 +47,7 @@ async function api(path, options = {}) {
         const fresh = await refreshing;
         assertSession();
         if (!fresh) throw Object.assign(new Error('Login kembali.'), { status: 401 });
-        const data = await raw(path, { ...options, token: fresh.accessToken, backend: fresh.backend });
+        const data = await raw(path, { ...options, token: fresh.accessToken });
         assertSession();
         return data;
     }
@@ -68,21 +60,12 @@ async function handle(message, sender) {
     if (!optionsPage && !whatsapp) throw new Error('Sumber permintaan tidak valid.');
     const { op, id, body } = message || {};
     if (op === 'openOptions') { await chrome.runtime.openOptionsPage(); return {}; }
-    if (op === 'config') {
-        if (!optionsPage) throw new Error('Buka pengaturan extension.');
-        const { backend = DEFAULT_BACKEND } = await chrome.storage.local.get('backend');
-        return { backend };
-    }
     if (op === 'login') {
         if (!optionsPage) throw new Error('Login hanya tersedia di pengaturan extension.');
-        const backend = backendUrl(body.backend);
-        if (!await chrome.permissions.contains({ origins: [`${backend}/*`] })) throw new Error('Izin backend belum diberikan.');
         authRevision++;
         refreshing = undefined;
         await chrome.storage.session.remove('session');
-        await chrome.storage.local.set({ backend });
-        const session = await raw('/auth/login', { method: 'POST', body: { username: body.username, password: body.password }, backend });
-        session.backend = backend;
+        const session = await raw('/auth/login', { method: 'POST', body: { username: body.username, password: body.password } });
         await chrome.storage.session.set({ session });
         return session.user;
     }
@@ -100,6 +83,7 @@ async function handle(message, sender) {
     if (typeof id !== 'string' || !id || id.length > 255) throw new Error('Pelanggan tidak valid.');
     if (['overview', 'network', 'traffic', 'acs', 'wifi', 'olt', 'billing', 'history'].includes(op)) return api(`/customer/${encodeURIComponent(id)}/${op}`);
     if (['ping', 'reboot', 'link'].includes(op)) return api(`/customer/${encodeURIComponent(id)}/${op}`, { method: 'POST', body: { confirm: body?.confirm === true, ...(op === 'link' ? { phone: body?.phone } : {}) } });
+    if (op === 'wifiUpdate') return api(`/customer/${encodeURIComponent(id)}/wifi`, { method: 'POST', body: { confirm: body?.confirm === true, ssid: body?.ssid, key: body?.key } });
     throw new Error('Operasi tidak dikenal.');
 }
 

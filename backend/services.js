@@ -534,7 +534,7 @@ export const updateCustomerWlan = async (customerId, updates) => {
         throw new Error("Password Wi-Fi harus terdiri dari minimal 8 karakter.");
     }
 
-    console.log(`[WLAN Update] Starting for customer ${customerId}`, updates);
+    console.log(`[WLAN Update] Starting for customer ${customerId}. SSID update=${Boolean(updates.ssid)}, password update=${Boolean(updates.key)}.`);
 
     try {
         // **PERUBAHAN: Gunakan getCustomerDeviceDetailsWithRefresh dengan forceRefresh**
@@ -737,7 +737,7 @@ const proceedWithWlanUpdate = async (customerId, updates, deviceDetails) => {
 
     console.log(`[WLAN Update] Preparing to send task to ACS for device ${serialNumber}`);
     console.log(`[WLAN Update] Task URL: ${taskUrl}`);
-    console.log(`[WLAN Update] Task Payload:`, JSON.stringify(taskPayload, null, 2));
+    console.log(`[WLAN Update] Task prepared with ${taskPayload.parameterValues.length} parameter(s).`);
 
 
     const controller = new AbortController();

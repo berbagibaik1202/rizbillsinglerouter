@@ -9,6 +9,26 @@ export function phoneFromTitle(raw: string): string | null {
     return /^[1-9]\d{7,14}$/.test(phone) ? phone : null;
 }
 
+function headerLabel(header: Element | null): string {
+    if (!header) return '';
+    const candidates = [
+        header.querySelector<HTMLElement>('[data-testid="conversation-info-header-chat-title"] [title]'),
+        header.querySelector<HTMLElement>('[data-testid="conversation-info-header-chat-title"]'),
+        header.querySelector<HTMLElement>('span[title]'),
+        header.querySelector<HTMLElement>('[role="button"] span[dir="auto"]'),
+        header.querySelector<HTMLElement>('span[dir="auto"]'),
+    ];
+    for (const candidate of candidates) {
+        const label = candidate?.getAttribute('title')?.trim() || candidate?.textContent?.trim() || '';
+        if (label) return label;
+    }
+    return '';
+}
+
+export function activeChatLabel(): string {
+    return headerLabel(document.querySelector('#main header'));
+}
+
 // Only inspect the active chat header. Never match numbers from message bodies,
 // participant lists or unrelated contact drawers. Saved names use manual lookup.
 export function observeChat(onChange: (chat: Chat | null) => void): () => void {
@@ -18,8 +38,7 @@ export function observeChat(onChange: (chat: Chat | null) => void): () => void {
     let timer: ReturnType<typeof setTimeout> | undefined;
     function inspect() {
         const header = document.querySelector('#main header');
-        const title = header?.querySelector<HTMLElement>('span[title]');
-        const label = title?.getAttribute('title')?.trim() || '';
+        const label = headerLabel(header);
         const signature = `${label}|${header ? 'open' : 'closed'}`;
         if (signature === previous && header === previousHeader) return;
         previous = signature;

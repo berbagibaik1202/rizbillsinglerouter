@@ -10,7 +10,7 @@ try {
     const page = await browser.newPage({ viewport: { width: 1366, height: 900 } });
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
-    await page.setContent('<html><body><div id="main"><header><span title="+62 81234567890">+62 81234567890</span></header><p>WhatsApp fixture</p></div></body></html>');
+    await page.setContent('<html><body><div id="main"><header><div data-testid="conversation-info-header-chat-title"><span>+62 81234567890</span></div></header><p>WhatsApp fixture</p></div></body></html>');
     await page.evaluate(() => {
         // Open the root only in this fixture so Playwright can inspect it.
         const attach = Element.prototype.attachShadow;
@@ -41,7 +41,7 @@ try {
     });
     await page.addScriptTag({ content: await readFile(new URL('../../extensions/wa-noc/dist/content.js', import.meta.url), 'utf8') });
     await page.waitForFunction(() => window.testCalls.some(call => call.op === 'lookup'));
-    await page.locator('#main header span').evaluate(element => { element.title = '+62 89876543210'; element.textContent = '+62 89876543210'; });
+    await page.locator('#main header [data-testid="conversation-info-header-chat-title"] span').evaluate(element => { element.textContent = '+62 89876543210'; });
     await page.getByRole('heading', { name: 'Pelanggan Dua', exact: true }).waitFor();
     await page.waitForTimeout(1000);
     assert.equal(await page.getByRole('heading', { name: 'Pelanggan Satu', exact: true }).count(), 0, 'Old lookup must not replace current customer');
@@ -58,12 +58,7 @@ try {
     await page.screenshot({ path: '.tmp-wa-noc-validation/sidebar.png', fullPage: true });
     await page.getByRole('button', { name: 'WIFI', exact: true }).click();
     await page.getByText('RIZKITECH-TEST', { exact: true }).waitFor();
-    await page.locator('#main header span').evaluate(element => { element.title = 'Kontak Tersimpan'; element.textContent = 'Kontak Tersimpan'; });
-    await page.getByText('Nomor tidak terlihat. Cari dan pilih pelanggan secara manual.', { exact: true }).waitFor();
-    assert.equal(await page.getByRole('heading', { name: 'Pelanggan Dua', exact: true }).count(), 0);
-    await page.getByRole('textbox', { name: 'Cari pelanggan', exact: true }).fill('Pelanggan Dua');
-    await page.getByRole('button', { name: 'Cari', exact: true }).click();
-    await page.getByRole('button', { name: /Pelanggan Dua/ }).click();
+    await page.locator('#main header [data-testid="conversation-info-header-chat-title"] span').evaluate(element => { element.textContent = 'Pelanggan Dua'; });
     await page.getByRole('heading', { name: 'Pelanggan Dua', exact: true }).waitFor();
     await page.getByRole('button', { name: 'Tutup panel', exact: true }).click();
     const before = await page.evaluate(() => window.testCalls.filter(call => call.op === 'traffic').length);

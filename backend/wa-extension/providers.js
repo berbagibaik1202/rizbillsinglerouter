@@ -2,6 +2,7 @@ import pool from '../db.js';
 import network from '../mikrotik-api.js';
 import { getSettings } from '../utils.js';
 import { parseDeviceDetails } from '../parsers/acsdeviceparser.js';
+import { updateCustomerWlan } from '../services.js';
 import { createWaExtensionRouter } from './router.js';
 
 async function request(path, options = {}) {
@@ -45,6 +46,9 @@ const acs = {
         const raw = await device(serial);
         await request(`/devices/${encodeURIComponent(raw._id)}/tasks?connection_request`, { method: 'POST', body: JSON.stringify({ name: 'reboot' }) });
         return { status: 'QUEUED', message: 'Task restart dikirim ke ACS. Periksa status perangkat beberapa saat lagi.' };
+    },
+    async updateWifi(customerId, updates) {
+        return updateCustomerWlan(customerId, updates);
     },
 };
 

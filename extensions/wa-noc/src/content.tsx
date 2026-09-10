@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { request, type Customer, type Operator } from './api';
-import { observeChat, type Chat } from './whatsapp';
+import { activeChatLabel, observeChat, type Chat } from './whatsapp';
 import styles from './style.css?inline';
 
 const text = (value: unknown) => value == null || value === '' ? '—' : String(value);
 const currency = (value: unknown) => Number.isFinite(Number(value)) ? new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(Number(value)) : '—';
+const comparableName = (value: string) => value.trim().replace(/\s+/g, ' ').toLocaleLowerCase('id-ID');
 function Row({ label, value }: { label: string; value: unknown }) { return <div className="row"><span>{label}</span><strong>{text(value)}</strong></div>; }
 
 function Provider({ title, op, id, refresh = 0, children }: { title: string; op: string; id: string; refresh?: number; children: (data: any) => React.ReactNode }) {
@@ -40,13 +41,14 @@ function CustomerPanel({ customer, user, chat }: { customer: Customer; user: Ope
     const busyRef = useRef(false);
     const [message, setMessage] = useState('');
     const [ping, setPing] = useState<any>(null);
+    const [wifiUpdate, setWifiUpdate] = useState({ ssid: '', key: '' });
+    const [wifiConfirm, setWifiConfirm] = useState(false);
     async function action(op: string) {
         if (busyRef.current) return;
-        const currentTitle = document.querySelector('#main header span[title]')?.getAttribute('title')?.trim();
-        if (currentTitle !== chat.label) { setMessage('Percakapan berubah. Pilih kembali pelanggan.'); setConfirm(false); return; }
-        busyRef.current = true; setBusy(true); setMessage(''); setConfirm(false);
+        if (activeChatLabel() !== chat.label) { setMessage('Percakapan berubah. Pilih kembali pelanggan.'); setConfirm(false); setWifiConfirm(false); return; }
+        busyRef.current = true; setBusy(true); setMessage(''); setConfirm(false); setWifiConfirm(false);
         try {
-            const result = await request(op, customer.id, { confirm: true });
+            const result = await request(op, customer.id, op === 'wifiUpdate' ? { confirm: true, ...wifiUpdate } : { confirm: true });
             if (op === 'ping') setPing(result);
             setMessage(result.message || 'Ping selesai.');
         } catch (error) { setMessage((error as Error).message); }
@@ -64,11 +66,12 @@ function CustomerPanel({ customer, user, chat }: { customer: Customer; user: Ope
                 {user.permissions.includes('reboot') && <button className="danger" disabled={busy || !customer.acsSerialNumber} onClick={() => setConfirm(true)}>Restart ONU</button>}
             </div>{busy && <p>Menjalankan tindakan…</p>}{ping && <><Row label="Target ping" value={ping.target} />{ping.samples.map((sample: any, index: number) => <Row key={index} label={`Paket ${index + 1}`} value={sample.time || sample.status || (sample.packetLoss != null ? `Loss ${sample.packetLoss}%` : 'Tidak ada balasan')} />)}</>}</section>
         </>}
-        {tab === 'wifi' && <Provider title="WiFi pelanggan" op="wifi" id={customer.id}>{data => data.wifi?.length ? data.wifi.map((wifi: any, index: number) => <Row key={index} label={wifi.band ? `${wifi.band} GHz` : `WiFi ${index + 1}`} value={wifi.ssid} />) : <p>SSID belum tersedia dari perangkat.</p>}</Provider>}
+        {tab === 'wifi' && <><Provider title="WiFi pelanggan" op="wifi" id={customer.id}>{data => data.wifi?.length ? data.wifi.map((wifi: any, index: number) => <Row key={index} label={wifi.band ? `${wifi.band} GHz` : `WiFi ${index + 1}`} value={wifi.ssid} />) : <p>SSID belum tersedia dari perangkat.</p>}</Provider>{user.permissions.includes('wifi_write') && <section><h3>Ubah WiFi</h3><label>SSID baru<input maxLength={32} value={wifiUpdate.ssid} onChange={event => setWifiUpdate(value => ({ ...value, ssid: event.target.value }))} /></label><label>Password baru<input type="password" minLength={8} value={wifiUpdate.key} onChange={event => setWifiUpdate(value => ({ ...value, key: event.target.value }))} /></label><button disabled={busy || (!wifiUpdate.ssid && !wifiUpdate.key)} onClick={() => setWifiConfirm(true)}>Kirim perubahan</button></section>}</>}
         {tab === 'billing' && <Provider title="Billing pelanggan" op="billing" id={customer.id}>{data => <><Row label="Paket" value={data.package?.name} /><Row label="Kecepatan" value={data.package?.speed == null ? null : `${data.package.speed} Mbps`} /><Row label="Harga paket" value={currency(data.package?.price)} /><Row label="Status pelanggan" value={data.customerStatus} />{data.invoices?.length ? <div className="invoices">{data.invoices.map((invoice: any) => <div className="event" key={invoice.id}><strong>{invoice.id} · {invoice.status}</strong><small>Jatuh tempo {invoice.dueDate ? new Date(invoice.dueDate).toLocaleDateString('id-ID') : '—'} · {currency(invoice.amount)}</small></div>)}</div> : <p>Belum ada tagihan.</p>}</>}</Provider>}
         {tab === 'history' && <Provider title="Riwayat tindakan extension" op="history" id={customer.id}>{data => data.length ? data.map((entry: any) => <div className="event" key={entry.id}><strong>{entry.action} · {entry.result}</strong><small>{new Date(entry.created_at).toLocaleString('id-ID')}</small></div>) : <p>Belum ada tindakan.</p>}</Provider>}
         {message && <p role="status" className="notice">{message}</p>}
         {confirm && <section role="alertdialog" aria-modal="true" aria-label="Konfirmasi restart" className="confirmation"><h3>Restart ONU {customer.name}?</h3><p>{customer.id} · {customer.acsSerialNumber}</p><p>Internet pelanggan akan terputus sementara.</p><div className="actions"><button autoFocus className="secondary" onClick={() => setConfirm(false)}>Batal</button><button className="danger" disabled={busy} onClick={() => void action('reboot')}>Ya, restart ONU</button></div></section>}
+        {wifiConfirm && <section role="alertdialog" aria-modal="true" aria-label="Konfirmasi perubahan WiFi" className="confirmation"><h3>Kirim perubahan WiFi?</h3><p>Perangkat dapat terputus sesaat saat menerapkan konfigurasi baru.</p><div className="actions"><button autoFocus className="secondary" onClick={() => setWifiConfirm(false)}>Batal</button><button disabled={busy} onClick={() => void action('wifiUpdate')}>Ya, kirim</button></div></section>}
     </>;
 }
 
@@ -86,8 +89,23 @@ function ChatPanel({ chat, user }: { chat: Chat; user: Operator }) {
         if (chat.phone) request<Customer>('lookup', undefined, { phone: chat.phone }).then(result => {
             if (version === requestVersion.current) { setCustomer(result); setMessage('Pelanggan ditemukan dari nomor WhatsApp.'); }
         }).catch(error => { if (version === requestVersion.current) setMessage(error.message); });
+        else {
+            setCustomer(null);
+            setResults([]);
+            setMessage('Mencocokkan nama kontak dengan pelanggan…');
+            request<Customer[]>('search', undefined, { query: chat.label }).then(rows => {
+                const exactMatches = rows.filter(row => comparableName(row.name) === comparableName(chat.label));
+                if (version !== requestVersion.current) return;
+                if (exactMatches.length === 1) {
+                    setCustomer(exactMatches[0]);
+                    setMessage('Pelanggan ditemukan dari nama kontak WhatsApp.');
+                } else {
+                    setMessage('Nomor tidak terlihat atau nama pelanggan tidak unik. Cari dan pilih pelanggan secara manual.');
+                }
+            }).catch(() => { if (version === requestVersion.current) setMessage('Nomor tidak terlihat. Cari dan pilih pelanggan secara manual.'); });
+        }
         return () => { requestVersion.current++; };
-    }, [chat.phone]);
+    }, [chat.label, chat.phone]);
     async function search(event: React.FormEvent) {
         event.preventDefault(); const version = ++requestVersion.current; setMessage('Mencari…');
         try {

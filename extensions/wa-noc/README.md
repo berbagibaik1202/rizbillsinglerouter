@@ -1,7 +1,7 @@
 # RizkiTech WA NOC — MVP
 
 Extension Manifest V3 untuk Chrome/Edge, menggunakan backend billing di workspace ini.
-Default backend: `https://billing.rizki-tech.com`. API harus diterapkan sebelum extension dapat login.
+Backend extension dikunci ke `https://billing.rizki-tech.com`. API harus diterapkan pada origin tersebut sebelum extension dapat login.
 
 ## Menyiapkan backend
 
@@ -18,13 +18,13 @@ Access token berlaku 15 menit, refresh token dirotasi dan sesi berakhir maksimal
 
 ## Permission
 
-Akun `admin` mendapat `view`, `ping`, `reboot`, `map`, `history` secara default.
+Akun `admin` mendapat `view`, `ping`, `reboot`, `wifi_write`, `map`, `history` secara default.
 Role lainnya tidak mendapat akses otomatis. Permission diperiksa ulang pada setiap request.
 Gunakan ID operator dari tabel `users` untuk memberikan izin granular melalui database:
 
 ```sql
 INSERT INTO extension_permissions (user_id, permission, allowed)
-VALUES ('ID-OPERATOR', 'view', 1), ('ID-OPERATOR', 'ping', 1), ('ID-OPERATOR', 'history', 1)
+VALUES ('ID-OPERATOR', 'view', 1), ('ID-OPERATOR', 'ping', 1), ('ID-OPERATOR', 'wifi_write', 1), ('ID-OPERATOR', 'history', 1)
 ON DUPLICATE KEY UPDATE allowed = VALUES(allowed);
 ```
 
@@ -49,9 +49,8 @@ npm run build:wa-extension
 1. Buka `chrome://extensions` atau `edge://extensions`, aktifkan Developer mode.
 2. Pilih **Load unpacked**, lalu folder `extensions/wa-noc/dist`.
 3. Klik ikon extension untuk membuka login. Gunakan akun billing dengan permission di atas.
-4. Untuk backend alternatif, isi origin HTTPS. HTTP hanya diperbolehkan untuk `localhost` atau `127.0.0.1`; extension meminta izin origin tersebut saat login.
-5. Buka atau reload WhatsApp Web. Tekan **Muat sesi** bila sidebar dibuka sebelum login.
-6. Buka percakapan pelanggan. Jika header hanya menampilkan nama kontak, cari pelanggan dan pilih manual.
+4. Buka atau reload WhatsApp Web. Tekan **Muat sesi** bila sidebar dibuka sebelum login.
+5. Buka percakapan pelanggan. Jika header hanya menampilkan nama kontak, extension memuat pelanggan otomatis bila nama tersebut cocok tepat dengan satu pelanggan billing; nama yang ambigu atau tidak ditemukan tetap memerlukan pilihan manual.
 
 Password tidak disimpan. Token berada di `chrome.storage.session`, hanya dapat diakses oleh konteks extension tepercaya;
 content script menerima data hasil API tanpa token. Browser yang ditutup memerlukan login ulang.
@@ -64,6 +63,7 @@ Ini mengikuti [pemisahan akses storage Chrome](https://developer.chrome.com/docs
 - Informasi paket dan PPPoE, IP, uptime, traffic download/upload, ping dari router pelanggan.
 - Tab Billing menampilkan paket, harga paket, status pelanggan, dan hingga 12 invoice terbaru dengan status jatuh tempo yang dihitung saat dibaca.
 - ACS online/stale/offline berdasarkan last inform, model, serial, RX power, SSID tanpa password WiFi.
+- Operator berizin `wifi_write` dapat mengirim perubahan SSID dan password WiFi dengan konfirmasi; password tidak ditampilkan atau ditulis ke log extension/backend.
 - Panel OLT/ONU menampilkan status, serial, RX, dan jalur PON dari cache OLT terbaru bila pelanggan telah memiliki mapping OLT lengkap.
 - Restart ONU dengan konfirmasi nama/ID/perangkat, permission, rate limit dan audit sebelum dispatch.
 - History tindakan extension. Task restart ditampilkan `QUEUED`, bukan klaim ONU sudah berhasil restart.
@@ -87,6 +87,7 @@ Semua path berikut berada di `/api/wa-extension`.
 | GET | `/customer/:id/traffic` | view |
 | GET | `/customer/:id/acs` | view |
 | GET | `/customer/:id/wifi` | view |
+| POST | `/customer/:id/wifi` | view + wifi_write; `{ "ssid": "opsional", "key": "opsional", "confirm": true }` |
 | GET | `/customer/:id/olt` | view |
 | GET | `/customer/:id/history` | view + history |
 | POST | `/customer/:id/link` | view + map; `{ "phone": "628...", "confirm": true }` |
@@ -105,6 +106,7 @@ Provider mengembalikan status terstruktur; error autentikasi memakai HTTP 401/40
 | `WA_NOC_ACS_STALE_MINUTES` | 30 |
 | `WA_NOC_PING_LIMIT` | 10 per menit per operator |
 | `WA_NOC_REBOOT_LIMIT` | 3 per 10 menit per pelanggan |
+| `WA_NOC_WIFI_LIMIT` | 3 per jam per pelanggan |
 
 Rate limit menggunakan fixed windows di MySQL dan berlaku lintas proses backend.
 Read limit: 240 request/menit/operator; login: 10 request/menit/IP; refresh: 30 request/menit/IP.
@@ -116,9 +118,9 @@ Jangan menganggap `UNKNOWN` berarti aman mengulangi restart; periksa perangkat/h
 - Transport MVP memakai REST polling (traffic tiap 5 detik) dengan cache/coalescing 3 detik di backend. WebSocket/Redis collector lintas proses belum dibuat. Polling berhenti saat panel ditutup, berganti pelanggan, atau tab browser tidak terlihat.
 - Integrasi MikroTik mengikuti satu konfigurasi router yang sudah digunakan billing. Multi-router/RADIUS belum ditambahkan pada extension. Mapping OLT opsional pelanggan disimpan sebagai `oltDeviceId`, `oltFrame`, `oltSlot`, `oltPort`, dan `oltOnuId`; isi kelima field tersebut bersama-sama melalui form pelanggan untuk mengaktifkan panel OLT/ONU. Data panel berasal dari `olt_ont_cache` backend, sehingga OLT perlu disinkronkan terlebih dahulu. Jika mapping atau cache belum ada, panel menampilkan `UNLINKED` atau `UNAVAILABLE`, bukan status perangkat yang ditebak.
 - ACS last inform bukan bukti langsung konektivitas ONU dari OLT. RX ditampilkan sebagai nilai, tanpa threshold vendor yang belum dikonfigurasi.
-- Adapter WhatsApp hanya membaca header percakapan aktif (`#main header span[title]`), tidak membaca isi pesan atau internal WhatsApp API. Perubahan DOM, kontak bernama, atau konteks ambigu memerlukan pencarian manual. Tidak ada pengiriman pesan otomatis.
+- Adapter WhatsApp hanya membaca header percakapan aktif, tidak membaca isi pesan atau internal WhatsApp API. Nomor pada header dicocokkan langsung; bila header hanya nama kontak, extension hanya memilih otomatis untuk satu kecocokan nama yang tepat. Perubahan DOM atau konteks ambigu memerlukan pencarian manual. Tidak ada pengiriman pesan otomatis.
 - Lookup menormalisasi kolom telepon lama saat membaca; performa pada database pelanggan besar belum diukur.
-- Fitur fase 2–4 (tagihan, perubahan WiFi, isolir, grafik, diagnosis, tiket, outage, AI) belum termasuk.
+- Fitur fase 2–4 yang belum termasuk: enable/disable WiFi, isolir, grafik/pemakaian data, diagnosis, balasan WhatsApp, tiket, outage, dan AI.
 - Unit/integration test memakai database dan provider tiruan, sehingga tidak menjalankan tindakan perangkat nyata. Pengujian MySQL, login WhatsApp nyata, serta ping/reboot ONU nyata tetap diperlukan di lingkungan uji sebelum dipakai operasional.
 
 Smoke test operasional: login admin; login operator tanpa izin (harus ditolak); buka nomor dikenali/tidak dikenali;

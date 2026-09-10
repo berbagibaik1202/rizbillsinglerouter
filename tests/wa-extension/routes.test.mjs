@@ -47,6 +47,7 @@ async function fixture(t, options = {}) {
     };
     const db = { query, getConnection: async () => ({ query, beginTransaction: async () => {}, commit: async () => {}, rollback: async () => {}, release() {} }) };
     let rebootCalls = 0;
+    let wifiCalls = 0;
     const app = express(); app.use(express.json());
     app.use('/api/wa-extension', createWaExtensionRouter({ db, network: {
         async getNocSnapshot() { if (options.networkFails) throw new Error('secret router address'); return { status: 'OFFLINE', online: false, downloadMbps: 0, uploadMbps: 0 }; },
@@ -54,6 +55,7 @@ async function fixture(t, options = {}) {
     }, acs: {
         async read() { return { lastInform: new Date().toISOString(), wifi: [{ ssid: 'Customer Wifi' }] }; },
         async reboot() { rebootCalls++; if (options.rebootFails) throw new Error('private ACS credential'); return { status: 'QUEUED' }; },
+        async updateWifi() { wifiCalls++; return { taskId: 'wifi-task' }; },
     }, env: { WA_NOC_REBOOT_LIMIT: 1 } }));
     const server = app.listen(0, '127.0.0.1'); await new Promise(resolve => server.once('listening', resolve));
     t.after(() => { server.closeAllConnections(); server.close(); });
@@ -62,7 +64,7 @@ async function fixture(t, options = {}) {
         return { status: response.status, data: await response.json() };
     };
     const login = () => call('/auth/login', 'POST', { username: 'operator', password: 'test-password' });
-    return { call, login, sessions, audits, rebootCalls: () => rebootCalls, setGrants: value => { grants = value; } };
+    return { call, login, sessions, audits, rebootCalls: () => rebootCalls, wifiCalls: () => wifiCalls, setGrants: value => { grants = value; } };
 }
 
 test('requires dedicated token; customer/reseller role cannot log in implicitly', async t => {
@@ -119,6 +121,17 @@ test('OLT status uses explicit customer mapping and cached ONU data', async t =>
     assert.equal(olt.data.status, 'UP');
     assert.equal(olt.data.onuId, 62);
     assert.equal((await f.call('/customer/C2/olt', 'GET', undefined, token)).data.status, 'UNLINKED');
+});
+
+test('WiFi updates require permission, confirmation, valid password, and are audited', async t => {
+    const f = await fixture(t); const token = (await f.login()).data.accessToken;
+    f.setGrants([{ permission: 'wifi_write', allowed: 0 }]);
+    assert.equal((await f.call('/customer/C1/wifi', 'POST', { ssid: 'Baru' }, token)).status, 403);
+    f.setGrants([{ permission: 'wifi_write', allowed: 1 }]);
+    assert.equal((await f.call('/customer/C1/wifi', 'POST', { ssid: 'Baru', confirm: true }, token)).data.status, 'QUEUED');
+    assert.equal(f.wifiCalls(), 1);
+    assert.equal(f.audits.at(-1).action, 'WIFI_UPDATE');
+    assert.equal((await f.call('/customer/C1/wifi', 'POST', { key: 'short', confirm: true }, token)).status, 400);
 });
 
 test('confirmed reboot records intent and queued result, rate limits repeated actions', async t => {

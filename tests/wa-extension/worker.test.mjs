@@ -7,8 +7,8 @@ const source = await readFile(new URL('../../extensions/wa-noc/background.js', i
 async function fixture() {
     let listener;
     const calls = [];
-    const local = { backend: 'https://billing.rizki-tech.com' };
-    const temporary = { session: { accessToken: 'secret-access', refreshToken: 'secret-refresh', backend: 'https://billing.rizki-tech.com' } };
+    const local = {};
+    const temporary = { session: { accessToken: 'secret-access', refreshToken: 'secret-refresh' } };
     const area = data => ({
         setAccessLevel: async () => {},
         get: async key => ({ [key]: data[key] }),
@@ -21,7 +21,6 @@ async function fixture() {
             runtime: { id: 'test-extension', getURL: file => `chrome-extension://test-extension/${file}`, openOptionsPage: async () => {}, onMessage: { addListener: callback => { listener = callback; } } },
             storage: { local: area(local), session: area(temporary) },
             action: { onClicked: { addListener() {} } },
-            permissions: { contains: async () => true },
         },
         fetch: async (url, options) => {
             calls.push({ url, options });
@@ -34,16 +33,15 @@ async function fixture() {
     };
 }
 
-test('worker rejects auth/config operations from WhatsApp and messages from other pages', async () => {
+test('worker rejects login operations from WhatsApp and messages from other pages', async () => {
     const f = await fixture();
-    for (const op of ['login', 'logout', 'config']) assert.equal((await f.send({ op })).ok, false);
+    for (const op of ['login', 'logout']) assert.equal((await f.send({ op })).ok, false);
     assert.equal((await f.send({ op: 'me' }, 'https://example.com/')).ok, false);
     assert.equal(f.calls.length, 0);
 });
 
-test('worker keeps access tokens server-side and binds requests to session backend', async () => {
+test('worker keeps access tokens server-side and uses the fixed billing backend', async () => {
     const f = await fixture();
-    f.local.backend = 'https://different-server.example';
     const result = await f.send({ op: 'me' });
     assert.equal(result.ok, true);
     assert.equal(JSON.stringify(result).includes('secret-access'), false);
@@ -58,11 +56,9 @@ test('worker permits only known operations and encodes customer identifiers', as
     assert.equal(f.calls[0].url.endsWith('/customer/C1%2F..%2F..%2Fadmin/overview'), true);
 });
 
-test('worker rejects insecure remote backend and embedded credentials before any request', async () => {
+test('worker ignores a supplied backend and always logs in through the fixed origin', async () => {
     const f = await fixture();
-    for (const backend of ['http://billing.rizki-tech.com', 'https://operator:secret@example.com', 'https://example.com/path']) {
-        const result = await f.send({ op: 'login', body: { backend, username: 'x', password: 'x' } }, 'chrome-extension://test-extension/options.html');
-        assert.equal(result.ok, false);
-    }
-    assert.equal(f.calls.length, 0);
+    const result = await f.send({ op: 'login', body: { backend: 'https://example.com', username: 'x', password: 'x' } }, 'chrome-extension://test-extension/options.html');
+    assert.equal(result.ok, true);
+    assert.equal(f.calls[0].url, 'https://billing.rizki-tech.com/api/wa-extension/auth/login');
 });
