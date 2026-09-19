@@ -1,8 +1,8 @@
 {
-  "appVersion": "build-1db7ce8f4c5d",
-  "gitCommit": "1db7ce8f4c5d",
+  "appVersion": "build-603be711f096",
+  "gitCommit": "603be711f096",
   "gitBranch": "main",
-  "builtAt": "2026-09-10T12:24:36.763Z",
+  "builtAt": "2026-09-19T03:56:19.608Z",
   "sourceDir": "E:\\APLIKASI\\rizkitechbill\\isp-billing-management-system\\dist",
   "releaseDir": "E:\\APLIKASI\\rizkitechbill\\isp-billing-management-system\\release",
   "copiedRootFiles": [
