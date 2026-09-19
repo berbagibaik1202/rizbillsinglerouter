@@ -342,7 +342,7 @@ const App: React.FC = () => {
                 case 'admin':
                     return <AdminDashboard user={loggedInAdmin} />;
                 case 'reseller':
-                    return <ResellerDashboard user={loggedInAdmin} />;
+                    return <ResellerDashboard user={loggedInAdmin} appSettings={appSettings?.app} />;
                 case 'technician':
                     return <TechnicianDashboard user={loggedInAdmin} page={page as TechnicianPage} />;
                 default:

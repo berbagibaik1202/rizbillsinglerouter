@@ -50,6 +50,7 @@ const ResellerPortalNav: React.FC<ResellerPortalNavProps> = ({ activePage, setPa
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-20 flex justify-around bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 shadow-[0_-2px_10px_rgba(0,0,0,0.1)] dark:shadow-[0_-2px_10px_rgba(0,0,0,0.3)]">
         <NavButton label="Sales" icon={<VoucherIcon isActive={activePage === 'voucher_sales'} />} isActive={activePage === 'voucher_sales'} onClick={() => setPage('voucher_sales')} />
+        <NavButton label="PPOB" icon={<span className="text-2xl" aria-hidden="true">??</span>} isActive={activePage === 'ppob'} onClick={() => setPage('ppob')} />
         <NavButton label="History" icon={<TransactionIcon isActive={activePage === 'my_transactions'} />} isActive={activePage === 'my_transactions'} onClick={() => setPage('my_transactions')} />
     </nav>
   );

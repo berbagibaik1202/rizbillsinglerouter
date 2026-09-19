@@ -9,12 +9,13 @@ interface PaymentChannel {
 }
 
 interface TopUpModalProps {
+    accountType?: 'customer' | 'reseller';
     isOpen: boolean;
     onClose: () => void;
     onSuccess?: () => void; // ✅ PERBAIKAN: Jadikan optional atau hapus jika tidak digunakan
 }
 
-const TopUpModal: React.FC<TopUpModalProps> = ({ isOpen, onClose, onSuccess }) => {
+const TopUpModal: React.FC<TopUpModalProps> = ({ isOpen, onClose, onSuccess, accountType = 'customer' }) => {
     const [amount, setAmount] = useState('');
     const [selectedMethod, setSelectedMethod] = useState<string>('');
     const [channels, setChannels] = useState<PaymentChannel[]>([]);
@@ -68,7 +69,7 @@ const TopUpModal: React.FC<TopUpModalProps> = ({ isOpen, onClose, onSuccess }) =
         setIsProcessing(true);
         setError(null);
         try {
-            const res = await fetchWithAuth(`/api/customers/affiliate/request-topup`, {
+            const res = await fetchWithAuth(accountType === 'reseller' ? '/api/reseller/request-topup' : '/api/customers/affiliate/request-topup', {
                 method: 'POST',
                 body: JSON.stringify({ amount: topupAmount, method: selectedMethod }),
             });

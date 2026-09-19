@@ -2064,20 +2064,20 @@ router.post('/debug/fix-ppob-table', async (req, res) => {
 
         if (hasUserId && !hasCustomerId) {
             logs.push(`Action: Renaming column '${oldColumnName}' to '${newColumnName}'.`);
-            await connection.query(`ALTER TABLE \`${tableName}\` CHANGE COLUMN \`${oldColumnName}\` \`${newColumnName}\` VARCHAR(255) NOT NULL`);
+            await connection.query(`ALTER TABLE \`${tableName}\` CHANGE COLUMN \`${oldColumnName}\` \`${newColumnName}\` VARCHAR(255) NULL`);
             logs.push("Rename successful.");
         } else if (hasCustomerId) {
             logs.push("Action: Column 'customer_id' already exists. No rename needed.");
-            // Optional: check if it's NOT NULL and fix it if needed
+            // Reseller transactions have no customer_id. Keep this column nullable.
             const customerIdColumn = columns.find(c => c.Field === newColumnName);
-            if (customerIdColumn.Null === 'YES') {
-                logs.push(`Action: Column '${newColumnName}' is nullable. Changing to NOT NULL.`);
-                await connection.query(`ALTER TABLE \`${tableName}\` MODIFY COLUMN \`${newColumnName}\` VARCHAR(255) NOT NULL`);
-                logs.push("Modification to NOT NULL successful.");
+            if (customerIdColumn.Null === 'NO') {
+                logs.push(`Action: Column '${newColumnName}' is NOT NULL. Changing to NULL for customer/reseller ownership.`);
+                await connection.query(`ALTER TABLE \`${tableName}\` MODIFY COLUMN \`${newColumnName}\` VARCHAR(255) NULL`);
+                logs.push("Modification to NULL successful.");
             }
         } else {
             logs.push("Warning: Neither 'customer_id' nor 'user_id' column found. Attempting to add 'customer_id'.");
-            await connection.query(`ALTER TABLE \`${tableName}\` ADD COLUMN \`${newColumnName}\` VARCHAR(255) NOT NULL`);
+            await connection.query(`ALTER TABLE \`${tableName}\` ADD COLUMN \`${newColumnName}\` VARCHAR(255) NULL`);
             logs.push("Action: Added 'customer_id' column successfully.");
         }
 

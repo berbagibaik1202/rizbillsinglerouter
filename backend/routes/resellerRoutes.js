@@ -14,6 +14,14 @@ router.use((req, res, next) => {
     next();
 });
 
+router.get('/me', async (req, res) => {
+    try {
+        const [[user]] = await pool.query("SELECT id, username, balance FROM users WHERE id = ? AND role = 'reseller'", [req.user.id]);
+        if (!user) return res.status(404).json({ message: 'Reseller tidak ditemukan.' });
+        res.json(user);
+    } catch { res.status(500).json({ message: 'Gagal memuat saldo reseller.' }); }
+});
+
 // POST /api/reseller/request-topup
 router.post('/request-topup', async (req, res) => {
     const resellerId = req.user.id;

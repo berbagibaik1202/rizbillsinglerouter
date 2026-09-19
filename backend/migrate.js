@@ -498,6 +498,17 @@ export const migrateDatabase = async () => {
         await checkAndAddIndex(connection, 'customers', 'idx_customers_olt', ['oltDeviceId', 'oltFrame', 'oltSlot', 'oltPort', 'oltOnuId']);
         await checkAndAddColumn(connection, 'topup_requests', 'user_id', 'VARCHAR(255) NULL');
         await checkAndAddColumn(connection, 'ppob_transactions', 'sn', 'VARCHAR(255) NULL');
+        await checkAndAddColumn(connection, 'ppob_transactions', 'reseller_id', 'VARCHAR(255) NULL');
+        await checkAndAddIndex(connection, 'ppob_transactions', 'idx_ppob_reseller_created', ['reseller_id', 'created_at']);
+        await connection.query(`CREATE TABLE IF NOT EXISTS reseller_ppob_inquiries (
+            ref_id VARCHAR(255) PRIMARY KEY,
+            reseller_id VARCHAR(255) NOT NULL,
+            product_code VARCHAR(100) NOT NULL,
+            customer_no VARCHAR(100) NOT NULL,
+            amount DECIMAL(15,2) NOT NULL,
+            consumed TINYINT(1) NOT NULL DEFAULT 0,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ) ${TABLE_ENGINE_AND_CHARSET}`);
         await checkAndAddColumn(connection, 'customers', 'nik', 'VARCHAR(100)');
         await checkAndAddColumn(connection, 'admin_notifications', 'key', 'VARCHAR(255) NULL');
 
@@ -583,8 +594,17 @@ export const migrateDatabase = async () => {
             constraintName: 'fk_ppob_transactions_customer_id',
             referencedTable: 'customers', 
             referencedColumn: 'id', 
-            columnDefinition: 'VARCHAR(255) NOT NULL',
+            columnDefinition: 'VARCHAR(255) NULL',
             onDelete: 'CASCADE' 
+        });
+        const [[ppobCustomerColumn]] = await connection.query("SHOW COLUMNS FROM ppob_transactions LIKE 'customer_id'");
+        if (ppobCustomerColumn?.Null === 'NO') {
+            await connection.query('ALTER TABLE ppob_transactions MODIFY COLUMN customer_id VARCHAR(255) NULL');
+        }
+        await ensureForeignKey({
+            connection, tableName: 'ppob_transactions', columnName: 'reseller_id',
+            constraintName: 'fk_ppob_transactions_reseller_id', referencedTable: 'users',
+            referencedColumn: 'id', columnDefinition: 'VARCHAR(255) NULL', onDelete: 'RESTRICT'
         });
         // --- PPOB FOREIGN KEYS END ---
 

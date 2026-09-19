@@ -6,7 +6,8 @@ interface AdminPPOBTransaction {
     id: number;
     product_type?: string;
     transaction_ref_id: string;
-    customer_id: string;
+    customer_id: string | null;
+    reseller_id?: string | null;
     customer_name: string | null;
     product_code: string;
     product_name: string;
@@ -301,7 +302,7 @@ const PPOBTransactions: React.FC = () => {
                                                     />
                                                 </td>
                                                 <td className="px-3 py-2 font-mono">{tx.transaction_ref_id}</td>
-                                                <td className="px-3 py-2">{tx.customer_name || tx.customer_id}</td>
+                                                <td className="px-3 py-2">{tx.customer_name || tx.reseller_id || tx.customer_id}{tx.reseller_id && <span className="ml-2 text-xs text-indigo-600">Reseller</span>}</td>
                                                 <td className="px-3 py-2">
                                                     <div className="font-semibold">{tx.product_name}</div>
                                                     <div className="text-xs text-gray-500 dark:text-gray-400">{tx.product_code}</div>
@@ -335,8 +336,8 @@ const PPOBTransactions: React.FC = () => {
                                                         </>
                                                     ) : (
                                                         <>
-                                                            <button onClick={() => startEdit(tx)} className="px-2 py-1 text-xs bg-yellow-200 text-yellow-900 rounded">Edit</button>
-                                                            <button onClick={() => deleteTx(tx.transaction_ref_id)} className="px-2 py-1 text-xs bg-red-200 text-red-900 rounded">Hapus</button>
+                                                            <button disabled={!!tx.reseller_id && tx.status !== 'PENDING'} onClick={() => startEdit(tx)} className="px-2 py-1 text-xs bg-yellow-200 text-yellow-900 rounded">Edit</button>
+                                                            <button disabled={!!tx.reseller_id} onClick={() => deleteTx(tx.transaction_ref_id)} className="px-2 py-1 text-xs bg-red-200 text-red-900 rounded">Hapus</button>
                                                         </>
                                                     )}
                                                 </td>

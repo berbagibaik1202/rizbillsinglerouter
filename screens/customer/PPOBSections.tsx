@@ -993,10 +993,11 @@ const ReceiptModal = ({
 };
 
 interface PPOBSectionsProps {
+    accountType?: 'customer' | 'reseller';
     appSettings?: ApiSettings['app'];
 }
 
-const PPOBSections: React.FC<PPOBSectionsProps> = ({ appSettings }) => {
+const PPOBSections: React.FC<PPOBSectionsProps> = ({ appSettings, accountType = 'customer' }) => {
     const [isAdmin, setIsAdmin] = useState(false);
     const [transactions, setTransactions] = useState<(PPOBTransaction & { customerName?: string })[]>([]);
     const [isLoadingHistory, setIsLoadingHistory] = useState(true);
@@ -1027,15 +1028,15 @@ const PPOBSections: React.FC<PPOBSectionsProps> = ({ appSettings }) => {
     const fetchBalance = useCallback(async () => {
         setIsLoadingBalance(true);
         try {
-            const response = await fetchWithAuth('/api/customers/me');
+            const response = await fetchWithAuth(accountType === 'reseller' ? '/api/reseller/me' : '/api/customers/me');
             const data = await response.json();
-            setBalance(data.voucher_balance || 0);
+            setBalance(Number(accountType === 'reseller' ? data.balance : data.voucher_balance) || 0);
         } catch (err) {
             console.error("Failed to fetch balance", err);
         } finally {
             setIsLoadingBalance(false);
         }
-    }, []);
+    }, [accountType]);
 
     const fetchHistory = useCallback(async (): Promise<(PPOBTransaction & { customerName?: string })[] | undefined> => {
         setIsLoadingHistory(true);
@@ -1125,6 +1126,7 @@ const PPOBSections: React.FC<PPOBSectionsProps> = ({ appSettings }) => {
                 throw new Error(result.message || 'Failed to refresh status.');
             }
             await fetchHistory();
+            await fetchBalance();
         } catch (err: any) {
             err.message || 'Failed to refresh status.';
         } finally {
@@ -1527,7 +1529,7 @@ const PPOBSections: React.FC<PPOBSectionsProps> = ({ appSettings }) => {
             {/* Balance Info */}
             <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 mb-8 flex items-center justify-between">
                 <div>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Saldo Anda</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">{accountType === 'reseller' ? 'Saldo Reseller' : 'Saldo Anda'}</p>
                     {isLoadingBalance ? <p className="text-2xl font-bold">Memuat...</p> : <p className="text-2xl font-bold">{formatRupiah(balance)}</p>}
                 </div>
                 <button
@@ -1704,7 +1706,7 @@ const PPOBSections: React.FC<PPOBSectionsProps> = ({ appSettings }) => {
                 </div>
             )}
 
-            <TopUpModal isOpen={showTopUpModal} onClose={() => setShowTopUpModal(false)} onSuccess={handleTransactionSuccess} />
+            <TopUpModal accountType={accountType} isOpen={showTopUpModal} onClose={() => setShowTopUpModal(false)} onSuccess={handleTransactionSuccess} />
 
             {/* NEW RECEIPT MODAL LOGIC */}
             {receiptTx && <ReceiptModal transaction={receiptTx} onClose={() => setReceiptTx(null)} appSettings={appSettings} />}

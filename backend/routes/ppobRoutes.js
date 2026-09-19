@@ -1,10 +1,15 @@
 import express from 'express';
 import crypto from 'crypto';
 import pool from '../db.js';
+import { createResellerPpobService, ppobOwnerColumn } from '../services/resellerPpob.js';
 import * as digiflazzService from '../digiflazzService.js';
 import { formatRupiah, getSettings } from '../utils.js';
 
 const router = express.Router();
+router.use((req, res, next) => {
+    if (!['admin', 'customer', 'reseller'].includes(req.user?.role)) return res.status(403).json({ message: 'Akses PPOB tidak diizinkan.' });
+    next();
+});
 const parseNumericValue = (value) => {
     if (typeof value === 'number' && Number.isFinite(value)) return value;
     if (typeof value !== 'string') return 0;
@@ -106,6 +111,8 @@ const isPostpaidType = (typeRaw) => {
     return false;
 };
 
+const resellerPpob = createResellerPpobService({ db: pool, provider: digiflazzService, normalizeStatus, isPostpaidType });
+
 const formatRcTag = (rcCode) => {
     if (!rcCode) return null;
     const normalized = String(rcCode).trim();
@@ -144,6 +151,17 @@ export const handleDigiflazzStatusUpdate = async (payload) => {
             throw new Error(`Transaction ${refId} not found.`);
         }
 
+        if (tx.reseller_id) {
+            await connection.rollback();
+            connection.release();
+            connection = null;
+            if (tx.status !== 'PENDING') return { refId, status: tx.status, message: tx.message };
+            // Verify reseller results directly with the provider, including unsigned webhook deployments.
+            const [[product]] = await pool.query('SELECT product_type, category FROM ppob_products WHERE product_code = ?', [tx.product_code]);
+            const verified = await digiflazzService.checkStatus(refId, tx.product_code, tx.customer_no, isPostpaidType(product?.product_type || product?.category));
+            const result = await resellerPpob.applyResult(refId, verified?.data || {});
+            return { refId, status: result.status, message: result.message };
+        }
         const normalized = normalizeStatus(status, data.rc || data.code);
         
         let existingDetails = {};
@@ -434,6 +452,15 @@ router.post('/admin/reconcile', isAdmin, async (req, res) => {
 
         for (const tx of pending) {
             try {
+                if (tx.reseller_id) {
+                    const [[product]] = await connection.query('SELECT product_type, category FROM ppob_products WHERE product_code = ?', [tx.product_code]);
+                    const result = await digiflazzService.checkStatus(tx.transaction_ref_id, tx.product_code, tx.customer_no, isPostpaidType(product?.product_type || product?.category));
+                    const updated = await resellerPpob.applyResult(tx.transaction_ref_id, result?.data || {});
+                    if (updated.status === 'FAILED') failedCount++;
+                    else if (updated.status === 'SUCCESS') successCount++;
+                    else stillPending++;
+                    continue;
+                }
                 const result = await digiflazzService.checkStatus(tx.transaction_ref_id);
                 const data = result?.data || {};
                 const newStatus = normalizeStatus(data.status);
@@ -512,7 +539,7 @@ router.post('/admin/products/bulk-delete', isAdmin, async (req, res) => {
     }
 
     try {
-        const [result] = await pool.query('DELETE FROM ppob_products WHERE product_code IN (?)', [codes]);
+        const [result] = await pool.query('DELETE FROM ppob_products WHERE product_code IN (?) AND NOT EXISTS (SELECT 1 FROM ppob_transactions t WHERE t.product_code = ppob_products.product_code AND t.reseller_id IS NOT NULL)', [codes]);
         res.json({
             success: true,
             deleted: result.affectedRows || 0,
@@ -650,13 +677,16 @@ router.post('/check-bill', async (req, res) => {
              return res.status(400).json({ message: data.message || 'Failed to check bill.' });
         }
 
-        const amountRaw = data.selling_price ?? data.price ?? data.amount ?? amountFromClient ?? product.selling_price ?? product.price;
+        const amountRaw = data.selling_price ?? data.price ?? data.amount ?? (req.user.role === 'reseller' ? 0 : amountFromClient) ?? product.selling_price ?? product.price;
         const parsedAmount = parseNumericValue(amountRaw);
         const bill_amount = parsedAmount > 0 ? parsedAmount : null;
         // Gunakan admin dari provider (admin/fee), fallback 0
         const providerAdmin = parseNumericValue(data.admin ?? data.fee ?? 0);
         const providerTotal = parseNumericValue(data.total_charge ?? data.totalcharge ?? data.total ?? data.tagihan ?? data.amount ?? 0);
         const total_charge = providerTotal > 0 ? providerTotal : (bill_amount ?? null);
+        if (req.user.role === 'reseller') {
+            await resellerPpob.saveInquiry(req.user.id, product_code, customer_no, data, total_charge);
+        }
 
         res.json({
             success: true,
@@ -672,7 +702,7 @@ router.post('/check-bill', async (req, res) => {
         });
     } catch (error) {
         console.error('[PPOB Check Bill] Error:', error);
-        res.status(500).json({ message: `A server error occurred: ${error.message}` });
+        res.status(error.status || 500).json({ message: `A server error occurred: ${error.message}` });
     }
 });
 
@@ -681,6 +711,15 @@ router.post('/check-bill', async (req, res) => {
  * [CUSTOMER] Creates a new PPOB purchase.
  */
 router.post('/purchase', async (req, res) => {
+    if (req.user.role === 'reseller') {
+        try {
+            const result = await resellerPpob.purchase(req.user.id, req.body);
+            return res.status(result.status === 'FAILED' ? 400 : 200).json(result);
+        } catch (error) {
+            return res.status(error.status || 500).json({ message: error.status ? error.message : 'Gagal memproses transaksi PPOB.' });
+        }
+    }
+    if (req.user.role !== 'customer') return res.status(403).json({ message: 'Gunakan akun customer atau reseller untuk membeli PPOB.' });
     const { product_code, customer_no, bill_ref_id, bill_selling_price, bill_total_charge, bill_admin } = req.body;
     const customer_id = req.user.id;
 
@@ -831,6 +870,8 @@ router.post('/purchase', async (req, res) => {
  * [CUSTOMER] Fetches the transaction history for the logged-in user.
  */
 router.get('/transactions', async (req, res) => {
+    if (!['customer', 'reseller'].includes(req.user.role)) return res.status(403).json({ message: 'Gunakan riwayat admin.' });
+    const ownerColumn = ppobOwnerColumn(req.user.role);
     const customer_id = req.user.id;
     try {
         console.log('Fetching PPOB transactions for customer_id:', customer_id);
@@ -838,7 +879,7 @@ router.get('/transactions', async (req, res) => {
             `SELECT t.*, p.product_name, p.product_type 
              FROM ppob_transactions t
              LEFT JOIN ppob_products p ON t.product_code = p.product_code
-             WHERE t.customer_id = ? 
+             WHERE t.${ownerColumn} = ?
              ORDER BY t.created_at DESC`,
             [customer_id]
         );
@@ -863,7 +904,8 @@ router.get('/admin/transactions', isAdmin, async (req, res) => {
                 t.id,
                 t.transaction_ref_id,
                 t.customer_id,
-                c.name AS customer_name,
+                t.reseller_id,
+                COALESCE(c.name, u.username) AS customer_name,
                 t.product_code,
                 p.product_name,
                 p.product_type,
@@ -878,6 +920,7 @@ router.get('/admin/transactions', isAdmin, async (req, res) => {
             FROM ppob_transactions t
             JOIN ppob_products p ON t.product_code = p.product_code
             LEFT JOIN customers c ON t.customer_id = c.id
+            LEFT JOIN users u ON t.reseller_id = u.id
             ORDER BY t.created_at DESC
         `);
         res.json(transactions.map(tx => ({ 
@@ -911,6 +954,22 @@ router.put('/admin/transactions/:ref_id', isAdmin, async (req, res) => {
             return res.status(404).json({ message: 'Transaction not found.' });
         }
 
+        if (tx.reseller_id) {
+            const nextStatus = status ? String(status).toUpperCase() : tx.status;
+            if (tx.status !== 'PENDING' && nextStatus !== tx.status) {
+                await connection.rollback();
+                return res.status(409).json({ message: 'Status transaksi reseller yang sudah final tidak dapat diubah.' });
+            }
+            if (!['PENDING', 'SUCCESS', 'FAILED'].includes(nextStatus)) {
+                await connection.rollback();
+                return res.status(400).json({ message: 'Status tidak valid.' });
+            }
+            await connection.rollback();
+            connection.release();
+            connection = null;
+            const updated = await resellerPpob.applyResult(ref_id, { status: nextStatus, message: message || tx.message });
+            return res.json({ success: true, status: updated.status, message: 'Transaction updated.' });
+        }
         const newStatus = status ? String(status).toUpperCase() : tx.status;
         const newMessage = typeof message !== 'undefined' ? message : tx.message;
 
@@ -948,11 +1007,12 @@ const refreshStatusHandler = async (req, res) => {
         const [[tx]] = isAdminRequest
             ? await connection.query('SELECT * FROM ppob_transactions WHERE transaction_ref_id = ?', [ref_id])
             : await connection.query(
-                  'SELECT * FROM ppob_transactions WHERE transaction_ref_id = ? AND customer_id = ?',
+                  `SELECT * FROM ppob_transactions WHERE transaction_ref_id = ? AND ${ppobOwnerColumn(req.user.role)} = ?`,
                   [ref_id, userId]
               );
         if (!tx) return res.status(404).json({ message: 'Transaction not found.' });
 
+        if (tx.reseller_id && tx.status !== 'PENDING') return res.json({ success: true, status: tx.status, message: tx.message });
         const buyerSkuCode = tx.product_code;
         const customerNo = tx.customer_no;
         if (!buyerSkuCode || !customerNo) {
@@ -967,6 +1027,12 @@ const refreshStatusHandler = async (req, res) => {
 
         const result = await digiflazzService.checkStatus(ref_id, buyerSkuCode, customerNo, isPostpaid);
         const data = result?.data || {};
+        if (tx.reseller_id) {
+            connection.release();
+            connection = null;
+            const updated = await resellerPpob.applyResult(ref_id, data);
+            return res.json({ success: true, status: updated.status, message: updated.message });
+        }
         const newStatus = normalizeStatus(data.status, data.rc || data.code);
 
         const sn = data.sn || null;
@@ -1016,9 +1082,9 @@ router.get('/transactions/:ref_id/refresh', refreshStatusHandler);
 router.delete('/admin/transactions/:ref_id', isAdmin, async (req, res) => {
     const { ref_id } = req.params;
     try {
-        const [result] = await pool.query('DELETE FROM ppob_transactions WHERE transaction_ref_id = ?', [ref_id]);
+        const [result] = await pool.query("DELETE FROM ppob_transactions WHERE transaction_ref_id = ? AND reseller_id IS NULL", [ref_id]);
         if (result.affectedRows === 0) {
-            return res.status(404).json({ message: 'Transaction not found.' });
+            return res.status(409).json({ message: 'Transaksi tidak ditemukan atau merupakan catatan saldo reseller yang tidak dapat dihapus.' });
         }
         res.json({ success: true, message: 'Transaction deleted.' });
     } catch (error) {
@@ -1028,10 +1094,9 @@ router.delete('/admin/transactions/:ref_id', isAdmin, async (req, res) => {
 });
 
 /**
- * [PUBLIC] Callback Digiflazz untuk update status transaksi.
- * Tambahkan pembatasan IP/signature sesuai kebutuhan di deployment.
+ * [ADMIN] Legacy callback endpoint. Provider callbacks use /webhook.
  */
-router.post('/callback', async (req, res) => {
+router.post('/callback', isAdmin, async (req, res) => {
     const payload = req.body?.data || req.body || {};
     const { ref_id, status, sign } = payload;
 
