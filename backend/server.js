@@ -24,6 +24,7 @@ import { verifyWebhookSignature, InvalidSignatureError, SignatureExpiredError, M
 import { updateDigiflazzPingEvent } from './services/digiflazzWebhookState.js';
 import { handleWhatsAppStatusWebhook } from './services/whatsappLogService.js';
 import waExtensionRoutes from './wa-extension/providers.js';
+import { mountHotspotWebhook } from './routes/hotspotWebhook.js';
 
 console.log('[Server] Static imports resolved. Entering server module initialization...');
 
@@ -914,6 +915,15 @@ const startServer = async () => {
     app.use((req, res, next) => {
         req.sendSseEvent = sendSseEvent;
         next();
+    });
+
+    // Router callbacks use the external API key, not an interactive JWT session.
+    mountHotspotWebhook(app, {
+        getSettings,
+        handleWebhook: async (req, res) => {
+            const { handleHotspotWebhook } = await import('./routes/hotspotRoutes.js');
+            return handleHotspotWebhook(req, res);
+        },
     });
 
     // --- ROUTE MOUNTING (REFACTORED FOR CLARITY) ---

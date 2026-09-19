@@ -775,7 +775,7 @@ router.post('/sync', async (req, res) => {
     }
 });
 
-router.post('/webhook', async (req, res) => {
+export const handleHotspotWebhook = async (req, res) => {
     const { event, username } = req.body;
     console.log(`[Hotspot Webhook] Received payload:`, req.body);
 
@@ -849,7 +849,7 @@ router.post('/webhook', async (req, res) => {
         console.error('[Hotspot Webhook] Error processing login event:', error);
         res.status(500).send('Internal Server Error');
     }
-});
+};
 
 
 export default router;
