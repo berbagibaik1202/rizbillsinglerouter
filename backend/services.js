@@ -530,15 +530,11 @@ export const updateCustomerWlan = async (customerId, updates) => {
         throw new Error("Customer ID and at least one update (ssid or key) are required.");
     }
 
-    if (!['2.4', '5'].includes(String(updates.band))) {
-        throw new Error("Pilih band WiFi 2.4 GHz atau 5 GHz.");
-    }
-
     if (updates.key && updates.key.length < 8) {
         throw new Error("Password Wi-Fi harus terdiri dari minimal 8 karakter.");
     }
 
-    console.log(`[WLAN Update] Starting for customer ${customerId}, band=${updates.band}. SSID update=${Boolean(updates.ssid)}, password update=${Boolean(updates.key)}.`);
+    console.log(`[WLAN Update] Starting for customer ${customerId}, targets=SSID1,SSID5. SSID update=${Boolean(updates.ssid)}, password update=${Boolean(updates.key)}.`);
 
     try {
         // **PERUBAHAN: Gunakan getCustomerDeviceDetailsWithRefresh dengan forceRefresh**
@@ -682,22 +678,14 @@ const proceedWithWlanUpdate = async (customerId, updates, deviceDetails) => {
         })
         .filter(Boolean);
 
-    // Pilih target 2.4G (SSID index 1) dan 5G (index 5) jika tersedia, tanpa membuat path sintetis
-    const pickByIndex = (list, idxStr) =>
-        list.find(n => (n.ssidPath || '').includes(`.${idxStr}.SSID`) || (n.keyPath || '').includes(`.${idxStr}.`));
-
-    // Prioritaskan yang match profil jika ada
+    // Hanya ubah SSID index 1 dan 5 yang tersedia pada perangkat.
+    const pickByIndex = (list, index) => list.find(config =>
+        new RegExp('(?:WLANConfiguration|WiFi\\.SSID)\\.' + index + '\\.SSID$').test(config.ssidPath || ''));
     const prioritized = normalized.sort((a, b) => Number(b.matchProfile) - Number(a.matchProfile));
+    const target1 = pickByIndex(prioritized, '1');
+    const target5 = pickByIndex(prioritized, '5');
 
-    const target24 = pickByIndex(prioritized, '1') || prioritized.find(n => n.band === '2.4') || prioritized[0];
-    const target5 = pickByIndex(prioritized, '5') || prioritized.find(n => n.band === '5');
-
-    const target = updates.band === '5' ? target5 : target24;
-    if (!target) {
-        throw new Error(`WiFi ${updates.band} GHz tidak tersedia pada perangkat pelanggan.`);
-    }
-
-    [target].forEach(config => {
+    [target1, target5].forEach(config => {
         if (!config) return;
         if (updates.ssid && config.ssidPath) {
             parameters.push({ path: config.ssidPath, value: updates.ssid });
@@ -769,8 +757,8 @@ const proceedWithWlanUpdate = async (customerId, updates, deviceDetails) => {
         if (updates.ssid) {
             try {
                 await pool.query(
-                    'UPDATE acs_devices SET ssid1 = ?, last_sync_at = NOW() WHERE serialNumber = ?', 
-                    [updates.ssid, serialNumber]
+                    `UPDATE acs_devices SET ${[target1 && 'ssid1 = ?', target5 && 'ssid5 = ?'].filter(Boolean).join(', ')}, last_sync_at = NOW() WHERE serialNumber = ?`,
+                    [...[target1, target5].filter(Boolean).map(() => updates.ssid), serialNumber]
                 );
             } catch (dbError) {
                 console.warn(`[WLAN Update] Failed to update local cache after successful task.`, dbError);

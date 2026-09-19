@@ -64,7 +64,7 @@ Ini mengikuti [pemisahan akses storage Chrome](https://developer.chrome.com/docs
 - Tab Billing menampilkan paket, harga paket, status pelanggan, dan hingga 12 invoice terbaru dengan status jatuh tempo yang dihitung saat dibaca.
 - Operator berizin `billing_write` dapat menandai invoice `UNPAID` atau `OVERDUE` sebagai lunas setelah memilih metode `Cash` atau `Transfer`; payment record, cash mutation, dan audit extension dibuat dalam transaksi yang sama.
 - ACS online/stale/offline berdasarkan last inform, model, serial, RX power, SSID tanpa password WiFi.
-- Operator berizin `wifi_write` dapat memilih radio 2.4 GHz atau 5 GHz yang terdeteksi lalu mengirim perubahan SSID dan password dengan konfirmasi; password tidak ditampilkan atau ditulis ke log extension/backend.
+- Operator berizin `wifi_write` dapat mengirim perubahan SSID dan password sekaligus ke SSID1 dan SSID5 yang tersedia dengan konfirmasi, tanpa memilih band; password tidak ditampilkan atau ditulis ke log extension/backend.
 - Panel OLT/ONU menampilkan status, serial, RX, dan jalur PON dari cache OLT terbaru bila pelanggan telah memiliki mapping OLT lengkap.
 - Restart ONU dengan konfirmasi nama/ID/perangkat, permission, rate limit dan audit sebelum dispatch.
 - History tindakan extension. Task restart ditampilkan `QUEUED`, bukan klaim ONU sudah berhasil restart.

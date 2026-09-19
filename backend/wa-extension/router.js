@@ -226,16 +226,14 @@ export function createWaExtensionRouter({ db, network, acs, env = process.env })
         if (req.body.confirm !== true) throw fail(400, 'Konfirmasi perubahan WiFi diperlukan.');
         const ssid = typeof req.body.ssid === 'string' ? req.body.ssid.trim() : '';
         const key = typeof req.body.key === 'string' ? req.body.key : '';
-        const band = String(req.body.band || '');
         if ((!ssid && !key) || ssid.length > 32 || (key && key.length < 8)) {
             throw fail(400, 'SSID maksimal 32 karakter dan password WiFi minimal 8 karakter.');
         }
-        if (!['2.4', '5'].includes(band)) throw fail(400, 'Pilih WiFi 2.4 GHz atau 5 GHz.');
         if (!req.customer.acsSerialNumber) throw fail(409, 'ONU belum terhubung ke ACS.');
         await limit(`wifi:${req.customer.id}`, positive(env.WA_NOC_WIFI_LIMIT, 3), 3600);
         const auditId = await audit(req, 'WIFI_UPDATE', 'PENDING');
         try {
-            const result = await acs.updateWifi(req.customer.id, { band, ...(ssid ? { ssid } : {}), ...(key ? { key } : {}) });
+            const result = await acs.updateWifi(req.customer.id, { ...(ssid ? { ssid } : {}), ...(key ? { key } : {}) });
             await db.query('UPDATE extension_audit_logs SET result = ? WHERE id = ?', ['QUEUED', auditId]);
             res.json({ status: 'QUEUED', message: 'Perubahan WiFi dikirim ke ACS. Tunggu perangkat melapor kembali.', taskId: result.taskId || null, auditId });
         } catch {

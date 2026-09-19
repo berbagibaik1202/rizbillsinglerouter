@@ -140,11 +140,11 @@ test('WiFi updates require permission, confirmation, valid password, and are aud
     f.setGrants([{ permission: 'wifi_write', allowed: 0 }]);
     assert.equal((await f.call('/customer/C1/wifi', 'POST', { ssid: 'Baru' }, token)).status, 403);
     f.setGrants([{ permission: 'wifi_write', allowed: 1 }]);
-    assert.equal((await f.call('/customer/C1/wifi', 'POST', { band: '2.4', ssid: 'Baru', confirm: true }, token)).data.status, 'QUEUED');
+    assert.equal((await f.call('/customer/C1/wifi', 'POST', { ssid: 'Baru', confirm: true }, token)).data.status, 'QUEUED');
     assert.equal(f.wifiCalls(), 1);
-    assert.equal(f.wifiUpdate().band, '2.4');
+    assert.deepEqual(f.wifiUpdate(), { ssid: 'Baru' });
     assert.equal(f.audits.at(-1).action, 'WIFI_UPDATE');
-    assert.equal((await f.call('/customer/C1/wifi', 'POST', { band: '5', key: 'short', confirm: true }, token)).status, 400);
+    assert.equal((await f.call('/customer/C1/wifi', 'POST', { key: 'short', confirm: true }, token)).status, 400);
 });
 
 test('unpaid invoices can be marked paid using Cash or Transfer with an audit trail', async t => {
