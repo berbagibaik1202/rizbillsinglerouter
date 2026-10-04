@@ -1,0 +1,135 @@
+name: ${COMPOSE_PROJECT_NAME:-rizkitechbill}
+
+services:
+  mariadb:
+    image: mariadb:11.4
+    restart: unless-stopped
+    env_file:
+      - ./docker.env
+    volumes:
+      - mariadb-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mariadb-admin ping -uroot -p$$MARIADB_ROOT_PASSWORD --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    networks:
+      - app-net
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file:
+      - ./docker.env
+    environment:
+      NODE_ENV: production
+      APP_HOST: 0.0.0.0
+      PORT: 3002
+      APP_INSTANCE_NAME: ${APP_INSTANCE_NAME:-app}
+      COMPOSE_PROJECT_NAME: ${COMPOSE_PROJECT_NAME:-rizkitechbill}
+      DB_HOST: mariadb
+      DB_PORT: 3306
+      WA_SESSION_BASE_DIR: ${WA_SESSION_BASE_DIR:-/app/whatsapp_sessions}
+      AUTO_MIGRATE_ON_START: ${AUTO_MIGRATE_ON_START:-false}
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"fetch('http://127.0.0.1:3002/api/health').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))\""]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 300s
+    expose:
+      - "3002"
+    volumes:
+      - ./backend/uploads:/app/dist/backend/uploads
+      - ./backend/whatsapp_session:/app/whatsapp_sessions
+    networks:
+      app-net:
+      proxy-net:
+        aliases:
+          - ${APP_INSTANCE_NAME:-app}
+
+  app-watchdog:
+    image: docker:27-cli
+    restart: unless-stopped
+    depends_on:
+      app:
+        condition: service_started
+    environment:
+      WATCHDOG_SERVICE_NAME: app
+      WATCHDOG_PROJECT_NAME: ${COMPOSE_PROJECT_NAME:-rizkitechbill}
+      WATCHDOG_INTERVAL_SECONDS: 30
+      WATCHDOG_GRACE_SECONDS: 300
+      WATCHDOG_DEBUG: "true"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./scripts/docker-healthwatch.sh:/usr/local/bin/docker-healthwatch.sh:ro
+    entrypoint: ["/bin/sh", "/usr/local/bin/docker-healthwatch.sh"]
+    networks:
+      - app-net
+
+  app-updater:
+    build:
+      context: .
+      dockerfile: Dockerfile.updater
+    restart: unless-stopped
+    env_file:
+      - ./docker.env
+    environment:
+      NODE_ENV: production
+      PORT: 3140
+      WORKSPACE_DIR: /workspace
+      APP_UPDATE_HOME: /tmp
+      APP_UPDATE_DOCKER_CONFIG: /tmp/.docker
+      APP_UPDATE_SSH_DIR: /tmp/.ssh
+      APP_UPDATE_REPO_URL: ${APP_UPDATE_REPO_URL:-}
+      APP_UPDATE_GIT_REMOTE: ${APP_UPDATE_GIT_REMOTE:-origin}
+      APP_UPDATE_GIT_BRANCH: ${APP_UPDATE_GIT_BRANCH:-main}
+      APP_UPDATE_COMPOSE_FILE: ${APP_UPDATE_COMPOSE_FILE:-docker-compose.vps.yml}
+      APP_UPDATE_ENV_FILE: ${APP_UPDATE_ENV_FILE:-docker.env}
+      GIT_SSH_COMMAND: ssh -o StrictHostKeyChecking=accept-new
+      HOME: /tmp
+    user: "${UPDATER_UID:-0}:${UPDATER_GID:-0}"
+    group_add:
+      - "${DOCKER_GID:-0}"
+    volumes:
+      - ./:/workspace
+      - ${UPDATER_SSH_DIR:-/root/.ssh}:/tmp/.ssh:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - app-net
+
+  nginx-proxy-manager:
+    image: jc21/nginx-proxy-manager:2.15.1
+    profiles:
+      - proxy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "81:81"
+      - "443:443"
+    environment:
+      TZ: Asia/Jakarta
+      DISABLE_IPV6: "true"
+    volumes:
+      - npm-data:/data
+      - npm-letsencrypt:/etc/letsencrypt
+    networks:
+      - proxy-net
+
+volumes:
+  mariadb-data:
+  npm-data:
+  npm-letsencrypt:
+
+networks:
+  app-net:
+    driver: bridge
+  proxy-net:
+    external: true
+    name: ${PROXY_NETWORK_NAME:-proxy-network}
