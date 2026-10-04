@@ -1,11 +1,22 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { Customer, Odc, Odp, formatDateDisplay } from '../../types';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { AcsDevice, Customer, Odc, Odp, formatDateDisplay } from '../../types';
 import { fetchWithAuth } from '~/components/api';
 import MapPicker from '~/components/common/MapPicker';
-import { ChevronDownIcon, ChevronRightIcon, MapPinIcon, PencilSquareIcon, PlusIcon } from '@heroicons/react/24/solid';
+import { ChevronDownIcon, ChevronRightIcon, MagnifyingGlassIcon, MapPinIcon, PencilSquareIcon, PlusIcon } from '@heroicons/react/24/solid';
 
 const NETWORK_API_URL = '/api/network';
 const CUSTOMERS_API_URL = '/api/customers';
+
+const CustomerRxPower: React.FC<{ rxPower?: string }> = ({ rxPower }) => {
+    const value = Number.parseFloat(rxPower || '');
+    if (!Number.isFinite(value)) return <span className="text-gray-400">N/A</span>;
+    const color = value > -22
+        ? 'text-green-600 dark:text-green-400'
+        : value >= -24
+            ? 'text-yellow-600 dark:text-yellow-400'
+            : 'text-red-600 dark:text-red-400';
+    return <span className={`font-semibold whitespace-nowrap ${color}`}>{value} dBm</span>;
+};
 
 interface OdpFormModalProps {
     isOpen: boolean;
@@ -113,12 +124,33 @@ const OdpListPage: React.FC = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [isSaving, setIsSaving] = useState(false);
     const [allCustomers, setAllCustomers] = useState<Customer[]>([]);
+    const [acsDevices, setAcsDevices] = useState<Map<string, AcsDevice>>(new Map());
+    const [acsLoading, setAcsLoading] = useState(false);
+    const [acsError, setAcsError] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [expandedOdpId, setExpandedOdpId] = useState<string | null>(null);
-    const [customers, setCustomers] = useState<Customer[]>([]);
-    const [customersLoading, setCustomersLoading] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingOdp, setEditingOdp] = useState<Odp | null>(null);
+
+    const normalizedQuery = searchQuery.trim().toLowerCase();
+    const customersByOdp = useMemo(() => {
+        const grouped = new Map<string, Customer[]>();
+        for (const customer of allCustomers) {
+            if (!customer.odpId) continue;
+            if (normalizedQuery && ![customer.name, customer.pppoeUsername].some(value => value?.toLowerCase().includes(normalizedQuery))) continue;
+            const group = grouped.get(customer.odpId) || [];
+            group.push(customer);
+            grouped.set(customer.odpId, group);
+        }
+        return grouped;
+    }, [allCustomers, normalizedQuery]);
+    const visibleOdps = useMemo(() => normalizedQuery ? odps.filter(odp => customersByOdp.has(odp.id)) : odps, [odps, customersByOdp, normalizedQuery]);
+    const customers = expandedOdpId ? customersByOdp.get(expandedOdpId) || [] : [];
+
+    useEffect(() => {
+        if (normalizedQuery) setExpandedOdpId(visibleOdps[0]?.id || null);
+    }, [normalizedQuery, visibleOdps]);
 
     const fetchData = useCallback(async () => {
         setIsLoading(true);
@@ -147,6 +179,34 @@ const OdpListPage: React.FC = () => {
     useEffect(() => {
         fetchData();
     }, [fetchData]);
+
+    useEffect(() => {
+        let cancelled = false;
+        const loadAcsDevices = async () => {
+            const serialNumbers = [...new Set(allCustomers.map(customer => customer.acsSerialNumber).filter((serial): serial is string => !!serial))];
+            setAcsError(null);
+            setAcsDevices(new Map());
+            if (serialNumbers.length === 0) {
+                setAcsLoading(false);
+                return;
+            }
+            setAcsLoading(true);
+            try {
+                const response = await fetchWithAuth('/api/acs/devices/cached');
+                const data = await response.json();
+                if (data.warning) throw new Error(data.warning);
+                if (!cancelled) {
+                    setAcsDevices(new Map<string, AcsDevice>((data.devices || []).map((device: AcsDevice) => [device.serialNumber, device])));
+                }
+            } catch {
+                if (!cancelled) setAcsError('Data RX ACS gagal dimuat.');
+            } finally {
+                if (!cancelled) setAcsLoading(false);
+            }
+        };
+        loadAcsDevices();
+        return () => { cancelled = true; };
+    }, [allCustomers]);
 
     const handleSaveOdp = async (odpData: any) => {
         setIsSaving(true);
@@ -180,9 +240,6 @@ const OdpListPage: React.FC = () => {
             return;
         }
         setExpandedOdpId(odpId);
-        setCustomersLoading(true);
-        setCustomers(allCustomers.filter(customer => customer.odpId === odpId));
-        setCustomersLoading(false);
     };
 
     if (isLoading) return <div className="text-center p-4">Loading ODP data...</div>;
@@ -217,6 +274,18 @@ const OdpListPage: React.FC = () => {
                 </button>
             </div>
 
+            <div className="relative w-full sm:max-w-md">
+                <MagnifyingGlassIcon aria-hidden="true" className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                <input
+                    type="search"
+                    value={searchQuery}
+                    onChange={event => setSearchQuery(event.target.value)}
+                    placeholder="Cari nama pelanggan atau username PPPoE..."
+                    aria-label="Cari pelanggan berdasarkan nama atau username PPPoE"
+                    className="w-full rounded-md border border-gray-300 bg-white py-2 pl-10 pr-3 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+                />
+            </div>
+
             <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                     <thead className="bg-gray-50 dark:bg-gray-700">
@@ -230,7 +299,14 @@ const OdpListPage: React.FC = () => {
                         </tr>
                     </thead>
                     <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                        {odps.map((odp) => (
+                        {visibleOdps.length === 0 && (
+                            <tr>
+                                <td colSpan={6} className="px-6 py-8 text-center text-sm text-gray-500 dark:text-gray-400">
+                                    {normalizedQuery ? 'Tidak ada pelanggan yang cocok pada daftar ODP.' : 'Belum ada ODP.'}
+                                </td>
+                            </tr>
+                        )}
+                        {visibleOdps.map((odp) => (
                             <React.Fragment key={odp.id}>
                                 <tr onClick={() => handleRowClick(odp.id)} className="cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700">
                                     <td className="px-6 py-4">
@@ -270,11 +346,10 @@ const OdpListPage: React.FC = () => {
                                 {expandedOdpId === odp.id && (
                                     <tr>
                                         <td colSpan={6} className="p-4 bg-gray-50 dark:bg-gray-800/50">
-                                            {customersLoading ? (
-                                                <div className="text-center">Loading customers...</div>
-                                            ) : customers.length > 0 ? (
+                                            {customers.length > 0 ? (
                                                 <div className="px-4">
                                                     <h4 className="text-md font-semibold mb-2 text-gray-700 dark:text-gray-200">Connected Customers</h4>
+                                                    {acsError && <p role="status" className="mb-2 text-sm text-yellow-600 dark:text-yellow-400">{acsError}</p>}
                                                     <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-600">
                                                         <thead className="bg-gray-100 dark:bg-gray-700">
                                                             <tr>
@@ -282,6 +357,8 @@ const OdpListPage: React.FC = () => {
                                                                 <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-300">PPPoE User</th>
                                                                 <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-300">Status</th>
                                                                 <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-300">Active Date</th>
+                                                                <th className="px-4 py-2 text-center text-xs font-medium text-gray-500 dark:text-gray-300">Lokasi</th>
+                                                                <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-300" title="Nilai dari sinkronisasi ACS terakhir">Power RX (ACS)</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -291,6 +368,26 @@ const OdpListPage: React.FC = () => {
                                                                     <td className="px-4 py-2 text-sm text-gray-500 dark:text-gray-400 font-mono">{customer.pppoeUsername || '-'}</td>
                                                                     <td className="px-4 py-2 text-sm text-gray-500 dark:text-gray-400">{customer.status}</td>
                                                                     <td className="px-4 py-2 text-sm text-gray-500 dark:text-gray-400">{formatDateDisplay(customer.activeDate)}</td>
+                                                                    <td className="px-4 py-2 text-sm text-center">
+                                                                        {customer.location && Number.isFinite(customer.location.lat) && Number.isFinite(customer.location.lng) ? (
+                                                                            <a
+                                                                                href={`https://www.google.com/maps?q=${customer.location.lat},${customer.location.lng}`}
+                                                                                target="_blank"
+                                                                                rel="noopener noreferrer"
+                                                                                className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+                                                                                title={`Lihat lokasi ${customer.name} di Google Maps`}
+                                                                                aria-label={`Lihat lokasi ${customer.name} di Google Maps`}
+                                                                            >
+                                                                                <MapPinIcon className="h-5 w-5" />
+                                                                                <span>Maps</span>
+                                                                            </a>
+                                                                        ) : <span className="text-gray-400" title="Koordinat pelanggan belum tersedia">-</span>}
+                                                                    </td>
+                                                                    <td className="px-4 py-2 text-sm">
+                                                                        {acsLoading && customer.acsSerialNumber ? <span className="text-gray-400">Loading...</span> : (
+                                                                            <CustomerRxPower rxPower={customer.acsSerialNumber ? acsDevices.get(customer.acsSerialNumber)?.rxPower : undefined} />
+                                                                        )}
+                                                                    </td>
                                                                 </tr>
                                                             ))}
                                                         </tbody>

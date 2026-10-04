@@ -6,6 +6,7 @@
 // cronJobs.js (FULL TIMEZONE-AWARE VERSION)
 
 import pool from './db.js';
+import { insertInvoiceForNonInactiveCustomer } from './invoiceGeneration.js';
 import {
     getSettings,
     dateToYMD,
@@ -98,7 +99,7 @@ export const runBillingMaintenance = async () => {
                 console.log(`[Cron] Checking Postpaid Generation for ${todayYMD}...`);
                 
                 const [postpaidCustomers] = await pool.query(
-                    "SELECT * FROM customers WHERE status IN ('Active','Suspended') AND (billing_type = 'postpaid' OR billing_type IS NULL) AND activeDate IS NOT NULL"
+                    "SELECT * FROM customers WHERE LOWER(TRIM(COALESCE(status, ''))) <> 'inactive' AND (billing_type = 'postpaid' OR billing_type IS NULL) AND activeDate IS NOT NULL"
                 );
 
                 // Target Billing Month for Postpaid is PREVIOUS month
@@ -140,7 +141,7 @@ export const runBillingMaintenance = async () => {
                         notes: `Postpaid Invoice ${monthStr}`
                     };
 
-                    await pool.query("INSERT INTO invoices SET ?", newInv);
+                    if (!await insertInvoiceForNonInactiveCustomer(pool, newInv)) continue;
                     generatedCount++;
                     queueInvoiceNotification(generatedInvoiceNotifications, c, newInv, pkg.name, settings);
                 }
@@ -156,7 +157,7 @@ export const runBillingMaintenance = async () => {
         const [fixedCustomers] = await pool.query(`
             SELECT *
             FROM customers
-            WHERE status IN ('Active','Suspended')
+            WHERE LOWER(TRIM(COALESCE(status, ''))) <> 'inactive'
               AND activeDate IS NOT NULL
               AND LOWER(TRIM(COALESCE(billing_type, ''))) = 'fixed'
         `);
@@ -210,7 +211,7 @@ export const runBillingMaintenance = async () => {
                 notes: `Monthly subscription`
             };
 
-            await pool.query("INSERT INTO invoices SET ?", newInv);
+            if (!await insertInvoiceForNonInactiveCustomer(pool, newInv)) continue;
             generatedCount++;
             queueInvoiceNotification(generatedInvoiceNotifications, c, newInv, pkg.name, settings);
         }
