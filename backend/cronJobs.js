@@ -356,6 +356,7 @@ export const runBillingMaintenance = async () => {
             JOIN customers c ON c.id = i.customerId
             LEFT JOIN packages p ON p.id = c.packageId
             WHERE i.status = 'Overdue'
+              AND LOWER(TRIM(c.status)) = 'active'
         `);
         const latestOverdueByCustomer = new Map();
 
@@ -399,6 +400,7 @@ export const runBillingMaintenance = async () => {
 
             for (const inv of targets) {
                 try {
+                    if (String(inv.customerStatus || '').trim().toLowerCase() !== 'active') continue;
                     const dueDateObj = parseLocalDateString(inv.dueDate);
                     if (!dueDateObj) {
                         continue;

@@ -181,11 +181,12 @@ export const suspendCustomer = async (customerId, invoice = null) => {
     }
 
     const [[customer]] = await pool.query('SELECT c.*, p.name as packageName FROM customers c LEFT JOIN packages p ON c.packageId = p.id WHERE c.id = ?', [customerId]);
-    const customerStatus = String(customer?.status || '').trim();
+    const customerStatus = String(customer?.status || '').trim().toLowerCase();
     if (!customer) {
         return;
     }
-    if (customerStatus === 'Suspended') {
+    // Automatic suspension only applies to an ongoing, active subscription.
+    if (customerStatus !== 'active') {
         return;
     }
     
@@ -194,14 +195,14 @@ export const suspendCustomer = async (customerId, invoice = null) => {
         const { username: linkedPppoeUsername, pppoeUser } = await resolveLinkedPppoeForCustomer(customer);
 
         if (!linkedPppoeUsername || !pppoeUser) {
-            await pool.query('UPDATE customers SET status = ? WHERE id = ?', ['Suspended', customerId]);
+            await pool.query("UPDATE customers SET status = ? WHERE id = ? AND LOWER(TRIM(status)) = 'active'", ['Suspended', customerId]);
             return;
         }
 
         const currentProfile = String(pppoeUser.profile || '').trim();
 
         if (currentProfile === suspensionProfile) {
-            await pool.query('UPDATE customers SET status = ? WHERE id = ?', ['Suspended', customerId]);
+            await pool.query("UPDATE customers SET status = ? WHERE id = ? AND LOWER(TRIM(status)) = 'active'", ['Suspended', customerId]);
             return;
         }
 
@@ -210,7 +211,11 @@ export const suspendCustomer = async (customerId, invoice = null) => {
             await connection.beginTransaction();
 
             // 1. Save current profile and update status in DB
-            await connection.query('UPDATE customers SET status = ?, previousPppoeProfile = ? WHERE id = ?', ['Suspended', currentProfile, customerId]);
+            const [statusUpdate] = await connection.query("UPDATE customers SET status = ?, previousPppoeProfile = ? WHERE id = ? AND LOWER(TRIM(status)) = 'active'", ['Suspended', currentProfile, customerId]);
+            if (statusUpdate.affectedRows === 0) {
+                await connection.rollback();
+                return;
+            }
             
             // 2. Change profile on router
             await mikrotikApi.updatePppoeUser(pppoeUser.id, { profile: suspensionProfile });
@@ -268,7 +273,7 @@ export const restoreCustomerProfile = async (customerId, invoice = null) => {
         return;
     }
 
-    if (customer.status !== 'Suspended') {
+    if (String(customer.status || '').trim().toLowerCase() !== 'suspended') {
         console.log(`[Service] Skipping profile restoration for customer ${customerId}: Not suspended or no PPPoE user linked.`);
         return;
     }
@@ -312,7 +317,7 @@ export const restoreCustomerProfile = async (customerId, invoice = null) => {
 
         if (!normalizedUsername || !pppoeUser) {
             console.warn(`[Service] Could not find PPPoE user '${normalizedUsername}' on router for customer ${customerId}. Cannot restore profile on router. Activating in DB only.`);
-            await pool.query('UPDATE customers SET status = ?, previousPppoeProfile = NULL WHERE id = ?', ['Active', customerId]);
+            await pool.query("UPDATE customers SET status = ?, previousPppoeProfile = NULL WHERE id = ? AND LOWER(TRIM(status)) = 'suspended'", ['Active', customerId]);
             // (Logika notifikasi bisa ditambahkan di sini jika diperlukan)
             return;
         }
@@ -345,7 +350,8 @@ export const restoreCustomerProfile = async (customerId, invoice = null) => {
         await mikrotikApi.reconnectPppoeUser(normalizedUsername);
 
         // 3. Perbarui DB: Atur status menjadi Aktif dan hapus profil sebelumnya yang tersimpan. Ini hanya berjalan jika pembaruan router berhasil.
-        await pool.query('UPDATE customers SET status = ?, previousPppoeProfile = NULL WHERE id = ?', ['Active', customerId]);
+        const [statusUpdate] = await pool.query("UPDATE customers SET status = ?, previousPppoeProfile = NULL WHERE id = ? AND LOWER(TRIM(status)) = 'suspended'", ['Active', customerId]);
+        if (statusUpdate.affectedRows === 0) return;
         
         // 4. Kirim notifikasi re-aktivasi
         if (settings.billing.whatsappNotificationsEnabled && settings.whatsapp.accountReactivated && customer.phone) {
