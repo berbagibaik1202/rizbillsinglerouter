@@ -113,6 +113,30 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
     const [isDragging, setIsDragging] = useState<boolean>(false);
     const [dragStart, setDragStart] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
     const canvasContainerRef = useRef<HTMLDivElement>(null);
+    const inspectorRef = useRef<HTMLDivElement>(null);
+
+    // Custom Draggable Node Positions (persisted in localStorage)
+    const [nodePositions, setNodePositions] = useState<Record<string, { x: number; y: number }>>(() => {
+        try {
+            const saved = localStorage.getItem('fo_calc_node_positions');
+            return saved ? JSON.parse(saved) : {};
+        } catch {
+            return {};
+        }
+    });
+    const [draggingNodeId, setDraggingNodeId] = useState<string | null>(null);
+    const [dragOffset, setDragOffset] = useState<{
+        mouseX: number;
+        mouseY: number;
+        initialNodeX: number;
+        initialNodeY: number;
+        moved: boolean;
+    } | null>(null);
+
+    // Delete Node Confirmation State
+    const [deletingNode, setDeletingNode] = useState<TreeNode | null>(null);
+    const [isDeleting, setIsDeleting] = useState<boolean>(false);
+    const [deleteError, setDeleteError] = useState<string | null>(null);
 
     // Filters and UI Toggles
     const [showCustomers, setShowCustomers] = useState<boolean>(true);
@@ -431,8 +455,55 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
 
         assignPositions(rootOltNode, 0);
 
+        // Apply custom dragged positions if set
+        allFlattened.forEach((node) => {
+            const customPos = nodePositions[node.id];
+            if (customPos) {
+                node.x = customPos.x;
+                node.y = customPos.y;
+            }
+        });
+
         return { tree: rootOltNode, flattenedNodes: allFlattened };
-    }, [odps, odcs, customers, currentTxPower, selectedOdcFilter, simulatedNodes, showCustomers]);
+    }, [odps, odcs, customers, currentTxPower, selectedOdcFilter, simulatedNodes, showCustomers, nodePositions]);
+
+    // Save custom node positions to localStorage
+    useEffect(() => {
+        try {
+            if (Object.keys(nodePositions).length > 0) {
+                localStorage.setItem('fo_calc_node_positions', JSON.stringify(nodePositions));
+            } else {
+                localStorage.removeItem('fo_calc_node_positions');
+            }
+        } catch {}
+    }, [nodePositions]);
+
+    // Smooth scroll into view for selected node inspector drawer
+    useEffect(() => {
+        if (selectedNode && inspectorRef.current) {
+            inspectorRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+    }, [selectedNode?.id]);
+
+    // Global mouseup to release dragging reliably
+    useEffect(() => {
+        const handleGlobalMouseUp = () => {
+            if (draggingNodeId) {
+                if (dragOffset && !dragOffset.moved) {
+                    const found = flattenedNodes.find((n) => n.id === draggingNodeId);
+                    if (found) setSelectedNode(found);
+                }
+                setDraggingNodeId(null);
+                setDragOffset(null);
+            }
+            if (isDragging) {
+                setIsDragging(false);
+            }
+        };
+
+        window.addEventListener('mouseup', handleGlobalMouseUp);
+        return () => window.removeEventListener('mouseup', handleGlobalMouseUp);
+    }, [draggingNodeId, dragOffset, isDragging, flattenedNodes]);
 
     // Set initial selected node if odpId passed
     useEffect(() => {
@@ -442,6 +513,20 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
         }
     }, [initialOdpId, flattenedNodes]);
 
+    // Node Mouse Dragging on Canvas
+    const handleNodeMouseDown = (e: React.MouseEvent, node: TreeNode) => {
+        if ((e.target as HTMLElement).closest('button, input, select, a')) return;
+        e.stopPropagation();
+        setDraggingNodeId(node.id);
+        setDragOffset({
+            mouseX: e.clientX,
+            mouseY: e.clientY,
+            initialNodeX: node.x,
+            initialNodeY: node.y,
+            moved: false,
+        });
+    };
+
     // Canvas Mouse Dragging & Panning
     const handleMouseDown = (e: React.MouseEvent) => {
         if ((e.target as HTMLElement).closest('.interactive-node, button, input, select')) return;
@@ -450,6 +535,22 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
     };
 
     const handleMouseMove = (e: React.MouseEvent) => {
+        if (draggingNodeId && dragOffset) {
+            const deltaX = (e.clientX - dragOffset.mouseX) / zoom;
+            const deltaY = (e.clientY - dragOffset.mouseY) / zoom;
+            if (!dragOffset.moved && (Math.abs(deltaX) > 3 || Math.abs(deltaY) > 3)) {
+                setDragOffset((prev) => (prev ? { ...prev, moved: true } : null));
+            }
+            setNodePositions((prev) => ({
+                ...prev,
+                [draggingNodeId]: {
+                    x: Math.round(dragOffset.initialNodeX + deltaX),
+                    y: Math.round(dragOffset.initialNodeY + deltaY),
+                },
+            }));
+            return;
+        }
+
         if (!isDragging) return;
         setPan({
             x: e.clientX - dragStart.x,
@@ -457,7 +558,30 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
         });
     };
 
-    const handleMouseUp = () => setIsDragging(false);
+    const handleMouseUp = () => {
+        if (draggingNodeId) {
+            if (dragOffset && !dragOffset.moved) {
+                const found = flattenedNodes.find((n) => n.id === draggingNodeId);
+                if (found) setSelectedNode(found);
+            }
+            setDraggingNodeId(null);
+            setDragOffset(null);
+            return;
+        }
+        setIsDragging(false);
+    };
+
+    // Reset all nodes to auto-layout
+    const handleResetPositions = () => {
+        setNodePositions({});
+        try {
+            localStorage.removeItem('fo_calc_node_positions');
+        } catch {}
+        setPan({ x: 30, y: 40 });
+        setZoom(1);
+        setCopyNotice('Semua posisi node berhasil diatur ulang secara otomatis.');
+        setTimeout(() => setCopyNotice(null), 3000);
+    };
 
     // Zoom handlers
     const handleZoomIn = () => setZoom((prev) => Math.min(1.6, prev + 0.15));
@@ -567,7 +691,60 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
     // Remove simulated node
     const handleRemoveSimulatedNode = (simId: string) => {
         setSimulatedNodes((prev) => prev.filter((s) => s.id !== simId));
+        setNodePositions((prev) => {
+            const next = { ...prev };
+            delete next[simId];
+            return next;
+        });
         if (selectedNode?.id === simId) setSelectedNode(null);
+    };
+
+    // Delete ODP or ODC permanently from database
+    const handleDeleteNode = async (node: TreeNode) => {
+        if (node.isSimulated) {
+            handleRemoveSimulatedNode(node.id);
+            setDeletingNode(null);
+            setCopyNotice(`Node simulasi ${node.name} berhasil dihapus.`);
+            setTimeout(() => setCopyNotice(null), 3000);
+            return;
+        }
+
+        setIsDeleting(true);
+        setDeleteError(null);
+        try {
+            const endpoint = node.type === 'odc' ? `/api/network/odcs/${node.id}` : `/api/network/odps/${node.id}`;
+            const res = await fetchWithAuth(endpoint, { method: 'DELETE' });
+            if (!res.ok) {
+                const data = await res.json().catch(() => ({}));
+                throw new Error(data.message || `Gagal menghapus ${node.type.toUpperCase()}.`);
+            }
+
+            if (node.type === 'odc') {
+                setOdcs((prev) => prev.filter((o) => o.id !== node.id));
+                if (selectedOdcFilter === node.id) setSelectedOdcFilter('all');
+            } else {
+                setOdps((prev) => prev.filter((o) => o.id !== node.id));
+            }
+
+            setNodePositions((prev) => {
+                const next = { ...prev };
+                delete next[node.id];
+                return next;
+            });
+
+            if (selectedNode?.id === node.id) {
+                setSelectedNode(null);
+            }
+
+            setDeletingNode(null);
+            setCopyNotice(`${node.type.toUpperCase()} ${node.name} berhasil dihapus dari sistem.`);
+            setTimeout(() => setCopyNotice(null), 3500);
+            await fetchNetworkData();
+        } catch (err: any) {
+            setDeleteError(err.message || `Gagal menghapus ${node.type.toUpperCase()}.`);
+        } finally {
+            setIsDeleting(false);
+        }
     };
 
     // Copy NOC / WhatsApp Report
@@ -597,7 +774,7 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
     };
 
     return (
-        <div className="space-y-4">
+        <div className="space-y-6 pb-40 min-h-[calc(100vh-4rem)]">
             {/* Top Header Card */}
             <div className="bg-[#0f172a] border border-slate-800 rounded-2xl p-5 shadow-xl text-white">
                 <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 pb-4 border-b border-slate-800">
@@ -626,14 +803,14 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                         {onBack && (
                             <button
                                 onClick={onBack}
-                                className="px-3.5 py-2 text-xs font-semibold rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-colors"
+                                className="px-3.5 py-2 text-xs font-semibold rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-colors cursor-pointer"
                             >
                                 Kembali ke ODP
                             </button>
                         )}
                         <button
                             onClick={handleCopyReport}
-                            className="px-3.5 py-2 text-xs font-semibold rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-400 border border-emerald-500/30 transition-colors flex items-center gap-1.5"
+                            className="px-3.5 py-2 text-xs font-semibold rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-400 border border-emerald-500/30 transition-colors flex items-center gap-1.5 cursor-pointer"
                             title="Salin ringkasan laporan ke WhatsApp"
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
@@ -722,7 +899,7 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                         </div>
                     </div>
 
-                    {/* Right: View Toggles & Zoom Controls */}
+                    {/* Right: View Toggles, Auto-Layout & Zoom Controls */}
                     <div className="flex items-center gap-2.5 flex-wrap">
                         {/* Toggle Customer Chips */}
                         <label className="flex items-center gap-2 cursor-pointer bg-slate-900/90 border border-slate-700/80 px-3 py-1.5 rounded-xl">
@@ -745,6 +922,19 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                             />
                             <span className="text-slate-300">Audit OPM vs Desain</span>
                         </label>
+
+                        {/* Reset Auto Layout Button */}
+                        <button
+                            type="button"
+                            onClick={handleResetPositions}
+                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-cyan-400 hover:text-cyan-300 border border-slate-700/80 text-xs font-semibold transition-colors cursor-pointer"
+                            title="Atur ulang posisi semua node ke susunan otomatis pohon hierarki"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                            </svg>
+                            <span>Atur Otomatis</span>
+                        </button>
 
                         {/* Zoom buttons */}
                         <div className="flex items-center bg-slate-900/90 border border-slate-700/80 rounded-xl overflow-hidden divide-x divide-slate-800">
@@ -838,15 +1028,19 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                         {/* Render links between parents and children */}
                         {flattenedNodes.map((parent) =>
                             parent.children.map((child) => {
-                                const startX = parent.x + (parent.type === 'olt' ? 160 : parent.type === 'odc' ? 200 : 180);
+                                const startX = parent.x + (parent.type === 'olt' ? 180 : parent.type === 'odc' ? 210 : 190);
                                 const startY = parent.y;
                                 const endX = child.x;
                                 const endY = child.y;
                                 const dx = endX - startX;
-                                const midX = startX + dx * 0.5;
+                                const ctrlDist = Math.max(40, Math.abs(dx) * 0.5);
+                                const ctrl1X = startX + (endX >= startX ? ctrlDist : -ctrlDist);
+                                const ctrl2X = endX - (endX >= startX ? ctrlDist : -ctrlDist);
 
-                                const pathD = `M ${startX} ${startY} C ${midX} ${startY}, ${midX} ${endY}, ${endX} ${endY}`;
+                                const pathD = `M ${startX} ${startY} C ${ctrl1X} ${startY}, ${ctrl2X} ${endY}, ${endX} ${endY}`;
                                 const isSim = child.isSimulated;
+                                const midX = (startX + endX) / 2;
+                                const midY = (startY + endY) / 2;
 
                                 return (
                                     <g key={`edge-${parent.id}-${child.id}`}>
@@ -862,7 +1056,7 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                                         {/* Label badge in the middle of link */}
                                         <rect
                                             x={midX - 70}
-                                            y={(startY + endY) / 2 - 11}
+                                            y={midY - 11}
                                             width={140}
                                             height={22}
                                             rx={11}
@@ -872,7 +1066,7 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                                         />
                                         <text
                                             x={midX}
-                                            y={(startY + endY) / 2 + 3}
+                                            y={midY + 3}
                                             textAnchor="middle"
                                             fill={isSim ? '#fcd34d' : '#94a3b8'}
                                             fontSize="9"
@@ -890,7 +1084,7 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                         {showCustomers &&
                             flattenedNodes.map((odp) => {
                                 if (odp.type !== 'odp' || odp.customers.length === 0) return null;
-                                const startX = odp.x + 180;
+                                const startX = odp.x + 190;
                                 const startY = odp.y;
 
                                 return odp.customers.map((cust, idx) => {
@@ -925,6 +1119,7 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                     <div className="absolute top-0 left-0 w-[4200px] h-[3600px] pointer-events-none">
                         {flattenedNodes.map((node) => {
                             const isSelected = selectedNode?.id === node.id;
+                            const isNodeDragging = draggingNodeId === node.id;
                             const isSearchMatch = searchQuery
                                 ? node.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                                   node.customers.some((c) => c.name.toLowerCase().includes(searchQuery.toLowerCase()))
@@ -940,9 +1135,11 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                                 return (
                                     <div
                                         key={node.id}
-                                        onClick={() => setSelectedNode(node)}
-                                        className={`interactive-node pointer-events-auto absolute p-4 rounded-2xl bg-gradient-to-b from-[#161f36] to-[#0f172a] border-2 transition-all cursor-pointer shadow-xl ${
-                                            isSelected
+                                        onMouseDown={(e) => handleNodeMouseDown(e, node)}
+                                        className={`interactive-node pointer-events-auto absolute p-4 rounded-2xl bg-gradient-to-b from-[#161f36] to-[#0f172a] border-2 transition-shadow select-none shadow-xl cursor-grab active:cursor-grabbing ${
+                                            isNodeDragging
+                                                ? 'ring-4 ring-amber-400/50 scale-[1.02] z-40 shadow-2xl opacity-95'
+                                                : isSelected
                                                 ? 'border-amber-400 ring-4 ring-amber-500/20 shadow-amber-500/30'
                                                 : 'border-amber-500/70 hover:border-amber-400 shadow-amber-500/10'
                                         }`}
@@ -953,9 +1150,16 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                                         }}
                                     >
                                         <div className="flex items-center justify-between mb-1.5">
-                                            <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-amber-950/80 text-amber-300 border border-amber-500/40">
-                                                OLT • {node.usedPorts}/{node.totalPorts}
-                                            </span>
+                                            <div className="flex items-center gap-1.5">
+                                                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-amber-950/80 text-amber-300 border border-amber-500/40">
+                                                    OLT • {node.usedPorts}/{node.totalPorts}
+                                                </span>
+                                                <span className="text-slate-500 hover:text-slate-300" title="Geser untuk memindahkan posisi OLT">
+                                                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path d="M7 2a2 2 0 100 4 2 2 0 000-4zM7 8a2 2 0 100 4 2 2 0 000-4zM7 14a2 2 0 100 4 2 2 0 000-4zM13 2a2 2 0 100 4 2 2 0 000-4zM13 8a2 2 0 100 4 2 2 0 000-4zM13 14a2 2 0 100 4 2 2 0 000-4z" />
+                                                    </svg>
+                                                </span>
+                                            </div>
                                             <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
                                         </div>
                                         <div className="font-extrabold text-sm text-slate-100 tracking-tight">{node.name}</div>
@@ -970,9 +1174,11 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                                 return (
                                     <div
                                         key={node.id}
-                                        onClick={() => setSelectedNode(node)}
-                                        className={`interactive-node pointer-events-auto absolute p-3.5 rounded-2xl bg-[#0f192e] border transition-all cursor-pointer shadow-lg ${
-                                            isSelected
+                                        onMouseDown={(e) => handleNodeMouseDown(e, node)}
+                                        className={`interactive-node pointer-events-auto absolute p-3.5 rounded-2xl bg-[#0f192e] border transition-shadow select-none shadow-lg cursor-grab active:cursor-grabbing ${
+                                            isNodeDragging
+                                                ? 'ring-4 ring-cyan-400/50 scale-[1.02] z-40 shadow-2xl opacity-95'
+                                                : isSelected
                                                 ? 'border-cyan-400 ring-4 ring-cyan-500/20 shadow-cyan-500/30'
                                                 : 'border-cyan-500/50 hover:border-cyan-400 shadow-cyan-500/10'
                                         } ${isSearchMatch ? 'ring-2 ring-yellow-400' : ''}`}
@@ -983,22 +1189,44 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                                         }}
                                     >
                                         <div className="flex items-center justify-between mb-1.5">
-                                            <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-cyan-950/80 text-cyan-300 border border-cyan-500/40">
-                                                ODC • {node.usedPorts}/{node.totalPorts}
-                                            </span>
-                                            <button
-                                                type="button"
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    setPlannerParentId(node.id);
-                                                    setPlannerName(`ODP-BARU-${odps.length + 1}`);
-                                                    setIsPlannerOpen(true);
-                                                }}
-                                                className="text-[10px] bg-cyan-900/60 hover:bg-cyan-800 text-cyan-200 px-1.5 py-0.5 rounded border border-cyan-700/50"
-                                                title="Tarik ODP Baru dari ODC ini"
-                                            >
-                                                + Tarik ODP
-                                            </button>
+                                            <div className="flex items-center gap-1.5">
+                                                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-cyan-950/80 text-cyan-300 border border-cyan-500/40">
+                                                    ODC • {node.usedPorts}/{node.totalPorts}
+                                                </span>
+                                                <span className="text-slate-500 hover:text-slate-300" title="Geser untuk memindahkan posisi ODC">
+                                                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path d="M7 2a2 2 0 100 4 2 2 0 000-4zM7 8a2 2 0 100 4 2 2 0 000-4zM7 14a2 2 0 100 4 2 2 0 000-4zM13 2a2 2 0 100 4 2 2 0 000-4zM13 8a2 2 0 100 4 2 2 0 000-4zM13 14a2 2 0 100 4 2 2 0 000-4z" />
+                                                    </svg>
+                                                </span>
+                                            </div>
+                                            <div className="flex items-center gap-1">
+                                                <button
+                                                    type="button"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        setPlannerParentId(node.id);
+                                                        setPlannerName(`ODP-BARU-${odps.length + 1}`);
+                                                        setIsPlannerOpen(true);
+                                                    }}
+                                                    className="text-[10px] bg-cyan-900/60 hover:bg-cyan-800 text-cyan-200 px-1.5 py-0.5 rounded border border-cyan-700/50 cursor-pointer"
+                                                    title="Tarik ODP Baru dari ODC ini"
+                                                >
+                                                    + Tarik ODP
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        setDeletingNode(node);
+                                                    }}
+                                                    className="text-[10px] text-slate-400 hover:text-rose-400 p-1 rounded hover:bg-rose-950/60 transition-colors cursor-pointer"
+                                                    title="Hapus ODC"
+                                                >
+                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                    </svg>
+                                                </button>
+                                            </div>
                                         </div>
                                         <div className="font-bold text-sm text-slate-100 truncate" title={node.name}>
                                             {node.name}
@@ -1018,9 +1246,11 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                             return (
                                 <React.Fragment key={node.id}>
                                     <div
-                                        onClick={() => setSelectedNode(node)}
-                                        className={`interactive-node pointer-events-auto absolute p-3.5 rounded-2xl bg-[#0b1424] border transition-all cursor-pointer shadow-lg ${
-                                            isSim
+                                        onMouseDown={(e) => handleNodeMouseDown(e, node)}
+                                        className={`interactive-node pointer-events-auto absolute p-3.5 rounded-2xl bg-[#0b1424] border transition-shadow select-none shadow-lg cursor-grab active:cursor-grabbing ${
+                                            isNodeDragging
+                                                ? 'ring-4 ring-teal-400/50 scale-[1.02] z-40 shadow-2xl opacity-95'
+                                                : isSim
                                                 ? 'border-2 border-dashed border-amber-400 shadow-amber-500/20'
                                                 : isSelected
                                                 ? 'border-teal-400 ring-4 ring-teal-500/20 shadow-teal-500/30'
@@ -1033,25 +1263,47 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                                         }}
                                     >
                                         <div className="flex items-center justify-between mb-1.5">
-                                            <span
-                                                className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded ${
-                                                    isSim
-                                                        ? 'bg-amber-950 text-amber-300 border border-amber-500/40'
-                                                        : 'bg-teal-950/80 text-teal-300 border border-teal-500/40'
-                                                }`}
-                                            >
-                                                {isSim ? 'DRAF' : 'ODP'} • {node.usedPorts}/{node.totalPorts}
-                                            </span>
-                                            {hasDeviation ? (
+                                            <div className="flex items-center gap-1.5">
                                                 <span
-                                                    className="text-[9px] px-1 py-0.5 rounded bg-rose-950 text-rose-300 border border-rose-500/50 font-bold animate-pulse"
-                                                    title={`Deviasi tinggi! OPM ukur (${node.powerOut} dBm) vs Desain (${node.calculatedPowerOut} dBm)`}
+                                                    className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded ${
+                                                        isSim
+                                                            ? 'bg-amber-950 text-amber-300 border border-amber-500/40'
+                                                            : 'bg-teal-950/80 text-teal-300 border border-teal-500/40'
+                                                    }`}
                                                 >
-                                                    ! Bending
+                                                    {isSim ? 'DRAF' : 'ODP'} • {node.usedPorts}/{node.totalPorts}
                                                 </span>
-                                            ) : (
-                                                <span className={`w-2 h-2 rounded-full ${node.usedPorts >= node.totalPorts ? 'bg-rose-500' : 'bg-teal-400'}`}></span>
-                                            )}
+                                                <span className="text-slate-500 hover:text-slate-300" title="Geser untuk memindahkan posisi ODP">
+                                                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path d="M7 2a2 2 0 100 4 2 2 0 000-4zM7 8a2 2 0 100 4 2 2 0 000-4zM7 14a2 2 0 100 4 2 2 0 000-4zM13 2a2 2 0 100 4 2 2 0 000-4zM13 8a2 2 0 100 4 2 2 0 000-4zM13 14a2 2 0 100 4 2 2 0 000-4z" />
+                                                    </svg>
+                                                </span>
+                                            </div>
+                                            <div className="flex items-center gap-1">
+                                                {hasDeviation ? (
+                                                    <span
+                                                        className="text-[9px] px-1 py-0.5 rounded bg-rose-950 text-rose-300 border border-rose-500/50 font-bold animate-pulse"
+                                                        title={`Deviasi tinggi! OPM ukur (${node.powerOut} dBm) vs Desain (${node.calculatedPowerOut} dBm)`}
+                                                    >
+                                                        ! Bending
+                                                    </span>
+                                                ) : (
+                                                    <span className={`w-2 h-2 rounded-full ${node.usedPorts >= node.totalPorts ? 'bg-rose-500' : 'bg-teal-400'}`}></span>
+                                                )}
+                                                <button
+                                                    type="button"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        setDeletingNode(node);
+                                                    }}
+                                                    className="text-[10px] text-slate-400 hover:text-rose-400 p-0.5 rounded hover:bg-rose-950/60 transition-colors ml-0.5 cursor-pointer"
+                                                    title={isSim ? "Hapus Simulasi" : "Hapus ODP"}
+                                                >
+                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                    </svg>
+                                                </button>
+                                            </div>
                                         </div>
 
                                         <div className="font-bold text-sm text-slate-100 truncate" title={node.name}>
@@ -1119,7 +1371,7 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                 </div>
 
                 {/* Floating Canvas Helper Legend */}
-                <div className="absolute bottom-4 left-4 bg-slate-900/90 backdrop-blur-md border border-slate-800 rounded-xl px-4 py-2 text-[11px] text-slate-400 flex items-center gap-4 shadow-lg pointer-events-none">
+                <div className="absolute bottom-4 left-4 bg-slate-900/90 backdrop-blur-md border border-slate-800 rounded-xl px-4 py-2 text-[11px] text-slate-400 flex items-center gap-3.5 shadow-lg flex-wrap">
                     <span className="flex items-center gap-1.5">
                         <span className="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
                         <span>Feeder (24C)</span>
@@ -1136,7 +1388,16 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                         <span className="w-2.5 h-2.5 rounded-full bg-rose-400"></span>
                         <span>Pelanggan Suspend</span>
                     </span>
-                    <span className="text-slate-500">| Geser kanvas untuk panning • Scroll untuk zoom</span>
+                    <span className="text-slate-500">|</span>
+                    <span className="text-cyan-300 font-medium">Tips: Node dapat digeser bebas</span>
+                    <button
+                        type="button"
+                        onClick={handleResetPositions}
+                        className="px-2 py-0.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 text-[10px] font-semibold border border-slate-700 transition-colors cursor-pointer"
+                        title="Kembalikan semua node ke posisi otomatis"
+                    >
+                        Atur Otomatis
+                    </button>
                 </div>
             </div>
 
@@ -1363,7 +1624,10 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
 
             {/* Selected Node Inspector Drawer */}
             {selectedNode && (
-                <div className="bg-[#0f172a] border border-slate-800 rounded-2xl p-5 shadow-xl text-white">
+                <div
+                    ref={inspectorRef}
+                    className="bg-[#0f172a] border border-slate-800 rounded-2xl p-5 shadow-xl text-white scroll-mt-8"
+                >
                     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-3 border-b border-slate-800">
                         <div>
                             <div className="flex items-center gap-2">
@@ -1382,13 +1646,17 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                             </p>
                         </div>
 
-                        <div className="flex items-center gap-2">
-                            {selectedNode.isSimulated && (
+                        <div className="flex items-center gap-2 flex-wrap">
+                            {selectedNode.type !== 'olt' && (
                                 <button
-                                    onClick={() => handleRemoveSimulatedNode(selectedNode.id)}
-                                    className="px-3 py-1.5 rounded-lg bg-rose-950 text-rose-300 border border-rose-500/40 text-xs font-semibold hover:bg-rose-900"
+                                    onClick={() => setDeletingNode(selectedNode)}
+                                    className="px-3 py-1.5 rounded-xl bg-rose-950/80 hover:bg-rose-900 text-rose-300 border border-rose-500/40 text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
+                                    title={selectedNode.isSimulated ? "Hapus Simulasi" : `Hapus ${selectedNode.type.toUpperCase()}`}
                                 >
-                                    Hapus Simulasi
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                    </svg>
+                                    <span>{selectedNode.isSimulated ? 'Hapus Simulasi' : `Hapus ${selectedNode.type.toUpperCase()}`}</span>
                                 </button>
                             )}
                             {selectedNode.location && (
@@ -1399,7 +1667,7 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                                             '_blank'
                                         )
                                     }
-                                    className="px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300 text-xs font-semibold hover:bg-slate-700"
+                                    className="px-3 py-1.5 rounded-xl bg-slate-800 text-slate-300 text-xs font-semibold hover:bg-slate-700 transition-colors cursor-pointer"
                                 >
                                     Buka Google Maps
                                 </button>
@@ -1410,13 +1678,14 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                                     setPlannerName(`ODP-CABANG-${odps.length + 1}`);
                                     setIsPlannerOpen(true);
                                 }}
-                                className="px-3 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold"
+                                className="px-3 py-1.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold transition-colors cursor-pointer"
                             >
                                 + Tarik Cabang Baru
                             </button>
                             <button
                                 onClick={() => setSelectedNode(null)}
-                                className="text-slate-400 hover:text-white text-sm px-2"
+                                className="text-slate-400 hover:text-white text-lg px-2 cursor-pointer"
+                                title="Tutup Detail"
                             >
                                 &times;
                             </button>
@@ -1451,6 +1720,98 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                     </div>
                 </div>
             )}
+
+            {/* Modal Konfirmasi Hapus ODP / ODC / Simulasi */}
+            {deletingNode && (
+                <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
+                    <div className="bg-[#0f172a] border border-slate-700/80 rounded-2xl w-full max-w-md p-6 shadow-2xl text-white space-y-4 animate-in fade-in zoom-in-95">
+                        <div className="flex items-center gap-3 text-rose-400">
+                            <span className="p-2.5 rounded-xl bg-rose-950/80 border border-rose-500/40">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                            </span>
+                            <div>
+                                <h3 className="text-base font-bold text-slate-100">
+                                    Hapus {deletingNode.isSimulated ? 'Simulasi' : deletingNode.type.toUpperCase()}
+                                </h3>
+                                <p className="text-xs text-slate-400 font-mono">
+                                    {deletingNode.name}
+                                </p>
+                            </div>
+                        </div>
+
+                        {deleteError && (
+                            <div className="bg-rose-950/80 border border-rose-500/60 text-rose-200 px-3.5 py-2.5 rounded-xl text-xs">
+                                {deleteError}
+                            </div>
+                        )}
+
+                        {deletingNode.isSimulated ? (
+                            <p className="text-xs text-slate-300">
+                                Node ini adalah draf rencana simulasi. Apakah Anda yakin ingin menghapus node ini dari diagram?
+                            </p>
+                        ) : deletingNode.type === 'odp' ? (
+                            <div className="space-y-2 text-xs text-slate-300">
+                                <p>
+                                    Apakah Anda yakin ingin menghapus ODP <strong className="text-white font-mono">{deletingNode.name}</strong> dari database?
+                                </p>
+                                {deletingNode.customers.length > 0 && (
+                                    <div className="bg-amber-950/70 border border-amber-500/50 text-amber-200 p-3 rounded-xl">
+                                        ⚠️ <strong>Perhatian:</strong> ODP ini masih memiliki {deletingNode.customers.length} pelanggan terhubung. Server akan menolak penghapusan sebelum pelanggan dipindahkan.
+                                    </div>
+                                )}
+                            </div>
+                        ) : (
+                            <div className="space-y-2 text-xs text-slate-300">
+                                <p>
+                                    Apakah Anda yakin ingin menghapus ODC <strong className="text-white font-mono">{deletingNode.name}</strong> dari database?
+                                </p>
+                                {deletingNode.children.length > 0 && (
+                                    <div className="bg-amber-950/70 border border-amber-500/50 text-amber-200 p-3 rounded-xl">
+                                        ⚠️ <strong>Perhatian:</strong> ODC ini masih memiliki {deletingNode.children.length} ODP anak terhubung. Harap hapus atau pindahkan ODP anak terlebih dahulu.
+                                    </div>
+                                )}
+                            </div>
+                        )}
+
+                        <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-800">
+                            <button
+                                type="button"
+                                disabled={isDeleting}
+                                onClick={() => {
+                                    setDeletingNode(null);
+                                    setDeleteError(null);
+                                }}
+                                className="px-4 py-2 text-xs font-semibold rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors cursor-pointer"
+                            >
+                                Batal
+                            </button>
+                            <button
+                                type="button"
+                                disabled={isDeleting}
+                                onClick={() => handleDeleteNode(deletingNode)}
+                                className="px-4 py-2 text-xs font-bold rounded-xl bg-rose-600 hover:bg-rose-500 text-white shadow-lg shadow-rose-600/30 transition-all flex items-center gap-1.5 disabled:opacity-50 cursor-pointer"
+                            >
+                                {isDeleting ? (
+                                    <>
+                                        <svg className="animate-spin h-3.5 w-3.5 text-white" viewBox="0 0 24 24" fill="none">
+                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                                        </svg>
+                                        <span>Menghapus...</span>
+                                    </>
+                                ) : (
+                                    <span>Hapus Permanen</span>
+                                )}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Extra Bottom Spacer ensuring scroll area never clips contents */}
+            <div className="h-28 w-full pointer-events-none" aria-hidden="true" />
         </div>
     );
 };
