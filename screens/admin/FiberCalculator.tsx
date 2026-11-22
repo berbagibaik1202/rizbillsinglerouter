@@ -47,6 +47,146 @@ export interface TreeNode {
     y: number;
 }
 
+// Fiber Cable Model (Loose Tube standard)
+export interface FiberCable {
+    id: string;
+    name: string;
+    fromNodeId: string;
+    toNodeId: string;
+    totalCores: number; // 12, 24, 48
+    tubesCount: number; // 1, 2, 4
+    coresPerTube: number; // default 12
+    lengthMeters: number;
+    cableType: string; // 'Feeder' | 'Distribusi' | 'Dropcore'
+    status?: 'ACTIVE' | 'PLANNED';
+    notes?: string;
+}
+
+// Splice Joint Connection Model inside Enclosure (ODC / JB / ODP)
+export interface SpliceConnection {
+    id: string;
+    enclosureNodeId: string;
+    fromCableId: string;
+    fromTubeNumber: number; // 1-based (1..N)
+    fromCoreNumber: number; // 1-based (1..12)
+    toCableId: string;
+    toTubeNumber: number; // 1-based (1..N)
+    toCoreNumber: number; // 1-based (1..12)
+    lossDb: number; // e.g. 0.05
+    notes?: string;
+    createdAt?: string;
+}
+
+// Custom Added Node (ODC, JB, ODP, Tiang)
+export interface CustomTopologyNode {
+    id: string;
+    name: string;
+    category: 'odc' | 'jb' | 'odp' | 'tiang';
+    parentId?: string;
+    totalPorts: number;
+    address?: string;
+    powerInput?: number | null;
+    powerOutput?: number | null;
+    location?: { lat: number; lng: number } | null;
+}
+
+// TIA/EIA-598 Color Standard (12 standard colors)
+export interface TIA598Color {
+    num: number;
+    name: string;
+    hex: string;
+    textColor: string;
+}
+
+export const TIA598_COLORS: TIA598Color[] = [
+    { num: 1, name: 'Biru', hex: '#0284c7', textColor: '#ffffff' },
+    { num: 2, name: 'Oranye', hex: '#ea580c', textColor: '#ffffff' },
+    { num: 3, name: 'Hijau', hex: '#16a34a', textColor: '#ffffff' },
+    { num: 4, name: 'Cokelat', hex: '#92400e', textColor: '#ffffff' },
+    { num: 5, name: 'Abu-abu', hex: '#64748b', textColor: '#ffffff' },
+    { num: 6, name: 'Putih', hex: '#f8fafc', textColor: '#0f172a' },
+    { num: 7, name: 'Merah', hex: '#dc2626', textColor: '#ffffff' },
+    { num: 8, name: 'Hitam', hex: '#1e293b', textColor: '#ffffff' },
+    { num: 9, name: 'Kuning', hex: '#ca8a04', textColor: '#ffffff' },
+    { num: 10, name: 'Ungu', hex: '#7c3aed', textColor: '#ffffff' },
+    { num: 11, name: 'Pink', hex: '#db2777', textColor: '#ffffff' },
+    { num: 12, name: 'Toska', hex: '#0891b2', textColor: '#ffffff' },
+];
+
+export const getTubeColor = (tubeNum: number): TIA598Color => {
+    const idx = ((tubeNum - 1) % 12 + 12) % 12;
+    return TIA598_COLORS[idx];
+};
+
+export const getCoreColor = (coreNum: number): TIA598Color => {
+    const idx = ((coreNum - 1) % 12 + 12) % 12;
+    return TIA598_COLORS[idx];
+};
+
+// Check if a specific tube and core in a cable is currently spliced
+export function isCoreSpliced(
+    cableId: string,
+    tubeNumber: number,
+    coreNumber: number,
+    splices: SpliceConnection[],
+    enclosureNodeId?: string
+): { isSpliced: boolean; splice?: SpliceConnection } {
+    const found = splices.find((s) => {
+        if (enclosureNodeId && s.enclosureNodeId !== enclosureNodeId) return false;
+        return (
+            (s.fromCableId === cableId && s.fromTubeNumber === tubeNumber && s.fromCoreNumber === coreNumber) ||
+            (s.toCableId === cableId && s.toTubeNumber === tubeNumber && s.toCoreNumber === coreNumber)
+        );
+    });
+    return { isSpliced: !!found, splice: found };
+}
+
+// Count total unique active cores in a cable
+export function countCableUsedCores(cableId: string, splices: SpliceConnection[]): number {
+    const uniqueKeys = new Set<string>();
+    splices.forEach((s) => {
+        if (s.fromCableId === cableId) {
+            uniqueKeys.add(`T${s.fromTubeNumber}-C${s.fromCoreNumber}`);
+        }
+        if (s.toCableId === cableId) {
+            uniqueKeys.add(`T${s.toTubeNumber}-C${s.toCoreNumber}`);
+        }
+    });
+    return uniqueKeys.size;
+}
+
+// Compute upstream trace path from a selected node up to root OLT
+export function getUpstreamTracePath(
+    targetNodeId: string,
+    cables: FiberCable[]
+): { traceNodeIds: Set<string>; traceCableIds: Set<string> } {
+    const traceNodeIds = new Set<string>();
+    const traceCableIds = new Set<string>();
+
+    if (!targetNodeId) return { traceNodeIds, traceCableIds };
+    traceNodeIds.add(targetNodeId);
+
+    let queue = [targetNodeId];
+    const visited = new Set<string>();
+
+    while (queue.length > 0) {
+        const currentId = queue.shift()!;
+        if (visited.has(currentId)) continue;
+        visited.add(currentId);
+
+        const incomingCables = cables.filter((c) => c.toNodeId === currentId);
+        for (const cable of incomingCables) {
+            traceCableIds.add(cable.id);
+            traceNodeIds.add(cable.fromNodeId);
+            if (cable.fromNodeId !== 'root-olt') {
+                queue.push(cable.fromNodeId);
+            }
+        }
+    }
+
+    return { traceNodeIds, traceCableIds };
+}
+
 // Reference Demo Topology matching user's schematic design (OLT-PUSAT -> ODCs -> JBs -> ODPs -> Customers)
 export const DEMO_TOPOLOGY_ODCS: Odc[] = [
     {
@@ -182,6 +322,237 @@ export const DEMO_TOPOLOGY_CUSTOMERS: Customer[] = [
     { id: 'c13', name: 'Warung Kopi Nusantara', odpId: 'ODP-LTA-01', status: CustomerStatus.Active, pppoeUsername: 'warkop@net' } as any,
     { id: 'c14', name: 'Nadia Kusuma', odpId: 'ODP-LTA-01', status: CustomerStatus.Active, pppoeUsername: 'nadia@net' } as any,
     { id: 'c15', name: 'Kafe Ruang Seduh', odpId: 'ODP-LTA-01', status: CustomerStatus.Active, pppoeUsername: 'ruangseduh@net' } as any,
+];
+
+// Reference Demo Cables matching the schematic diagram
+export const DEMO_TOPOLOGY_CABLES: FiberCable[] = [
+    {
+        id: 'FDR-OLT1-ODC1',
+        name: 'FDR-OLT1-ODC1',
+        fromNodeId: 'root-olt',
+        toNodeId: 'ODC-TBT-01',
+        totalCores: 24,
+        tubesCount: 2,
+        coresPerTube: 12,
+        lengthMeters: 850,
+        cableType: 'Feeder',
+    },
+    {
+        id: 'FDR-OLT1-ODC2',
+        name: 'FDR-OLT1-ODC2',
+        fromNodeId: 'root-olt',
+        toNodeId: 'ODC-PSM-01',
+        totalCores: 24,
+        tubesCount: 2,
+        coresPerTube: 12,
+        lengthMeters: 1420,
+        cableType: 'Feeder',
+    },
+    {
+        id: 'DST-ODC1-JB1',
+        name: 'DST-ODC1-JB1',
+        fromNodeId: 'ODC-TBT-01',
+        toNodeId: 'JB-TBT-01',
+        totalCores: 24,
+        tubesCount: 2,
+        coresPerTube: 12,
+        lengthMeters: 240,
+        cableType: 'Distribusi',
+    },
+    {
+        id: 'DST-JB1-ODP1',
+        name: 'DST-JB1-ODP1',
+        fromNodeId: 'JB-TBT-01',
+        toNodeId: 'ODP-TBT-01',
+        totalCores: 12,
+        tubesCount: 1,
+        coresPerTube: 12,
+        lengthMeters: 380,
+        cableType: 'Distribusi',
+    },
+    {
+        id: 'DST-JB1-ODP2',
+        name: 'DST-JB1-ODP2',
+        fromNodeId: 'JB-TBT-01',
+        toNodeId: 'ODP-TBT-02',
+        totalCores: 12,
+        tubesCount: 1,
+        coresPerTube: 12,
+        lengthMeters: 520,
+        cableType: 'Distribusi',
+    },
+    {
+        id: 'DST-ODP2-KMG1',
+        name: 'DST-ODP2-KMG1',
+        fromNodeId: 'ODP-TBT-02',
+        toNodeId: 'ODP-KMG-01',
+        totalCores: 12,
+        tubesCount: 1,
+        coresPerTube: 12,
+        lengthMeters: 640,
+        cableType: 'Distribusi',
+    },
+    {
+        id: 'DST-ODC2-JB2',
+        name: 'DST-ODC2-JB2',
+        fromNodeId: 'ODC-PSM-01',
+        toNodeId: 'JB-PSM-01',
+        totalCores: 24,
+        tubesCount: 2,
+        coresPerTube: 12,
+        lengthMeters: 520,
+        cableType: 'Distribusi',
+    },
+    {
+        id: 'DST-ODC2-LTA1',
+        name: 'DST-ODC2-LTA1',
+        fromNodeId: 'ODC-PSM-01',
+        toNodeId: 'ODP-LTA-01',
+        totalCores: 12,
+        tubesCount: 1,
+        coresPerTube: 12,
+        lengthMeters: 980,
+        cableType: 'Distribusi',
+    },
+    {
+        id: 'DST-ODC2-TNG42',
+        name: 'DST-ODC2-TNG42',
+        fromNodeId: 'ODC-PSM-01',
+        toNodeId: 'TNG-042',
+        totalCores: 12,
+        tubesCount: 1,
+        coresPerTube: 12,
+        lengthMeters: 210,
+        cableType: 'Distribusi',
+    },
+    {
+        id: 'DST-JB2-ODP4',
+        name: 'DST-JB2-ODP4',
+        fromNodeId: 'JB-PSM-01',
+        toNodeId: 'ODP-PSM-01',
+        totalCores: 12,
+        tubesCount: 1,
+        coresPerTube: 12,
+        lengthMeters: 320,
+        cableType: 'Distribusi',
+    },
+];
+
+// Reference Demo Splices matching the schematic
+export const DEMO_TOPOLOGY_SPLICES: SpliceConnection[] = [
+    // In ODC-PSM-01:
+    {
+        id: 'spl-psm-1',
+        enclosureNodeId: 'ODC-PSM-01',
+        fromCableId: 'FDR-OLT1-ODC2',
+        fromTubeNumber: 1,
+        fromCoreNumber: 1,
+        toCableId: 'DST-ODC2-JB2',
+        toTubeNumber: 1,
+        toCoreNumber: 1,
+        lossDb: 0.05,
+        notes: 'Main trunk to JB-PSM-01',
+    },
+    {
+        id: 'spl-psm-2',
+        enclosureNodeId: 'ODC-PSM-01',
+        fromCableId: 'FDR-OLT1-ODC2',
+        fromTubeNumber: 1,
+        fromCoreNumber: 2,
+        toCableId: 'DST-ODC2-LTA1',
+        toTubeNumber: 1,
+        toCoreNumber: 1,
+        lossDb: 0.05,
+        notes: 'Direct branch to ODP-LTA-01',
+    },
+    {
+        id: 'spl-psm-3',
+        enclosureNodeId: 'ODC-PSM-01',
+        fromCableId: 'FDR-OLT1-ODC2',
+        fromTubeNumber: 1,
+        fromCoreNumber: 3,
+        toCableId: 'DST-ODC2-TNG42',
+        toTubeNumber: 1,
+        toCoreNumber: 1,
+        lossDb: 0.05,
+        notes: 'Branch to Tiang 42',
+    },
+    // In JB-PSM-01:
+    {
+        id: 'spl-jbpsm-1',
+        enclosureNodeId: 'JB-PSM-01',
+        fromCableId: 'DST-ODC2-JB2',
+        fromTubeNumber: 1,
+        fromCoreNumber: 1,
+        toCableId: 'DST-JB2-ODP4',
+        toTubeNumber: 1,
+        toCoreNumber: 1,
+        lossDb: 0.05,
+        notes: 'Distribution to ODP-PSM-01',
+    },
+    // In ODC-TBT-01:
+    {
+        id: 'spl-tbt-1',
+        enclosureNodeId: 'ODC-TBT-01',
+        fromCableId: 'FDR-OLT1-ODC1',
+        fromTubeNumber: 1,
+        fromCoreNumber: 1,
+        toCableId: 'DST-ODC1-JB1',
+        toTubeNumber: 1,
+        toCoreNumber: 1,
+        lossDb: 0.05,
+        notes: 'Trunk to JB-TBT-01 Core 1',
+    },
+    {
+        id: 'spl-tbt-2',
+        enclosureNodeId: 'ODC-TBT-01',
+        fromCableId: 'FDR-OLT1-ODC1',
+        fromTubeNumber: 1,
+        fromCoreNumber: 2,
+        toCableId: 'DST-ODC1-JB1',
+        toTubeNumber: 1,
+        toCoreNumber: 2,
+        lossDb: 0.05,
+        notes: 'Trunk to JB-TBT-01 Core 2',
+    },
+    // In JB-TBT-01:
+    {
+        id: 'spl-jbtbt-1',
+        enclosureNodeId: 'JB-TBT-01',
+        fromCableId: 'DST-ODC1-JB1',
+        fromTubeNumber: 1,
+        fromCoreNumber: 1,
+        toCableId: 'DST-JB1-ODP1',
+        toTubeNumber: 1,
+        toCoreNumber: 1,
+        lossDb: 0.05,
+        notes: 'Drop to ODP-TBT-01',
+    },
+    {
+        id: 'spl-jbtbt-2',
+        enclosureNodeId: 'JB-TBT-01',
+        fromCableId: 'DST-ODC1-JB1',
+        fromTubeNumber: 1,
+        fromCoreNumber: 2,
+        toCableId: 'DST-JB1-ODP2',
+        toTubeNumber: 1,
+        toCoreNumber: 1,
+        lossDb: 0.05,
+        notes: 'Drop to ODP-TBT-02',
+    },
+    // In ODP-TBT-02:
+    {
+        id: 'spl-tbt2-1',
+        enclosureNodeId: 'ODP-TBT-02',
+        fromCableId: 'DST-JB1-ODP2',
+        fromTubeNumber: 1,
+        fromCoreNumber: 2,
+        toCableId: 'DST-ODP2-KMG1',
+        toTubeNumber: 1,
+        toCoreNumber: 1,
+        lossDb: 0.05,
+        notes: 'Cascade pass-through to ODP-KMG-01',
+    },
 ];
 
 export const resolveNodeCategory = (name: string, type: string, isSimulated?: boolean): string => {
@@ -367,6 +738,52 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
         } catch { }
     }, [odcSplitterMap]);
 
+    // Custom topology nodes created by user (ODC / JB / ODP / Tiang)
+    const [customNodes, setCustomNodes] = useState<CustomTopologyNode[]>(() => {
+        try {
+            const saved = localStorage.getItem('fo_calc_custom_nodes');
+            return saved ? JSON.parse(saved) : [];
+        } catch {
+            return [];
+        }
+    });
+
+    useEffect(() => {
+        try {
+            localStorage.setItem('fo_calc_custom_nodes', JSON.stringify(customNodes));
+        } catch { }
+    }, [customNodes]);
+
+    // FO Cables state (Loose Tube & Cores)
+    const [cables, setCables] = useState<FiberCable[]>(() => {
+        try {
+            const saved = localStorage.getItem('fo_calc_cables');
+            if (saved) return JSON.parse(saved);
+        } catch { }
+        return DEMO_TOPOLOGY_CABLES;
+    });
+
+    useEffect(() => {
+        try {
+            localStorage.setItem('fo_calc_cables', JSON.stringify(cables));
+        } catch { }
+    }, [cables]);
+
+    // Splice Joints state inside enclosures
+    const [splices, setSplices] = useState<SpliceConnection[]>(() => {
+        try {
+            const saved = localStorage.getItem('fo_calc_splices');
+            if (saved) return JSON.parse(saved);
+        } catch { }
+        return DEMO_TOPOLOGY_SPLICES;
+    });
+
+    useEffect(() => {
+        try {
+            localStorage.setItem('fo_calc_splices', JSON.stringify(splices));
+        } catch { }
+    }, [splices]);
+
     // Canvas view state
     const [zoom, setZoom] = useState<number>(1);
     const [pan, setPan] = useState<{ x: number; y: number }>({ x: 30, y: 40 });
@@ -393,17 +810,23 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
         moved: boolean;
     } | null>(null);
 
+    // Selected Node & Inspector Tabs
+    const [selectedNode, setSelectedNode] = useState<TreeNode | null>(null);
+    const [activeInspectorTab, setActiveInspectorTab] = useState<'mapping' | 'kabel' | 'splice'>('kabel');
+
     // Delete Node Confirmation State
     const [deletingNode, setDeletingNode] = useState<TreeNode | null>(null);
     const [isDeleting, setIsDeleting] = useState<boolean>(false);
     const [deleteError, setDeleteError] = useState<string | null>(null);
+
+    // Delete Cable Confirmation State
+    const [deletingCable, setDeletingCable] = useState<FiberCable | null>(null);
 
     // Filters and UI Toggles
     const [showCustomers, setShowCustomers] = useState<boolean>(true);
     const [showAuditMode, setShowAuditMode] = useState<boolean>(true);
     const [searchQuery, setSearchQuery] = useState<string>('');
     const [selectedOdcFilter, setSelectedOdcFilter] = useState<string>('all');
-    const [selectedNode, setSelectedNode] = useState<TreeNode | null>(null);
 
     // Simulated / Planned Nodes State
     const [simulatedNodes, setSimulatedNodes] = useState<SimulatedNode[]>([]);
@@ -418,6 +841,35 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
     const [plannerPorts, setPlannerPorts] = useState<number>(8);
     const [isSavingOdp, setIsSavingOdp] = useState<boolean>(false);
     const [copyNotice, setCopyNotice] = useState<string | null>(null);
+
+    // Modal: Add Cable (Tarik Kabel FO)
+    const [isAddCableModalOpen, setIsAddCableModalOpen] = useState<boolean>(false);
+    const [newCableFromNode, setNewCableFromNode] = useState<string>('root-olt');
+    const [newCableToNode, setNewCableToNode] = useState<string>('');
+    const [newCableName, setNewCableName] = useState<string>('');
+    const [newCableCores, setNewCableCores] = useState<number>(12);
+    const [newCableLength, setNewCableLength] = useState<number>(350);
+    const [newCableType, setNewCableType] = useState<string>('Distribusi');
+
+    // Modal: Add Splice (Sambung Core)
+    const [isAddSpliceModalOpen, setIsAddSpliceModalOpen] = useState<boolean>(false);
+    const [newSpliceFromCableId, setNewSpliceFromCableId] = useState<string>('');
+    const [newSpliceFromTube, setNewSpliceFromTube] = useState<number>(1);
+    const [newSpliceFromCore, setNewSpliceFromCore] = useState<number>(1);
+    const [newSpliceToCableId, setNewSpliceToCableId] = useState<string>('');
+    const [newSpliceToTube, setNewSpliceToTube] = useState<number>(1);
+    const [newSpliceToCore, setNewSpliceToCore] = useState<number>(1);
+    const [newSpliceLoss, setNewSpliceLoss] = useState<number>(0.05);
+    const [newSpliceNotes, setNewSpliceNotes] = useState<string>('');
+
+    // Modal: Add Node (ODC / JB / ODP / Tiang)
+    const [isAddNodeModalOpen, setIsAddNodeModalOpen] = useState<boolean>(false);
+    const [newNodeCategory, setNewNodeCategory] = useState<'odc' | 'jb' | 'odp' | 'tiang'>('odp');
+    const [newNodeName, setNewNodeName] = useState<string>('');
+    const [newNodeParentId, setNewNodeParentId] = useState<string>('');
+    const [newNodePorts, setNewNodePorts] = useState<number>(8);
+    const [newNodeAddress, setNewNodeAddress] = useState<string>('');
+    const [newNodeAutoCable, setNewNodeAutoCable] = useState<boolean>(true);
 
     // Fetch live network data
     const fetchNetworkData = async () => {
@@ -454,9 +906,36 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
         const rootTx = currentTxPower;
         const allFlattened: TreeNode[] = [];
 
-        // Active dataset based on mode
-        const activeOdcsSource = useDemoTopology ? DEMO_TOPOLOGY_ODCS : odcs;
-        const activeOdpsSource = useDemoTopology ? DEMO_TOPOLOGY_ODPS : odps;
+        // Active dataset based on mode, merged with custom created nodes
+        const baseOdcs = useDemoTopology ? DEMO_TOPOLOGY_ODCS : odcs;
+        const customOdcList: Odc[] = customNodes
+            .filter((n) => n.category === 'odc')
+            .map((n) => ({
+                id: n.id,
+                name: n.name,
+                address: n.address || '',
+                totalPorts: n.totalPorts,
+                powerInput: n.powerInput ?? 4.5,
+                powerOutput: n.powerOutput ?? -5.1,
+                location: n.location || { lat: -6.22, lng: 106.85 },
+            }));
+        const activeOdcsSource = [...baseOdcs, ...customOdcList];
+
+        const baseOdps = useDemoTopology ? DEMO_TOPOLOGY_ODPS : odps;
+        const customOdpList: Odp[] = customNodes
+            .filter((n) => n.category !== 'odc')
+            .map((n) => ({
+                id: n.id,
+                name: n.name,
+                parentId: n.parentId,
+                totalPorts: n.totalPorts,
+                powerInput: n.powerInput ?? -6.0,
+                powerOutput: n.powerOutput ?? -16.5,
+                address: n.address || '',
+                location: n.location || { lat: -6.22, lng: 106.85 },
+            }));
+        const activeOdpsSource = [...baseOdps, ...customOdpList];
+
         const activeCustsSource = useDemoTopology ? DEMO_TOPOLOGY_CUSTOMERS : customers;
         const effectivePonCapacity = useDemoTopology ? 16 : oltPonCapacity;
 
@@ -495,27 +974,28 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
         const odcNodeMap = new Map<string, TreeNode>();
 
         const odcNodes: TreeNode[] = activeOdcs.map((odc) => {
-            const estMeters = odc.id === 'ODC-PSM-01' ? 1420 : 850;
-            const cableLoss = (estMeters / 1000) * 0.35; // ~0.30 dB
+            const matchingCable = cables.find((c) => c.fromNodeId === 'root-olt' && c.toNodeId === odc.id);
+            const estMeters = matchingCable ? matchingCable.lengthMeters : (odc.id === 'ODC-PSM-01' ? 1420 : 850);
+            const cableLoss = (estMeters / 1000) * 0.35;
 
             // Dedicated SFP PON port to each ODC (no pre-splitting at OLT)
-            // Power arriving at ODC is purely OLT TX minus feeder cable loss
             const calcPowerIn = Number((rootTx - cableLoss).toFixed(2));
 
-            // Inside ODC: configurable splitter (default 1:4 with 7.2 dB loss, or direct 1:1 with 0 dB loss)
+            // Inside ODC: configurable splitter
             const odcSplitter = odcSplitterMap[odc.id] || '1:4';
             let splitterLoss = 7.2;
             if (odcSplitter === 'direct' || odcSplitter === '1:1') splitterLoss = 0;
             else if (odcSplitter === '1:2') splitterLoss = 3.7;
             else if (odcSplitter === '1:8') splitterLoss = 10.5;
 
-            // In demo mode, use precise calibration matching reference diagram
             const calcPowerOut = useDemoTopology && odc.powerOutput != null
                 ? odc.powerOutput
                 : Number((calcPowerIn - splitterLoss).toFixed(2));
 
             const fdrCode = odc.name.replace(/[^A-Za-z0-9]/g, '');
-            const cableLabel = `FDR-OLT1-${fdrCode} • 24C • ${estMeters}m`;
+            const cableLabel = matchingCable
+                ? `${matchingCable.name} • ${matchingCable.totalCores}C • ${matchingCable.lengthMeters}m`
+                : `FDR-OLT1-${fdrCode} • 24C • ${estMeters}m`;
 
             const odcNode: TreeNode = {
                 id: odc.id,
@@ -556,31 +1036,34 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
             const parentOdc = odcMapById.get(odp.parentId || '');
             const parentOdp = odpMapById.get(odp.parentId || '');
 
-            let distanceMeters = 420;
-            if (useDemoTopology) {
-                if (odp.id === 'JB-TBT-01') distanceMeters = 210;
-                else if (odp.id === 'ODP-TBT-01') distanceMeters = 380;
-                else if (odp.id === 'ODP-TBT-02') distanceMeters = 520;
-                else if (odp.id === 'ODP-KMG-01') distanceMeters = 640;
-                else if (odp.id === 'JB-PSM-01') distanceMeters = 350;
-                else if (odp.id === 'TNG-042') distanceMeters = 480;
-                else if (odp.id === 'ODP-PSM-01') distanceMeters = 320;
-                else if (odp.id === 'ODP-LTA-01') distanceMeters = 980;
-            } else if (parentOdc?.location && odp.location) {
-                const dist = haversineMeters(parentOdc.location, odp.location);
-                if (dist) distanceMeters = dist;
-            } else if (parentOdp?.location && odp.location) {
-                const dist = haversineMeters(parentOdp.location, odp.location);
-                if (dist) distanceMeters = dist;
+            const matchingCable = cables.find((c) => c.toNodeId === odp.id);
+            let distanceMeters = matchingCable ? matchingCable.lengthMeters : 420;
+
+            if (!matchingCable) {
+                if (useDemoTopology) {
+                    if (odp.id === 'JB-TBT-01') distanceMeters = 240;
+                    else if (odp.id === 'ODP-TBT-01') distanceMeters = 380;
+                    else if (odp.id === 'ODP-TBT-02') distanceMeters = 520;
+                    else if (odp.id === 'ODP-KMG-01') distanceMeters = 640;
+                    else if (odp.id === 'JB-PSM-01') distanceMeters = 520;
+                    else if (odp.id === 'TNG-042') distanceMeters = 210;
+                    else if (odp.id === 'ODP-PSM-01') distanceMeters = 320;
+                    else if (odp.id === 'ODP-LTA-01') distanceMeters = 980;
+                } else if (parentOdc?.location && odp.location) {
+                    const dist = haversineMeters(parentOdc.location, odp.location);
+                    if (dist) distanceMeters = dist;
+                } else if (parentOdp?.location && odp.location) {
+                    const dist = haversineMeters(parentOdp.location, odp.location);
+                    if (dist) distanceMeters = dist;
+                }
             }
 
             const cableLoss = (distanceMeters / 1000) * 0.35;
             const splitterLoss = PLC_LOSS_MAP[odp.totalPorts === 16 ? '1:16' : '1:8'] || 10.5;
-            const spliceLoss = 0.2; // 2 splices average
-            const connectorLoss = 0.5; // 2 connectors
+            const spliceLoss = 0.2;
+            const connectorLoss = 0.5;
 
-            // Estimate power based on actual parent node power output
-            let parentPowerOut = rootTx - 7.5; // fallback
+            let parentPowerOut = rootTx - 7.5;
             if (parentOdc) {
                 const parentOdcNode = odcNodeMap.get(parentOdc.id);
                 parentPowerOut = parentOdcNode ? parentOdcNode.calculatedPowerOut : (rootTx - 7.5);
@@ -594,9 +1077,11 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                 ? odp.powerOutput
                 : Number((calcPowerIn - splitterLoss - spliceLoss - connectorLoss).toFixed(2));
 
-            const parentName = (parentOdc?.name || parentOdp?.name || 'ODC').replace(/[^A-Za-z0-9]/g, '');
+            const parentName = (parentOdc?.name || parentOdp?.name || 'NODE').replace(/[^A-Za-z0-9]/g, '');
             const childName = odp.name.replace(/[^A-Za-z0-9]/g, '');
-            const cableLabel = `DST-${parentName}-${childName} • 12C • ${distanceMeters}m`;
+            const cableLabel = matchingCable
+                ? `${matchingCable.name} • ${matchingCable.totalCores}C • ${matchingCable.lengthMeters}m`
+                : `DST-${parentName}-${childName} • 12C • ${distanceMeters}m`;
 
             const node: TreeNode = {
                 id: odp.id,
@@ -660,7 +1145,6 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
         const unassignedOdps: TreeNode[] = [];
 
         odpMap.forEach((odpNode) => {
-            // Check if direct parent is an active ODC
             const odcParent = odcNodeMap.get(odpNode.parentId || '');
             if (odcParent) {
                 odcParent.children.push(odpNode);
@@ -668,7 +1152,6 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                 return;
             }
 
-            // Check if direct parent is another ODP (cascading)
             const odpParent = odpMap.get(odpNode.parentId || '');
             if (odpParent) {
                 odpParent.children.push(odpNode);
@@ -676,7 +1159,6 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                 return;
             }
 
-            // If unparented (and we are in 'all' view):
             if (selectedOdcFilter === 'all') {
                 unassignedOdps.push(odpNode);
             }
@@ -701,7 +1183,6 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
             y: 0,
         };
 
-        // If in 'all' view and there are unparented ODPs, add a clean distinct branch for them
         if (unassignedOdps.length > 0 && selectedOdcFilter === 'all') {
             const unassignedGroupNode: TreeNode = {
                 id: 'unassigned-odp-group',
@@ -732,7 +1213,6 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
             node.x = depthX;
 
             if (node.children.length === 0) {
-                // Leaf node height considers its customers
                 const custCount = (showCustomers && node.customers) ? node.customers.length : 0;
                 const branchHeight = Math.max(80, custCount * 34 + 16);
                 node.y = currentY + branchHeight / 2;
@@ -741,8 +1221,6 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                 return;
             }
 
-            // Next column offset for child nodes:
-            // If this node has customers, offset child nodes so they never collide with customer chips
             const nextDepthX = (showCustomers && node.customers && node.customers.length > 0)
                 ? node.x + 390
                 : (node.type === 'olt' ? node.x + 280 : node.x + 260);
@@ -771,7 +1249,12 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
         });
 
         return { tree: rootOltNode, flattenedNodes: allFlattened };
-    }, [odps, odcs, customers, currentTxPower, selectedOdcFilter, simulatedNodes, showCustomers, nodePositions, oltPonCapacity, odcSplitterMap, useDemoTopology]);
+    }, [odps, odcs, customers, currentTxPower, selectedOdcFilter, simulatedNodes, showCustomers, nodePositions, oltPonCapacity, odcSplitterMap, useDemoTopology, customNodes, cables]);
+
+    // Fast Node Lookup Map
+    const nodeMap = useMemo(() => {
+        return new Map<string, TreeNode>(flattenedNodes.map((n) => [n.id, n]));
+    }, [flattenedNodes]);
 
     // Save custom node positions to localStorage
     useEffect(() => {
@@ -784,12 +1267,13 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
         } catch { }
     }, [nodePositions]);
 
-    // Smooth scroll into view for selected node inspector drawer
-    useEffect(() => {
-        if (selectedNode && inspectorRef.current) {
-            inspectorRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    // Compute Active Upstream Trace Path when a node is selected
+    const { traceCableIds } = useMemo(() => {
+        if (!selectedNode) {
+            return { traceNodeIds: new Set<string>(), traceCableIds: new Set<string>() };
         }
-    }, [selectedNode?.id]);
+        return getUpstreamTracePath(selectedNode.id, cables);
+    }, [selectedNode, cables]);
 
     // Global mouseup to release dragging reliably
     useEffect(() => {
@@ -797,7 +1281,9 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
             if (draggingNodeId) {
                 if (dragOffset && !dragOffset.moved) {
                     const found = flattenedNodes.find((n) => n.id === draggingNodeId);
-                    if (found) setSelectedNode(found);
+                    if (found) {
+                        setSelectedNode(found);
+                    }
                 }
                 setDraggingNodeId(null);
                 setDragOffset(null);
@@ -899,7 +1385,6 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
 
     // Calculate real-time simulation in planner drawer
     const plannerCalculations = useMemo(() => {
-        // Find parent node
         const parent = flattenedNodes.find((n) => n.id === plannerParentId) || tree;
         const parentOutPower = parent.type === 'olt' ? currentTxPower : (parent.calculatedPowerOut || -7.5);
 
@@ -1005,7 +1490,7 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
         if (selectedNode?.id === simId) setSelectedNode(null);
     };
 
-    // Delete ODP or ODC permanently from database
+    // Delete ODP or ODC permanently from database or custom nodes
     const handleDeleteNode = async (node: TreeNode) => {
         if (node.isSimulated) {
             handleRemoveSimulatedNode(node.id);
@@ -1015,6 +1500,25 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
             return;
         }
 
+        // Check if it's a custom user node
+        const isCustom = customNodes.some((n) => n.id === node.id);
+        if (isCustom) {
+            setCustomNodes((prev) => prev.filter((n) => n.id !== node.id));
+            setCables((prev) => prev.filter((c) => c.fromNodeId !== node.id && c.toNodeId !== node.id));
+            setSplices((prev) => prev.filter((s) => s.enclosureNodeId !== node.id));
+            setNodePositions((prev) => {
+                const next = { ...prev };
+                delete next[node.id];
+                return next;
+            });
+            if (selectedNode?.id === node.id) setSelectedNode(null);
+            setDeletingNode(null);
+            setCopyNotice(`Node ${node.name} berhasil dihapus.`);
+            setTimeout(() => setCopyNotice(null), 3000);
+            return;
+        }
+
+        // Live DB node
         setIsDeleting(true);
         setDeleteError(null);
         try {
@@ -1031,6 +1535,9 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
             } else {
                 setOdps((prev) => prev.filter((o) => o.id !== node.id));
             }
+
+            setCables((prev) => prev.filter((c) => c.fromNodeId !== node.id && c.toNodeId !== node.id));
+            setSplices((prev) => prev.filter((s) => s.enclosureNodeId !== node.id));
 
             setNodePositions((prev) => {
                 const next = { ...prev };
@@ -1053,15 +1560,179 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
         }
     };
 
+    // Action: Create New Custom Node (ODC, JB, ODP, Tiang)
+    const handleCreateCustomNode = () => {
+        if (!newNodeName.trim()) {
+            alert('Masukkan nama node baru.');
+            return;
+        }
+
+        const nodeId = newNodeName.trim().toUpperCase().replace(/\s+/g, '-');
+        const parent = flattenedNodes.find((n) => n.id === newNodeParentId);
+
+        const newCustom: CustomTopologyNode = {
+            id: nodeId,
+            name: newNodeName.trim(),
+            category: newNodeCategory,
+            parentId: parent?.id || (newNodeCategory === 'odc' ? 'root-olt' : odcs[0]?.id || 'root-olt'),
+            totalPorts: newNodePorts,
+            address: newNodeAddress.trim() || undefined,
+            powerInput: newNodeCategory === 'odc' ? 4.5 : -5.5,
+            powerOutput: newNodeCategory === 'odc' ? -4.5 : -17.0,
+        };
+
+        setCustomNodes((prev) => [...prev, newCustom]);
+
+        // Auto create cable if checked
+        if (newNodeAutoCable && newCustom.parentId) {
+            const autoCableName = `DST-${newCustom.parentId.replace(/[^A-Za-z0-9]/g, '')}-${nodeId.replace(/[^A-Za-z0-9]/g, '')}`;
+            const newCable: FiberCable = {
+                id: autoCableName,
+                name: autoCableName,
+                fromNodeId: newCustom.parentId,
+                toNodeId: nodeId,
+                totalCores: 12,
+                tubesCount: 1,
+                coresPerTube: 12,
+                lengthMeters: 350,
+                cableType: newNodeCategory === 'odc' ? 'Feeder' : 'Distribusi',
+            };
+            setCables((prev) => [...prev, newCable]);
+        }
+
+        setIsAddNodeModalOpen(false);
+        setNewNodeName('');
+        setNewNodeAddress('');
+        setCopyNotice(`Node ${newCustom.name} (${newCustom.category.toUpperCase()}) berhasil ditambahkan.`);
+        setTimeout(() => setCopyNotice(null), 3500);
+    };
+
+    // Action: Create New Cable
+    const handleCreateCable = () => {
+        if (!newCableName.trim()) {
+            alert('Masukkan nama/kode kabel FO.');
+            return;
+        }
+        if (newCableFromNode === newCableToNode) {
+            alert('Node asal dan node tujuan tidak boleh sama.');
+            return;
+        }
+
+        const tubes = Math.max(1, Math.ceil(newCableCores / 12));
+        const newCable: FiberCable = {
+            id: newCableName.trim(),
+            name: newCableName.trim(),
+            fromNodeId: newCableFromNode,
+            toNodeId: newCableToNode,
+            totalCores: newCableCores,
+            tubesCount: tubes,
+            coresPerTube: 12,
+            lengthMeters: newCableLength,
+            cableType: newCableType,
+        };
+
+        setCables((prev) => [...prev, newCable]);
+        setIsAddCableModalOpen(false);
+        setNewCableName('');
+        setCopyNotice(`Kabel FO ${newCable.name} (${newCable.totalCores} Core, ${newCable.lengthMeters}m) berhasil ditarik.`);
+        setTimeout(() => setCopyNotice(null), 3500);
+    };
+
+    // Action: Delete Cable
+    const handleDeleteCable = (cable: FiberCable) => {
+        setCables((prev) => prev.filter((c) => c.id !== cable.id));
+        setSplices((prev) => prev.filter((s) => s.fromCableId !== cable.id && s.toCableId !== cable.id));
+        setDeletingCable(null);
+        setCopyNotice(`Kabel FO ${cable.name} berhasil dihapus.`);
+        setTimeout(() => setCopyNotice(null), 3000);
+    };
+
+    // Action: Create New Splice Joint
+    const handleCreateSplice = () => {
+        if (!selectedNode) {
+            alert('Pilih node enclosure terlebih dahulu.');
+            return;
+        }
+        if (!newSpliceFromCableId || !newSpliceToCableId) {
+            alert('Pilih kabel IN dan kabel OUT untuk disambung.');
+            return;
+        }
+        if (newSpliceFromCableId === newSpliceToCableId && newSpliceFromTube === newSpliceToTube && newSpliceFromCore === newSpliceToCore) {
+            alert('Tidak dapat menyambung core ke core yang sama pada kabel yang sama.');
+            return;
+        }
+
+        // Validate not already spliced in this enclosure
+        const alreadyFrom = isCoreSpliced(newSpliceFromCableId, newSpliceFromTube, newSpliceFromCore, splices, selectedNode.id);
+        if (alreadyFrom.isSpliced) {
+            alert(`Core IN (Tube ${newSpliceFromTube}, Core ${newSpliceFromCore}) sudah disambung di enclosure ini.`);
+            return;
+        }
+        const alreadyTo = isCoreSpliced(newSpliceToCableId, newSpliceToTube, newSpliceToCore, splices, selectedNode.id);
+        if (alreadyTo.isSpliced) {
+            alert(`Core OUT (Tube ${newSpliceToTube}, Core ${newSpliceToCore}) sudah disambung di enclosure ini.`);
+            return;
+        }
+
+        const newSplice: SpliceConnection = {
+            id: `spl-${Date.now()}`,
+            enclosureNodeId: selectedNode.id,
+            fromCableId: newSpliceFromCableId,
+            fromTubeNumber: newSpliceFromTube,
+            fromCoreNumber: newSpliceFromCore,
+            toCableId: newSpliceToCableId,
+            toTubeNumber: newSpliceToTube,
+            toCoreNumber: newSpliceToCore,
+            lossDb: newSpliceLoss || 0.05,
+            notes: newSpliceNotes.trim() || undefined,
+            createdAt: new Date().toISOString(),
+        };
+
+        setSplices((prev) => [...prev, newSplice]);
+        setIsAddSpliceModalOpen(false);
+        setNewSpliceNotes('');
+        setCopyNotice(`Sambungan splice baru di ${selectedNode.name} berhasil dibuat.`);
+        setTimeout(() => setCopyNotice(null), 3500);
+    };
+
+    // Action: Delete / Disconnect Splice
+    const handleDeleteSplice = (spliceId: string) => {
+        setSplices((prev) => prev.filter((s) => s.id !== spliceId));
+        setCopyNotice('Sambungan core (splice) berhasil diputus.');
+        setTimeout(() => setCopyNotice(null), 3000);
+    };
+
+    // Connected cables for the currently selected node
+    const nodeIncomingCables = useMemo(() => {
+        if (!selectedNode) return [];
+        return cables.filter((c) => c.toNodeId === selectedNode.id);
+    }, [selectedNode, cables]);
+
+    const nodeOutgoingCables = useMemo(() => {
+        if (!selectedNode) return [];
+        return cables.filter((c) => c.fromNodeId === selectedNode.id);
+    }, [selectedNode, cables]);
+
+    const nodeAllCables = useMemo(() => {
+        return [...nodeIncomingCables, ...nodeOutgoingCables];
+    }, [nodeIncomingCables, nodeOutgoingCables]);
+
+    // Splices inside currently selected node
+    const nodeSplices = useMemo(() => {
+        if (!selectedNode) return [];
+        return splices.filter((s) => s.enclosureNodeId === selectedNode.id);
+    }, [selectedNode, splices]);
+
     // Copy NOC / WhatsApp Report
     const handleCopyReport = () => {
         const textLines = [
             `*LAPORAN TOPOLOGI FO & BUDGETING ISP*`,
             `Tanggal: ${new Date().toLocaleString('id-ID')}`,
             `SFP OLT TX: ${currentTxPower} dBm`,
-            `Total ODC: ${odcs.length} unit`,
-            `Total ODP: ${odps.length} unit (Simulasi Tambahan: ${simulatedNodes.length})`,
-            `Total Pelanggan Terpasang: ${customers.length} user`,
+            `Total ODC: ${odcs.length + customNodes.filter((n) => n.category === 'odc').length} unit`,
+            `Total ODP/JB: ${odps.length + customNodes.filter((n) => n.category !== 'odc').length} unit`,
+            `Total Kabel FO: ${cables.length} ruas kabel`,
+            `Total Sambungan Splice: ${splices.length} joint`,
             '',
             `*DAFTAR NODE OPTIK & REDAMAN:*`,
         ];
@@ -1080,13 +1751,13 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
     };
 
     return (
-        <div className="space-y-6 pb-40 min-h-[calc(100vh-4rem)]">
+        <div className="space-y-5 pb-32 min-h-screen">
             {/* Top Header Card */}
             <div className="bg-[#0f172a] border border-slate-800 rounded-2xl p-5 shadow-xl text-white">
                 <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 pb-4 border-b border-slate-800">
                     <div>
                         <div className="flex items-center gap-3">
-                            <span className="p-2 rounded-xl bg-gradient-to-tr from-cyan-600 to-blue-500 shadow-lg shadow-cyan-500/20 text-white">
+                            <span className="p-2.5 rounded-xl bg-gradient-to-tr from-cyan-600 to-blue-500 shadow-lg shadow-cyan-500/20 text-white">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                                 </svg>
@@ -1095,11 +1766,11 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                                 <h2 className="text-xl font-black tracking-tight text-slate-100 flex items-center gap-2">
                                     <span>FO Network Topology & Budgeting Planner</span>
                                     <span className="text-xs px-2.5 py-0.5 rounded-full bg-cyan-950 border border-cyan-500/40 text-cyan-300 font-mono">
-                                        NOC Interactive Tree
+                                        TIA/EIA-598 Matrix
                                     </span>
                                 </h2>
                                 <p className="text-xs text-slate-400 mt-0.5">
-                                    Peta visual skematik jalur OLT &rarr; ODC &rarr; ODP &rarr; Pelanggan. Desain jalur tarikan baru & evaluasi redaman optik riil vs teoritis.
+                                    Peta visual skematik jalur OLT &rarr; ODC &rarr; JB &rarr; ODP &rarr; Pelanggan. Dokumentasi sambungan core & tube, tarik kabel, dan kalkulasi redaman.
                                 </p>
                             </div>
                         </div>
@@ -1143,26 +1814,47 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                         )}
                         <button
                             onClick={handleCopyReport}
-                            className="px-3.5 py-2 text-xs font-semibold rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-400 border border-emerald-500/30 transition-colors flex items-center gap-1.5 cursor-pointer"
+                            className="px-3 py-2 text-xs font-semibold rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-400 border border-emerald-500/30 transition-colors flex items-center gap-1.5 cursor-pointer"
                             title="Salin ringkasan laporan ke WhatsApp"
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 4.315 1.731 6.086l.107.192-.533 1.955 1.976-.518.188.112z" />
                             </svg>
-                            <span>Salin Laporan WA</span>
+                            <span>Salin Laporan</span>
                         </button>
+
+                        {/* Button: Add Node (ODC/JB/ODP) */}
                         <button
+                            type="button"
                             onClick={() => {
-                                setPlannerParentId(odcs[0]?.id || 'root-olt');
-                                setPlannerName(`ODP-BARU-${odps.length + 1}`);
-                                setIsPlannerOpen(true);
+                                setNewNodeCategory('odp');
+                                setNewNodeName(`ODP-BARU-${odps.length + 1}`);
+                                setNewNodeParentId(selectedNode?.id || odcs[0]?.id || 'root-olt');
+                                setIsAddNodeModalOpen(true);
                             }}
-                            className="px-4 py-2 text-xs font-bold rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white shadow-lg shadow-cyan-500/25 transition-all flex items-center gap-1.5 cursor-pointer"
+                            className="px-3.5 py-2 text-xs font-bold rounded-xl bg-indigo-600/90 hover:bg-indigo-500 text-white shadow-md transition-all flex items-center gap-1.5 cursor-pointer"
                         >
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                             </svg>
-                            <span>+ Rencanakan Tarikan ODP</span>
+                            <span>+ Tambah Node</span>
+                        </button>
+
+                        {/* Button: Tarik Kabel FO Baru */}
+                        <button
+                            type="button"
+                            onClick={() => {
+                                setNewCableFromNode(selectedNode?.id || 'root-olt');
+                                setNewCableToNode(odcs[0]?.id || '');
+                                setNewCableName(`DST-KABEL-${cables.length + 1}`);
+                                setIsAddCableModalOpen(true);
+                            }}
+                            className="px-3.5 py-2 text-xs font-bold rounded-xl bg-cyan-700/80 hover:bg-cyan-600 text-white shadow-md transition-all flex items-center gap-1.5 cursor-pointer"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                            </svg>
+                            <span>+ Tarik Kabel FO</span>
                         </button>
                     </div>
                 </div>
@@ -1235,7 +1927,7 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                                 placeholder="Cari ODP / Pelanggan..."
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                className="bg-slate-900/90 border border-slate-700/80 text-white placeholder-slate-500 rounded-xl px-3 py-1.5 w-48 sm:w-60 focus:outline-none focus:border-cyan-500 text-xs"
+                                className="bg-slate-900/90 border border-slate-700/80 text-white placeholder-slate-500 rounded-xl px-3 py-1.5 w-44 sm:w-56 focus:outline-none focus:border-cyan-500 text-xs"
                             />
                             {searchQuery && (
                                 <button
@@ -1258,7 +1950,7 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                                 onChange={(e) => setShowCustomers(e.target.checked)}
                                 className="rounded bg-slate-800 border-slate-600 text-cyan-500 focus:ring-0 cursor-pointer"
                             />
-                            <span className="text-slate-300">Tampilkan Pelanggan</span>
+                            <span className="text-slate-300">Pelanggan</span>
                         </label>
 
                         {/* Toggle Audit Mode */}
@@ -1269,7 +1961,7 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                                 onChange={(e) => setShowAuditMode(e.target.checked)}
                                 className="rounded bg-slate-800 border-slate-600 text-cyan-500 focus:ring-0 cursor-pointer"
                             />
-                            <span className="text-slate-300">Audit OPM vs Desain</span>
+                            <span className="text-slate-300">Audit OPM</span>
                         </label>
 
                         {/* Reset Auto Layout Button */}
@@ -1329,290 +2021,1243 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                 </div>
             )}
 
-            {/* Interactive Schematic Diagram Canvas */}
-            <div
-                ref={canvasContainerRef}
-                onMouseDown={handleMouseDown}
-                onMouseMove={handleMouseMove}
-                onMouseUp={handleMouseUp}
-                className="relative w-full h-[680px] bg-[#070b14] border border-slate-800/90 rounded-2xl overflow-hidden select-none cursor-grab active:cursor-grabbing shadow-2xl"
-                style={{
-                    backgroundImage: `radial-gradient(circle, rgba(148, 163, 184, 0.08) 1px, transparent 1px)`,
-                    backgroundSize: '24px 24px',
-                }}
-            >
-                {isLoading && (
-                    <div className="absolute inset-0 bg-[#070b14]/80 backdrop-blur-sm z-50 flex items-center justify-center text-cyan-400 text-sm font-semibold">
-                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-cyan-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                        Memuat Topologi Fiber Optic & Pelanggan...
-                    </div>
-                )}
-
-                {/* SVG Connections Layer */}
-                <div
-                    className="absolute inset-0 origin-top-left transition-transform duration-75"
-                    style={{
-                        transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom})`,
-                    }}
-                >
-                    <svg className="absolute top-0 left-0 w-[4200px] h-[3600px] pointer-events-none">
-                        <defs>
-                            <linearGradient id="grad-feeder" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.8" />
-                                <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.9" />
-                            </linearGradient>
-                            <linearGradient id="grad-distribution" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.7" />
-                                <stop offset="100%" stopColor="#14b8a6" stopOpacity="0.9" />
-                            </linearGradient>
-                            <linearGradient id="grad-simulated" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" stopColor="#f59e0b" stopOpacity="0.8" />
-                                <stop offset="100%" stopColor="#ec4899" stopOpacity="0.8" />
-                            </linearGradient>
-                        </defs>
-
-                        {/* Render links between parents and children */}
-                        {flattenedNodes.map((parent) =>
-                            parent.children.map((child) => {
-                                const startX = parent.x + 160;
-                                const startY = parent.y;
-                                const endX = child.x;
-                                const endY = child.y;
-                                const dx = endX - startX;
-                                const ctrlDist = Math.max(35, Math.abs(dx) * 0.45);
-                                const ctrl1X = startX + (endX >= startX ? ctrlDist : -ctrlDist);
-                                const ctrl2X = endX - (endX >= startX ? ctrlDist : -ctrlDist);
-
-                                const pathD = `M ${startX} ${startY} C ${ctrl1X} ${startY}, ${ctrl2X} ${endY}, ${endX} ${endY}`;
-                                const isSim = child.isSimulated;
-                                const midX = (startX + endX) / 2;
-                                const midY = (startY + endY) / 2;
-                                const isFeeder = parent.type === 'olt';
-                                const strokeColor = isSim ? '#f59e0b' : isFeeder ? '#0284c7' : '#0d9488';
-                                const labelText = child.cableLabel;
-                                const labelWidth = Math.max(130, labelText.length * 6.5 + 20);
-
-                                return (
-                                    <g key={`edge-${parent.id}-${child.id}`}>
-                                        {/* Terminal port anchor dots */}
-                                        <circle cx={startX} cy={startY} r="3" fill="#38bdf8" />
-                                        <circle cx={endX} cy={endY} r="3" fill="#38bdf8" />
-
-                                        {/* Cable Curve */}
-                                        <path
-                                            d={pathD}
-                                            fill="none"
-                                            stroke={strokeColor}
-                                            strokeWidth={isFeeder ? 2.5 : 2}
-                                            strokeDasharray={isSim ? '6 4' : 'none'}
-                                            opacity={0.9}
-                                        />
-
-                                        {/* Capsule Cable Badge */}
-                                        <rect
-                                            x={midX - labelWidth / 2}
-                                            y={midY - 10}
-                                            width={labelWidth}
-                                            height={20}
-                                            rx={10}
-                                            fill="#080f1e"
-                                            stroke={isSim ? '#f59e0b' : '#1e3a5f'}
-                                            strokeWidth={1}
-                                        />
-                                        <text
-                                            x={midX}
-                                            y={midY + 3.5}
-                                            textAnchor="middle"
-                                            fill={isSim ? '#fcd34d' : '#7dd3fc'}
-                                            fontSize="9"
-                                            fontFamily="monospace"
-                                            fontWeight="600"
-                                        >
-                                            {labelText}
-                                        </text>
-                                    </g>
-                                );
-                            })
+            {/* Split Screen Layout: Left Canvas | Right Side Inspector Drawer */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+                {/* Left Column: Interactive Schematic Canvas */}
+                <div className={selectedNode ? 'lg:col-span-7 xl:col-span-8' : 'lg:col-span-12'}>
+                    <div
+                        ref={canvasContainerRef}
+                        onMouseDown={handleMouseDown}
+                        onMouseMove={handleMouseMove}
+                        onMouseUp={handleMouseUp}
+                        className="relative w-full h-[700px] bg-[#070b14] border border-slate-800/90 rounded-2xl overflow-hidden select-none cursor-grab active:cursor-grabbing shadow-2xl"
+                        style={{
+                            backgroundImage: `radial-gradient(circle, rgba(148, 163, 184, 0.08) 1px, transparent 1px)`,
+                            backgroundSize: '24px 24px',
+                        }}
+                    >
+                        {isLoading && (
+                            <div className="absolute inset-0 bg-[#070b14]/80 backdrop-blur-sm z-50 flex items-center justify-center text-cyan-400 text-sm font-semibold">
+                                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-cyan-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                Memuat Topologi Fiber Optic & Pelanggan...
+                            </div>
                         )}
 
-                        {/* Render links to Customers */}
-                        {showCustomers &&
-                            flattenedNodes.map((odp) => {
-                                if (odp.type === 'olt' || odp.customers.length === 0) return null;
-                                const startX = odp.x + 160;
-                                const startY = odp.y;
-                                const custCount = odp.customers.length;
+                        {/* SVG Connections Layer */}
+                        <div
+                            className="absolute inset-0 origin-top-left transition-transform duration-75"
+                            style={{
+                                transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom})`,
+                            }}
+                        >
+                            <svg className="absolute top-0 left-0 w-[4200px] h-[3600px] pointer-events-none">
+                                <defs>
+                                    <filter id="glow-gold" x="-20%" y="-20%" width="140%" height="140%">
+                                        <feDropShadow dx="0" dy="0" stdDeviation="3.5" floodColor="#f59e0b" floodOpacity="0.8" />
+                                    </filter>
+                                    <filter id="glow-cyan" x="-20%" y="-20%" width="140%" height="140%">
+                                        <feDropShadow dx="0" dy="0" stdDeviation="2.5" floodColor="#06b6d4" floodOpacity="0.5" />
+                                    </filter>
+                                </defs>
 
-                                return odp.customers.map((cust, idx) => {
-                                    const custX = odp.x + 195;
-                                    const custY = Math.round(odp.y - ((custCount - 1) * 32) / 2 + idx * 32);
-                                    const dropEval = evaluateCustomerDropStatus(cust, odp.calculatedPowerOut, idx + 1);
-                                    const dx = custX - startX;
-                                    const midX = startX + dx * 0.5;
-                                    const pathD = `M ${startX} ${startY} C ${midX} ${startY}, ${midX} ${custY}, ${custX} ${custY}`;
+                                {/* Render explicit cables */}
+                                {cables.map((cable) => {
+                                    const parent = nodeMap.get(cable.fromNodeId);
+                                    const child = nodeMap.get(cable.toNodeId);
+                                    if (!parent || !child) return null;
+
+                                    const startX = parent.x + 160;
+                                    const startY = parent.y;
+                                    const endX = child.x;
+                                    const endY = child.y;
+                                    const dx = endX - startX;
+                                    const ctrlDist = Math.max(35, Math.abs(dx) * 0.45);
+                                    const ctrl1X = startX + (endX >= startX ? ctrlDist : -ctrlDist);
+                                    const ctrl2X = endX - (endX >= startX ? ctrlDist : -ctrlDist);
+
+                                    const pathD = `M ${startX} ${startY} C ${ctrl1X} ${startY}, ${ctrl2X} ${endY}, ${endX} ${endY}`;
+                                    const isTraceActive = traceCableIds.has(cable.id);
+                                    const midX = (startX + endX) / 2;
+                                    const midY = (startY + endY) / 2;
+                                    const isFeeder = cable.cableType === 'Feeder' || parent.type === 'olt';
+
+                                    const strokeColor = isTraceActive
+                                        ? '#f59e0b'
+                                        : isFeeder
+                                            ? '#0284c7'
+                                            : '#0d9488';
+
+                                    const strokeWidth = isTraceActive ? 3.5 : (isFeeder ? 2.5 : 2);
+                                    const labelText = `${cable.name} • ${cable.totalCores}C • ${cable.lengthMeters}m`;
+                                    const labelWidth = Math.max(130, labelText.length * 6.5 + 20);
 
                                     return (
-                                        <path
-                                            key={`cust-edge-${odp.id}-${cust.id}`}
-                                            d={pathD}
-                                            fill="none"
-                                            stroke={dropEval.strokeColor}
-                                            strokeWidth={1.5}
-                                            strokeDasharray="4 3"
-                                            opacity={0.85}
-                                        />
+                                        <g key={`cable-${cable.id}`}>
+                                            <circle cx={startX} cy={startY} r="3" fill={isTraceActive ? '#f59e0b' : '#38bdf8'} />
+                                            <circle cx={endX} cy={endY} r="3" fill={isTraceActive ? '#f59e0b' : '#38bdf8'} />
+
+                                            <path
+                                                d={pathD}
+                                                fill="none"
+                                                stroke={strokeColor}
+                                                strokeWidth={strokeWidth}
+                                                opacity={isTraceActive ? 1 : 0.85}
+                                                filter={isTraceActive ? 'url(#glow-gold)' : undefined}
+                                            />
+
+                                            <rect
+                                                x={midX - labelWidth / 2}
+                                                y={midY - 10}
+                                                width={labelWidth}
+                                                height={20}
+                                                rx={10}
+                                                fill="#080f1e"
+                                                stroke={isTraceActive ? '#f59e0b' : '#1e3a5f'}
+                                                strokeWidth={isTraceActive ? 1.5 : 1}
+                                            />
+                                            <text
+                                                x={midX}
+                                                y={midY + 3.5}
+                                                textAnchor="middle"
+                                                fill={isTraceActive ? '#fbbf24' : '#7dd3fc'}
+                                                fontSize="9"
+                                                fontFamily="monospace"
+                                                fontWeight={isTraceActive ? '700' : '600'}
+                                            >
+                                                {labelText}
+                                            </text>
+                                        </g>
                                     );
-                                });
-                            })}
-                    </svg>
+                                })}
 
-                    {/* HTML Node Cards Layer */}
-                    <div className="absolute top-0 left-0 w-[4200px] h-[3600px] pointer-events-none">
-                        {flattenedNodes.map((node) => {
-                            const isSelected = selectedNode?.id === node.id;
-                            const isNodeDragging = draggingNodeId === node.id;
-                            const isSearchMatch = searchQuery
-                                ? node.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                                node.customers.some((c) => c.name.toLowerCase().includes(searchQuery.toLowerCase()))
-                                : false;
+                                {/* Fallback render for child nodes without explicit cable */}
+                                {flattenedNodes.map((parent) =>
+                                    parent.children.map((child) => {
+                                        const hasExplicit = cables.some(
+                                            (c) => c.fromNodeId === parent.id && c.toNodeId === child.id
+                                        );
+                                        if (hasExplicit) return null;
 
-                            const category = resolveNodeCategory(node.name, node.type, node.isSimulated);
-                            const effectivePonCap = useDemoTopology ? 16 : oltPonCapacity;
-                            const badgeText = category === 'OLT'
-                                ? `OLT • ${node.usedPorts}/${effectivePonCap}`
-                                : `${category} • ${node.usedPorts}/${node.totalPorts}`;
+                                        const startX = parent.x + 160;
+                                        const startY = parent.y;
+                                        const endX = child.x;
+                                        const endY = child.y;
+                                        const dx = endX - startX;
+                                        const ctrlDist = Math.max(35, Math.abs(dx) * 0.45);
+                                        const ctrl1X = startX + (endX >= startX ? ctrlDist : -ctrlDist);
+                                        const ctrl2X = endX - (endX >= startX ? ctrlDist : -ctrlDist);
+                                        const pathD = `M ${startX} ${startY} C ${ctrl1X} ${startY}, ${ctrl2X} ${endY}, ${endX} ${endY}`;
+                                        const isSim = child.isSimulated;
+                                        const midX = (startX + endX) / 2;
+                                        const midY = (startY + endY) / 2;
+                                        const isFeeder = parent.type === 'olt';
+                                        const strokeColor = isSim ? '#f59e0b' : isFeeder ? '#0284c7' : '#0d9488';
+                                        const labelText = child.cableLabel;
+                                        const labelWidth = Math.max(130, labelText.length * 6.5 + 20);
 
-                            const metricText = node.type === 'olt'
-                                ? 'Root Tx'
-                                : `${node.calculatedPowerOut} dB`;
+                                        return (
+                                            <g key={`fallback-edge-${parent.id}-${child.id}`}>
+                                                <circle cx={startX} cy={startY} r="3" fill="#38bdf8" />
+                                                <circle cx={endX} cy={endY} r="3" fill="#38bdf8" />
+                                                <path
+                                                    d={pathD}
+                                                    fill="none"
+                                                    stroke={strokeColor}
+                                                    strokeWidth={2}
+                                                    strokeDasharray={isSim ? '6 4' : 'none'}
+                                                    opacity={0.85}
+                                                />
+                                                <rect
+                                                    x={midX - labelWidth / 2}
+                                                    y={midY - 10}
+                                                    width={labelWidth}
+                                                    height={20}
+                                                    rx={10}
+                                                    fill="#080f1e"
+                                                    stroke={isSim ? '#f59e0b' : '#1e3a5f'}
+                                                    strokeWidth={1}
+                                                />
+                                                <text
+                                                    x={midX}
+                                                    y={midY + 3.5}
+                                                    textAnchor="middle"
+                                                    fill={isSim ? '#fcd34d' : '#7dd3fc'}
+                                                    fontSize="9"
+                                                    fontFamily="monospace"
+                                                    fontWeight="600"
+                                                >
+                                                    {labelText}
+                                                </text>
+                                            </g>
+                                        );
+                                    })
+                                )}
 
-                            return (
-                                <React.Fragment key={node.id}>
-                                    <div
-                                        onMouseDown={(e) => handleNodeMouseDown(e, node)}
-                                        className={`group interactive-node pointer-events-auto absolute p-2 rounded-2xl transition-all select-none shadow-xl cursor-grab active:cursor-grabbing flex flex-col justify-between items-center text-center ${isNodeDragging
-                                            ? 'ring-4 ring-cyan-400/50 scale-[1.02] z-40 shadow-2xl opacity-95 bg-[#0e172a]'
-                                            : isSelected
-                                                ? 'border-2 border-dashed border-amber-400 shadow-[0_0_20px_rgba(251,191,36,0.45)] ring-2 ring-amber-400/20 bg-[#0c1424] z-30'
-                                                : `${getCardBorderClass(category, node.isSimulated)} bg-[#0c1424] hover:border-slate-500/80 hover:shadow-cyan-900/30`
-                                            } ${isSearchMatch ? 'ring-2 ring-yellow-400' : ''}`}
-                                        style={{
-                                            left: `${node.x}px`,
-                                            top: `${node.y - 37}px`,
-                                            width: '160px',
-                                            height: '74px',
-                                        }}
-                                    >
-                                        {/* Top Badge with subtle hover drag handle and action buttons */}
-                                        <div className="w-full flex items-center justify-between px-1 relative">
-                                            <span className="opacity-0 group-hover:opacity-60 text-slate-400 text-[10px] cursor-grab" title="Geser node">
-                                                ⋮⋮
-                                            </span>
-                                            <span className={`text-[10px] font-mono font-semibold tracking-wider ${getBadgeColorClass(category)}`}>
-                                                {badgeText}
-                                            </span>
-                                            <div className="opacity-0 group-hover:opacity-100 flex items-center gap-1 transition-opacity">
-                                                {node.type !== 'olt' && (
-                                                    <button
-                                                        type="button"
-                                                        onClick={(e) => {
-                                                            e.stopPropagation();
-                                                            setDeletingNode(node);
-                                                        }}
-                                                        className="text-slate-400 hover:text-rose-400 text-xs p-0.5 cursor-pointer"
-                                                        title="Hapus"
-                                                    >
-                                                        &times;
-                                                    </button>
-                                                )}
-                                            </div>
-                                        </div>
+                                {/* Render links to Customers */}
+                                {showCustomers &&
+                                    flattenedNodes.map((odp) => {
+                                        if (odp.type === 'olt' || odp.customers.length === 0) return null;
+                                        const startX = odp.x + 160;
+                                        const startY = odp.y;
+                                        const custCount = odp.customers.length;
 
-                                        {/* Node Name */}
-                                        <div className="font-bold text-[13px] text-white tracking-tight truncate w-full px-1" title={node.name}>
-                                            {node.name}
-                                        </div>
-
-                                        {/* Metric Subtitle */}
-                                        <div className={`text-[11px] font-mono font-medium ${getMetricColorClass(node)}`}>
-                                            {metricText}
-                                        </div>
-                                    </div>
-
-                                    {/* Customer Port Chips */}
-                                    {showCustomers &&
-                                        node.customers.map((cust, idx) => {
-                                            const custCount = node.customers.length;
-                                            const custX = node.x + 195;
-                                            const custY = Math.round(node.y - ((custCount - 1) * 32) / 2 + idx * 32);
-                                            const dropEval = evaluateCustomerDropStatus(cust, node.calculatedPowerOut, idx + 1);
+                                        return odp.customers.map((cust, idx) => {
+                                            const custX = odp.x + 195;
+                                            const custY = Math.round(odp.y - ((custCount - 1) * 32) / 2 + idx * 32);
+                                            const dropEval = evaluateCustomerDropStatus(cust, odp.calculatedPowerOut, idx + 1);
+                                            const dx = custX - startX;
+                                            const midX = startX + dx * 0.5;
+                                            const pathD = `M ${startX} ${startY} C ${midX} ${startY}, ${midX} ${custY}, ${custX} ${custY}`;
 
                                             return (
-                                                <div
-                                                    key={`cust-chip-${node.id}-${cust.id}`}
-                                                    className={`interactive-node pointer-events-auto absolute px-2.5 py-1 rounded-xl border text-xs shadow-sm flex items-center justify-between gap-1.5 transition-all select-none ${dropEval.pillBg} ${dropEval.pillBorder}`}
-                                                    style={{
-                                                        left: `${custX}px`,
-                                                        top: `${custY - 15}px`,
-                                                        width: '170px',
-                                                        height: '30px',
-                                                    }}
-                                                    title={`Pelanggan: ${cust.name} | Status: ${cust.status} | Estimasi: ${dropEval.label}`}
-                                                >
-                                                    <div className="flex items-center gap-1.5 truncate">
-                                                        <span className={`font-mono font-bold text-[10px] ${dropEval.portText}`}>
-                                                            P#{idx + 1}
-                                                        </span>
-                                                        <span className="truncate font-medium text-slate-100 text-xs" title={cust.name}>
-                                                            {cust.name}
-                                                        </span>
+                                                <path
+                                                    key={`cust-edge-${odp.id}-${cust.id}`}
+                                                    d={pathD}
+                                                    fill="none"
+                                                    stroke={dropEval.strokeColor}
+                                                    strokeWidth={1.5}
+                                                    strokeDasharray="4 3"
+                                                    opacity={0.85}
+                                                />
+                                            );
+                                        });
+                                    })}
+                            </svg>
+
+                            {/* HTML Node Cards Layer */}
+                            <div className="absolute top-0 left-0 w-[4200px] h-[3600px] pointer-events-none">
+                                {flattenedNodes.map((node) => {
+                                    const isSelected = selectedNode?.id === node.id;
+                                    const isNodeDragging = draggingNodeId === node.id;
+                                    const isSearchMatch = searchQuery
+                                        ? node.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                        node.customers.some((c) => c.name.toLowerCase().includes(searchQuery.toLowerCase()))
+                                        : false;
+
+                                    const category = resolveNodeCategory(node.name, node.type, node.isSimulated);
+                                    const effectivePonCap = useDemoTopology ? 16 : oltPonCapacity;
+                                    const badgeText = category === 'OLT'
+                                        ? `OLT • ${node.usedPorts}/${effectivePonCap}`
+                                        : `${category} • ${node.usedPorts}/${node.totalPorts}`;
+
+                                    const metricText = node.type === 'olt'
+                                        ? 'Root Tx'
+                                        : `${node.calculatedPowerOut} dB`;
+
+                                    return (
+                                        <React.Fragment key={node.id}>
+                                            <div
+                                                onMouseDown={(e) => handleNodeMouseDown(e, node)}
+                                                className={`group interactive-node pointer-events-auto absolute p-2 rounded-2xl transition-all select-none shadow-xl cursor-grab active:cursor-grabbing flex flex-col justify-between items-center text-center ${isNodeDragging
+                                                    ? 'ring-4 ring-cyan-400/50 scale-[1.02] z-40 shadow-2xl opacity-95 bg-[#0e172a]'
+                                                    : isSelected
+                                                        ? 'border-2 border-dashed border-amber-400 shadow-[0_0_20px_rgba(251,191,36,0.45)] ring-2 ring-amber-400/20 bg-[#0c1424] z-30'
+                                                        : `${getCardBorderClass(category, node.isSimulated)} bg-[#0c1424] hover:border-slate-500/80 hover:shadow-cyan-900/30`
+                                                    } ${isSearchMatch ? 'ring-2 ring-yellow-400' : ''}`}
+                                                style={{
+                                                    left: `${node.x}px`,
+                                                    top: `${node.y - 37}px`,
+                                                    width: '160px',
+                                                    height: '74px',
+                                                }}
+                                            >
+                                                {/* Top Badge with subtle hover drag handle and action buttons */}
+                                                <div className="w-full flex items-center justify-between px-1 relative">
+                                                    <span className="opacity-0 group-hover:opacity-60 text-slate-400 text-[10px] cursor-grab" title="Geser node">
+                                                        ⋮⋮
+                                                    </span>
+                                                    <span className={`text-[10px] font-mono font-semibold tracking-wider ${getBadgeColorClass(category)}`}>
+                                                        {badgeText}
+                                                    </span>
+                                                    <div className="opacity-0 group-hover:opacity-100 flex items-center gap-1 transition-opacity">
+                                                        {node.type !== 'olt' && (
+                                                            <button
+                                                                type="button"
+                                                                onClick={(e) => {
+                                                                    e.stopPropagation();
+                                                                    setDeletingNode(node);
+                                                                }}
+                                                                className="text-slate-400 hover:text-rose-400 text-xs p-0.5 cursor-pointer"
+                                                                title="Hapus"
+                                                            >
+                                                                &times;
+                                                            </button>
+                                                        )}
                                                     </div>
                                                 </div>
-                                            );
-                                        })}
-                                </React.Fragment>
-                            );
-                        })}
+
+                                                {/* Node Name */}
+                                                <div className="font-bold text-[13px] text-white tracking-tight truncate w-full px-1" title={node.name}>
+                                                    {node.name}
+                                                </div>
+
+                                                {/* Metric Subtitle */}
+                                                <div className={`text-[11px] font-mono font-medium ${getMetricColorClass(node)}`}>
+                                                    {metricText}
+                                                </div>
+                                            </div>
+
+                                            {/* Customer Port Chips */}
+                                            {showCustomers &&
+                                                node.customers.map((cust, idx) => {
+                                                    const custCount = node.customers.length;
+                                                    const custX = node.x + 195;
+                                                    const custY = Math.round(node.y - ((custCount - 1) * 32) / 2 + idx * 32);
+                                                    const dropEval = evaluateCustomerDropStatus(cust, node.calculatedPowerOut, idx + 1);
+
+                                                    return (
+                                                        <div
+                                                            key={`cust-chip-${node.id}-${cust.id}`}
+                                                            className={`interactive-node pointer-events-auto absolute px-2.5 py-1 rounded-xl border text-xs shadow-sm flex items-center justify-between gap-1.5 transition-all select-none ${dropEval.pillBg} ${dropEval.pillBorder}`}
+                                                            style={{
+                                                                left: `${custX}px`,
+                                                                top: `${custY - 15}px`,
+                                                                width: '170px',
+                                                                height: '30px',
+                                                            }}
+                                                            title={`Pelanggan: ${cust.name} | Status: ${cust.status} | Estimasi: ${dropEval.label}`}
+                                                        >
+                                                            <div className="flex items-center gap-1.5 truncate">
+                                                                <span className={`font-mono font-bold text-[10px] ${dropEval.portText}`}>
+                                                                    P#{idx + 1}
+                                                                </span>
+                                                                <span className="truncate font-medium text-slate-100 text-xs" title={cust.name}>
+                                                                    {cust.name}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    );
+                                                })}
+                                        </React.Fragment>
+                                    );
+                                })}
+                            </div>
+                        </div>
+
+                        {/* Floating Canvas Helper Legend */}
+                        <div className="absolute bottom-4 left-4 bg-slate-900/90 backdrop-blur-md border border-slate-800 rounded-xl px-4 py-2 text-[11px] text-slate-400 flex items-center gap-3.5 shadow-lg flex-wrap">
+                            <span className="flex items-center gap-1.5">
+                                <span className="w-2.5 h-2.5 rounded-full bg-sky-400"></span>
+                                <span>OLT</span>
+                            </span>
+                            <span className="flex items-center gap-1.5">
+                                <span className="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
+                                <span>ODC</span>
+                            </span>
+                            <span className="flex items-center gap-1.5">
+                                <span className="w-2.5 h-2.5 rounded-full bg-indigo-400"></span>
+                                <span>JB</span>
+                            </span>
+                            <span className="flex items-center gap-1.5">
+                                <span className="w-2.5 h-2.5 rounded-full bg-teal-400"></span>
+                                <span>ODP</span>
+                            </span>
+                            <span className="flex items-center gap-1.5">
+                                <span className="w-4 h-1 bg-amber-400 rounded-full"></span>
+                                <span className="text-amber-300 font-semibold">Jalur Trace Aktif</span>
+                            </span>
+                            <span className="text-slate-500">|</span>
+                            <span className="text-cyan-300 font-medium">Drag node untuk atur posisi</span>
+                        </div>
                     </div>
                 </div>
 
-                {/* Floating Canvas Helper Legend */}
-                <div className="absolute bottom-4 left-4 bg-slate-900/90 backdrop-blur-md border border-slate-800 rounded-xl px-4 py-2 text-[11px] text-slate-400 flex items-center gap-3.5 shadow-lg flex-wrap">
-                    <span className="flex items-center gap-1.5">
-                        <span className="w-2.5 h-2.5 rounded-full bg-sky-400"></span>
-                        <span>Feeder (24C)</span>
-                    </span>
-                    <span className="flex items-center gap-1.5">
-                        <span className="w-2.5 h-2.5 rounded-full bg-teal-400"></span>
-                        <span>Distribusi (12C)</span>
-                    </span>
-                    <span className="flex items-center gap-1.5">
-                        <span className="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
-                        <span>Drop Optimal</span>
-                    </span>
-                    <span className="flex items-center gap-1.5">
-                        <span className="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
-                        <span>Drop Waspada</span>
-                    </span>
-                    <span className="flex items-center gap-1.5">
-                        <span className="w-2.5 h-2.5 rounded-full bg-rose-400"></span>
-                        <span>Drop Kritis</span>
-                    </span>
-                    <span className="text-slate-500">|</span>
-                    <span className="text-cyan-300 font-medium">Tips: Node dapat digeser bebas</span>
-                    <button
-                        type="button"
-                        onClick={handleResetPositions}
-                        className="px-2 py-0.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 text-[10px] font-semibold border border-slate-700 transition-colors cursor-pointer"
-                        title="Kembalikan semua node ke posisi otomatis"
+                {/* Right Column: Side Inspector Drawer with 3 Tabs [Mapping] [Kabel (N)] [Splice (M)] */}
+                {selectedNode && (
+                    <div
+                        ref={inspectorRef}
+                        className="lg:col-span-5 xl:col-span-4 bg-[#0b1220] border border-slate-800 rounded-2xl p-5 shadow-2xl flex flex-col gap-4 max-h-[700px] overflow-y-auto text-white sticky top-4"
                     >
-                        Atur Otomatis
-                    </button>
-                </div>
+                        {/* Drawer Header */}
+                        <div className="flex items-center justify-between pb-3 border-b border-slate-800/80">
+                            <div>
+                                <div className="flex items-center gap-2">
+                                    <h3 className="text-base font-bold text-white tracking-tight">{selectedNode.name}</h3>
+                                    <span className={`text-[10px] font-mono px-2 py-0.5 rounded bg-slate-900 border border-slate-700/80 font-bold ${getBadgeColorClass(resolveNodeCategory(selectedNode.name, selectedNode.type, selectedNode.isSimulated))}`}>
+                                        {resolveNodeCategory(selectedNode.name, selectedNode.type, selectedNode.isSimulated)}
+                                    </span>
+                                </div>
+                                <p className="text-[11px] text-slate-400 truncate max-w-[260px] mt-0.5">
+                                    {selectedNode.address || 'Alamat fisik belum diatur'}
+                                </p>
+                            </div>
+                            <button
+                                type="button"
+                                onClick={() => setSelectedNode(null)}
+                                className="text-slate-400 hover:text-white text-xl p-1 leading-none cursor-pointer"
+                                title="Tutup Inspector"
+                            >
+                                &times;
+                            </button>
+                        </div>
+
+                        {/* 3 Tabs Header: [Mapping] [Kabel (N)] [Splice (M)] */}
+                        <div className="grid grid-cols-3 gap-1 bg-slate-900/90 border border-slate-800 p-1 rounded-xl text-xs font-semibold">
+                            <button
+                                type="button"
+                                onClick={() => setActiveInspectorTab('mapping')}
+                                className={`py-1.5 px-2 rounded-lg text-center transition-all cursor-pointer ${activeInspectorTab === 'mapping'
+                                    ? 'bg-cyan-600 text-white font-bold shadow-sm'
+                                    : 'text-slate-400 hover:text-slate-200'
+                                    }`}
+                            >
+                                Mapping
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => setActiveInspectorTab('kabel')}
+                                className={`py-1.5 px-2 rounded-lg text-center transition-all cursor-pointer ${activeInspectorTab === 'kabel'
+                                    ? 'bg-cyan-600 text-white font-bold shadow-sm'
+                                    : 'text-slate-400 hover:text-slate-200'
+                                    }`}
+                            >
+                                Kabel ({nodeAllCables.length})
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => setActiveInspectorTab('splice')}
+                                className={`py-1.5 px-2 rounded-lg text-center transition-all cursor-pointer ${activeInspectorTab === 'splice'
+                                    ? 'bg-cyan-600 text-white font-bold shadow-sm'
+                                    : 'text-slate-400 hover:text-slate-200'
+                                    }`}
+                            >
+                                Splice ({nodeSplices.length})
+                            </button>
+                        </div>
+
+                        {/* Tab 1: Mapping Details */}
+                        {activeInspectorTab === 'mapping' && (
+                            <div className="space-y-4 animate-in fade-in">
+                                {selectedNode.type === 'odc' ? (
+                                    <div className="grid grid-cols-2 gap-2.5 text-xs font-mono">
+                                        <div className="p-2.5 rounded-xl bg-slate-900/90 border border-slate-800">
+                                            <span className="text-[10px] text-slate-400 block">Power In (Feeder)</span>
+                                            <span className="text-sm font-bold text-emerald-400">
+                                                +{selectedNode.calculatedPowerIn} dBm
+                                            </span>
+                                            <span className="text-[9px] text-slate-500 block">Direct OLT Tx</span>
+                                        </div>
+                                        <div className="p-2.5 rounded-xl bg-slate-900/90 border border-slate-800">
+                                            <span className="text-[10px] text-slate-400 block mb-0.5">Splitter Internal</span>
+                                            <select
+                                                value={odcSplitterMap[selectedNode.id] || '1:4'}
+                                                onChange={(e) => setOdcSplitterMap((prev) => ({ ...prev, [selectedNode.id]: e.target.value }))}
+                                                className="bg-slate-800 border border-slate-700 rounded px-1.5 py-0.5 text-xs text-cyan-300 font-mono w-full focus:outline-none cursor-pointer"
+                                            >
+                                                <option value="direct">Direct 1:1 (0 dB)</option>
+                                                <option value="1:2">PLC 1:2 (3.7 dB)</option>
+                                                <option value="1:4">PLC 1:4 (7.2 dB)</option>
+                                                <option value="1:8">PLC 1:8 (10.5 dB)</option>
+                                            </select>
+                                        </div>
+                                        <div className="p-2.5 rounded-xl bg-slate-900/90 border border-slate-800">
+                                            <span className="text-[10px] text-slate-400 block">Power Out (ke ODP)</span>
+                                            <span className="text-sm font-bold text-cyan-400">
+                                                {selectedNode.calculatedPowerOut} dBm
+                                            </span>
+                                        </div>
+                                        <div className="p-2.5 rounded-xl bg-slate-900/90 border border-slate-800">
+                                            <span className="text-[10px] text-slate-400 block">Daya Ukur Riil (OPM)</span>
+                                            <span className="text-sm font-bold text-slate-200">
+                                                {selectedNode.powerOut != null ? `${selectedNode.powerOut} dBm` : 'Belum diukur'}
+                                            </span>
+                                        </div>
+                                    </div>
+                                ) : selectedNode.type === 'olt' ? (
+                                    <div className="grid grid-cols-2 gap-2.5 text-xs font-mono">
+                                        <div className="p-2.5 rounded-xl bg-slate-900/90 border border-slate-800">
+                                            <span className="text-[10px] text-slate-400 block">Kapasitas PON</span>
+                                            <span className="text-sm font-bold text-amber-300">
+                                                {selectedNode.usedPorts} / {selectedNode.totalPorts} PON
+                                            </span>
+                                        </div>
+                                        <div className="p-2.5 rounded-xl bg-slate-900/90 border border-slate-800">
+                                            <span className="text-[10px] text-slate-400 block">Power Tx SFP</span>
+                                            <span className="text-sm font-bold text-cyan-400">
+                                                +{selectedNode.powerOut} dBm
+                                            </span>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="grid grid-cols-2 gap-2.5 text-xs font-mono">
+                                        <div className="p-2.5 rounded-xl bg-slate-900/90 border border-slate-800">
+                                            <span className="text-[10px] text-slate-400 block">Utilisasi Port</span>
+                                            <span className="text-sm font-bold text-slate-100">
+                                                {selectedNode.usedPorts} / {selectedNode.totalPorts} Port
+                                            </span>
+                                        </div>
+                                        <div className="p-2.5 rounded-xl bg-slate-900/90 border border-slate-800">
+                                            <span className="text-[10px] text-slate-400 block">Daya Hitungan Desain</span>
+                                            <span className="text-sm font-bold text-cyan-400">
+                                                {selectedNode.calculatedPowerOut} dBm
+                                            </span>
+                                        </div>
+                                        <div className="p-2.5 rounded-xl bg-slate-900/90 border border-slate-800">
+                                            <span className="text-[10px] text-slate-400 block">Daya Ukur Riil (OPM)</span>
+                                            <span className="text-sm font-bold text-slate-200">
+                                                {selectedNode.powerOut != null ? `${selectedNode.powerOut} dBm` : 'Belum diukur'}
+                                            </span>
+                                        </div>
+                                        <div className="p-2.5 rounded-xl bg-slate-900/90 border border-slate-800">
+                                            <span className="text-[10px] text-slate-400 block">Status Akurasi Optik</span>
+                                            <span className={`text-[11px] font-bold ${evaluateOpticalStatus(selectedNode.calculatedPowerOut).color}`}>
+                                                {evaluateOpticalStatus(selectedNode.calculatedPowerOut).label}
+                                            </span>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Action Buttons */}
+                                <div className="flex flex-col gap-2 pt-2 border-t border-slate-800 text-xs">
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            setPlannerParentId(selectedNode.id);
+                                            setPlannerName(`ODP-CABANG-${odps.length + 1}`);
+                                            setIsPlannerOpen(true);
+                                        }}
+                                        className="w-full py-2 px-3 rounded-xl bg-cyan-600 hover:bg-cyan-500 font-bold text-white transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-md"
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                                        </svg>
+                                        <span>+ Rencanakan Tarikan ODP Baru</span>
+                                    </button>
+
+                                    {selectedNode.location && (
+                                        <button
+                                            type="button"
+                                            onClick={() => window.open(`https://www.google.com/maps?q=${selectedNode.location?.lat},${selectedNode.location?.lng}`, '_blank')}
+                                            className="w-full py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold transition-colors flex items-center justify-center gap-1.5 cursor-pointer border border-slate-700"
+                                        >
+                                            <span>Buka di Google Maps</span>
+                                        </button>
+                                    )}
+
+                                    {selectedNode.type !== 'olt' && (
+                                        <button
+                                            type="button"
+                                            onClick={() => setDeletingNode(selectedNode)}
+                                            className="w-full py-2 px-3 rounded-xl bg-rose-950/80 hover:bg-rose-900 text-rose-300 border border-rose-500/40 font-semibold transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                                        >
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                            </svg>
+                                            <span>Hapus Node {selectedNode.name}</span>
+                                        </button>
+                                    )}
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Tab 2: Kabel FO Terhubung (IN & OUT cards + TIA-598 12 Core Pills) */}
+                        {activeInspectorTab === 'kabel' && (
+                            <div className="space-y-3.5 animate-in fade-in">
+                                <div className="flex items-center justify-between">
+                                    <span className="text-xs font-bold text-slate-200">Kabel FO Terhubung</span>
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            setNewCableFromNode(selectedNode.id);
+                                            setNewCableToNode('');
+                                            setNewCableName(`DST-${selectedNode.name.replace(/[^A-Za-z0-9]/g, '')}-BARU`);
+                                            setIsAddCableModalOpen(true);
+                                        }}
+                                        className="text-[11px] font-semibold text-amber-400 hover:text-amber-300 transition-colors flex items-center gap-1 cursor-pointer"
+                                    >
+                                        <span>+ Buat Kabel Keluar</span>
+                                    </button>
+                                </div>
+
+                                {nodeAllCables.length === 0 ? (
+                                    <div className="p-4 rounded-xl bg-slate-900/60 border border-dashed border-slate-800 text-center text-xs text-slate-400">
+                                        <p>Belum ada kabel FO yang terhubung ke node ini.</p>
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                setNewCableFromNode('root-olt');
+                                                setNewCableToNode(selectedNode.id);
+                                                setNewCableName(`FDR-OLT-${selectedNode.name.replace(/[^A-Za-z0-9]/g, '')}`);
+                                                setIsAddCableModalOpen(true);
+                                            }}
+                                            className="mt-2.5 px-3 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-semibold cursor-pointer"
+                                        >
+                                            + Sambungkan Kabel Masuk
+                                        </button>
+                                    </div>
+                                ) : (
+                                    nodeAllCables.map((cable) => {
+                                        const isIncoming = cable.toNodeId === selectedNode.id;
+                                        const fromNode = nodeMap.get(cable.fromNodeId);
+                                        const toNode = nodeMap.get(cable.toNodeId);
+                                        const usedCores = countCableUsedCores(cable.id, splices);
+                                        const totalTubes = cable.tubesCount || Math.max(1, Math.ceil(cable.totalCores / 12));
+
+                                        return (
+                                            <div
+                                                key={`cable-card-${cable.id}`}
+                                                className="p-3.5 rounded-xl bg-[#0c1527] border border-slate-800/90 shadow-md space-y-2.5"
+                                            >
+                                                {/* Header Row */}
+                                                <div className="flex items-center justify-between">
+                                                    <div className="flex items-center gap-2">
+                                                        <span className={`text-[10px] font-black uppercase px-2 py-0.5 rounded font-mono ${isIncoming ? 'bg-sky-950 text-sky-300 border border-sky-500/40' : 'bg-emerald-950 text-emerald-300 border border-emerald-500/40'}`}>
+                                                            {isIncoming ? 'IN' : 'OUT'} • {cable.name}
+                                                        </span>
+                                                    </div>
+                                                    <div className="flex items-center gap-2">
+                                                        <span className="text-[11px] font-mono font-bold text-emerald-400">
+                                                            {usedCores}/{cable.totalCores} Core
+                                                        </span>
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => setDeletingCable(cable)}
+                                                            className="text-slate-500 hover:text-rose-400 text-xs p-0.5 cursor-pointer"
+                                                            title="Hapus Kabel"
+                                                        >
+                                                            &times;
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                                {/* Subtitle Details */}
+                                                <p className="text-[11px] text-slate-400 font-sans">
+                                                    {isIncoming ? `Dari ${fromNode?.name || cable.fromNodeId}` : `Ke ${toNode?.name || cable.toNodeId}`}
+                                                    {' • '}
+                                                    {totalTubes} Tube × 12 Core • {cable.lengthMeters}m
+                                                </p>
+
+                                                {/* Tube and Core Matrix with TIA-598 Standard Colors */}
+                                                <div className="space-y-2 pt-1">
+                                                    {Array.from({ length: totalTubes }).map((_, tubeIdx) => {
+                                                        const tubeNum = tubeIdx + 1;
+                                                        const tubeColor = getTubeColor(tubeNum);
+
+                                                        return (
+                                                            <div key={`cable-${cable.id}-tube-${tubeNum}`} className="space-y-1">
+                                                                {totalTubes > 1 && (
+                                                                    <div className="flex items-center gap-1.5 text-[10px] text-slate-300 font-semibold">
+                                                                        <span
+                                                                            className="w-2 h-2 rounded-full ring-1 ring-white/30"
+                                                                            style={{ backgroundColor: tubeColor.hex }}
+                                                                        />
+                                                                        <span>Tube {tubeNum} ({tubeColor.name})</span>
+                                                                    </div>
+                                                                )}
+
+                                                                {/* 12 Core Pills */}
+                                                                <div className="grid grid-cols-6 sm:grid-cols-12 gap-1">
+                                                                    {Array.from({ length: 12 }).map((__, coreIdx) => {
+                                                                        const coreNum = coreIdx + 1;
+                                                                        const coreColor = getCoreColor(coreNum);
+                                                                        const spliceStatus = isCoreSpliced(cable.id, tubeNum, coreNum, splices, selectedNode.id);
+
+                                                                        return (
+                                                                            <button
+                                                                                key={`core-btn-${cable.id}-${tubeNum}-${coreNum}`}
+                                                                                type="button"
+                                                                                onClick={() => {
+                                                                                    if (isIncoming) {
+                                                                                        setNewSpliceFromCableId(cable.id);
+                                                                                        setNewSpliceFromTube(tubeNum);
+                                                                                        setNewSpliceFromCore(coreNum);
+                                                                                        if (nodeOutgoingCables.length > 0) {
+                                                                                            setNewSpliceToCableId(nodeOutgoingCables[0].id);
+                                                                                        }
+                                                                                    } else {
+                                                                                        setNewSpliceToCableId(cable.id);
+                                                                                        setNewSpliceToTube(tubeNum);
+                                                                                        setNewSpliceToCore(coreNum);
+                                                                                        if (nodeIncomingCables.length > 0) {
+                                                                                            setNewSpliceFromCableId(nodeIncomingCables[0].id);
+                                                                                        }
+                                                                                    }
+                                                                                    setIsAddSpliceModalOpen(true);
+                                                                                }}
+                                                                                title={`Tube ${tubeNum} Core ${coreNum} (${coreColor.name}): ${spliceStatus.isSpliced ? 'Terpakai (Spliced)' : 'Idle / Tersedia'}`}
+                                                                                className="relative h-6 flex items-center justify-center rounded-md font-mono text-[10px] font-bold border transition-transform hover:scale-105 cursor-pointer shadow-sm"
+                                                                                style={{
+                                                                                    backgroundColor: coreColor.hex,
+                                                                                    color: coreColor.textColor,
+                                                                                    borderColor: spliceStatus.isSpliced ? '#22c55e' : 'rgba(255,255,255,0.2)',
+                                                                                }}
+                                                                            >
+                                                                                <span>{coreNum}</span>
+                                                                                {/* Active dot indicator on spliced cores */}
+                                                                                <span
+                                                                                    className={`absolute top-0.5 right-0.5 w-1.5 h-1.5 rounded-full ${spliceStatus.isSpliced
+                                                                                        ? 'bg-emerald-300 ring-1 ring-black'
+                                                                                        : 'bg-black/40 border border-white/30'
+                                                                                        }`}
+                                                                                />
+                                                                            </button>
+                                                                        );
+                                                                    })}
+                                                                </div>
+                                                            </div>
+                                                        );
+                                                    })}
+                                                </div>
+                                            </div>
+                                        );
+                                    })
+                                )}
+                            </div>
+                        )}
+
+                        {/* Tab 3: Daftar Sambungan Splice (Joint Matrix) */}
+                        {activeInspectorTab === 'splice' && (
+                            <div className="space-y-3.5 animate-in fade-in">
+                                <div className="flex items-center justify-between">
+                                    <span className="text-xs font-bold text-slate-200">Manajemen Sambungan Splice</span>
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            if (nodeIncomingCables.length > 0) setNewSpliceFromCableId(nodeIncomingCables[0].id);
+                                            if (nodeOutgoingCables.length > 0) setNewSpliceToCableId(nodeOutgoingCables[0].id);
+                                            setIsAddSpliceModalOpen(true);
+                                        }}
+                                        className="text-[11px] font-semibold text-cyan-400 hover:text-cyan-300 transition-colors flex items-center gap-1 cursor-pointer"
+                                    >
+                                        <span>+ Sambung Core (Splice)</span>
+                                    </button>
+                                </div>
+
+                                {nodeSplices.length === 0 ? (
+                                    <div className="p-4 rounded-xl bg-slate-900/60 border border-dashed border-slate-800 text-center text-xs text-slate-400 space-y-2">
+                                        <p>Belum ada sambungan core (joint splice) yang tercatat di {selectedNode.name}.</p>
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                if (nodeIncomingCables.length > 0) setNewSpliceFromCableId(nodeIncomingCables[0].id);
+                                                if (nodeOutgoingCables.length > 0) setNewSpliceToCableId(nodeOutgoingCables[0].id);
+                                                setIsAddSpliceModalOpen(true);
+                                            }}
+                                            className="px-3.5 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-semibold cursor-pointer"
+                                        >
+                                            + Sambungkan Core Pertama
+                                        </button>
+                                    </div>
+                                ) : (
+                                    nodeSplices.map((splice, idx) => {
+                                        const fromCable = cables.find((c) => c.id === splice.fromCableId);
+                                        const toCable = cables.find((c) => c.id === splice.toCableId);
+                                        const fromTubeColor = getTubeColor(splice.fromTubeNumber);
+                                        const fromCoreColor = getCoreColor(splice.fromCoreNumber);
+                                        const toTubeColor = getTubeColor(splice.toTubeNumber);
+                                        const toCoreColor = getCoreColor(splice.toCoreNumber);
+
+                                        return (
+                                            <div
+                                                key={`splice-${splice.id}`}
+                                                className="p-3.5 rounded-xl bg-[#0c1527] border border-slate-800/90 shadow-md space-y-2 text-xs"
+                                            >
+                                                <div className="flex items-center justify-between pb-1.5 border-b border-slate-800/70">
+                                                    <span className="font-mono text-[10px] text-slate-400">
+                                                        Splice #{idx + 1} • Loss: <strong className="text-amber-400">{splice.lossDb} dB</strong>
+                                                    </span>
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => handleDeleteSplice(splice.id)}
+                                                        className="text-rose-400 hover:text-rose-300 text-[10px] font-semibold cursor-pointer"
+                                                        title="Putus sambungan ini"
+                                                    >
+                                                        Putus Sambungan
+                                                    </button>
+                                                </div>
+
+                                                <div className="flex items-center justify-between gap-2">
+                                                    {/* From Cable Core */}
+                                                    <div className="space-y-1">
+                                                        <span className="text-[10px] font-mono text-sky-300 block truncate max-w-[130px]">
+                                                            {fromCable?.name || splice.fromCableId}
+                                                        </span>
+                                                        <div className="flex items-center gap-1.5">
+                                                            <span
+                                                                className="w-2.5 h-2.5 rounded-full ring-1 ring-white/30"
+                                                                style={{ backgroundColor: fromTubeColor.hex }}
+                                                                title={`Tube ${splice.fromTubeNumber} (${fromTubeColor.name})`}
+                                                            />
+                                                            <span
+                                                                className="px-2 py-0.5 rounded text-[10px] font-mono font-bold"
+                                                                style={{ backgroundColor: fromCoreColor.hex, color: fromCoreColor.textColor }}
+                                                            >
+                                                                C#{splice.fromCoreNumber} {fromCoreColor.name}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+
+                                                    <span className="text-slate-500 font-bold text-sm">&rarr;</span>
+
+                                                    {/* To Cable Core */}
+                                                    <div className="space-y-1 text-right">
+                                                        <span className="text-[10px] font-mono text-emerald-300 block truncate max-w-[130px]">
+                                                            {toCable?.name || splice.toCableId}
+                                                        </span>
+                                                        <div className="flex items-center justify-end gap-1.5">
+                                                            <span
+                                                                className="px-2 py-0.5 rounded text-[10px] font-mono font-bold"
+                                                                style={{ backgroundColor: toCoreColor.hex, color: toCoreColor.textColor }}
+                                                            >
+                                                                C#{splice.toCoreNumber} {toCoreColor.name}
+                                                            </span>
+                                                            <span
+                                                                className="w-2.5 h-2.5 rounded-full ring-1 ring-white/30"
+                                                                style={{ backgroundColor: toTubeColor.hex }}
+                                                                title={`Tube ${splice.toTubeNumber} (${toTubeColor.name})`}
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                {splice.notes && (
+                                                    <p className="text-[10px] text-slate-400 italic pt-1 border-t border-slate-800/50">
+                                                        Catatan: {splice.notes}
+                                                    </p>
+                                                )}
+                                            </div>
+                                        );
+                                    })
+                                )}
+                            </div>
+                        )}
+                    </div>
+                )}
             </div>
+
+            {/* Modal: Tarik Kabel FO Baru */}
+            {isAddCableModalOpen && (
+                <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+                    <div className="bg-[#0f172a] border border-slate-700/80 rounded-2xl w-full max-w-lg p-6 shadow-2xl text-white space-y-4 animate-in fade-in zoom-in-95">
+                        <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+                            <div>
+                                <h3 className="text-base font-bold text-slate-100 flex items-center gap-2">
+                                    <span>Tarik Kabel Fiber Optic Baru</span>
+                                </h3>
+                                <p className="text-xs text-slate-400 mt-0.5">
+                                    Hubungkan kabel distribusi atau feeder antara dua titik enclosure/tiang.
+                                </p>
+                            </div>
+                            <button
+                                onClick={() => setIsAddCableModalOpen(false)}
+                                className="text-slate-400 hover:text-white text-xl font-bold"
+                            >
+                                &times;
+                            </button>
+                        </div>
+
+                        <div className="space-y-3 text-xs">
+                            <div>
+                                <label className="block font-semibold text-slate-300 mb-1">Nama / Kode Kabel FO:</label>
+                                <input
+                                    type="text"
+                                    value={newCableName}
+                                    onChange={(e) => setNewCableName(e.target.value)}
+                                    placeholder="Contoh: DST-ODC2-JB3"
+                                    className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white font-mono"
+                                />
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label className="block font-semibold text-slate-300 mb-1">Titik Asal (From):</label>
+                                    <select
+                                        value={newCableFromNode}
+                                        onChange={(e) => setNewCableFromNode(e.target.value)}
+                                        className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white"
+                                    >
+                                        <option value="root-olt">OLT-PUSAT (Root)</option>
+                                        {flattenedNodes
+                                            .filter((n) => n.id !== 'root-olt')
+                                            .map((n) => (
+                                                <option key={`from-${n.id}`} value={n.id}>
+                                                    {n.name} ({n.type.toUpperCase()})
+                                                </option>
+                                            ))}
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label className="block font-semibold text-slate-300 mb-1">Titik Tujuan (To):</label>
+                                    <select
+                                        value={newCableToNode}
+                                        onChange={(e) => setNewCableToNode(e.target.value)}
+                                        className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white"
+                                    >
+                                        <option value="">Pilih Node Tujuan...</option>
+                                        {flattenedNodes
+                                            .filter((n) => n.id !== newCableFromNode)
+                                            .map((n) => (
+                                                <option key={`to-${n.id}`} value={n.id}>
+                                                    {n.name} ({n.type.toUpperCase()})
+                                                </option>
+                                            ))}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-3 gap-3">
+                                <div>
+                                    <label className="block font-semibold text-slate-300 mb-1">Kapasitas Core:</label>
+                                    <select
+                                        value={newCableCores}
+                                        onChange={(e) => setNewCableCores(Number(e.target.value))}
+                                        className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white font-mono"
+                                    >
+                                        <option value={12}>12 Core (1 Tube)</option>
+                                        <option value={24}>24 Core (2 Tube)</option>
+                                        <option value={48}>48 Core (4 Tube)</option>
+                                        <option value={96}>96 Core (8 Tube)</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label className="block font-semibold text-slate-300 mb-1">Panjang (Meter):</label>
+                                    <input
+                                        type="number"
+                                        min="10"
+                                        max="15000"
+                                        step="50"
+                                        value={newCableLength}
+                                        onChange={(e) => setNewCableLength(Number(e.target.value) || 0)}
+                                        className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white font-mono"
+                                    />
+                                </div>
+
+                                <div>
+                                    <label className="block font-semibold text-slate-300 mb-1">Jenis Kabel:</label>
+                                    <select
+                                        value={newCableType}
+                                        onChange={(e) => setNewCableType(e.target.value)}
+                                        className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white"
+                                    >
+                                        <option value="Distribusi">Distribusi</option>
+                                        <option value="Feeder">Feeder</option>
+                                        <option value="Dropcore">Dropcore</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-800">
+                            <button
+                                type="button"
+                                onClick={() => setIsAddCableModalOpen(false)}
+                                className="px-4 py-2 text-xs font-semibold rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700"
+                            >
+                                Batal
+                            </button>
+                            <button
+                                type="button"
+                                onClick={handleCreateCable}
+                                className="px-5 py-2 text-xs font-bold rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white shadow-lg"
+                            >
+                                + Pasang Kabel FO
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Modal: Sambung Core (Splice) */}
+            {isAddSpliceModalOpen && selectedNode && (
+                <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+                    <div className="bg-[#0f172a] border border-slate-700/80 rounded-2xl w-full max-w-lg p-6 shadow-2xl text-white space-y-4 animate-in fade-in zoom-in-95">
+                        <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+                            <div>
+                                <h3 className="text-base font-bold text-slate-100 flex items-center gap-2">
+                                    <span>Sambung Core FO (Fusion Splice)</span>
+                                </h3>
+                                <p className="text-xs text-slate-400 mt-0.5">
+                                    Dokumentasikan joint core di enclosure <strong className="text-cyan-300 font-mono">{selectedNode.name}</strong>.
+                                </p>
+                            </div>
+                            <button
+                                onClick={() => setIsAddSpliceModalOpen(false)}
+                                className="text-slate-400 hover:text-white text-xl font-bold"
+                            >
+                                &times;
+                            </button>
+                        </div>
+
+                        <div className="space-y-4 text-xs">
+                            {/* Kabel IN selection */}
+                            <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-2">
+                                <span className="font-bold text-sky-400 uppercase text-[10px] block">1. Core Sumber (Kabel IN)</span>
+                                <div>
+                                    <label className="text-slate-400 block mb-1">Pilih Kabel Masuk:</label>
+                                    <select
+                                        value={newSpliceFromCableId}
+                                        onChange={(e) => setNewSpliceFromCableId(e.target.value)}
+                                        className="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white font-mono"
+                                    >
+                                        <option value="">Pilih Kabel IN...</option>
+                                        {nodeAllCables.map((c) => (
+                                            <option key={`inc-${c.id}`} value={c.id}>
+                                                {c.name} ({c.totalCores}C)
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div className="grid grid-cols-2 gap-2">
+                                    <div>
+                                        <label className="text-slate-400 block mb-1">Tube IN:</label>
+                                        <select
+                                            value={newSpliceFromTube}
+                                            onChange={(e) => setNewSpliceFromTube(Number(e.target.value))}
+                                            className="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white font-mono"
+                                        >
+                                            <option value={1}>Tube 1 ({getTubeColor(1).name})</option>
+                                            <option value={2}>Tube 2 ({getTubeColor(2).name})</option>
+                                            <option value={3}>Tube 3 ({getTubeColor(3).name})</option>
+                                            <option value={4}>Tube 4 ({getTubeColor(4).name})</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label className="text-slate-400 block mb-1">Core IN (1-12):</label>
+                                        <select
+                                            value={newSpliceFromCore}
+                                            onChange={(e) => setNewSpliceFromCore(Number(e.target.value))}
+                                            className="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white font-mono"
+                                        >
+                                            {TIA598_COLORS.map((c) => {
+                                                const check = isCoreSpliced(newSpliceFromCableId, newSpliceFromTube, c.num, splices, selectedNode.id);
+                                                return (
+                                                    <option key={`from-core-${c.num}`} value={c.num}>
+                                                        Core {c.num} ({c.name}) {check.isSpliced ? '• [Terpakai]' : '• [Tersedia]'}
+                                                    </option>
+                                                );
+                                            })}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Kabel OUT selection */}
+                            <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-2">
+                                <span className="font-bold text-emerald-400 uppercase text-[10px] block">2. Core Tujuan (Kabel OUT)</span>
+                                <div>
+                                    <label className="text-slate-400 block mb-1">Pilih Kabel Keluar:</label>
+                                    <select
+                                        value={newSpliceToCableId}
+                                        onChange={(e) => setNewSpliceToCableId(e.target.value)}
+                                        className="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white font-mono"
+                                    >
+                                        <option value="">Pilih Kabel OUT...</option>
+                                        {nodeAllCables.map((c) => (
+                                            <option key={`outc-${c.id}`} value={c.id}>
+                                                {c.name} ({c.totalCores}C)
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div className="grid grid-cols-2 gap-2">
+                                    <div>
+                                        <label className="text-slate-400 block mb-1">Tube OUT:</label>
+                                        <select
+                                            value={newSpliceToTube}
+                                            onChange={(e) => setNewSpliceToTube(Number(e.target.value))}
+                                            className="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white font-mono"
+                                        >
+                                            <option value={1}>Tube 1 ({getTubeColor(1).name})</option>
+                                            <option value={2}>Tube 2 ({getTubeColor(2).name})</option>
+                                            <option value={3}>Tube 3 ({getTubeColor(3).name})</option>
+                                            <option value={4}>Tube 4 ({getTubeColor(4).name})</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label className="text-slate-400 block mb-1">Core OUT (1-12):</label>
+                                        <select
+                                            value={newSpliceToCore}
+                                            onChange={(e) => setNewSpliceToCore(Number(e.target.value))}
+                                            className="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white font-mono"
+                                        >
+                                            {TIA598_COLORS.map((c) => {
+                                                const check = isCoreSpliced(newSpliceToCableId, newSpliceToTube, c.num, splices, selectedNode.id);
+                                                return (
+                                                    <option key={`to-core-${c.num}`} value={c.num}>
+                                                        Core {c.num} ({c.name}) {check.isSpliced ? '• [Terpakai]' : '• [Tersedia]'}
+                                                    </option>
+                                                );
+                                            })}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Loss & Notes */}
+                            <div className="grid grid-cols-3 gap-3">
+                                <div>
+                                    <label className="block text-slate-400 mb-1">Loss Splice (dB):</label>
+                                    <input
+                                        type="number"
+                                        step="0.01"
+                                        value={newSpliceLoss}
+                                        onChange={(e) => setNewSpliceLoss(parseFloat(e.target.value) || 0.05)}
+                                        className="w-full bg-slate-900 border border-slate-700 rounded-lg px-2 py-1.5 text-white font-mono text-center"
+                                    />
+                                </div>
+                                <div className="col-span-2">
+                                    <label className="block text-slate-400 mb-1">Catatan Sambungan (Opsional):</label>
+                                    <input
+                                        type="text"
+                                        value={newSpliceNotes}
+                                        onChange={(e) => setNewSpliceNotes(e.target.value)}
+                                        placeholder="Contoh: Jalur Feeder Utama OLT ke JB"
+                                        className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-white"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-800">
+                            <button
+                                type="button"
+                                onClick={() => setIsAddSpliceModalOpen(false)}
+                                className="px-4 py-2 text-xs font-semibold rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700"
+                            >
+                                Batal
+                            </button>
+                            <button
+                                type="button"
+                                onClick={handleCreateSplice}
+                                className="px-5 py-2 text-xs font-bold rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white shadow-lg"
+                            >
+                                + Sambungkan Core (Joint)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Modal: Tambah Node Baru (ODC / JB / ODP / Tiang) */}
+            {isAddNodeModalOpen && (
+                <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+                    <div className="bg-[#0f172a] border border-slate-700/80 rounded-2xl w-full max-w-md p-6 shadow-2xl text-white space-y-4 animate-in fade-in zoom-in-95">
+                        <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+                            <div>
+                                <h3 className="text-base font-bold text-slate-100">Tambah Node Jaringan Baru</h3>
+                                <p className="text-xs text-slate-400 mt-0.5">
+                                    Pasang ODC, Joint Box (JB), ODP, atau Tiang Distribusi baru.
+                                </p>
+                            </div>
+                            <button onClick={() => setIsAddNodeModalOpen(false)} className="text-slate-400 hover:text-white text-xl font-bold">
+                                &times;
+                            </button>
+                        </div>
+
+                        <div className="space-y-3 text-xs">
+                            <div>
+                                <label className="block font-semibold text-slate-300 mb-1">Tipe / Kategori Node:</label>
+                                <select
+                                    value={newNodeCategory}
+                                    onChange={(e) => {
+                                        const cat = e.target.value as any;
+                                        setNewNodeCategory(cat);
+                                        const prefix = cat === 'odc' ? 'ODC' : cat === 'jb' ? 'JB' : cat === 'tiang' ? 'TNG' : 'ODP';
+                                        setNewNodeName(`${prefix}-${Date.now().toString().slice(-4)}`);
+                                    }}
+                                    className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white font-semibold"
+                                >
+                                    <option value="odp">ODP (Optical Distribution Point)</option>
+                                    <option value="jb">JB (Joint Box / Closure Sambungan)</option>
+                                    <option value="odc">ODC (Optical Distribution Cabinet)</option>
+                                    <option value="tiang">TIANG (Tiang Distribusi FO)</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label className="block font-semibold text-slate-300 mb-1">Nama Node:</label>
+                                <input
+                                    type="text"
+                                    value={newNodeName}
+                                    onChange={(e) => setNewNodeName(e.target.value)}
+                                    placeholder="Contoh: JB-PSM-02"
+                                    className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white font-mono font-bold"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block font-semibold text-slate-300 mb-1">Parent Node (Titik Sumber):</label>
+                                <select
+                                    value={newNodeParentId}
+                                    onChange={(e) => setNewNodeParentId(e.target.value)}
+                                    className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white"
+                                >
+                                    <option value="root-olt">OLT-PUSAT (Root)</option>
+                                    {flattenedNodes
+                                        .filter((n) => n.id !== 'root-olt')
+                                        .map((n) => (
+                                            <option key={`parent-opt-${n.id}`} value={n.id}>
+                                                {n.name} ({n.type.toUpperCase()})
+                                            </option>
+                                        ))}
+                                </select>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label className="block font-semibold text-slate-300 mb-1">Kapasitas Port:</label>
+                                    <select
+                                        value={newNodePorts}
+                                        onChange={(e) => setNewNodePorts(Number(e.target.value))}
+                                        className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white font-mono"
+                                    >
+                                        <option value={4}>4 Port</option>
+                                        <option value={8}>8 Port</option>
+                                        <option value={12}>12 Port</option>
+                                        <option value={16}>16 Port</option>
+                                        <option value={24}>24 Port</option>
+                                        <option value={48}>48 Port</option>
+                                    </select>
+                                </div>
+                                <div className="flex items-center pt-5">
+                                    <label className="flex items-center gap-2 cursor-pointer text-slate-300">
+                                        <input
+                                            type="checkbox"
+                                            checked={newNodeAutoCable}
+                                            onChange={(e) => setNewNodeAutoCable(e.target.checked)}
+                                            className="rounded bg-slate-800 border-slate-600 text-cyan-500 focus:ring-0"
+                                        />
+                                        <span className="text-[11px]">Auto Buat Kabel Masuk</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label className="block font-semibold text-slate-300 mb-1">Alamat / Lokasi Tiang:</label>
+                                <input
+                                    type="text"
+                                    value={newNodeAddress}
+                                    onChange={(e) => setNewNodeAddress(e.target.value)}
+                                    placeholder="Contoh: Jl. Kemang Timur Tiang No. 14"
+                                    className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-800">
+                            <button
+                                type="button"
+                                onClick={() => setIsAddNodeModalOpen(false)}
+                                className="px-4 py-2 text-xs font-semibold rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700"
+                            >
+                                Batal
+                            </button>
+                            <button
+                                type="button"
+                                onClick={handleCreateCustomNode}
+                                className="px-5 py-2 text-xs font-bold rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg"
+                            >
+                                + Simpan Node
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {/* Slide-over / Modal: Planner Simulator */}
             {isPlannerOpen && (
@@ -1635,15 +3280,15 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                             </button>
                         </div>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                             <div>
-                                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                                <label className="block font-semibold text-slate-300 mb-1">
                                     Titik Sumber / Parent Node:
                                 </label>
                                 <select
                                     value={plannerParentId}
                                     onChange={(e) => setPlannerParentId(e.target.value)}
-                                    className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500"
+                                    className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-cyan-500"
                                 >
                                     <optgroup label="ODC Distribusi">
                                         {odcs.map((o) => (
@@ -1663,7 +3308,7 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                             </div>
 
                             <div>
-                                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                                <label className="block font-semibold text-slate-300 mb-1">
                                     Nama ODP Rencana:
                                 </label>
                                 <input
@@ -1671,12 +3316,12 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                                     value={plannerName}
                                     onChange={(e) => setPlannerName(e.target.value)}
                                     placeholder="Contoh: ODP-TBT-03"
-                                    className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500 font-semibold"
+                                    className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-cyan-500 font-semibold"
                                 />
                             </div>
 
                             <div>
-                                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                                <label className="block font-semibold text-slate-300 mb-1">
                                     Panjang Tarikan Kabel (Meter):
                                 </label>
                                 <div className="flex items-center gap-2">
@@ -1687,9 +3332,9 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                                         step="50"
                                         value={plannerCableMeters}
                                         onChange={(e) => setPlannerCableMeters(parseInt(e.target.value) || 0)}
-                                        className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500 font-mono"
+                                        className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white font-mono"
                                     />
-                                    <span className="text-xs text-slate-400 font-mono">meter</span>
+                                    <span className="text-slate-400 font-mono">meter</span>
                                 </div>
                                 <span className="text-[10px] text-slate-400 mt-1 block">
                                     Loss kabel: {plannerCalculations.cableLoss} dB (rate 0.35 dB/km)
@@ -1697,13 +3342,13 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                             </div>
 
                             <div>
-                                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                                <label className="block font-semibold text-slate-300 mb-1">
                                     Jenis Kabel:
                                 </label>
                                 <select
                                     value={plannerCableType}
                                     onChange={(e) => setPlannerCableType(e.target.value)}
-                                    className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500 font-mono"
+                                    className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white font-mono"
                                 >
                                     <option value="12C Distribusi">12 Core (Distribusi)</option>
                                     <option value="24C Feeder">24 Core (Feeder)</option>
@@ -1713,13 +3358,13 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                             </div>
 
                             <div>
-                                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                                <label className="block font-semibold text-slate-300 mb-1">
                                     Tipe Splitter ODP:
                                 </label>
                                 <select
                                     value={plannerSplitter}
                                     onChange={(e) => setPlannerSplitter(e.target.value)}
-                                    className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500 font-mono"
+                                    className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white font-mono"
                                 >
                                     <option value="1:4">PLC 1:4 (Loss 7.2 dB)</option>
                                     <option value="1:8">PLC 1:8 (Loss 10.5 dB) - Standar</option>
@@ -1732,7 +3377,7 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                             </div>
 
                             <div>
-                                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                                <label className="block font-semibold text-slate-300 mb-1">
                                     Jumlah Sambungan Splice & Konektor:
                                 </label>
                                 <div className="grid grid-cols-2 gap-2">
@@ -1743,7 +3388,7 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                                             min="0"
                                             value={plannerSplices}
                                             onChange={(e) => setPlannerSplices(parseInt(e.target.value) || 0)}
-                                            className="w-full bg-slate-900 border border-slate-700 rounded-lg px-2 py-1 text-xs text-center text-white"
+                                            className="w-full bg-slate-900 border border-slate-700 rounded-lg px-2 py-1 text-center text-white"
                                         />
                                     </div>
                                     <div>
@@ -1753,24 +3398,25 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                                             min="0"
                                             value={plannerConnectors}
                                             onChange={(e) => setPlannerConnectors(parseInt(e.target.value) || 0)}
-                                            className="w-full bg-slate-900 border border-slate-700 rounded-lg px-2 py-1 text-xs text-center text-white"
+                                            className="w-full bg-slate-900 border border-slate-700 rounded-lg px-2 py-1 text-center text-white"
                                         />
                                     </div>
                                 </div>
                             </div>
 
                             <div>
-                                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                                <label className="block font-semibold text-slate-300 mb-1">
                                     Kapasitas Port ODP:
                                 </label>
                                 <select
                                     value={plannerPorts}
                                     onChange={(e) => setPlannerPorts(parseInt(e.target.value) || 8)}
-                                    className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500"
+                                    className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white font-mono"
                                 >
+                                    <option value={4}>4 Port</option>
                                     <option value={8}>8 Port</option>
                                     <option value={16}>16 Port</option>
-                                    <option value={4}>4 Port</option>
+                                    <option value={24}>24 Port</option>
                                 </select>
                             </div>
                         </div>
@@ -1835,171 +3481,6 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                 </div>
             )}
 
-            {/* Selected Node Inspector Drawer */}
-            {selectedNode && (
-                <div
-                    ref={inspectorRef}
-                    className="bg-[#0f172a] border border-slate-800 rounded-2xl p-5 shadow-xl text-white scroll-mt-8"
-                >
-                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-3 border-b border-slate-800">
-                        <div>
-                            <div className="flex items-center gap-2">
-                                <h3 className="text-base font-bold text-slate-100">{selectedNode.name}</h3>
-                                <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-slate-800 text-cyan-300 border border-slate-700">
-                                    {resolveNodeCategory(selectedNode.name, selectedNode.type, selectedNode.isSimulated)}
-                                </span>
-                                {selectedNode.isSimulated && (
-                                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-500/40">
-                                        SIMULASI
-                                    </span>
-                                )}
-                            </div>
-                            <p className="text-xs text-slate-400 mt-0.5">
-                                Alamat: {selectedNode.address || 'Belum diatur'} | Parent: {selectedNode.parentId || 'None'}
-                            </p>
-                        </div>
-
-                        <div className="flex items-center gap-2 flex-wrap">
-                            {selectedNode.type !== 'olt' && (
-                                <button
-                                    onClick={() => setDeletingNode(selectedNode)}
-                                    className="px-3 py-1.5 rounded-xl bg-rose-950/80 hover:bg-rose-900 text-rose-300 border border-rose-500/40 text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
-                                    title={selectedNode.isSimulated ? "Hapus Simulasi" : `Hapus ${selectedNode.type.toUpperCase()}`}
-                                >
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                    </svg>
-                                    <span>{selectedNode.isSimulated ? 'Hapus Simulasi' : `Hapus ${selectedNode.type.toUpperCase()}`}</span>
-                                </button>
-                            )}
-                            {selectedNode.location && (
-                                <button
-                                    onClick={() =>
-                                        window.open(
-                                            `https://www.google.com/maps?q=${selectedNode.location?.lat},${selectedNode.location?.lng}`,
-                                            '_blank'
-                                        )
-                                    }
-                                    className="px-3 py-1.5 rounded-xl bg-slate-800 text-slate-300 text-xs font-semibold hover:bg-slate-700 transition-colors cursor-pointer"
-                                >
-                                    Buka Google Maps
-                                </button>
-                            )}
-                            <button
-                                onClick={() => {
-                                    setPlannerParentId(selectedNode.id);
-                                    setPlannerName(`ODP-CABANG-${odps.length + 1}`);
-                                    setIsPlannerOpen(true);
-                                }}
-                                className="px-3 py-1.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold transition-colors cursor-pointer"
-                            >
-                                + Tarik Cabang Baru
-                            </button>
-                            <button
-                                onClick={() => setSelectedNode(null)}
-                                className="text-slate-400 hover:text-white text-lg px-2 cursor-pointer"
-                                title="Tutup Detail"
-                            >
-                                &times;
-                            </button>
-                        </div>
-                    </div>
-
-                    {selectedNode.type === 'odc' ? (
-                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 text-xs font-mono">
-                            <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
-                                <span className="text-[10px] text-slate-400 block">Power In (Feeder SFP)</span>
-                                <span className="text-sm font-bold text-emerald-400">
-                                    +{selectedNode.calculatedPowerIn} dBm
-                                </span>
-                                <span className="text-[9px] text-slate-500 block mt-0.5">Langsung dari OLT TX</span>
-                            </div>
-                            <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
-                                <span className="text-[10px] text-slate-400 block mb-1">Splitter Internal ODC</span>
-                                <select
-                                    value={odcSplitterMap[selectedNode.id] || '1:4'}
-                                    onChange={(e) => setOdcSplitterMap((prev) => ({ ...prev, [selectedNode.id]: e.target.value }))}
-                                    className="bg-slate-800 border border-slate-700 rounded px-1.5 py-0.5 text-xs text-cyan-300 font-mono w-full focus:outline-none cursor-pointer"
-                                >
-                                    <option value="direct">Direct 1:1 (0 dB)</option>
-                                    <option value="1:2">PLC 1:2 (3.7 dB)</option>
-                                    <option value="1:4">PLC 1:4 (7.2 dB)</option>
-                                    <option value="1:8">PLC 1:8 (10.5 dB)</option>
-                                </select>
-                            </div>
-                            <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
-                                <span className="text-[10px] text-slate-400 block">Power Out (ke ODP)</span>
-                                <span className="text-sm font-bold text-cyan-400">
-                                    {selectedNode.calculatedPowerOut} dBm
-                                </span>
-                                <span className="text-[9px] text-slate-500 block mt-0.5">Setelah Splitter ODC</span>
-                            </div>
-                            <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
-                                <span className="text-[10px] text-slate-400 block">Daya Ukur Riil (OPM)</span>
-                                <span className="text-sm font-bold text-slate-200">
-                                    {selectedNode.powerOut != null ? `${selectedNode.powerOut} dBm` : 'Belum diukur'}
-                                </span>
-                            </div>
-                        </div>
-                    ) : selectedNode.type === 'olt' ? (
-                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 text-xs font-mono">
-                            <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
-                                <span className="text-[10px] text-slate-400 block">Kapasitas PON</span>
-                                <span className="text-sm font-bold text-amber-300">
-                                    {selectedNode.usedPorts} / {selectedNode.totalPorts} PON Terpakai
-                                </span>
-                            </div>
-                            <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
-                                <span className="text-[10px] text-slate-400 block">Power Tx per PON SFP</span>
-                                <span className="text-sm font-bold text-cyan-400">
-                                    +{selectedNode.powerOut} dBm
-                                </span>
-                            </div>
-                            <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
-                                <span className="text-[10px] text-slate-400 block">Mode Distribusi</span>
-                                <span className="text-xs font-bold text-emerald-400">
-                                    1 Dedicated SFP per ODC
-                                </span>
-                                <span className="text-[9px] text-slate-500 block mt-0.5">Tanpa Splitter OLT</span>
-                            </div>
-                            <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
-                                <span className="text-[10px] text-slate-400 block">Total ODC Terhubung</span>
-                                <span className="text-sm font-bold text-slate-200">
-                                    {selectedNode.usedPorts} Unit ODC
-                                </span>
-                            </div>
-                        </div>
-                    ) : (
-                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 text-xs font-mono">
-                            <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
-                                <span className="text-[10px] text-slate-400 block">Utilisasi Port</span>
-                                <span className="text-sm font-bold text-slate-100">
-                                    {selectedNode.usedPorts} / {selectedNode.totalPorts} Port
-                                </span>
-                            </div>
-                            <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
-                                <span className="text-[10px] text-slate-400 block">Daya Hitungan Desain</span>
-                                <span className="text-sm font-bold text-cyan-400">
-                                    {selectedNode.calculatedPowerOut} dBm
-                                </span>
-                            </div>
-                            <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
-                                <span className="text-[10px] text-slate-400 block">Daya Ukur Riil (OPM)</span>
-                                <span className="text-sm font-bold text-slate-200">
-                                    {selectedNode.powerOut != null ? `${selectedNode.powerOut} dBm` : 'Belum diukur'}
-                                </span>
-                            </div>
-                            <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
-                                <span className="text-[10px] text-slate-400 block">Status Akurasi Optik</span>
-                                <span className={`text-xs font-bold ${evaluateOpticalStatus(selectedNode.calculatedPowerOut).color}`}>
-                                    {evaluateOpticalStatus(selectedNode.calculatedPowerOut).label}
-                                </span>
-                            </div>
-                        </div>
-                    )}
-                </div>
-            )}
-
             {/* Modal Konfirmasi Hapus ODP / ODC / Simulasi */}
             {deletingNode && (
                 <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
@@ -2026,33 +3507,10 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                             </div>
                         )}
 
-                        {deletingNode.isSimulated ? (
-                            <p className="text-xs text-slate-300">
-                                Node ini adalah draf rencana simulasi. Apakah Anda yakin ingin menghapus node ini dari diagram?
-                            </p>
-                        ) : deletingNode.type === 'odp' ? (
-                            <div className="space-y-2 text-xs text-slate-300">
-                                <p>
-                                    Apakah Anda yakin ingin menghapus ODP <strong className="text-white font-mono">{deletingNode.name}</strong> dari database?
-                                </p>
-                                {deletingNode.customers.length > 0 && (
-                                    <div className="bg-amber-950/70 border border-amber-500/50 text-amber-200 p-3 rounded-xl">
-                                        ⚠️ <strong>Perhatian:</strong> ODP ini masih memiliki {deletingNode.customers.length} pelanggan terhubung. Server akan menolak penghapusan sebelum pelanggan dipindahkan.
-                                    </div>
-                                )}
-                            </div>
-                        ) : (
-                            <div className="space-y-2 text-xs text-slate-300">
-                                <p>
-                                    Apakah Anda yakin ingin menghapus ODC <strong className="text-white font-mono">{deletingNode.name}</strong> dari database?
-                                </p>
-                                {deletingNode.children.length > 0 && (
-                                    <div className="bg-amber-950/70 border border-amber-500/50 text-amber-200 p-3 rounded-xl">
-                                        ⚠️ <strong>Perhatian:</strong> ODC ini masih memiliki {deletingNode.children.length} ODP anak terhubung. Harap hapus atau pindahkan ODP anak terlebih dahulu.
-                                    </div>
-                                )}
-                            </div>
-                        )}
+                        <p className="text-xs text-slate-300">
+                            Apakah Anda yakin ingin menghapus <strong className="text-white font-mono">{deletingNode.name}</strong>?
+                            Kabel dan sambungan splice yang terhubung ke node ini juga akan dilepas.
+                        </p>
 
                         <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-800">
                             <button
@@ -2072,25 +3530,57 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                                 onClick={() => handleDeleteNode(deletingNode)}
                                 className="px-4 py-2 text-xs font-bold rounded-xl bg-rose-600 hover:bg-rose-500 text-white shadow-lg shadow-rose-600/30 transition-all flex items-center gap-1.5 disabled:opacity-50 cursor-pointer"
                             >
-                                {isDeleting ? (
-                                    <>
-                                        <svg className="animate-spin h-3.5 w-3.5 text-white" viewBox="0 0 24 24" fill="none">
-                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-                                        </svg>
-                                        <span>Menghapus...</span>
-                                    </>
-                                ) : (
-                                    <span>Hapus Permanen</span>
-                                )}
+                                {isDeleting ? 'Menghapus...' : 'Hapus Permanen'}
                             </button>
                         </div>
                     </div>
                 </div>
             )}
 
-            {/* Extra Bottom Spacer ensuring scroll area never clips contents */}
-            <div className="h-28 w-full pointer-events-none" aria-hidden="true" />
+            {/* Modal Konfirmasi Hapus Kabel */}
+            {deletingCable && (
+                <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
+                    <div className="bg-[#0f172a] border border-slate-700/80 rounded-2xl w-full max-w-md p-6 shadow-2xl text-white space-y-4 animate-in fade-in zoom-in-95">
+                        <div className="flex items-center gap-3 text-rose-400">
+                            <span className="p-2.5 rounded-xl bg-rose-950/80 border border-rose-500/40">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                            </span>
+                            <div>
+                                <h3 className="text-base font-bold text-slate-100">
+                                    Hapus Kabel FO
+                                </h3>
+                                <p className="text-xs text-slate-400 font-mono">
+                                    {deletingCable.name}
+                                </p>
+                            </div>
+                        </div>
+
+                        <p className="text-xs text-slate-300">
+                            Apakah Anda yakin ingin menghapus ruas kabel <strong className="text-white font-mono">{deletingCable.name}</strong> ({deletingCable.totalCores} Core)?
+                            Semua sambungan splice yang menggunakan kabel ini akan otomatis dilepas.
+                        </p>
+
+                        <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-800">
+                            <button
+                                type="button"
+                                onClick={() => setDeletingCable(null)}
+                                className="px-4 py-2 text-xs font-semibold rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors cursor-pointer"
+                            >
+                                Batal
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => handleDeleteCable(deletingCable)}
+                                className="px-4 py-2 text-xs font-bold rounded-xl bg-rose-600 hover:bg-rose-500 text-white shadow-lg transition-all cursor-pointer"
+                            >
+                                Hapus Kabel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

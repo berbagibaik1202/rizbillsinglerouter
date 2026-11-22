@@ -264,3 +264,157 @@ test('FO Topology Planner: evaluateCustomerDropStatus maps optical and connectio
     assert.strictEqual(crit.label, 'CRITICAL');
     assert.strictEqual(crit.color, '#f43f5e');
 });
+
+export const TIA598_COLORS = [
+    { num: 1, name: 'Biru', hex: '#0284c7', textColor: '#ffffff' },
+    { num: 2, name: 'Oranye', hex: '#ea580c', textColor: '#ffffff' },
+    { num: 3, name: 'Hijau', hex: '#16a34a', textColor: '#ffffff' },
+    { num: 4, name: 'Cokelat', hex: '#92400e', textColor: '#ffffff' },
+    { num: 5, name: 'Abu-abu', hex: '#64748b', textColor: '#ffffff' },
+    { num: 6, name: 'Putih', hex: '#f8fafc', textColor: '#0f172a' },
+    { num: 7, name: 'Merah', hex: '#dc2626', textColor: '#ffffff' },
+    { num: 8, name: 'Hitam', hex: '#1e293b', textColor: '#ffffff' },
+    { num: 9, name: 'Kuning', hex: '#ca8a04', textColor: '#ffffff' },
+    { num: 10, name: 'Ungu', hex: '#7c3aed', textColor: '#ffffff' },
+    { num: 11, name: 'Pink', hex: '#db2777', textColor: '#ffffff' },
+    { num: 12, name: 'Toska', hex: '#0891b2', textColor: '#ffffff' },
+];
+
+export const getTubeOrCoreColor = (num) => {
+    const idx = ((num - 1) % 12 + 12) % 12;
+    return TIA598_COLORS[idx];
+};
+
+export function isCoreSpliced(cableId, tubeNumber, coreNumber, splices, enclosureNodeId) {
+    const found = splices.find((s) => {
+        if (enclosureNodeId && s.enclosureNodeId !== enclosureNodeId) return false;
+        return (
+            (s.fromCableId === cableId && s.fromTubeNumber === tubeNumber && s.fromCoreNumber === coreNumber) ||
+            (s.toCableId === cableId && s.toTubeNumber === tubeNumber && s.toCoreNumber === coreNumber)
+        );
+    });
+    return { isSpliced: !!found, splice: found };
+}
+
+export function countCableUsedCores(cableId, splices) {
+    const uniqueKeys = new Set();
+    splices.forEach((s) => {
+        if (s.fromCableId === cableId) {
+            uniqueKeys.add(`T${s.fromTubeNumber}-C${s.fromCoreNumber}`);
+        }
+        if (s.toCableId === cableId) {
+            uniqueKeys.add(`T${s.toTubeNumber}-C${s.toCoreNumber}`);
+        }
+    });
+    return uniqueKeys.size;
+}
+
+export function getUpstreamTracePath(targetNodeId, cables) {
+    const traceNodeIds = new Set([targetNodeId]);
+    const traceCableIds = new Set();
+
+    let queue = [targetNodeId];
+    const visited = new Set();
+
+    while (queue.length > 0) {
+        const currentId = queue.shift();
+        if (visited.has(currentId)) continue;
+        visited.add(currentId);
+
+        const incomingCables = cables.filter((c) => c.toNodeId === currentId);
+        for (const cable of incomingCables) {
+            traceCableIds.add(cable.id);
+            traceNodeIds.add(cable.fromNodeId);
+            if (cable.fromNodeId !== 'root-olt') {
+                queue.push(cable.fromNodeId);
+            }
+        }
+    }
+
+    return { traceNodeIds, traceCableIds };
+}
+
+test('FO Topology Planner: TIA/EIA-598 standard maps 12 tube and core colors accurately', () => {
+    assert.strictEqual(TIA598_COLORS.length, 12);
+    assert.strictEqual(getTubeOrCoreColor(1).name, 'Biru');
+    assert.strictEqual(getTubeOrCoreColor(2).name, 'Oranye');
+    assert.strictEqual(getTubeOrCoreColor(3).name, 'Hijau');
+    assert.strictEqual(getTubeOrCoreColor(6).name, 'Putih');
+    assert.strictEqual(getTubeOrCoreColor(6).textColor, '#0f172a'); // Contrast text
+    assert.strictEqual(getTubeOrCoreColor(12).name, 'Toska');
+    // Repeating cycle for cables > 12 tubes or cores:
+    assert.strictEqual(getTubeOrCoreColor(13).name, 'Biru');
+    assert.strictEqual(getTubeOrCoreColor(24).name, 'Toska');
+});
+
+test('FO Topology Planner: Splice tracking correctly marks core usage and active counts', () => {
+    const mockSplices = [
+        {
+            id: 'spl-1',
+            enclosureNodeId: 'ODC-PSM-01',
+            fromCableId: 'FDR-OLT1-ODC2',
+            fromTubeNumber: 1,
+            fromCoreNumber: 1,
+            toCableId: 'DST-ODC2-JB2',
+            toTubeNumber: 1,
+            toCoreNumber: 1,
+            lossDb: 0.05,
+        },
+        {
+            id: 'spl-2',
+            enclosureNodeId: 'ODC-PSM-01',
+            fromCableId: 'FDR-OLT1-ODC2',
+            fromTubeNumber: 1,
+            fromCoreNumber: 2,
+            toCableId: 'DST-ODC2-LTA1',
+            toTubeNumber: 1,
+            toCoreNumber: 1,
+            lossDb: 0.05,
+        },
+    ];
+
+    // FDR-OLT1-ODC2: Tube 1 Core 1 is spliced
+    const checkCore1 = isCoreSpliced('FDR-OLT1-ODC2', 1, 1, mockSplices);
+    assert.strictEqual(checkCore1.isSpliced, true);
+    assert.strictEqual(checkCore1.splice?.toCableId, 'DST-ODC2-JB2');
+
+    // FDR-OLT1-ODC2: Tube 1 Core 3 is NOT spliced (spare)
+    const checkCore3 = isCoreSpliced('FDR-OLT1-ODC2', 1, 3, mockSplices);
+    assert.strictEqual(checkCore3.isSpliced, false);
+
+    // Total used cores on FDR-OLT1-ODC2 should be 2
+    assert.strictEqual(countCableUsedCores('FDR-OLT1-ODC2', mockSplices), 2);
+    // DST-ODC2-JB2 has 1 used core
+    assert.strictEqual(countCableUsedCores('DST-ODC2-JB2', mockSplices), 1);
+    // Unknown cable has 0 used cores
+    assert.strictEqual(countCableUsedCores('UNKNOWN-CABLE', mockSplices), 0);
+});
+
+test('FO Topology Planner: getUpstreamTracePath traces backwards from target node up to root OLT', () => {
+    const mockCables = [
+        { id: 'fdr-1', fromNodeId: 'root-olt', toNodeId: 'ODC-PSM-01' },
+        { id: 'dst-1', fromNodeId: 'ODC-PSM-01', toNodeId: 'JB-PSM-01' },
+        { id: 'dst-2', fromNodeId: 'JB-PSM-01', toNodeId: 'ODP-PSM-01' },
+        { id: 'fdr-2', fromNodeId: 'root-olt', toNodeId: 'ODC-TBT-01' },
+    ];
+
+    // Trace from ODP-PSM-01:
+    // Path should be ODP-PSM-01 <- dst-2 <- JB-PSM-01 <- dst-1 <- ODC-PSM-01 <- fdr-1 <- root-olt
+    const trace = getUpstreamTracePath('ODP-PSM-01', mockCables);
+    assert.ok(trace.traceNodeIds.has('ODP-PSM-01'));
+    assert.ok(trace.traceNodeIds.has('JB-PSM-01'));
+    assert.ok(trace.traceNodeIds.has('ODC-PSM-01'));
+    assert.ok(trace.traceNodeIds.has('root-olt'));
+    assert.ok(!trace.traceNodeIds.has('ODC-TBT-01'), 'TBT branch must not be in PSM trace path');
+
+    assert.ok(trace.traceCableIds.has('dst-2'));
+    assert.ok(trace.traceCableIds.has('dst-1'));
+    assert.ok(trace.traceCableIds.has('fdr-1'));
+    assert.ok(!trace.traceCableIds.has('fdr-2'));
+
+    // Trace from ODC-PSM-01:
+    const traceOdc = getUpstreamTracePath('ODC-PSM-01', mockCables);
+    assert.strictEqual(traceOdc.traceCableIds.size, 1);
+    assert.ok(traceOdc.traceCableIds.has('fdr-1'));
+});
+
