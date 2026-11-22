@@ -332,7 +332,10 @@ main() {
     log "Proxy profile enabled."
   fi
 
-  docker compose "${compose_args[@]}"
+  if ! docker compose "${compose_args[@]}"; then
+    log "Warning: docker compose up failed. Retrying with --pull never (using local image cache)..."
+    docker compose "${compose_args[@]}" --pull never
+  fi
 
   log "Install complete."
   log "Check status with: docker compose --env-file docker.env -f docker-compose.vps.yml ps"

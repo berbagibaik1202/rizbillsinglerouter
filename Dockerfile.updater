@@ -9,4 +9,4 @@ COPY updater /opt/updater
 ENV NODE_ENV=production
 ENV PORT=3140
 
-ENTRYPOINT ["node", "/opt/updater/update-server.mjs"]
+ENTRYPOINT ["/bin/sh", "-c", "if [ -f /workspace/updater/update-server.mjs ]; then exec node /workspace/updater/update-server.mjs; else exec node /opt/updater/update-server.mjs; fi"]

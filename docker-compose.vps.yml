@@ -99,6 +99,7 @@ services:
       - "${DOCKER_GID:-0}"
     volumes:
       - ./:/workspace
+      - ./updater:/opt/updater:ro
       - ${UPDATER_SSH_DIR:-/root/.ssh}:/tmp/.ssh:ro
       - /var/run/docker.sock:/var/run/docker.sock
     networks:

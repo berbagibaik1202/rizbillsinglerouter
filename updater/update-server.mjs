@@ -355,11 +355,7 @@ const performUpdate = async (job) => {
         let lastBuildError = null;
         for (let attempt = 1; attempt <= 3; attempt += 1) {
             try {
-                if (attempt > 1) {
-                    addLog(job, 'system', `Retrying docker compose up (attempt ${attempt}/3)...`);
-                    await new Promise((r) => setTimeout(r, 4000));
-                }
-                await runCommand(job, 'docker compose up', 'docker', [
+                const composeArgs = [
                     'compose',
                     '--env-file',
                     ENV_FILE,
@@ -369,10 +365,25 @@ const performUpdate = async (job) => {
                     '-d',
                     '--build',
                     '--remove-orphans',
-                    'app',
-                    'app-watchdog',
-                ], {}, {
-                    commandLabel: `rebuilding application containers${attempt > 1 ? ` (attempt ${attempt}/3)` : ''}`,
+                ];
+
+                const extraEnv = {};
+
+                if (attempt > 1) {
+                    // Bypass remote registry metadata lookups using local cached base images
+                    composeArgs.push('--pull', 'never');
+                    addLog(job, 'system', `Retrying docker compose up using local image cache (--pull never) (attempt ${attempt}/3)...`);
+                    await new Promise((r) => setTimeout(r, 3000));
+                }
+
+                if (attempt === 3) {
+                    extraEnv.DOCKER_BUILDKIT = '0';
+                }
+
+                composeArgs.push('app', 'app-watchdog');
+
+                await runCommand(job, 'docker compose up', 'docker', composeArgs, extraEnv, {
+                    commandLabel: `rebuilding application containers${attempt > 1 ? ` (attempt ${attempt}/3, --pull never)` : ''}`,
                 });
                 lastBuildError = null;
                 break;
@@ -383,9 +394,12 @@ const performUpdate = async (job) => {
                     || errMsg.includes('connection timed out')
                     || errMsg.includes('temporary failure in name resolution')
                     || errMsg.includes('failed to resolve source metadata')
+                    || errMsg.includes('failed to fetch anonymous token')
+                    || errMsg.includes('auth.docker.io')
+                    || errMsg.includes('registry-1.docker.io')
                     || errMsg.includes('net/http');
                 if (attempt < 3 && isNetworkTimeout) {
-                    addLog(job, 'stderr', `Transient network timeout detected during docker compose build. Auto-retrying (${attempt}/3)...`);
+                    addLog(job, 'stderr', `Docker Hub registry timeout detected (${attempt}/3). Auto-retrying with local cache (--pull never)...`);
                     continue;
                 }
                 throw err;
