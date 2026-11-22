@@ -187,6 +187,65 @@ export function getUpstreamTracePath(
     return { traceNodeIds, traceCableIds };
 }
 
+// Automatically synthesize full FiberCable objects from topology parent-child tree
+export function synthesizeTopologyCables(
+    persistedCables: FiberCable[] = [],
+    flattenedNodes: TreeNode[] = [],
+    deletedKeys: Record<string, boolean> = {}
+): FiberCable[] {
+    const list: FiberCable[] = [];
+    const pairToCableMap = new Map<string, FiberCable>();
+
+    // 1. First add any custom/persisted cables
+    persistedCables.forEach((c) => {
+        const pairKey = `${c.fromNodeId}->${c.toNodeId}`;
+        if (!deletedKeys[pairKey] && !deletedKeys[c.id]) {
+            list.push(c);
+            pairToCableMap.set(pairKey, c);
+        }
+    });
+
+    // 2. Synthesize missing cables for any parent->child connections in the tree
+    flattenedNodes.forEach((parent) => {
+        if (!parent.children) return;
+        parent.children.forEach((child) => {
+            const pairKey = `${parent.id}->${child.id}`;
+            if (deletedKeys[pairKey]) return;
+
+            if (!pairToCableMap.has(pairKey)) {
+                const isFeeder = parent.type === 'olt';
+                const childCode = (child.name || '').replace(/[^A-Za-z0-9]/g, '');
+                const parentCode = (parent.name || '').replace(/[^A-Za-z0-9]/g, '');
+                const autoName = isFeeder
+                    ? `FDR-OLT1-${childCode}`
+                    : `DST-${parentCode}-${childCode}`;
+
+                if (deletedKeys[autoName]) return;
+
+                const totalCores = isFeeder ? 24 : (child.totalPorts > 8 ? 24 : 12);
+                const tubesCount = isFeeder ? 2 : Math.max(1, Math.ceil(totalCores / 12));
+
+                const synCable: FiberCable = {
+                    id: autoName,
+                    name: autoName,
+                    fromNodeId: parent.id,
+                    toNodeId: child.id,
+                    totalCores,
+                    tubesCount,
+                    coresPerTube: 12,
+                    lengthMeters: child.cableMeters || (isFeeder ? 850 : 350),
+                    cableType: isFeeder ? 'Feeder' : 'Distribusi',
+                    status: child.isSimulated ? 'PLANNED' : 'ACTIVE',
+                };
+                list.push(synCable);
+                pairToCableMap.set(pairKey, synCable);
+            }
+        });
+    });
+
+    return list;
+}
+
 // Reference Demo Topology matching user's schematic design (OLT-PUSAT -> ODCs -> JBs -> ODPs -> Customers)
 export const DEMO_TOPOLOGY_ODCS: Odc[] = [
     {
@@ -769,6 +828,22 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
         } catch { }
     }, [cables]);
 
+    // Track explicitly deleted cables so synthesized topology cables can be suppressed
+    const [deletedCableKeys, setDeletedCableKeys] = useState<Record<string, boolean>>(() => {
+        try {
+            const saved = localStorage.getItem('fo_calc_deleted_cables');
+            return saved ? JSON.parse(saved) : {};
+        } catch {
+            return {};
+        }
+    });
+
+    useEffect(() => {
+        try {
+            localStorage.setItem('fo_calc_deleted_cables', JSON.stringify(deletedCableKeys));
+        } catch { }
+    }, [deletedCableKeys]);
+
     // Splice Joints state inside enclosures
     const [splices, setSplices] = useState<SpliceConnection[]>(() => {
         try {
@@ -1267,13 +1342,18 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
         } catch { }
     }, [nodePositions]);
 
+    // Complete effective cables unified across explicit cables and topology parent-child links
+    const effectiveCables = useMemo(() => {
+        return synthesizeTopologyCables(cables, flattenedNodes, deletedCableKeys);
+    }, [cables, flattenedNodes, deletedCableKeys]);
+
     // Compute Active Upstream Trace Path when a node is selected
     const { traceCableIds } = useMemo(() => {
         if (!selectedNode) {
             return { traceNodeIds: new Set<string>(), traceCableIds: new Set<string>() };
         }
-        return getUpstreamTracePath(selectedNode.id, cables);
-    }, [selectedNode, cables]);
+        return getUpstreamTracePath(selectedNode.id, effectiveCables);
+    }, [selectedNode, effectiveCables]);
 
     // Global mouseup to release dragging reliably
     useEffect(() => {
@@ -1640,6 +1720,12 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
 
     // Action: Delete Cable
     const handleDeleteCable = (cable: FiberCable) => {
+        const pairKey = `${cable.fromNodeId}->${cable.toNodeId}`;
+        setDeletedCableKeys((prev) => ({
+            ...prev,
+            [pairKey]: true,
+            [cable.id]: true,
+        }));
         setCables((prev) => prev.filter((c) => c.id !== cable.id));
         setSplices((prev) => prev.filter((s) => s.fromCableId !== cable.id && s.toCableId !== cable.id));
         setDeletingCable(null);
@@ -1705,13 +1791,13 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
     // Connected cables for the currently selected node
     const nodeIncomingCables = useMemo(() => {
         if (!selectedNode) return [];
-        return cables.filter((c) => c.toNodeId === selectedNode.id);
-    }, [selectedNode, cables]);
+        return effectiveCables.filter((c) => c.toNodeId === selectedNode.id);
+    }, [selectedNode, effectiveCables]);
 
     const nodeOutgoingCables = useMemo(() => {
         if (!selectedNode) return [];
-        return cables.filter((c) => c.fromNodeId === selectedNode.id);
-    }, [selectedNode, cables]);
+        return effectiveCables.filter((c) => c.fromNodeId === selectedNode.id);
+    }, [selectedNode, effectiveCables]);
 
     const nodeAllCables = useMemo(() => {
         return [...nodeIncomingCables, ...nodeOutgoingCables];
@@ -1731,7 +1817,7 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
             `SFP OLT TX: ${currentTxPower} dBm`,
             `Total ODC: ${odcs.length + customNodes.filter((n) => n.category === 'odc').length} unit`,
             `Total ODP/JB: ${odps.length + customNodes.filter((n) => n.category !== 'odc').length} unit`,
-            `Total Kabel FO: ${cables.length} ruas kabel`,
+            `Total Kabel FO: ${effectiveCables.length} ruas kabel`,
             `Total Sambungan Splice: ${splices.length} joint`,
             '',
             `*DAFTAR NODE OPTIK & REDAMAN:*`,
@@ -2063,8 +2149,8 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                                     </filter>
                                 </defs>
 
-                                {/* Render explicit cables */}
-                                {cables.map((cable) => {
+                                {/* Render all unified effective cables */}
+                                {effectiveCables.map((cable) => {
                                     const parent = nodeMap.get(cable.fromNodeId);
                                     const child = nodeMap.get(cable.toNodeId);
                                     if (!parent || !child) return null;
@@ -2083,12 +2169,15 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                                     const midX = (startX + endX) / 2;
                                     const midY = (startY + endY) / 2;
                                     const isFeeder = cable.cableType === 'Feeder' || parent.type === 'olt';
+                                    const isSim = cable.status === 'PLANNED' || child.isSimulated;
 
                                     const strokeColor = isTraceActive
                                         ? '#f59e0b'
-                                        : isFeeder
-                                            ? '#0284c7'
-                                            : '#0d9488';
+                                        : isSim
+                                            ? '#f59e0b'
+                                            : isFeeder
+                                                ? '#0284c7'
+                                                : '#0d9488';
 
                                     const strokeWidth = isTraceActive ? 3.5 : (isFeeder ? 2.5 : 2);
                                     const labelText = `${cable.name} • ${cable.totalCores}C • ${cable.lengthMeters}m`;
@@ -2104,6 +2193,7 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                                                 fill="none"
                                                 stroke={strokeColor}
                                                 strokeWidth={strokeWidth}
+                                                strokeDasharray={isSim ? '6 4' : 'none'}
                                                 opacity={isTraceActive ? 1 : 0.85}
                                                 filter={isTraceActive ? 'url(#glow-gold)' : undefined}
                                             />
@@ -2115,14 +2205,14 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                                                 height={20}
                                                 rx={10}
                                                 fill="#080f1e"
-                                                stroke={isTraceActive ? '#f59e0b' : '#1e3a5f'}
+                                                stroke={isTraceActive ? '#f59e0b' : isSim ? '#f59e0b' : '#1e3a5f'}
                                                 strokeWidth={isTraceActive ? 1.5 : 1}
                                             />
                                             <text
                                                 x={midX}
                                                 y={midY + 3.5}
                                                 textAnchor="middle"
-                                                fill={isTraceActive ? '#fbbf24' : '#7dd3fc'}
+                                                fill={isTraceActive ? '#fbbf24' : isSim ? '#fcd34d' : '#7dd3fc'}
                                                 fontSize="9"
                                                 fontFamily="monospace"
                                                 fontWeight={isTraceActive ? '700' : '600'}
@@ -2132,69 +2222,6 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                                         </g>
                                     );
                                 })}
-
-                                {/* Fallback render for child nodes without explicit cable */}
-                                {flattenedNodes.map((parent) =>
-                                    parent.children.map((child) => {
-                                        const hasExplicit = cables.some(
-                                            (c) => c.fromNodeId === parent.id && c.toNodeId === child.id
-                                        );
-                                        if (hasExplicit) return null;
-
-                                        const startX = parent.x + 160;
-                                        const startY = parent.y;
-                                        const endX = child.x;
-                                        const endY = child.y;
-                                        const dx = endX - startX;
-                                        const ctrlDist = Math.max(35, Math.abs(dx) * 0.45);
-                                        const ctrl1X = startX + (endX >= startX ? ctrlDist : -ctrlDist);
-                                        const ctrl2X = endX - (endX >= startX ? ctrlDist : -ctrlDist);
-                                        const pathD = `M ${startX} ${startY} C ${ctrl1X} ${startY}, ${ctrl2X} ${endY}, ${endX} ${endY}`;
-                                        const isSim = child.isSimulated;
-                                        const midX = (startX + endX) / 2;
-                                        const midY = (startY + endY) / 2;
-                                        const isFeeder = parent.type === 'olt';
-                                        const strokeColor = isSim ? '#f59e0b' : isFeeder ? '#0284c7' : '#0d9488';
-                                        const labelText = child.cableLabel;
-                                        const labelWidth = Math.max(130, labelText.length * 6.5 + 20);
-
-                                        return (
-                                            <g key={`fallback-edge-${parent.id}-${child.id}`}>
-                                                <circle cx={startX} cy={startY} r="3" fill="#38bdf8" />
-                                                <circle cx={endX} cy={endY} r="3" fill="#38bdf8" />
-                                                <path
-                                                    d={pathD}
-                                                    fill="none"
-                                                    stroke={strokeColor}
-                                                    strokeWidth={2}
-                                                    strokeDasharray={isSim ? '6 4' : 'none'}
-                                                    opacity={0.85}
-                                                />
-                                                <rect
-                                                    x={midX - labelWidth / 2}
-                                                    y={midY - 10}
-                                                    width={labelWidth}
-                                                    height={20}
-                                                    rx={10}
-                                                    fill="#080f1e"
-                                                    stroke={isSim ? '#f59e0b' : '#1e3a5f'}
-                                                    strokeWidth={1}
-                                                />
-                                                <text
-                                                    x={midX}
-                                                    y={midY + 3.5}
-                                                    textAnchor="middle"
-                                                    fill={isSim ? '#fcd34d' : '#7dd3fc'}
-                                                    fontSize="9"
-                                                    fontFamily="monospace"
-                                                    fontWeight="600"
-                                                >
-                                                    {labelText}
-                                                </text>
-                                            </g>
-                                        );
-                                    })
-                                )}
 
                                 {/* Render links to Customers */}
                                 {showCustomers &&

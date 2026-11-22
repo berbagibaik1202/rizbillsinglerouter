@@ -310,7 +310,9 @@ export function countCableUsedCores(cableId, splices) {
 }
 
 export function getUpstreamTracePath(targetNodeId, cables) {
-    const traceNodeIds = new Set([targetNodeId]);
+    const traceNodeIds = new Set();
+    if (!targetNodeId) return { traceNodeIds, traceCableIds: new Set() };
+    traceNodeIds.add(targetNodeId);
     const traceCableIds = new Set();
 
     let queue = [targetNodeId];
@@ -332,6 +334,60 @@ export function getUpstreamTracePath(targetNodeId, cables) {
     }
 
     return { traceNodeIds, traceCableIds };
+}
+
+export function synthesizeTopologyCables(persistedCables = [], flattenedNodes = [], deletedKeys = {}) {
+    const list = [];
+    const pairToCableMap = new Map();
+
+    // 1. First add any custom/persisted cables
+    persistedCables.forEach((c) => {
+        const pairKey = `${c.fromNodeId}->${c.toNodeId}`;
+        if (!deletedKeys[pairKey] && !deletedKeys[c.id]) {
+            list.push(c);
+            pairToCableMap.set(pairKey, c);
+        }
+    });
+
+    // 2. Synthesize missing cables for any parent->child connections in the tree
+    flattenedNodes.forEach((parent) => {
+        if (!parent.children) return;
+        parent.children.forEach((child) => {
+            const pairKey = `${parent.id}->${child.id}`;
+            if (deletedKeys[pairKey]) return;
+
+            if (!pairToCableMap.has(pairKey)) {
+                const isFeeder = parent.type === 'olt';
+                const childCode = (child.name || '').replace(/[^A-Za-z0-9]/g, '');
+                const parentCode = (parent.name || '').replace(/[^A-Za-z0-9]/g, '');
+                const autoName = isFeeder
+                    ? `FDR-OLT1-${childCode}`
+                    : `DST-${parentCode}-${childCode}`;
+
+                if (deletedKeys[autoName]) return;
+
+                const totalCores = isFeeder ? 24 : (child.totalPorts > 8 ? 24 : 12);
+                const tubesCount = isFeeder ? 2 : Math.max(1, Math.ceil(totalCores / 12));
+
+                const synCable = {
+                    id: autoName,
+                    name: autoName,
+                    fromNodeId: parent.id,
+                    toNodeId: child.id,
+                    totalCores,
+                    tubesCount,
+                    coresPerTube: 12,
+                    lengthMeters: child.cableMeters || (isFeeder ? 850 : 350),
+                    cableType: isFeeder ? 'Feeder' : 'Distribusi',
+                    status: child.isSimulated ? 'PLANNED' : 'ACTIVE',
+                };
+                list.push(synCable);
+                pairToCableMap.set(pairKey, synCable);
+            }
+        });
+    });
+
+    return list;
 }
 
 test('FO Topology Planner: TIA/EIA-598 standard maps 12 tube and core colors accurately', () => {
@@ -416,5 +472,66 @@ test('FO Topology Planner: getUpstreamTracePath traces backwards from target nod
     const traceOdc = getUpstreamTracePath('ODC-PSM-01', mockCables);
     assert.strictEqual(traceOdc.traceCableIds.size, 1);
     assert.ok(traceOdc.traceCableIds.has('fdr-1'));
+});
+
+test('FO Topology Planner: synthesizeTopologyCables automatically provides full cables for real DB nodes like ODC-02-CMS', () => {
+    const mockNodes = [
+        {
+            id: 'root-olt',
+            name: 'OLT-PUSAT',
+            type: 'olt',
+            children: [
+                {
+                    id: 'ODC-02-CMS',
+                    name: 'ODC-02-CMS',
+                    type: 'odc',
+                    cableMeters: 850,
+                    totalPorts: 16,
+                    children: [
+                        { id: 'CMS-06', name: 'CMS-06', type: 'odp', cableMeters: 274, totalPorts: 8, children: [] },
+                        { id: 'CMS-07', name: 'CMS-07', type: 'odp', cableMeters: 310, totalPorts: 8, children: [] },
+                        { id: 'CMS-08-CBHBL', name: 'CMS-08-CBHBL', type: 'odp', cableMeters: 347, totalPorts: 8, children: [] },
+                    ],
+                },
+            ],
+        },
+        {
+            id: 'ODC-02-CMS',
+            name: 'ODC-02-CMS',
+            type: 'odc',
+            cableMeters: 850,
+            totalPorts: 16,
+            children: [
+                { id: 'CMS-06', name: 'CMS-06', type: 'odp', cableMeters: 274, totalPorts: 8, children: [] },
+                { id: 'CMS-07', name: 'CMS-07', type: 'odp', cableMeters: 310, totalPorts: 8, children: [] },
+                { id: 'CMS-08-CBHBL', name: 'CMS-08-CBHBL', type: 'odp', cableMeters: 347, totalPorts: 8, children: [] },
+            ],
+        },
+    ];
+
+    // Even if persistedCables has no entries for ODC-02-CMS:
+    const synCables = synthesizeTopologyCables([], mockNodes);
+
+    // Should synthesize: 1 incoming feeder cable + 3 outgoing distribution cables = 4 cables!
+    assert.strictEqual(synCables.length, 4);
+
+    const inc = synCables.filter((c) => c.toNodeId === 'ODC-02-CMS');
+    assert.strictEqual(inc.length, 1);
+    assert.strictEqual(inc[0].name, 'FDR-OLT1-ODC02CMS');
+    assert.strictEqual(inc[0].totalCores, 24);
+    assert.strictEqual(inc[0].tubesCount, 2);
+    assert.strictEqual(inc[0].lengthMeters, 850);
+
+    const out = synCables.filter((c) => c.fromNodeId === 'ODC-02-CMS');
+    assert.strictEqual(out.length, 3);
+    assert.strictEqual(out[0].name, 'DST-ODC02CMS-CMS06');
+    assert.strictEqual(out[1].name, 'DST-ODC02CMS-CMS07');
+    assert.strictEqual(out[2].name, 'DST-ODC02CMS-CMS08CBHBL');
+    assert.strictEqual(out[2].lengthMeters, 347);
+
+    // Upstream trace path from ODC-02-CMS must now locate the feeder cable!
+    const trace = getUpstreamTracePath('ODC-02-CMS', synCables);
+    assert.ok(trace.traceCableIds.has('FDR-OLT1-ODC02CMS'));
+    assert.ok(trace.traceNodeIds.has('root-olt'));
 });
 
