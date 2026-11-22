@@ -130,10 +130,18 @@ router.post('/users/:id/:action', async (req, res) => {
 router.get('/profiles', async (req, res) => {
     try {
         const [profiles] = await pool.query(`
-            SELECT hp.id, hp.name, hp.rateLimit, hp.sharedUsers, hp.price, hp.sellingPrice, hp.duration_minutes, COUNT(hu.id) as userCount 
+            SELECT 
+                COALESCE(MAX(hp.id), '') as id, 
+                hp.name, 
+                COALESCE(MAX(hp.rateLimit), '') as rateLimit, 
+                COALESCE(MAX(hp.sharedUsers), 1) as sharedUsers, 
+                COALESCE(MAX(hp.price), 0) as price, 
+                COALESCE(MAX(hp.sellingPrice), 0) as sellingPrice, 
+                MAX(hp.duration_minutes) as duration_minutes, 
+                COUNT(hu.id) as userCount 
             FROM hotspot_profiles hp 
             LEFT JOIN hotspot_users hu ON hp.name = hu.profile 
-            GROUP BY hp.id, hp.name, hp.rateLimit, hp.sharedUsers, hp.price, hp.sellingPrice, hp.duration_minutes
+            GROUP BY hp.name
             ORDER BY hp.name
         `);
         res.json(profiles);
@@ -146,10 +154,17 @@ router.get('/profiles', async (req, res) => {
 router.post('/profiles/sync', async (req, res) => {
     try {
         const [dbProfiles] = await pool.query('SELECT name, price, sellingPrice, duration_minutes FROM hotspot_profiles');
-        const priceMap = dbProfiles.reduce((acc, p) => {
-            acc[p.name] = { price: p.price, sellingPrice: p.sellingPrice, duration_minutes: p.duration_minutes };
-            return acc;
-        }, {});
+        const priceMap = {};
+        for (const p of dbProfiles) {
+            if (!p || !p.name) continue;
+            if (!priceMap[p.name] || (p.sellingPrice && !priceMap[p.name].sellingPrice)) {
+                priceMap[p.name] = {
+                    price: p.price || 0,
+                    sellingPrice: p.sellingPrice || 0,
+                    duration_minutes: p.duration_minutes || null,
+                };
+            }
+        }
 
         const routerProfiles = await mikrotikApi.fetchHotspotProfiles();
         
@@ -165,15 +180,19 @@ router.post('/profiles/sync', async (req, res) => {
             }
             
             if (routerProfiles.length > 0) {
+                const seenRouterNames = new Set();
                 for (const profile of routerProfiles) {
+                    if (!profile || !profile.name) continue;
+                    const normalizedName = profile.name.toLowerCase().trim();
+                    if (seenRouterNames.has(normalizedName)) continue;
+                    seenRouterNames.add(normalizedName);
+
                     const localData = priceMap[profile.name] || { price: 0, sellingPrice: 0, duration_minutes: null };
+                    // Delete any existing rows for this profile name to eliminate duplicate entries
+                    await connection.query('DELETE FROM hotspot_profiles WHERE name = ?', [profile.name]);
                     await connection.query(
                         `INSERT INTO hotspot_profiles (id, name, rateLimit, sharedUsers, price, sellingPrice, duration_minutes) 
-                         VALUES (?, ?, ?, ?, ?, ?, ?) 
-                         ON DUPLICATE KEY UPDATE 
-                         id = VALUES(id),
-                         rateLimit = VALUES(rateLimit), 
-                         sharedUsers = VALUES(sharedUsers)`,
+                         VALUES (?, ?, ?, ?, ?, ?, ?)`,
                         [profile.id, profile.name, profile.rateLimit, profile.sharedUsers, localData.price, localData.sellingPrice, localData.duration_minutes]
                     );
                 }
@@ -187,10 +206,18 @@ router.post('/profiles/sync', async (req, res) => {
         }
         
         const [profiles] = await pool.query(`
-            SELECT hp.id, hp.name, hp.rateLimit, hp.sharedUsers, hp.price, hp.sellingPrice, hp.duration_minutes, COUNT(hu.id) as userCount 
+            SELECT 
+                COALESCE(MAX(hp.id), '') as id, 
+                hp.name, 
+                COALESCE(MAX(hp.rateLimit), '') as rateLimit, 
+                COALESCE(MAX(hp.sharedUsers), 1) as sharedUsers, 
+                COALESCE(MAX(hp.price), 0) as price, 
+                COALESCE(MAX(hp.sellingPrice), 0) as sellingPrice, 
+                MAX(hp.duration_minutes) as duration_minutes, 
+                COUNT(hu.id) as userCount 
             FROM hotspot_profiles hp 
             LEFT JOIN hotspot_users hu ON hp.name = hu.profile 
-            GROUP BY hp.id, hp.name, hp.rateLimit, hp.sharedUsers, hp.price, hp.sellingPrice, hp.duration_minutes
+            GROUP BY hp.name
             ORDER BY hp.name
         `);
         res.json(profiles);
@@ -213,6 +240,7 @@ router.post('/profiles', async (req, res) => {
             throw new Error("Could not find newly created profile on router. It might have failed silently.");
         }
 
+        await pool.query('DELETE FROM hotspot_profiles WHERE name = ?', [name]);
         await pool.query(
             'INSERT INTO hotspot_profiles (id, name, rateLimit, sharedUsers, price, sellingPrice, duration_minutes) VALUES (?, ?, ?, ?, ?, ?, ?)',
             [newProfileOnRouter.id, name, rateLimit || '', sharedUsers || 1, price || 0, sellingPrice || 0, duration_minutes || null]
@@ -749,21 +777,34 @@ router.post('/sync', async (req, res) => {
             await pool.query('INSERT INTO hotspot_users (id, name, password, profile, comment, disabled) VALUES ?', [usersToInsert]);
         }
         
-        // Sync Profiles but preserve prices
+        // Sync Profiles but preserve prices and avoid duplicates
         const [dbProfiles] = await pool.query('SELECT name, price, sellingPrice, duration_minutes FROM hotspot_profiles');
-        const priceMap = dbProfiles.reduce((acc, p) => ({ ...acc, [p.name]: { price: p.price, sellingPrice: p.sellingPrice, duration_minutes: p.duration_minutes } }), {});
+        const priceMap = {};
+        for (const p of dbProfiles) {
+            if (!p || !p.name) continue;
+            if (!priceMap[p.name] || (p.sellingPrice && !priceMap[p.name].sellingPrice)) {
+                priceMap[p.name] = {
+                    price: p.price || 0,
+                    sellingPrice: p.sellingPrice || 0,
+                    duration_minutes: p.duration_minutes || null,
+                };
+            }
+        }
 
         const routerProfiles = await mikrotikApi.fetchHotspotProfiles();
         if (routerProfiles.length > 0) {
-            for(const profile of routerProfiles) {
+            const seenRouterNames = new Set();
+            for (const profile of routerProfiles) {
+                if (!profile || !profile.name) continue;
+                const normalizedName = profile.name.toLowerCase().trim();
+                if (seenRouterNames.has(normalizedName)) continue;
+                seenRouterNames.add(normalizedName);
+
                 const localData = priceMap[profile.name] || { price: 0, sellingPrice: 0, duration_minutes: null };
+                await pool.query('DELETE FROM hotspot_profiles WHERE name = ?', [profile.name]);
                 await pool.query(
                     `INSERT INTO hotspot_profiles (id, name, rateLimit, sharedUsers, price, sellingPrice, duration_minutes) 
-                     VALUES (?, ?, ?, ?, ?, ?, ?) 
-                     ON DUPLICATE KEY UPDATE 
-                     id = VALUES(id),
-                     rateLimit = VALUES(rateLimit), 
-                     sharedUsers = VALUES(sharedUsers)`,
+                     VALUES (?, ?, ?, ?, ?, ?, ?)`,
                     [profile.id, profile.name, profile.rateLimit, profile.sharedUsers, localData.price, localData.sellingPrice, localData.duration_minutes]
                 );
             }

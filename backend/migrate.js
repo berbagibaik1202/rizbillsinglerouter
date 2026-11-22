@@ -416,6 +416,17 @@ export const migrateDatabase = async () => {
         await checkAndAddColumn(connection, 'hotspot_profiles', 'price', 'INT');
         await checkAndAddColumn(connection, 'hotspot_profiles', 'sellingPrice', 'INT');
         await checkAndAddColumn(connection, 'hotspot_profiles', 'duration_minutes', 'INT');
+        try {
+            await connection.query(`
+                DELETE hp1 FROM hotspot_profiles hp1
+                INNER JOIN hotspot_profiles hp2 
+                ON hp1.name = hp2.name AND (
+                    (COALESCE(hp1.sellingPrice, 0) = 0 AND COALESCE(hp2.sellingPrice, 0) > 0)
+                    OR (COALESCE(hp1.sellingPrice, 0) = COALESCE(hp2.sellingPrice, 0) AND hp1.id < hp2.id)
+                )
+            `);
+        } catch (_) {}
+        await checkAndAddIndex(connection, 'hotspot_profiles', 'idx_hotspot_profiles_name', 'name');
         await checkAndAddColumn(connection, 'hotspot_vouchers', 'sold_by_user_id', 'VARCHAR(255) NULL');
         await checkAndAddColumn(connection, 'hotspot_vouchers', 'sold_by_customer_id', 'VARCHAR(255) NULL');
         await checkAndAddColumn(connection, 'whatsapp_logs', 'type', 'VARCHAR(100)');

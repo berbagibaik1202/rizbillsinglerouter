@@ -6,6 +6,22 @@ import { fetchWithAuth } from '~/components/api';
 
 const API_URL = '/api/hotspot';
 
+export const deduplicateProfiles = (items: unknown): HotspotProfile[] => {
+    if (!Array.isArray(items)) return [];
+    const seen = new Set<string>();
+    const unique: HotspotProfile[] = [];
+
+    for (const item of items) {
+        if (!item || typeof item !== 'object') continue;
+        const nameKey = String((item as HotspotProfile).name || '').trim().toLowerCase();
+        if (!nameKey || seen.has(nameKey)) continue;
+        seen.add(nameKey);
+        unique.push(item as HotspotProfile);
+    }
+
+    return unique;
+};
+
 // --- Form Modal ---
 interface ProfileFormModalProps {
     isOpen: boolean;
@@ -134,7 +150,8 @@ const HotspotProfiles: React.FC = () => {
         try {
             const res = await fetchWithAuth(`${API_URL}/profiles`);
             if (!res.ok) throw new Error('Failed to fetch profiles.');
-            setProfiles(await res.json());
+            const data = await res.json();
+            setProfiles(deduplicateProfiles(data));
         } catch (err: any) {
             setError(err.message);
         } finally {
@@ -155,7 +172,8 @@ const HotspotProfiles: React.FC = () => {
                 const errorData = await res.json();
                 throw new Error(errorData.message || 'Sync failed');
             }
-            setProfiles(await res.json());
+            const data = await res.json();
+            setProfiles(deduplicateProfiles(data));
         } catch (err: any) {
             setError(err.message);
         } finally {
@@ -252,8 +270,8 @@ const HotspotProfiles: React.FC = () => {
                             </tr>
                         </thead>
                         <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                            {profiles.map(profile => (
-                                <tr key={profile.id}>
+                            {profiles.map((profile, index) => (
+                                <tr key={profile.id || `${profile.name}-${index}`}>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">{profile.name}</td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{profile.rateLimit || '-'}</td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{profile.sharedUsers}</td>
