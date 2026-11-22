@@ -1,30 +1,50 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import Card from '../../components/common/Card';
-import { Odp, Odc } from '../../types';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
+import { Odp, Odc, Customer, CustomerStatus } from '../../types';
 import { fetchWithAuth } from '~/components/api';
 
-export type StageType = 'cable' | 'plc_splitter' | 'fbt_coupler' | 'splice' | 'connector' | 'custom_attenuator';
-
-export interface FiberStage {
+// --- Types & Constants ---
+export interface SimulatedNode {
     id: string;
-    type: StageType;
     name: string;
-    // Cable
-    lengthMeters?: number;
-    attenuationPerKm?: number;
-    // PLC Splitter
-    plcRatio?: '1:2' | '1:4' | '1:8' | '1:16' | '1:32' | '1:64';
-    // FBT Coupler
-    fbtRatio?: '90:10' | '80:20' | '70:30' | '60:40' | '50:50';
-    fbtPort?: 'tap' | 'through';
-    // Splicing
-    spliceCount?: number;
-    lossPerSplice?: number;
-    // Connector
-    connectorCount?: number;
-    lossPerConnector?: number;
-    // Custom
-    customLossDb?: number;
+    type: 'odp' | 'odc';
+    parentId: string;
+    parentType: 'olt' | 'odc' | 'odp';
+    cableMeters: number;
+    cableType: string;
+    splitterType: string;
+    spliceCount: number;
+    connectorCount: number;
+    totalPorts: number;
+    calculatedPowerIn: number;
+    calculatedPowerOut: number;
+    status: 'OPTIMAL' | 'WARNING' | 'CRITICAL';
+    address?: string;
+    createdAt: string;
+}
+
+export interface TreeNode {
+    id: string;
+    name: string;
+    type: 'olt' | 'odc' | 'odp' | 'simulated';
+    parentId?: string;
+    parentType?: 'olt' | 'odc' | 'odp';
+    totalPorts: number;
+    usedPorts: number;
+    powerIn?: number | null;
+    powerOut?: number | null;
+    calculatedPowerIn: number;
+    calculatedPowerOut: number;
+    cableMeters: number;
+    cableLabel: string;
+    location?: { lat: number; lng: number } | null;
+    address?: string;
+    customers: Customer[];
+    children: TreeNode[];
+    isSimulated?: boolean;
+    simulatedData?: SimulatedNode;
+    // Position on canvas
+    x: number;
+    y: number;
 }
 
 const PLC_LOSS_MAP: Record<string, number> = {
@@ -34,14 +54,9 @@ const PLC_LOSS_MAP: Record<string, number> = {
     '1:16': 13.8,
     '1:32': 17.1,
     '1:64': 20.5,
-};
-
-const FBT_LOSS_MAP: Record<string, { through: number; tap: number }> = {
-    '90:10': { through: 0.6, tap: 10.5 },
-    '80:20': { through: 1.2, tap: 7.5 },
-    '70:30': { through: 1.9, tap: 5.8 },
-    '60:40': { through: 2.7, tap: 4.4 },
-    '50:50': { through: 3.6, tap: 3.6 },
+    'fbt_90_10_tap': 10.5,
+    'fbt_80_20_tap': 7.5,
+    'fbt_70_30_tap': 5.8,
 };
 
 const SFP_PRESETS: Record<string, { label: string; powerDbm: number }> = {
@@ -51,74 +66,27 @@ const SFP_PRESETS: Record<string, { label: string; powerDbm: number }> = {
     'custom': { label: 'Custom TX Power', powerDbm: 5.0 },
 };
 
-const calculateStageLoss = (stage: FiberStage): number => {
-    switch (stage.type) {
-        case 'cable': {
-            const meters = stage.lengthMeters || 0;
-            const rate = stage.attenuationPerKm ?? 0.35;
-            return (meters / 1000) * rate;
-        }
-        case 'plc_splitter': {
-            return PLC_LOSS_MAP[stage.plcRatio || '1:8'] || 10.5;
-        }
-        case 'fbt_coupler': {
-            const ratioData = FBT_LOSS_MAP[stage.fbtRatio || '90:10'] || { through: 0.6, tap: 10.5 };
-            return stage.fbtPort === 'through' ? ratioData.through : ratioData.tap;
-        }
-        case 'splice': {
-            const count = stage.spliceCount || 0;
-            const loss = stage.lossPerSplice ?? 0.1;
-            return count * loss;
-        }
-        case 'connector': {
-            const count = stage.connectorCount || 0;
-            const loss = stage.lossPerConnector ?? 0.25;
-            return count * loss;
-        }
-        case 'custom_attenuator': {
-            return stage.customLossDb || 0;
-        }
-        default:
-            return 0;
-    }
+const haversineMeters = (pos1?: { lat: number; lng: number } | null, pos2?: { lat: number; lng: number } | null): number | null => {
+    if (!pos1 || !pos2 || !pos1.lat || !pos1.lng || !pos2.lat || !pos2.lng) return null;
+    const R = 6371e3;
+    const toRad = (x: number) => (x * Math.PI) / 180;
+    const dLat = toRad(pos2.lat - pos1.lat);
+    const dLng = toRad(pos2.lng - pos1.lng);
+    const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(toRad(pos1.lat)) * Math.cos(toRad(pos2.lat)) * Math.sin(dLng / 2) * Math.sin(dLng / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return Math.round(R * c * 1.25); // 1.25 routing detour factor
 };
 
-const createPresetStages = (presetKey: string): FiberStage[] => {
-    if (presetKey === 'star_2_level') {
-        return [
-            { id: '1', type: 'cable', name: 'Kabel Feeder OLT ke ODC', lengthMeters: 1500, attenuationPerKm: 0.35 },
-            { id: '2', type: 'connector', name: 'Konektor Adaptor ODC', connectorCount: 2, lossPerConnector: 0.25 },
-            { id: '3', type: 'plc_splitter', name: 'Splitter ODC (PLC 1:4)', plcRatio: '1:4' },
-            { id: '4', type: 'cable', name: 'Kabel Distribusi ODC ke ODP', lengthMeters: 800, attenuationPerKm: 0.35 },
-            { id: '5', type: 'splice', name: 'Fusion Splicing di ODP', spliceCount: 1, lossPerSplice: 0.1 },
-            { id: '6', type: 'plc_splitter', name: 'Splitter ODP (PLC 1:8)', plcRatio: '1:8' },
-            { id: '7', type: 'cable', name: 'Dropcore ke Rumah Pelanggan', lengthMeters: 150, attenuationPerKm: 0.35 },
-            { id: '8', type: 'connector', name: 'Fast Connector SC/UPC (ODP & Roset)', connectorCount: 2, lossPerConnector: 0.25 },
-        ];
+const evaluateOpticalStatus = (powerOutDbm: number): { status: 'OPTIMAL' | 'WARNING' | 'CRITICAL'; label: string; color: string; badgeBg: string } => {
+    if (powerOutDbm >= -24 && powerOutDbm <= -14) {
+        return { status: 'OPTIMAL', label: 'Optimal (-14 s/d -24 dBm)', color: 'text-emerald-400', badgeBg: 'bg-emerald-950/60 border-emerald-500/40 text-emerald-300' };
     }
-    if (presetKey === 'star_1_level') {
-        return [
-            { id: '1', type: 'cable', name: 'Kabel Feeder OLT ke ODP', lengthMeters: 2000, attenuationPerKm: 0.35 },
-            { id: '2', type: 'splice', name: 'Fusion Splice di ODP', spliceCount: 1, lossPerSplice: 0.1 },
-            { id: '3', type: 'plc_splitter', name: 'Splitter ODP (PLC 1:16)', plcRatio: '1:16' },
-            { id: '4', type: 'cable', name: 'Dropcore Pelanggan', lengthMeters: 150, attenuationPerKm: 0.35 },
-            { id: '5', type: 'connector', name: 'Fast Connector (ODP & Roset)', connectorCount: 2, lossPerConnector: 0.25 },
-        ];
+    if (powerOutDbm < -24 && powerOutDbm >= -27) {
+        return { status: 'WARNING', label: 'Waspada (-24 s/d -27 dBm)', color: 'text-amber-400', badgeBg: 'bg-amber-950/60 border-amber-500/40 text-amber-300' };
     }
-    if (presetKey === 'daisy_chain') {
-        return [
-            { id: '1', type: 'cable', name: 'Kabel Backbone OLT ke Tiang 1', lengthMeters: 1000, attenuationPerKm: 0.35 },
-            { id: '2', type: 'fbt_coupler', name: 'Coupler Tiang 1 (90:10 - Output Tap ODP)', fbtRatio: '90:10', fbtPort: 'tap' },
-            { id: '3', type: 'plc_splitter', name: 'Splitter ODP 1 (PLC 1:8)', plcRatio: '1:8' },
-            { id: '4', type: 'cable', name: 'Dropcore ke Pelanggan', lengthMeters: 100, attenuationPerKm: 0.35 },
-            { id: '5', type: 'connector', name: 'Fast Connector SC/UPC', connectorCount: 2, lossPerConnector: 0.25 },
-        ];
-    }
-    return [
-        { id: '1', type: 'cable', name: 'Kabel Optik', lengthMeters: 1000, attenuationPerKm: 0.35 },
-        { id: '2', type: 'plc_splitter', name: 'Splitter ODP', plcRatio: '1:8' },
-        { id: '3', type: 'connector', name: 'Konektor Adaptor', connectorCount: 2, lossPerConnector: 0.25 },
-    ];
+    return { status: 'CRITICAL', label: 'Kritis / Redaman Buruk (< -27 dBm)', color: 'text-rose-400', badgeBg: 'bg-rose-950/60 border-rose-500/40 text-rose-300' };
 };
 
 interface FiberCalculatorProps {
@@ -127,732 +95,1298 @@ interface FiberCalculatorProps {
 }
 
 const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack }) => {
-    const [sfpClass, setSfpClass] = useState<string>('class_c');
-    const [customTxPower, setCustomTxPower] = useState<number>(5.0);
-    const [activePreset, setActivePreset] = useState<string>('star_2_level');
-    const [stages, setStages] = useState<FiberStage[]>(() => createPresetStages('star_2_level'));
-
-    // ODP & ODC Integration
+    // Data sources
     const [odps, setOdps] = useState<Odp[]>([]);
     const [odcs, setOdcs] = useState<Odc[]>([]);
-    const [selectedOdpId, setSelectedOdpId] = useState<string>(initialOdpId || '');
+    const [customers, setCustomers] = useState<Customer[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+
+    // OLT & Optical Settings
+    const [sfpClass, setSfpClass] = useState<string>('class_c');
+    const [customTxPower, setCustomTxPower] = useState<number>(5.0);
+    const currentTxPower = sfpClass === 'custom' ? customTxPower : (SFP_PRESETS[sfpClass]?.powerDbm ?? 5.0);
+
+    // Canvas view state
+    const [zoom, setZoom] = useState<number>(1);
+    const [pan, setPan] = useState<{ x: number; y: number }>({ x: 30, y: 40 });
+    const [isDragging, setIsDragging] = useState<boolean>(false);
+    const [dragStart, setDragStart] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+    const canvasContainerRef = useRef<HTMLDivElement>(null);
+
+    // Filters and UI Toggles
+    const [showCustomers, setShowCustomers] = useState<boolean>(true);
+    const [showAuditMode, setShowAuditMode] = useState<boolean>(true);
+    const [searchQuery, setSearchQuery] = useState<string>('');
+    const [selectedOdcFilter, setSelectedOdcFilter] = useState<string>('all');
+    const [selectedNode, setSelectedNode] = useState<TreeNode | null>(null);
+
+    // Simulated / Planned Nodes State
+    const [simulatedNodes, setSimulatedNodes] = useState<SimulatedNode[]>([]);
+    const [isPlannerOpen, setIsPlannerOpen] = useState<boolean>(false);
+    const [plannerParentId, setPlannerParentId] = useState<string>('');
+    const [plannerName, setPlannerName] = useState<string>('');
+    const [plannerCableMeters, setPlannerCableMeters] = useState<number>(450);
+    const [plannerCableType, setPlannerCableType] = useState<string>('12C Distribusi');
+    const [plannerSplitter, setPlannerSplitter] = useState<string>('1:8');
+    const [plannerSplices, setPlannerSplices] = useState<number>(2);
+    const [plannerConnectors, setPlannerConnectors] = useState<number>(2);
+    const [plannerPorts, setPlannerPorts] = useState<number>(8);
+    const [isSavingOdp, setIsSavingOdp] = useState<boolean>(false);
     const [copyNotice, setCopyNotice] = useState<string | null>(null);
 
-    useEffect(() => {
-        const loadNetworkData = async () => {
-            try {
-                const [odpRes, odcRes] = await Promise.allSettled([
-                    fetchWithAuth('/api/network/odps'),
-                    fetchWithAuth('/api/network/odcs'),
-                ]);
-                if (odpRes.status === 'fulfilled' && odpRes.value.ok) {
-                    setOdps(await odpRes.value.json());
-                }
-                if (odcRes.status === 'fulfilled' && odcRes.value.ok) {
-                    setOdcs(await odcRes.value.json());
-                }
-            } catch (err) {
-                console.warn('Failed to load network infrastructure for FO Calculator:', err);
+    // Fetch live network data
+    const fetchNetworkData = async () => {
+        setIsLoading(true);
+        setError(null);
+        try {
+            const [odpRes, odcRes, custRes] = await Promise.all([
+                fetchWithAuth('/api/network/odps'),
+                fetchWithAuth('/api/network/odcs'),
+                fetchWithAuth('/api/customers'),
+            ]);
+            if (!odpRes.ok || !odcRes.ok) {
+                throw new Error('Gagal memuat data ODP/ODC dari server.');
             }
-        };
-        loadNetworkData();
+            const odpData = await odpRes.json();
+            const odcData = await odcRes.json();
+            const custData = custRes.ok ? await custRes.json() : [];
+            setOdps(odpData || []);
+            setOdcs(odcData || []);
+            setCustomers(custData || []);
+        } catch (err: any) {
+            setError(err.message || 'Terjadi kesalahan saat memuat data jaringan.');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchNetworkData();
     }, []);
 
-    // If an initial ODP is passed, auto-select it
+    // Build hierarchical tree nodes
+    const { tree, flattenedNodes } = useMemo(() => {
+        const rootTx = currentTxPower;
+        const allFlattened: TreeNode[] = [];
+
+        // 1. Group customers by ODP
+        const customersByOdp: Record<string, Customer[]> = {};
+        customers.forEach((c) => {
+            if (c.odpId) {
+                if (!customersByOdp[c.odpId]) customersByOdp[c.odpId] = [];
+                customersByOdp[c.odpId].push(c);
+            }
+        });
+
+        // 2. Identify ODC nodes
+        const odcNodes: TreeNode[] = odcs
+            .filter((odc) => selectedOdcFilter === 'all' || odc.id === selectedOdcFilter)
+            .map((odc) => {
+                const estMeters = 850;
+                const cableLoss = (estMeters / 1000) * 0.35;
+                const splitterLoss = 7.2; // default PLC 1:4 on ODC
+                const calcPowerIn = rootTx - cableLoss;
+                const calcPowerOut = calcPowerIn - splitterLoss;
+
+                return {
+                    id: odc.id,
+                    name: odc.name,
+                    type: 'odc',
+                    parentId: 'root-olt',
+                    parentType: 'olt',
+                    totalPorts: odc.totalPorts || 24,
+                    usedPorts: 0,
+                    powerIn: odc.powerInput ?? null,
+                    powerOut: odc.powerOutput ?? null,
+                    calculatedPowerIn: Number(calcPowerIn.toFixed(2)),
+                    calculatedPowerOut: Number(calcPowerOut.toFixed(2)),
+                    cableMeters: estMeters,
+                    cableLabel: `FDR-OLT1-${odc.name.replace(/\s+/g, '')} • 24C • ${estMeters}m`,
+                    location: odc.location,
+                    address: odc.address,
+                    customers: [],
+                    children: [],
+                    x: 0,
+                    y: 0,
+                };
+            });
+
+        // 3. Attach ODP nodes to ODCs or cascading parent ODPs
+        const odpMap = new Map<string, TreeNode>();
+
+        odps.forEach((odp) => {
+            const custs = customersByOdp[odp.id] || [];
+            const parentOdc = odcs.find((o) => o.id === odp.parentId);
+            const parentOdp = odps.find((o) => o.id === odp.parentId);
+
+            let distanceMeters = 420;
+            if (parentOdc?.location && odp.location) {
+                const dist = haversineMeters(parentOdc.location, odp.location);
+                if (dist) distanceMeters = dist;
+            } else if (parentOdp?.location && odp.location) {
+                const dist = haversineMeters(parentOdp.location, odp.location);
+                if (dist) distanceMeters = dist;
+            }
+
+            const cableLoss = (distanceMeters / 1000) * 0.35;
+            const splitterLoss = PLC_LOSS_MAP[odp.totalPorts === 16 ? '1:16' : '1:8'] || 10.5;
+            const spliceLoss = 0.2; // 2 splices average
+            const connectorLoss = 0.5; // 2 connectors
+
+            // Estimate power based on parent
+            let parentPowerOut = rootTx - 7.5; // fallback
+            if (parentOdc) {
+                parentPowerOut = rootTx - ((850 / 1000) * 0.35 + 7.2);
+            }
+
+            const calcPowerIn = Number((parentPowerOut - cableLoss).toFixed(2));
+            const calcPowerOut = Number((calcPowerIn - splitterLoss - spliceLoss - connectorLoss).toFixed(2));
+
+            const node: TreeNode = {
+                id: odp.id,
+                name: odp.name,
+                type: 'odp',
+                parentId: odp.parentId || (odcNodes[0]?.id ?? 'root-olt'),
+                parentType: parentOdc ? 'odc' : parentOdp ? 'odp' : 'odc',
+                totalPorts: odp.totalPorts || 8,
+                usedPorts: custs.length,
+                powerIn: odp.powerInput ?? null,
+                powerOut: odp.powerOutput ?? null,
+                calculatedPowerIn: calcPowerIn,
+                calculatedPowerOut: calcPowerOut,
+                cableMeters: distanceMeters,
+                cableLabel: `DST • 12C • ${distanceMeters}m`,
+                location: odp.location,
+                address: odp.address,
+                customers: custs,
+                children: [],
+                x: 0,
+                y: 0,
+            };
+
+            odpMap.set(odp.id, node);
+        });
+
+        // 4. Attach Simulated Nodes
+        simulatedNodes.forEach((sim) => {
+            const node: TreeNode = {
+                id: sim.id,
+                name: `${sim.name} [RENCANA]`,
+                type: 'simulated',
+                parentId: sim.parentId,
+                parentType: sim.parentType,
+                totalPorts: sim.totalPorts,
+                usedPorts: 0,
+                powerIn: null,
+                powerOut: null,
+                calculatedPowerIn: sim.calculatedPowerIn,
+                calculatedPowerOut: sim.calculatedPowerOut,
+                cableMeters: sim.cableMeters,
+                cableLabel: `DRAF • ${sim.cableType} • ${sim.cableMeters}m`,
+                location: null,
+                address: sim.address,
+                customers: [],
+                children: [],
+                isSimulated: true,
+                simulatedData: sim,
+                x: 0,
+                y: 0,
+            };
+            odpMap.set(sim.id, node);
+        });
+
+        // 5. Connect children to parents
+        odpMap.forEach((odpNode) => {
+            // Check if parent is an ODC
+            const odcParent = odcNodes.find((o) => o.id === odpNode.parentId);
+            if (odcParent) {
+                odcParent.children.push(odpNode);
+                odcParent.usedPorts += 1;
+            } else {
+                // Check if parent is an ODP (cascading)
+                const odpParent = odpMap.get(odpNode.parentId || '');
+                if (odpParent) {
+                    odpParent.children.push(odpNode);
+                } else if (odcNodes.length > 0) {
+                    // Default to first ODC if parentId unmapped
+                    odcNodes[0].children.push(odpNode);
+                    odcNodes[0].usedPorts += 1;
+                }
+            }
+        });
+
+        // Root Node OLT
+        const rootOltNode: TreeNode = {
+            id: 'root-olt',
+            name: 'OLT-PUSAT',
+            type: 'olt',
+            totalPorts: 16,
+            usedPorts: odcNodes.length,
+            powerIn: null,
+            powerOut: rootTx,
+            calculatedPowerIn: rootTx,
+            calculatedPowerOut: rootTx,
+            cableMeters: 0,
+            cableLabel: 'ROOT SFP TX',
+            customers: [],
+            children: odcNodes,
+            x: 50,
+            y: 0,
+        };
+
+        // 6. Compute 2D layout coordinates (Level X, Subtree Y)
+        const COLUMN_WIDTH = 340;
+        let currentY = 50;
+
+        const assignPositions = (node: TreeNode, depth: number) => {
+            node.x = 50 + depth * COLUMN_WIDTH;
+
+            if (node.children.length === 0) {
+                // Leaf node height considers its customers
+                const custRows = showCustomers ? Math.max(1, node.customers.length) : 1;
+                const nodeHeight = Math.max(110, custRows * 42 + 20);
+                node.y = currentY + nodeHeight / 2;
+                currentY += nodeHeight + 35;
+                allFlattened.push(node);
+                return;
+            }
+
+            // Internal node: position children first, then center parent vertically
+            const childYPositions: number[] = [];
+            node.children.forEach((child) => {
+                assignPositions(child, depth + 1);
+                childYPositions.push(child.y);
+            });
+
+            const minY = Math.min(...childYPositions);
+            const maxY = Math.max(...childYPositions);
+            node.y = (minY + maxY) / 2;
+            allFlattened.push(node);
+        };
+
+        assignPositions(rootOltNode, 0);
+
+        return { tree: rootOltNode, flattenedNodes: allFlattened };
+    }, [odps, odcs, customers, currentTxPower, selectedOdcFilter, simulatedNodes, showCustomers]);
+
+    // Set initial selected node if odpId passed
     useEffect(() => {
-        if (initialOdpId) {
-            setSelectedOdpId(initialOdpId);
+        if (initialOdpId && flattenedNodes.length > 0) {
+            const found = flattenedNodes.find((n) => n.id === initialOdpId);
+            if (found) setSelectedNode(found);
         }
-    }, [initialOdpId]);
+    }, [initialOdpId, flattenedNodes]);
 
-    const txPowerDbm = useMemo(() => {
-        if (sfpClass === 'custom') return customTxPower;
-        return SFP_PRESETS[sfpClass]?.powerDbm ?? 5.0;
-    }, [sfpClass, customTxPower]);
+    // Canvas Mouse Dragging & Panning
+    const handleMouseDown = (e: React.MouseEvent) => {
+        if ((e.target as HTMLElement).closest('.interactive-node, button, input, select')) return;
+        setIsDragging(true);
+        setDragStart({ x: e.clientX - pan.x, y: e.clientY - pan.y });
+    };
 
-    // Calculate progression stage by stage
-    const calculatedProgression = useMemo(() => {
-        let currentPower = txPowerDbm;
-        let totalLoss = 0;
-
-        const progression = stages.map((stage) => {
-            const loss = calculateStageLoss(stage);
-            totalLoss += loss;
-            currentPower -= loss;
-
-            return {
-                ...stage,
-                lossDb: Number(loss.toFixed(2)),
-                remainingPowerDbm: Number(currentPower.toFixed(2)),
-            };
+    const handleMouseMove = (e: React.MouseEvent) => {
+        if (!isDragging) return;
+        setPan({
+            x: e.clientX - dragStart.x,
+            y: e.clientY - dragStart.y,
         });
+    };
+
+    const handleMouseUp = () => setIsDragging(false);
+
+    // Zoom handlers
+    const handleZoomIn = () => setZoom((prev) => Math.min(1.6, prev + 0.15));
+    const handleZoomOut = () => setZoom((prev) => Math.max(0.4, prev - 0.15));
+    const handleResetZoom = () => {
+        setZoom(1);
+        setPan({ x: 30, y: 40 });
+    };
+
+    // Calculate real-time simulation in planner drawer
+    const plannerCalculations = useMemo(() => {
+        // Find parent node
+        const parent = flattenedNodes.find((n) => n.id === plannerParentId) || tree;
+        const parentOutPower = parent.type === 'olt' ? currentTxPower : (parent.calculatedPowerOut || -7.5);
+
+        const cableLoss = (plannerCableMeters / 1000) * 0.35;
+        const splitterLoss = PLC_LOSS_MAP[plannerSplitter] || 10.5;
+        const spliceLoss = plannerSplices * 0.1;
+        const connLoss = plannerConnectors * 0.25;
+
+        const totalAdditionalLoss = cableLoss + splitterLoss + spliceLoss + connLoss;
+        const estPowerIn = Number((parentOutPower - cableLoss).toFixed(2));
+        const estPowerOut = Number((estPowerIn - splitterLoss - spliceLoss - connLoss).toFixed(2));
+        const optStatus = evaluateOpticalStatus(estPowerOut);
 
         return {
-            progression,
-            totalLossDb: Number(totalLoss.toFixed(2)),
-            rxPowerDbm: Number(currentPower.toFixed(2)),
+            parentOutPower,
+            cableLoss: Number(cableLoss.toFixed(2)),
+            splitterLoss,
+            spliceLoss: Number(spliceLoss.toFixed(2)),
+            connLoss: Number(connLoss.toFixed(2)),
+            totalAdditionalLoss: Number(totalAdditionalLoss.toFixed(2)),
+            estPowerIn,
+            estPowerOut,
+            optStatus,
         };
-    }, [stages, txPowerDbm]);
+    }, [plannerParentId, plannerCableMeters, plannerSplitter, plannerSplices, plannerConnectors, currentTxPower, flattenedNodes, tree]);
 
-    // Status evaluation based on GPON ITU-T G.984
-    const statusAssessment = useMemo(() => {
-        const rx = calculatedProgression.rxPowerDbm;
-        if (rx > -8) {
-            return {
-                level: 'overpower',
-                color: 'text-purple-600 bg-purple-50 dark:bg-purple-900/40 border-purple-400',
-                badge: '⚠️ OVERPOWER (> -8 dBm)',
-                label: 'Daya optik terlalu tinggi! Risiko merusak receiver optik ONU/ONT. Pasang attenuator optik.',
-            };
+    // Action: Add Simulated Node to Diagram
+    const handleAddSimulatedNode = () => {
+        if (!plannerName.trim()) {
+            alert('Masukkan nama ODP/cabang rencana.');
+            return;
         }
-        if (rx >= -22) {
-            return {
-                level: 'optimal',
-                color: 'text-green-700 bg-green-50 dark:bg-green-900/40 border-green-500',
-                badge: '🟢 OPTIMAL (-15 s/d -22 dBm)',
-                label: 'Redaman sangat ideal dan stabil. Sesuai standar performa tinggi ISP/Telco.',
-            };
-        }
-        if (rx >= -25) {
-            return {
-                level: 'good',
-                color: 'text-blue-700 bg-blue-50 dark:bg-blue-900/40 border-blue-400',
-                badge: '🟡 AMAN & STABIL (-22 s/d -25 dBm)',
-                label: 'Sinyal normal beroperasi dengan baik. Disarankan tidak banyak penambahan lekukan kabel.',
-            };
-        }
-        if (rx >= -27) {
-            return {
-                level: 'warning',
-                color: 'text-yellow-800 bg-yellow-50 dark:bg-yellow-900/40 border-yellow-500',
-                badge: '🟠 MARGIN KRITIS (-25 s/d -27 dBm)',
-                label: 'Mendekati batas sensitivitas ONT (-27 s/d -28 dBm). Rawan gangguan packet loss saat hujan/panas.',
-            };
-        }
-        return {
-            level: 'critical',
-            color: 'text-red-700 bg-red-50 dark:bg-red-900/40 border-red-500',
-            badge: '🔴 DI LUAR SPESIFIKASI / LOS (< -27 dBm)',
-            label: 'Redaman terlalu tinggi! Internet berisiko sering putus atau LOS (Loss of Signal). Periksa sambungan atau kurangi rasio splitter.',
+
+        const parent = flattenedNodes.find((n) => n.id === plannerParentId) || tree;
+        const newSimNode: SimulatedNode = {
+            id: `SIM-${Date.now()}`,
+            name: plannerName.trim(),
+            type: 'odp',
+            parentId: parent.id,
+            parentType: parent.type === 'odc' ? 'odc' : parent.type === 'odp' ? 'odp' : 'olt',
+            cableMeters: plannerCableMeters,
+            cableType: plannerCableType,
+            splitterType: plannerSplitter,
+            spliceCount: plannerSplices,
+            connectorCount: plannerConnectors,
+            totalPorts: plannerPorts,
+            calculatedPowerIn: plannerCalculations.estPowerIn,
+            calculatedPowerOut: plannerCalculations.estPowerOut,
+            status: plannerCalculations.optStatus.status,
+            createdAt: new Date().toISOString(),
         };
-    }, [calculatedProgression.rxPowerDbm]);
 
-    const handleApplyPreset = (key: string) => {
-        setActivePreset(key);
-        setStages(createPresetStages(key));
+        setSimulatedNodes((prev) => [...prev, newSimNode]);
+        setIsPlannerOpen(false);
+        setPlannerName('');
     };
 
-    const handleAddStage = (type: StageType) => {
-        const newId = String(Date.now());
-        let newStage: FiberStage;
-
-        switch (type) {
-            case 'cable':
-                newStage = { id: newId, type: 'cable', name: 'Segmen Kabel Baru', lengthMeters: 500, attenuationPerKm: 0.35 };
-                break;
-            case 'plc_splitter':
-                newStage = { id: newId, type: 'plc_splitter', name: 'Passive Splitter PLC', plcRatio: '1:8' };
-                break;
-            case 'fbt_coupler':
-                newStage = { id: newId, type: 'fbt_coupler', name: 'Coupler FBT Asimetris', fbtRatio: '80:20', fbtPort: 'tap' };
-                break;
-            case 'splice':
-                newStage = { id: newId, type: 'splice', name: 'Sambungan Fusion Splice', spliceCount: 1, lossPerSplice: 0.1 };
-                break;
-            case 'connector':
-                newStage = { id: newId, type: 'connector', name: 'Fast Connector / Adapter', connectorCount: 2, lossPerConnector: 0.25 };
-                break;
-            case 'custom_attenuator':
-                newStage = { id: newId, type: 'custom_attenuator', name: 'Attenuator Optik / Redaman Lain', customLossDb: 2.0 };
-                break;
+    // Action: Commit Simulated Node to Official Database
+    const handleCommitToDatabase = async () => {
+        if (!plannerName.trim()) {
+            alert('Masukkan nama ODP rencana.');
+            return;
         }
 
-        setStages(prev => [...prev, newStage]);
-        setActivePreset('custom');
+        setIsSavingOdp(true);
+        try {
+            const parent = flattenedNodes.find((n) => n.id === plannerParentId);
+            const res = await fetchWithAuth('/api/network/odps', {
+                method: 'POST',
+                body: JSON.stringify({
+                    name: plannerName.trim(),
+                    parentId: parent?.id || null,
+                    totalPorts: plannerPorts,
+                    powerInput: plannerCalculations.estPowerIn,
+                    powerOutput: plannerCalculations.estPowerOut,
+                    address: `Simulasi tarikan dari ${parent?.name || 'OLT'} (${plannerCableMeters}m)`,
+                }),
+            });
+            if (!res.ok) {
+                const data = await res.json().catch(() => ({}));
+                throw new Error(data.message || 'Gagal menyimpan ODP baru ke database.');
+            }
+
+            await fetchNetworkData();
+            setIsPlannerOpen(false);
+            setPlannerName('');
+            alert(`Sukses! ${plannerName.trim()} berhasil resmi ditambahkan ke database ODP.`);
+        } catch (err: any) {
+            alert(`Error: ${err.message}`);
+        } finally {
+            setIsSavingOdp(false);
+        }
     };
 
-    const handleUpdateStage = (id: string, updates: Partial<FiberStage>) => {
-        setStages(prev => prev.map(s => s.id === id ? { ...s, ...updates } : s));
-        setActivePreset('custom');
+    // Remove simulated node
+    const handleRemoveSimulatedNode = (simId: string) => {
+        setSimulatedNodes((prev) => prev.filter((s) => s.id !== simId));
+        if (selectedNode?.id === simId) setSelectedNode(null);
     };
 
-    const handleRemoveStage = (id: string) => {
-        setStages(prev => prev.filter(s => s.id !== id));
-        setActivePreset('custom');
-    };
-
-    const handleMoveStage = (index: number, direction: 'up' | 'down') => {
-        const targetIndex = direction === 'up' ? index - 1 : index + 1;
-        if (targetIndex < 0 || targetIndex >= stages.length) return;
-
-        setStages(prev => {
-            const next = [...prev];
-            const temp = next[index];
-            next[index] = next[targetIndex];
-            next[targetIndex] = temp;
-            return next;
-        });
-        setActivePreset('custom');
-    };
-
-    // Copy formatted report for WhatsApp
-    const handleCopyWhatsAppReport = () => {
-        const lines = [
-            `📊 *ESTIMASI FIBER OPTIC POWER BUDGET (FTTH)*`,
-            `----------------------------------------------`,
-            `📡 Sumber TX OLT : +${txPowerDbm.toFixed(2)} dBm (${SFP_PRESETS[sfpClass]?.label || 'Custom'})`,
-            `📉 Total Loss : -${calculatedProgression.totalLossDb.toFixed(2)} dB`,
-            `🎯 Estimasi RX ONT : *${calculatedProgression.rxPowerDbm.toFixed(2)} dBm*`,
-            `🚦 Status Link : ${statusAssessment.badge}`,
-            ``,
-            `*Rincian Jalur Optik:*`,
-            ...calculatedProgression.progression.map((p, idx) => {
-                return `${idx + 1}. ${p.name} : -${p.lossDb.toFixed(2)} dB (Sisa: ${p.remainingPowerDbm.toFixed(2)} dBm)`;
-            }),
-            `----------------------------------------------`,
-            `💡 Catatan: ${statusAssessment.label}`,
+    // Copy NOC / WhatsApp Report
+    const handleCopyReport = () => {
+        const textLines = [
+            `*LAPORAN TOPOLOGI FO & BUDGETING ISP*`,
+            `Tanggal: ${new Date().toLocaleString('id-ID')}`,
+            `SFP OLT TX: ${currentTxPower} dBm`,
+            `Total ODC: ${odcs.length} unit`,
+            `Total ODP: ${odps.length} unit (Simulasi Tambahan: ${simulatedNodes.length})`,
+            `Total Pelanggan Terpasang: ${customers.length} user`,
+            '',
+            `*DAFTAR NODE OPTIK & REDAMAN:*`,
         ];
 
-        const text = lines.join('\n');
-        navigator.clipboard.writeText(text);
-        setCopyNotice('Laporan berhasil disalin! Siap dipaste ke grup WhatsApp.');
-        setTimeout(() => setCopyNotice(null), 3000);
+        flattenedNodes.forEach((node) => {
+            if (node.type === 'olt') return;
+            const statusLabel = evaluateOpticalStatus(node.calculatedPowerOut).label;
+            const actualStr = node.powerOut != null ? ` | OPM Riil: ${node.powerOut} dBm` : '';
+            textLines.push(`• [${node.type.toUpperCase()}] ${node.name} (${node.usedPorts}/${node.totalPorts} Port) -> Desain: ${node.calculatedPowerOut} dBm${actualStr} [${statusLabel}]`);
+        });
+
+        navigator.clipboard.writeText(textLines.join('\n')).then(() => {
+            setCopyNotice('Laporan skematik berhasil disalin ke clipboard!');
+            setTimeout(() => setCopyNotice(null), 3500);
+        });
     };
 
-    // Selected ODP info
-    const selectedOdp = useMemo(() => {
-        return odps.find(o => o.id === selectedOdpId) || null;
-    }, [odps, selectedOdpId]);
-
-    const selectedParentOdc = useMemo(() => {
-        if (!selectedOdp || !selectedOdp.parentId) return null;
-        return odcs.find(o => o.id === selectedOdp.parentId) || null;
-    }, [selectedOdp, odcs]);
-
     return (
-        <div className="space-y-6">
-            {/* Header */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                <div>
-                    <div className="flex items-center gap-3">
+        <div className="space-y-4">
+            {/* Top Header Card */}
+            <div className="bg-[#0f172a] border border-slate-800 rounded-2xl p-5 shadow-xl text-white">
+                <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 pb-4 border-b border-slate-800">
+                    <div>
+                        <div className="flex items-center gap-3">
+                            <span className="p-2 rounded-xl bg-gradient-to-tr from-cyan-600 to-blue-500 shadow-lg shadow-cyan-500/20 text-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                </svg>
+                            </span>
+                            <div>
+                                <h2 className="text-xl font-black tracking-tight text-slate-100 flex items-center gap-2">
+                                    <span>FO Network Topology & Budgeting Planner</span>
+                                    <span className="text-xs px-2.5 py-0.5 rounded-full bg-cyan-950 border border-cyan-500/40 text-cyan-300 font-mono">
+                                        NOC Interactive Tree
+                                    </span>
+                                </h2>
+                                <p className="text-xs text-slate-400 mt-0.5">
+                                    Peta visual skematik jalur OLT &rarr; ODC &rarr; ODP &rarr; Pelanggan. Desain jalur tarikan baru & evaluasi redaman optik riil vs teoritis.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="flex items-center gap-2.5 flex-wrap">
                         {onBack && (
                             <button
                                 onClick={onBack}
-                                className="px-3 py-1.5 text-xs bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-md font-semibold text-gray-700 dark:text-gray-200"
+                                className="px-3.5 py-2 text-xs font-semibold rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-colors"
                             >
-                                ← Kembali
+                                Kembali ke ODP
                             </button>
                         )}
-                        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 flex items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                            </svg>
-                            Fiber Optic (FO) Power Budget Calculator
-                        </h2>
-                    </div>
-                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                        Simulasi link optical loss & estimasi redaman RX ONT pelanggan dari OLT secara akurat.
-                    </p>
-                </div>
-                <div className="flex items-center gap-2">
-                    <button
-                        onClick={handleCopyWhatsAppReport}
-                        className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-md font-semibold shadow-sm flex items-center gap-2 text-sm transition-colors"
-                        title="Salin hasil estimasi ke format chat WhatsApp"
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 4.315 1.731 6.086l.107.192-.533 1.955 1.976-.518.188.112z" />
-                        </svg>
-                        Salin Laporan WA
-                    </button>
-                </div>
-            </div>
-
-            {copyNotice && (
-                <div className="p-3 bg-emerald-100 dark:bg-emerald-950 border border-emerald-400 text-emerald-800 dark:text-emerald-200 rounded-md text-sm font-medium animate-fadeIn">
-                    {copyNotice}
-                </div>
-            )}
-
-            {/* Presets & ODP Reference Bar */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                <Card className="lg:col-span-2">
-                    <div className="p-4 space-y-3">
-                        <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                            Pilih Template / Topologi Cepat:
-                        </label>
-                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                            <button
-                                onClick={() => handleApplyPreset('star_2_level')}
-                                className={`px-3 py-2 text-xs font-semibold rounded-md border text-center transition-all ${
-                                    activePreset === 'star_2_level'
-                                        ? 'bg-blue-600 border-blue-600 text-white shadow-sm'
-                                        : 'bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600'
-                                }`}
-                            >
-                                🌟 Star 2-Stage<br />
-                                <span className="text-[10px] opacity-80">(ODC 1:4 ➔ ODP 1:8)</span>
-                            </button>
-                            <button
-                                onClick={() => handleApplyPreset('star_1_level')}
-                                className={`px-3 py-2 text-xs font-semibold rounded-md border text-center transition-all ${
-                                    activePreset === 'star_1_level'
-                                        ? 'bg-blue-600 border-blue-600 text-white shadow-sm'
-                                        : 'bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600'
-                                }`}
-                            >
-                                ⚡ Star 1-Stage<br />
-                                <span className="text-[10px] opacity-80">(Langsung ODP 1:16)</span>
-                            </button>
-                            <button
-                                onClick={() => handleApplyPreset('daisy_chain')}
-                                className={`px-3 py-2 text-xs font-semibold rounded-md border text-center transition-all ${
-                                    activePreset === 'daisy_chain'
-                                        ? 'bg-blue-600 border-blue-600 text-white shadow-sm'
-                                        : 'bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600'
-                                }`}
-                            >
-                                ⛓️ Daisy Chain / Bus<br />
-                                <span className="text-[10px] opacity-80">(Coupler 90:10 ➔ ODP)</span>
-                            </button>
-                            <button
-                                onClick={() => setActivePreset('custom')}
-                                className={`px-3 py-2 text-xs font-semibold rounded-md border text-center transition-all ${
-                                    activePreset === 'custom'
-                                        ? 'bg-purple-600 border-purple-600 text-white shadow-sm'
-                                        : 'bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600'
-                                }`}
-                            >
-                                🛠️ Kustom Mandiri<br />
-                                <span className="text-[10px] opacity-80">({stages.length} Tahapan Aktif)</span>
-                            </button>
-                        </div>
-                    </div>
-                </Card>
-
-                {/* SFP Transmitter Configuration */}
-                <Card>
-                    <div className="p-4 space-y-2">
-                        <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                            Daya Pancar SFP OLT (TX Power):
-                        </label>
-                        <select
-                            value={sfpClass}
-                            onChange={(e) => setSfpClass(e.target.value)}
-                            className="w-full p-2 text-sm border rounded-md bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                        <button
+                            onClick={handleCopyReport}
+                            className="px-3.5 py-2 text-xs font-semibold rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-400 border border-emerald-500/30 transition-colors flex items-center gap-1.5"
+                            title="Salin ringkasan laporan ke WhatsApp"
                         >
-                            {Object.entries(SFP_PRESETS).map(([key, item]) => (
-                                <option key={key} value={key}>{item.label}</option>
-                            ))}
-                        </select>
-                        {sfpClass === 'custom' && (
-                            <div className="flex items-center gap-2 pt-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 4.315 1.731 6.086l.107.192-.533 1.955 1.976-.518.188.112z" />
+                            </svg>
+                            <span>Salin Laporan WA</span>
+                        </button>
+                        <button
+                            onClick={() => {
+                                setPlannerParentId(odcs[0]?.id || 'root-olt');
+                                setPlannerName(`ODP-BARU-${odps.length + 1}`);
+                                setIsPlannerOpen(true);
+                            }}
+                            className="px-4 py-2 text-xs font-bold rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white shadow-lg shadow-cyan-500/25 transition-all flex items-center gap-1.5 cursor-pointer"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
+                            </svg>
+                            <span>+ Rencanakan Tarikan ODP</span>
+                        </button>
+                    </div>
+                </div>
+
+                {/* Sub-toolbar Controls */}
+                <div className="flex flex-wrap items-center justify-between gap-3 pt-4 text-xs">
+                    {/* Left: OLT Power & Filter */}
+                    <div className="flex items-center gap-3 flex-wrap">
+                        <div className="flex items-center gap-2 bg-slate-900/90 border border-slate-700/80 px-3 py-1.5 rounded-xl">
+                            <span className="text-slate-400">SFP OLT TX:</span>
+                            <select
+                                value={sfpClass}
+                                onChange={(e) => setSfpClass(e.target.value)}
+                                className="bg-transparent text-cyan-300 font-semibold focus:outline-none cursor-pointer"
+                            >
+                                {Object.entries(SFP_PRESETS).map(([k, v]) => (
+                                    <option key={k} value={k} className="bg-slate-900 text-white">
+                                        {v.label}
+                                    </option>
+                                ))}
+                            </select>
+                            {sfpClass === 'custom' && (
                                 <input
                                     type="number"
                                     step="0.1"
                                     value={customTxPower}
                                     onChange={(e) => setCustomTxPower(parseFloat(e.target.value) || 0)}
-                                    className="w-full p-1.5 text-sm border rounded bg-white dark:bg-gray-800 dark:border-gray-600 dark:text-white"
-                                    placeholder="Input dBm..."
+                                    className="w-16 bg-slate-800 text-white text-center rounded px-1 py-0.5 border border-slate-600 font-mono text-xs"
                                 />
-                                <span className="text-sm font-semibold text-gray-600 dark:text-gray-300">dBm</span>
-                            </div>
-                        )}
-                        <p className="text-xs text-gray-500 dark:text-gray-400">
-                            Standar OLT ZTE/Huawei umum: <strong>+5.0 s/d +7.0 dBm (Class C+)</strong>.
-                        </p>
-                    </div>
-                </Card>
-            </div>
-
-            {/* Main Power Meter & Result Gauge */}
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
-                {/* Result Card */}
-                <div className="lg:col-span-3">
-                    <div className={`p-6 rounded-xl border shadow-md flex flex-col justify-between ${statusAssessment.color}`}>
-                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                            <div>
-                                <span className="text-xs font-bold uppercase tracking-wider opacity-80">
-                                    Hasil Estimasi Daya Terima di ONT Pelanggan (RX Optical Power):
-                                </span>
-                                <div className="text-4xl sm:text-5xl font-extrabold tracking-tight mt-1 flex items-baseline gap-2">
-                                    <span>{calculatedProgression.rxPowerDbm.toFixed(2)}</span>
-                                    <span className="text-xl font-bold opacity-80">dBm</span>
-                                </div>
-                            </div>
-                            <div className="text-right sm:border-l sm:pl-6 border-current/20">
-                                <span className="text-xs font-bold uppercase tracking-wider opacity-80">Total Optical Loss:</span>
-                                <div className="text-2xl sm:text-3xl font-extrabold tracking-tight mt-1">
-                                    -{calculatedProgression.totalLossDb.toFixed(2)} <span className="text-base font-semibold">dB</span>
-                                </div>
-                                <span className="text-xs opacity-75">Dari sumber TX: +{txPowerDbm.toFixed(2)} dBm</span>
-                            </div>
+                            )}
                         </div>
 
-                        <div className="mt-4 pt-4 border-t border-current/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                            <span className="inline-block px-3 py-1 rounded-full text-xs font-extrabold uppercase bg-white/70 dark:bg-black/30 shadow-sm">
-                                {statusAssessment.badge}
-                            </span>
-                            <p className="text-xs sm:text-sm font-medium opacity-90">
-                                {statusAssessment.label}
-                            </p>
+                        {/* Filter by ODC */}
+                        <div className="flex items-center gap-2 bg-slate-900/90 border border-slate-700/80 px-3 py-1.5 rounded-xl">
+                            <span className="text-slate-400">Filter ODC:</span>
+                            <select
+                                value={selectedOdcFilter}
+                                onChange={(e) => setSelectedOdcFilter(e.target.value)}
+                                className="bg-transparent text-slate-200 font-medium focus:outline-none cursor-pointer"
+                            >
+                                <option value="all" className="bg-slate-900 text-white">Semua ODC ({odcs.length})</option>
+                                {odcs.map((o) => (
+                                    <option key={o.id} value={o.id} className="bg-slate-900 text-white">
+                                        {o.name}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+
+                        {/* Search Box */}
+                        <div className="relative">
+                            <input
+                                type="text"
+                                placeholder="Cari ODP / Pelanggan..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className="bg-slate-900/90 border border-slate-700/80 text-white placeholder-slate-500 rounded-xl px-3 py-1.5 w-48 sm:w-60 focus:outline-none focus:border-cyan-500 text-xs"
+                            />
+                            {searchQuery && (
+                                <button
+                                    onClick={() => setSearchQuery('')}
+                                    className="absolute right-2.5 top-1.5 text-slate-400 hover:text-white"
+                                >
+                                    &times;
+                                </button>
+                            )}
                         </div>
                     </div>
-                </div>
 
-                {/* ODP Quick Match Card */}
-                <Card>
-                    <div className="p-4 space-y-3">
-                        <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                            Cek ODP di Database:
+                    {/* Right: View Toggles & Zoom Controls */}
+                    <div className="flex items-center gap-2.5 flex-wrap">
+                        {/* Toggle Customer Chips */}
+                        <label className="flex items-center gap-2 cursor-pointer bg-slate-900/90 border border-slate-700/80 px-3 py-1.5 rounded-xl">
+                            <input
+                                type="checkbox"
+                                checked={showCustomers}
+                                onChange={(e) => setShowCustomers(e.target.checked)}
+                                className="rounded bg-slate-800 border-slate-600 text-cyan-500 focus:ring-0 cursor-pointer"
+                            />
+                            <span className="text-slate-300">Tampilkan Pelanggan</span>
                         </label>
-                        <select
-                            value={selectedOdpId}
-                            onChange={(e) => setSelectedOdpId(e.target.value)}
-                            className="w-full p-2 text-sm border rounded-md bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                        >
-                            <option value="">-- Pilih ODP Tersimpan --</option>
-                            {odps.map(o => (
-                                <option key={o.id} value={o.id}>{o.name} ({o.totalPorts || 8} Port)</option>
-                            ))}
-                        </select>
-                        {selectedOdp ? (
-                            <div className="text-xs space-y-1.5 p-3 rounded-lg bg-gray-50 dark:bg-gray-700/40 border dark:border-gray-600">
-                                <div className="flex justify-between">
-                                    <span className="text-gray-500">Parent ODC:</span>
-                                    <span className="font-semibold text-gray-800 dark:text-gray-200">{selectedParentOdc?.name || '-'}</span>
-                                </div>
-                                <div className="flex justify-between">
-                                    <span className="text-gray-500">Power In (DB):</span>
-                                    <span className="font-semibold text-gray-800 dark:text-gray-200">{selectedOdp.powerInput ? `${selectedOdp.powerInput} dBm` : 'N/A'}</span>
-                                </div>
-                                <div className="flex justify-between">
-                                    <span className="text-gray-500">Power Out (DB):</span>
-                                    <span className="font-semibold text-gray-800 dark:text-gray-200">{selectedOdp.powerOutput ? `${selectedOdp.powerOutput} dBm` : 'N/A'}</span>
-                                </div>
-                                <div className="flex justify-between">
-                                    <span className="text-gray-500">Kapasitas Port:</span>
-                                    <span className="font-semibold text-gray-800 dark:text-gray-200">{selectedOdp.totalPorts || 8} Port</span>
-                                </div>
-                            </div>
-                        ) : (
-                            <p className="text-xs text-gray-400 italic">
-                                Pilih ODP di jaringan Anda untuk membandingkan redaman aktual di lapangan dengan kalkulasi teoritis.
-                            </p>
-                        )}
-                    </div>
-                </Card>
-            </div>
 
-            {/* Stages / Chain Builder */}
-            <Card>
-                <div className="p-4 border-b dark:border-gray-700 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-                    <div>
-                        <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100 flex items-center gap-2">
-                            <span>Tahapan Jalur Optik (Optical Link Chain)</span>
-                            <span className="text-xs px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900/60 dark:text-blue-300 font-semibold">
-                                {stages.length} Segmen
+                        {/* Toggle Audit Mode */}
+                        <label className="flex items-center gap-2 cursor-pointer bg-slate-900/90 border border-slate-700/80 px-3 py-1.5 rounded-xl">
+                            <input
+                                type="checkbox"
+                                checked={showAuditMode}
+                                onChange={(e) => setShowAuditMode(e.target.checked)}
+                                className="rounded bg-slate-800 border-slate-600 text-cyan-500 focus:ring-0 cursor-pointer"
+                            />
+                            <span className="text-slate-300">Audit OPM vs Desain</span>
+                        </label>
+
+                        {/* Zoom buttons */}
+                        <div className="flex items-center bg-slate-900/90 border border-slate-700/80 rounded-xl overflow-hidden divide-x divide-slate-800">
+                            <button
+                                onClick={handleZoomOut}
+                                className="px-2.5 py-1.5 hover:bg-slate-800 text-slate-300 font-bold"
+                                title="Zoom Out (-)"
+                            >
+                                &minus;
+                            </button>
+                            <span className="px-2 py-1.5 font-mono text-[11px] text-slate-400">
+                                {Math.round(zoom * 100)}%
                             </span>
-                        </h3>
-                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
-                            Ubah panjang kabel, rasio splitter, atau jumlah sambungan untuk melihat pergeseran nilai dBm secara langsung.
-                        </p>
-                    </div>
-
-                    {/* Add Stage Dropdown buttons */}
-                    <div className="flex items-center gap-1.5 flex-wrap">
-                        <span className="text-xs text-gray-500 font-medium mr-1">Tambah:</span>
-                        <button
-                            onClick={() => handleAddStage('cable')}
-                            className="px-2.5 py-1.5 text-xs bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded text-gray-700 dark:text-gray-200 font-medium border dark:border-gray-600 flex items-center gap-1"
-                        >
-                            + Kabel
-                        </button>
-                        <button
-                            onClick={() => handleAddStage('plc_splitter')}
-                            className="px-2.5 py-1.5 text-xs bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded text-gray-700 dark:text-gray-200 font-medium border dark:border-gray-600 flex items-center gap-1"
-                        >
-                            + PLC Splitter
-                        </button>
-                        <button
-                            onClick={() => handleAddStage('fbt_coupler')}
-                            className="px-2.5 py-1.5 text-xs bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded text-gray-700 dark:text-gray-200 font-medium border dark:border-gray-600 flex items-center gap-1"
-                        >
-                            + Coupler FBT
-                        </button>
-                        <button
-                            onClick={() => handleAddStage('splice')}
-                            className="px-2.5 py-1.5 text-xs bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded text-gray-700 dark:text-gray-200 font-medium border dark:border-gray-600 flex items-center gap-1"
-                        >
-                            + Splicing
-                        </button>
-                        <button
-                            onClick={() => handleAddStage('connector')}
-                            className="px-2.5 py-1.5 text-xs bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded text-gray-700 dark:text-gray-200 font-medium border dark:border-gray-600 flex items-center gap-1"
-                        >
-                            + Konektor
-                        </button>
-                        <button
-                            onClick={() => handleAddStage('custom_attenuator')}
-                            className="px-2.5 py-1.5 text-xs bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded text-gray-700 dark:text-gray-200 font-medium border dark:border-gray-600 flex items-center gap-1"
-                        >
-                            + Attenuator
-                        </button>
+                            <button
+                                onClick={handleZoomIn}
+                                className="px-2.5 py-1.5 hover:bg-slate-800 text-slate-300 font-bold"
+                                title="Zoom In (+)"
+                            >
+                                +
+                            </button>
+                            <button
+                                onClick={handleResetZoom}
+                                className="px-2 py-1.5 hover:bg-slate-800 text-xs text-cyan-400"
+                                title="Reset Zoom"
+                            >
+                                Reset
+                            </button>
+                        </div>
                     </div>
                 </div>
+            </div>
 
-                {/* Stages Table */}
-                <div className="overflow-x-auto">
-                    <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700/50 dark:text-gray-400">
-                            <tr>
-                                <th scope="col" className="px-4 py-3 w-12 text-center">#</th>
-                                <th scope="col" className="px-4 py-3">Nama Segmen / Komponen</th>
-                                <th scope="col" className="px-4 py-3">Parameter & Spesifikasi</th>
-                                <th scope="col" className="px-4 py-3 text-right">Loss (dB)</th>
-                                <th scope="col" className="px-4 py-3 text-right">Daya Sisa</th>
-                                <th scope="col" className="px-4 py-3 text-right w-24">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-                            {calculatedProgression.progression.map((stage, idx) => (
-                                <tr key={stage.id} className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-750">
-                                    <td className="px-4 py-3 text-center text-xs font-bold text-gray-400">
-                                        {idx + 1}
-                                    </td>
-                                    <td className="px-4 py-3 font-medium text-gray-900 dark:text-white">
-                                        <input
-                                            type="text"
-                                            value={stage.name}
-                                            onChange={(e) => handleUpdateStage(stage.id, { name: e.target.value })}
-                                            className="w-full p-1 border rounded text-xs bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white font-medium"
+            {copyNotice && (
+                <div className="bg-emerald-950/80 border border-emerald-500/50 text-emerald-200 px-4 py-2.5 rounded-xl text-xs flex items-center justify-between">
+                    <span>{copyNotice}</span>
+                    <button onClick={() => setCopyNotice(null)} className="text-emerald-400 font-bold ml-2">&times;</button>
+                </div>
+            )}
+
+            {error && (
+                <div className="bg-rose-950/80 border border-rose-500/50 text-rose-200 px-4 py-3 rounded-xl text-xs">
+                    {error}
+                </div>
+            )}
+
+            {/* Interactive Schematic Diagram Canvas */}
+            <div
+                ref={canvasContainerRef}
+                onMouseDown={handleMouseDown}
+                onMouseMove={handleMouseMove}
+                onMouseUp={handleMouseUp}
+                className="relative w-full h-[680px] bg-[#070b14] border border-slate-800/90 rounded-2xl overflow-hidden select-none cursor-grab active:cursor-grabbing shadow-2xl"
+                style={{
+                    backgroundImage: `radial-gradient(circle, rgba(148, 163, 184, 0.08) 1px, transparent 1px)`,
+                    backgroundSize: '24px 24px',
+                }}
+            >
+                {isLoading && (
+                    <div className="absolute inset-0 bg-[#070b14]/80 backdrop-blur-sm z-50 flex items-center justify-center text-cyan-400 text-sm font-semibold">
+                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-cyan-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Memuat Topologi Fiber Optic & Pelanggan...
+                    </div>
+                )}
+
+                {/* SVG Connections Layer */}
+                <div
+                    className="absolute inset-0 origin-top-left transition-transform duration-75"
+                    style={{
+                        transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom})`,
+                    }}
+                >
+                    <svg className="absolute top-0 left-0 w-[4200px] h-[3600px] pointer-events-none">
+                        <defs>
+                            <linearGradient id="grad-feeder" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.8" />
+                                <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.9" />
+                            </linearGradient>
+                            <linearGradient id="grad-distribution" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.7" />
+                                <stop offset="100%" stopColor="#14b8a6" stopOpacity="0.9" />
+                            </linearGradient>
+                            <linearGradient id="grad-simulated" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stopColor="#f59e0b" stopOpacity="0.8" />
+                                <stop offset="100%" stopColor="#ec4899" stopOpacity="0.8" />
+                            </linearGradient>
+                        </defs>
+
+                        {/* Render links between parents and children */}
+                        {flattenedNodes.map((parent) =>
+                            parent.children.map((child) => {
+                                const startX = parent.x + (parent.type === 'olt' ? 160 : parent.type === 'odc' ? 200 : 180);
+                                const startY = parent.y;
+                                const endX = child.x;
+                                const endY = child.y;
+                                const dx = endX - startX;
+                                const midX = startX + dx * 0.5;
+
+                                const pathD = `M ${startX} ${startY} C ${midX} ${startY}, ${midX} ${endY}, ${endX} ${endY}`;
+                                const isSim = child.isSimulated;
+
+                                return (
+                                    <g key={`edge-${parent.id}-${child.id}`}>
+                                        {/* Background glow path */}
+                                        <path
+                                            d={pathD}
+                                            fill="none"
+                                            stroke={isSim ? '#f59e0b' : child.type === 'odc' ? '#06b6d4' : '#14b8a6'}
+                                            strokeWidth={isSim ? 2.5 : 2}
+                                            strokeDasharray={isSim ? '6 4' : 'none'}
+                                            opacity={0.7}
                                         />
-                                    </td>
-                                    <td className="px-4 py-3">
-                                        {/* Dynamic Parameter Controls based on stage type */}
-                                        {stage.type === 'cable' && (
-                                            <div className="flex items-center gap-2 flex-wrap text-xs">
-                                                <div className="flex items-center gap-1">
-                                                    <span className="text-gray-500">Panjang:</span>
-                                                    <input
-                                                        type="number"
-                                                        value={stage.lengthMeters ?? 500}
-                                                        onChange={(e) => handleUpdateStage(stage.id, { lengthMeters: Math.max(0, parseInt(e.target.value) || 0) })}
-                                                        className="w-20 p-1 border rounded bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                                                        min="0"
-                                                    />
-                                                    <span>m</span>
-                                                </div>
-                                                <div className="flex items-center gap-1">
-                                                    <span className="text-gray-500">Koef:</span>
-                                                    <input
-                                                        type="number"
-                                                        step="0.01"
-                                                        value={stage.attenuationPerKm ?? 0.35}
-                                                        onChange={(e) => handleUpdateStage(stage.id, { attenuationPerKm: parseFloat(e.target.value) || 0.35 })}
-                                                        className="w-16 p-1 border rounded bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                                                    />
-                                                    <span>dB/km</span>
-                                                </div>
-                                            </div>
-                                        )}
+                                        {/* Label badge in the middle of link */}
+                                        <rect
+                                            x={midX - 70}
+                                            y={(startY + endY) / 2 - 11}
+                                            width={140}
+                                            height={22}
+                                            rx={11}
+                                            fill="#0b1324"
+                                            stroke={isSim ? '#f59e0b' : '#334155'}
+                                            strokeWidth={1}
+                                        />
+                                        <text
+                                            x={midX}
+                                            y={(startY + endY) / 2 + 3}
+                                            textAnchor="middle"
+                                            fill={isSim ? '#fcd34d' : '#94a3b8'}
+                                            fontSize="9"
+                                            fontFamily="monospace"
+                                            fontWeight="600"
+                                        >
+                                            {child.cableLabel}
+                                        </text>
+                                    </g>
+                                );
+                            })
+                        )}
 
-                                        {stage.type === 'plc_splitter' && (
-                                            <div className="flex items-center gap-2 text-xs">
-                                                <span className="text-gray-500">Rasio Splitter:</span>
-                                                <select
-                                                    value={stage.plcRatio || '1:8'}
-                                                    onChange={(e) => handleUpdateStage(stage.id, { plcRatio: e.target.value as any })}
-                                                    className="p-1 border rounded bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white font-semibold"
-                                                >
-                                                    <option value="1:2">PLC 1:2 (~3.7 dB)</option>
-                                                    <option value="1:4">PLC 1:4 (~7.2 dB)</option>
-                                                    <option value="1:8">PLC 1:8 (~10.5 dB)</option>
-                                                    <option value="1:16">PLC 1:16 (~13.8 dB)</option>
-                                                    <option value="1:32">PLC 1:32 (~17.1 dB)</option>
-                                                    <option value="1:64">PLC 1:64 (~20.5 dB)</option>
-                                                </select>
-                                            </div>
-                                        )}
+                        {/* Render links to Customers */}
+                        {showCustomers &&
+                            flattenedNodes.map((odp) => {
+                                if (odp.type !== 'odp' || odp.customers.length === 0) return null;
+                                const startX = odp.x + 180;
+                                const startY = odp.y;
 
-                                        {stage.type === 'fbt_coupler' && (
-                                            <div className="flex items-center gap-2 text-xs flex-wrap">
-                                                <span className="text-gray-500">Rasio:</span>
-                                                <select
-                                                    value={stage.fbtRatio || '90:10'}
-                                                    onChange={(e) => handleUpdateStage(stage.id, { fbtRatio: e.target.value as any })}
-                                                    className="p-1 border rounded bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white font-semibold"
-                                                >
-                                                    <option value="90:10">FBT 90:10</option>
-                                                    <option value="80:20">FBT 80:20</option>
-                                                    <option value="70:30">FBT 70:30</option>
-                                                    <option value="60:40">FBT 60:40</option>
-                                                    <option value="50:50">FBT 50:50</option>
-                                                </select>
+                                return odp.customers.map((cust, idx) => {
+                                    const custX = odp.x + 320;
+                                    const custY = odp.y - (odp.customers.length * 20) + idx * 42 + 20;
+                                    const dx = custX - startX;
+                                    const midX = startX + dx * 0.5;
+                                    const pathD = `M ${startX} ${startY} C ${midX} ${startY}, ${midX} ${custY}, ${custX} ${custY}`;
+                                    const strokeColor =
+                                        cust.status === CustomerStatus.Active
+                                            ? '#10b981'
+                                            : cust.status === CustomerStatus.Inactive
+                                            ? '#f43f5e'
+                                            : '#f59e0b';
 
-                                                <span className="text-gray-500">Port Dipakai:</span>
-                                                <select
-                                                    value={stage.fbtPort || 'tap'}
-                                                    onChange={(e) => handleUpdateStage(stage.id, { fbtPort: e.target.value as any })}
-                                                    className="p-1 border rounded bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white font-semibold"
-                                                >
-                                                    <option value="tap">TAP (% Kecil - Keluar ke ODP/Pelanggan)</option>
-                                                    <option value="through">THROUGH (% Besar - Lanjut ke Tiang Berikutnya)</option>
-                                                </select>
-                                            </div>
-                                        )}
+                                    return (
+                                        <path
+                                            key={`cust-edge-${cust.id}`}
+                                            d={pathD}
+                                            fill="none"
+                                            stroke={strokeColor}
+                                            strokeWidth={1.5}
+                                            strokeDasharray="4 3"
+                                            opacity={0.65}
+                                        />
+                                    );
+                                });
+                            })}
+                    </svg>
 
-                                        {stage.type === 'splice' && (
-                                            <div className="flex items-center gap-2 text-xs">
-                                                <span className="text-gray-500">Jumlah Titik Sambung:</span>
-                                                <input
-                                                    type="number"
-                                                    value={stage.spliceCount ?? 1}
-                                                    onChange={(e) => handleUpdateStage(stage.id, { spliceCount: Math.max(0, parseInt(e.target.value) || 0) })}
-                                                    className="w-16 p-1 border rounded bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                                                    min="0"
-                                                />
-                                                <span className="text-gray-400">(@ 0.1 dB per core)</span>
-                                            </div>
-                                        )}
+                    {/* HTML Node Cards Layer */}
+                    <div className="absolute top-0 left-0 w-[4200px] h-[3600px] pointer-events-none">
+                        {flattenedNodes.map((node) => {
+                            const isSelected = selectedNode?.id === node.id;
+                            const isSearchMatch = searchQuery
+                                ? node.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                  node.customers.some((c) => c.name.toLowerCase().includes(searchQuery.toLowerCase()))
+                                : false;
 
-                                        {stage.type === 'connector' && (
-                                            <div className="flex items-center gap-2 text-xs">
-                                                <span className="text-gray-500">Jumlah Fast Connector:</span>
-                                                <input
-                                                    type="number"
-                                                    value={stage.connectorCount ?? 2}
-                                                    onChange={(e) => handleUpdateStage(stage.id, { connectorCount: Math.max(0, parseInt(e.target.value) || 0) })}
-                                                    className="w-16 p-1 border rounded bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                                                    min="0"
-                                                />
-                                                <span className="text-gray-400">(@ 0.25 dB per konektor)</span>
-                                            </div>
-                                        )}
+                            // Deviation check
+                            const hasDeviation =
+                                showAuditMode &&
+                                node.powerOut != null &&
+                                Math.abs(node.powerOut - node.calculatedPowerOut) > 2.5;
 
-                                        {stage.type === 'custom_attenuator' && (
-                                            <div className="flex items-center gap-2 text-xs">
-                                                <span className="text-gray-500">Nilai Redaman:</span>
-                                                <input
-                                                    type="number"
-                                                    step="0.1"
-                                                    value={stage.customLossDb ?? 2.0}
-                                                    onChange={(e) => handleUpdateStage(stage.id, { customLossDb: Math.max(0, parseFloat(e.target.value) || 0) })}
-                                                    className="w-20 p-1 border rounded bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                                                    min="0"
-                                                />
-                                                <span>dB</span>
-                                            </div>
-                                        )}
-                                    </td>
-                                    <td className="px-4 py-3 text-right font-mono text-xs font-bold text-red-600 dark:text-red-400">
-                                        -{stage.lossDb.toFixed(2)} dB
-                                    </td>
-                                    <td className="px-4 py-3 text-right font-mono text-xs font-bold text-gray-900 dark:text-white">
-                                        {stage.remainingPowerDbm.toFixed(2)} dBm
-                                    </td>
-                                    <td className="px-4 py-3 text-right">
-                                        <div className="flex items-center justify-end gap-1">
+                            if (node.type === 'olt') {
+                                return (
+                                    <div
+                                        key={node.id}
+                                        onClick={() => setSelectedNode(node)}
+                                        className={`interactive-node pointer-events-auto absolute p-4 rounded-2xl bg-gradient-to-b from-[#161f36] to-[#0f172a] border-2 transition-all cursor-pointer shadow-xl ${
+                                            isSelected
+                                                ? 'border-amber-400 ring-4 ring-amber-500/20 shadow-amber-500/30'
+                                                : 'border-amber-500/70 hover:border-amber-400 shadow-amber-500/10'
+                                        }`}
+                                        style={{
+                                            left: `${node.x}px`,
+                                            top: `${node.y - 45}px`,
+                                            width: '180px',
+                                        }}
+                                    >
+                                        <div className="flex items-center justify-between mb-1.5">
+                                            <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-amber-950/80 text-amber-300 border border-amber-500/40">
+                                                OLT • {node.usedPorts}/{node.totalPorts}
+                                            </span>
+                                            <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+                                        </div>
+                                        <div className="font-extrabold text-sm text-slate-100 tracking-tight">{node.name}</div>
+                                        <div className="text-[11px] font-mono text-cyan-300 mt-0.5">
+                                            Root Tx: +{node.powerOut} dBm
+                                        </div>
+                                    </div>
+                                );
+                            }
+
+                            if (node.type === 'odc') {
+                                return (
+                                    <div
+                                        key={node.id}
+                                        onClick={() => setSelectedNode(node)}
+                                        className={`interactive-node pointer-events-auto absolute p-3.5 rounded-2xl bg-[#0f192e] border transition-all cursor-pointer shadow-lg ${
+                                            isSelected
+                                                ? 'border-cyan-400 ring-4 ring-cyan-500/20 shadow-cyan-500/30'
+                                                : 'border-cyan-500/50 hover:border-cyan-400 shadow-cyan-500/10'
+                                        } ${isSearchMatch ? 'ring-2 ring-yellow-400' : ''}`}
+                                        style={{
+                                            left: `${node.x}px`,
+                                            top: `${node.y - 45}px`,
+                                            width: '210px',
+                                        }}
+                                    >
+                                        <div className="flex items-center justify-between mb-1.5">
+                                            <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-cyan-950/80 text-cyan-300 border border-cyan-500/40">
+                                                ODC • {node.usedPorts}/{node.totalPorts}
+                                            </span>
                                             <button
-                                                onClick={() => handleMoveStage(idx, 'up')}
-                                                disabled={idx === 0}
-                                                className="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 disabled:opacity-30"
-                                                title="Pindah ke atas"
+                                                type="button"
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setPlannerParentId(node.id);
+                                                    setPlannerName(`ODP-BARU-${odps.length + 1}`);
+                                                    setIsPlannerOpen(true);
+                                                }}
+                                                className="text-[10px] bg-cyan-900/60 hover:bg-cyan-800 text-cyan-200 px-1.5 py-0.5 rounded border border-cyan-700/50"
+                                                title="Tarik ODP Baru dari ODC ini"
                                             >
-                                                ▲
-                                            </button>
-                                            <button
-                                                onClick={() => handleMoveStage(idx, 'down')}
-                                                disabled={idx === stages.length - 1}
-                                                className="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 disabled:opacity-30"
-                                                title="Pindah ke bawah"
-                                            >
-                                                ▼
-                                            </button>
-                                            <button
-                                                onClick={() => handleRemoveStage(stage.id)}
-                                                className="p-1 text-red-500 hover:text-red-700 dark:hover:text-red-400"
-                                                title="Hapus segmen ini"
-                                            >
-                                                ✕
+                                                + Tarik ODP
                                             </button>
                                         </div>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                        <tfoot className="bg-gray-100 dark:bg-gray-700/70 font-semibold text-gray-900 dark:text-white text-xs">
-                            <tr>
-                                <td colSpan={3} className="px-4 py-3 text-right uppercase tracking-wider">
-                                    Total Redaman Link & Daya Sisa Akhir:
-                                </td>
-                                <td className="px-4 py-3 text-right font-mono text-red-600 dark:text-red-400 font-bold">
-                                    -{calculatedProgression.totalLossDb.toFixed(2)} dB
-                                </td>
-                                <td className="px-4 py-3 text-right font-mono text-sm font-extrabold text-blue-600 dark:text-blue-400">
-                                    {calculatedProgression.rxPowerDbm.toFixed(2)} dBm
-                                </td>
-                                <td></td>
-                            </tr>
-                        </tfoot>
-                    </table>
+                                        <div className="font-bold text-sm text-slate-100 truncate" title={node.name}>
+                                            {node.name}
+                                        </div>
+                                        <div className="flex items-center justify-between text-[11px] font-mono mt-1 pt-1 border-t border-slate-800/80 text-slate-400">
+                                            <span>Est. Power:</span>
+                                            <span className="text-cyan-400 font-bold">{node.calculatedPowerOut} dBm</span>
+                                        </div>
+                                    </div>
+                                );
+                            }
+
+                            // ODP & Simulated Node
+                            const isSim = node.isSimulated;
+                            const optEval = evaluateOpticalStatus(node.calculatedPowerOut);
+
+                            return (
+                                <React.Fragment key={node.id}>
+                                    <div
+                                        onClick={() => setSelectedNode(node)}
+                                        className={`interactive-node pointer-events-auto absolute p-3.5 rounded-2xl bg-[#0b1424] border transition-all cursor-pointer shadow-lg ${
+                                            isSim
+                                                ? 'border-2 border-dashed border-amber-400 shadow-amber-500/20'
+                                                : isSelected
+                                                ? 'border-teal-400 ring-4 ring-teal-500/20 shadow-teal-500/30'
+                                                : 'border-teal-500/40 hover:border-teal-400 shadow-teal-500/10'
+                                        } ${isSearchMatch ? 'ring-2 ring-yellow-400' : ''}`}
+                                        style={{
+                                            left: `${node.x}px`,
+                                            top: `${node.y - 48}px`,
+                                            width: '190px',
+                                        }}
+                                    >
+                                        <div className="flex items-center justify-between mb-1.5">
+                                            <span
+                                                className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded ${
+                                                    isSim
+                                                        ? 'bg-amber-950 text-amber-300 border border-amber-500/40'
+                                                        : 'bg-teal-950/80 text-teal-300 border border-teal-500/40'
+                                                }`}
+                                            >
+                                                {isSim ? 'DRAF' : 'ODP'} • {node.usedPorts}/{node.totalPorts}
+                                            </span>
+                                            {hasDeviation ? (
+                                                <span
+                                                    className="text-[9px] px-1 py-0.5 rounded bg-rose-950 text-rose-300 border border-rose-500/50 font-bold animate-pulse"
+                                                    title={`Deviasi tinggi! OPM ukur (${node.powerOut} dBm) vs Desain (${node.calculatedPowerOut} dBm)`}
+                                                >
+                                                    ! Bending
+                                                </span>
+                                            ) : (
+                                                <span className={`w-2 h-2 rounded-full ${node.usedPorts >= node.totalPorts ? 'bg-rose-500' : 'bg-teal-400'}`}></span>
+                                            )}
+                                        </div>
+
+                                        <div className="font-bold text-sm text-slate-100 truncate" title={node.name}>
+                                            {node.name}
+                                        </div>
+
+                                        {/* Optical Level Info */}
+                                        <div className="flex items-center justify-between text-[11px] font-mono mt-1 pt-1 border-t border-slate-800/80">
+                                            <span className="text-slate-400">Power Out:</span>
+                                            <span className={`font-bold ${optEval.color}`}>
+                                                {node.calculatedPowerOut} dBm
+                                            </span>
+                                        </div>
+
+                                        {node.powerOut != null && (
+                                            <div className="flex items-center justify-between text-[10px] font-mono text-slate-400 mt-0.5">
+                                                <span>OPM Riil:</span>
+                                                <span className="text-slate-200">{node.powerOut} dBm</span>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    {/* Render Customer Port Chips */}
+                                    {showCustomers &&
+                                        node.customers.map((cust, idx) => {
+                                            const custX = node.x + 320;
+                                            const custY = node.y - (node.customers.length * 20) + idx * 42;
+                                            const portNum = idx + 1;
+                                            const isActive = cust.status === CustomerStatus.Active;
+
+                                            return (
+                                                <div
+                                                    key={cust.id}
+                                                    className={`interactive-node pointer-events-auto absolute px-3 py-1.5 rounded-xl border text-xs shadow-sm flex items-center justify-between gap-2.5 transition-all ${
+                                                        isActive
+                                                            ? 'bg-emerald-950/40 border-emerald-500/50 text-emerald-200'
+                                                            : cust.status === CustomerStatus.Inactive
+                                                            ? 'bg-rose-950/40 border-rose-500/50 text-rose-200'
+                                                            : 'bg-amber-950/40 border-amber-500/50 text-amber-200'
+                                                    }`}
+                                                    style={{
+                                                        left: `${custX}px`,
+                                                        top: `${custY}px`,
+                                                        width: '210px',
+                                                    }}
+                                                >
+                                                    <div className="flex items-center gap-1.5 truncate">
+                                                        <span className="font-mono font-bold text-[10px] opacity-80">
+                                                            P#{portNum}
+                                                        </span>
+                                                        <span className="truncate font-semibold text-slate-100" title={cust.name}>
+                                                            {cust.name}
+                                                        </span>
+                                                    </div>
+                                                    <span className="text-[10px] font-mono opacity-70">
+                                                        {cust.pppoeUsername || cust.status}
+                                                    </span>
+                                                </div>
+                                            );
+                                        })}
+                                </React.Fragment>
+                            );
+                        })}
+                    </div>
                 </div>
-            </Card>
 
-            {/* Practical Reference Cheat Sheet for Field Technicians */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <Card>
-                    <div className="p-4 space-y-2">
-                        <h4 className="font-bold text-sm text-gray-800 dark:text-gray-200 flex items-center gap-2">
-                            <span>📖 Referensi Standar Redaman PLC Splitter</span>
-                        </h4>
-                        <div className="overflow-x-auto">
-                            <table className="w-full text-xs text-left text-gray-600 dark:text-gray-300">
-                                <thead className="bg-gray-100 dark:bg-gray-700/50 uppercase font-semibold">
-                                    <tr>
-                                        <th className="p-2">Tipe Splitter</th>
-                                        <th className="p-2">Teoritis (Logis)</th>
-                                        <th className="p-2">Standar Loss Lapangan</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-                                    <tr><td className="p-2 font-medium">1:2</td><td className="p-2">3.0 dB</td><td className="p-2 font-mono text-red-500">~ 3.6 s/d 3.8 dB</td></tr>
-                                    <tr><td className="p-2 font-medium">1:4</td><td className="p-2">6.0 dB</td><td className="p-2 font-mono text-red-500">~ 7.0 s/d 7.3 dB</td></tr>
-                                    <tr><td className="p-2 font-medium">1:8</td><td className="p-2">9.0 dB</td><td className="p-2 font-mono text-red-500">~ 10.2 s/d 10.6 dB</td></tr>
-                                    <tr><td className="p-2 font-medium">1:16</td><td className="p-2">12.0 dB</td><td className="p-2 font-mono text-red-500">~ 13.5 s/d 14.0 dB</td></tr>
-                                    <tr><td className="p-2 font-medium">1:32</td><td className="p-2">15.0 dB</td><td className="p-2 font-mono text-red-500">~ 16.8 s/d 17.5 dB</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </Card>
-
-                <Card>
-                    <div className="p-4 space-y-2">
-                        <h4 className="font-bold text-sm text-gray-800 dark:text-gray-200 flex items-center gap-2">
-                            <span>📐 Referensi FBT Coupler Ratio (Daisy Chain)</span>
-                        </h4>
-                        <div className="overflow-x-auto">
-                            <table className="w-full text-xs text-left text-gray-600 dark:text-gray-300">
-                                <thead className="bg-gray-100 dark:bg-gray-700/50 uppercase font-semibold">
-                                    <tr>
-                                        <th className="p-2">Rasio Coupler</th>
-                                        <th className="p-2">Through (Lanjut Tiang)</th>
-                                        <th className="p-2">Tap (Masuk ODP)</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-                                    <tr><td className="p-2 font-medium">90:10 (Tiang 1)</td><td className="p-2 font-mono">~ 0.6 dB</td><td className="p-2 font-mono text-blue-600 font-bold">~ 10.5 dB</td></tr>
-                                    <tr><td className="p-2 font-medium">80:20 (Tiang 2)</td><td className="p-2 font-mono">~ 1.2 dB</td><td className="p-2 font-mono text-blue-600 font-bold">~ 7.5 dB</td></tr>
-                                    <tr><td className="p-2 font-medium">70:30 (Tiang 3)</td><td className="p-2 font-mono">~ 1.9 dB</td><td className="p-2 font-mono text-blue-600 font-bold">~ 5.8 dB</td></tr>
-                                    <tr><td className="p-2 font-medium">60:40 (Tiang 4)</td><td className="p-2 font-mono">~ 2.7 dB</td><td className="p-2 font-mono text-blue-600 font-bold">~ 4.4 dB</td></tr>
-                                    <tr><td className="p-2 font-medium">50:50 (Tiang Ujung)</td><td className="p-2 font-mono">~ 3.6 dB</td><td className="p-2 font-mono text-blue-600 font-bold">~ 3.6 dB</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </Card>
+                {/* Floating Canvas Helper Legend */}
+                <div className="absolute bottom-4 left-4 bg-slate-900/90 backdrop-blur-md border border-slate-800 rounded-xl px-4 py-2 text-[11px] text-slate-400 flex items-center gap-4 shadow-lg pointer-events-none">
+                    <span className="flex items-center gap-1.5">
+                        <span className="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
+                        <span>Feeder (24C)</span>
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                        <span className="w-2.5 h-2.5 rounded-full bg-teal-400"></span>
+                        <span>Distribusi (12C)</span>
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                        <span className="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+                        <span>Pelanggan Aktif</span>
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                        <span className="w-2.5 h-2.5 rounded-full bg-rose-400"></span>
+                        <span>Pelanggan Suspend</span>
+                    </span>
+                    <span className="text-slate-500">| Geser kanvas untuk panning • Scroll untuk zoom</span>
+                </div>
             </div>
+
+            {/* Slide-over / Modal: Planner Simulator */}
+            {isPlannerOpen && (
+                <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+                    <div className="bg-[#0f172a] border border-slate-700/80 rounded-2xl w-full max-w-2xl p-6 shadow-2xl text-white space-y-5 animate-in fade-in zoom-in-95">
+                        <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+                            <div>
+                                <h3 className="text-lg font-bold text-slate-100 flex items-center gap-2">
+                                    <span>Rencanakan Tarikan ODP Baru (FO Planner)</span>
+                                </h3>
+                                <p className="text-xs text-slate-400 mt-0.5">
+                                    Simulasikan panjang kabel dan splitter sebelum memasang ODP fisik di tiang.
+                                </p>
+                            </div>
+                            <button
+                                onClick={() => setIsPlannerOpen(false)}
+                                className="text-slate-400 hover:text-white text-xl font-bold"
+                            >
+                                &times;
+                            </button>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                                    Titik Sumber / Parent Node:
+                                </label>
+                                <select
+                                    value={plannerParentId}
+                                    onChange={(e) => setPlannerParentId(e.target.value)}
+                                    className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500"
+                                >
+                                    <optgroup label="ODC Distribusi">
+                                        {odcs.map((o) => (
+                                            <option key={o.id} value={o.id}>
+                                                {o.name} (Output: ~-4.2 dBm)
+                                            </option>
+                                        ))}
+                                    </optgroup>
+                                    <optgroup label="Cascading dari ODP Lain">
+                                        {odps.map((o) => (
+                                            <option key={o.id} value={o.id}>
+                                                {o.name} (Output: {o.powerOutput || '-16.8'} dBm)
+                                            </option>
+                                        ))}
+                                    </optgroup>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                                    Nama ODP Rencana:
+                                </label>
+                                <input
+                                    type="text"
+                                    value={plannerName}
+                                    onChange={(e) => setPlannerName(e.target.value)}
+                                    placeholder="Contoh: ODP-TBT-03"
+                                    className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500 font-semibold"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                                    Panjang Tarikan Kabel (Meter):
+                                </label>
+                                <div className="flex items-center gap-2">
+                                    <input
+                                        type="number"
+                                        min="10"
+                                        max="15000"
+                                        step="50"
+                                        value={plannerCableMeters}
+                                        onChange={(e) => setPlannerCableMeters(parseInt(e.target.value) || 0)}
+                                        className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500 font-mono"
+                                    />
+                                    <span className="text-xs text-slate-400 font-mono">meter</span>
+                                </div>
+                                <span className="text-[10px] text-slate-400 mt-1 block">
+                                    Loss kabel: {plannerCalculations.cableLoss} dB (rate 0.35 dB/km)
+                                </span>
+                            </div>
+
+                            <div>
+                                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                                    Jenis Kabel:
+                                </label>
+                                <select
+                                    value={plannerCableType}
+                                    onChange={(e) => setPlannerCableType(e.target.value)}
+                                    className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500 font-mono"
+                                >
+                                    <option value="12C Distribusi">12 Core (Distribusi)</option>
+                                    <option value="24C Feeder">24 Core (Feeder)</option>
+                                    <option value="2C Dropcore">2 Core (Dropcore)</option>
+                                    <option value="1C Dropcore">1 Core (Dropcore)</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                                    Tipe Splitter ODP:
+                                </label>
+                                <select
+                                    value={plannerSplitter}
+                                    onChange={(e) => setPlannerSplitter(e.target.value)}
+                                    className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500 font-mono"
+                                >
+                                    <option value="1:4">PLC 1:4 (Loss 7.2 dB)</option>
+                                    <option value="1:8">PLC 1:8 (Loss 10.5 dB) - Standar</option>
+                                    <option value="1:16">PLC 1:16 (Loss 13.8 dB)</option>
+                                    <option value="1:2">PLC 1:2 (Loss 3.7 dB)</option>
+                                    <option value="fbt_90_10_tap">FBT Coupler 90:10 Tap (Loss 10.5 dB)</option>
+                                    <option value="fbt_80_20_tap">FBT Coupler 80:20 Tap (Loss 7.5 dB)</option>
+                                    <option value="fbt_70_30_tap">FBT Coupler 70:30 Tap (Loss 5.8 dB)</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                                    Jumlah Sambungan Splice & Konektor:
+                                </label>
+                                <div className="grid grid-cols-2 gap-2">
+                                    <div>
+                                        <span className="text-[10px] text-slate-400">Splice (0.1 dB):</span>
+                                        <input
+                                            type="number"
+                                            min="0"
+                                            value={plannerSplices}
+                                            onChange={(e) => setPlannerSplices(parseInt(e.target.value) || 0)}
+                                            className="w-full bg-slate-900 border border-slate-700 rounded-lg px-2 py-1 text-xs text-center text-white"
+                                        />
+                                    </div>
+                                    <div>
+                                        <span className="text-[10px] text-slate-400">Konektor (0.25 dB):</span>
+                                        <input
+                                            type="number"
+                                            min="0"
+                                            value={plannerConnectors}
+                                            onChange={(e) => setPlannerConnectors(parseInt(e.target.value) || 0)}
+                                            className="w-full bg-slate-900 border border-slate-700 rounded-lg px-2 py-1 text-xs text-center text-white"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                                    Kapasitas Port ODP:
+                                </label>
+                                <select
+                                    value={plannerPorts}
+                                    onChange={(e) => setPlannerPorts(parseInt(e.target.value) || 8)}
+                                    className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500"
+                                >
+                                    <option value={8}>8 Port</option>
+                                    <option value={16}>16 Port</option>
+                                    <option value={4}>4 Port</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        {/* Real-time Calculation Result Box */}
+                        <div className="bg-slate-900/90 border border-slate-700/80 rounded-2xl p-4 space-y-3">
+                            <div className="flex items-center justify-between text-xs">
+                                <span className="text-slate-400 font-semibold uppercase tracking-wider">Hasil Perhitungan Power Budgeting</span>
+                                <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold border ${plannerCalculations.optStatus.badgeBg}`}>
+                                    {plannerCalculations.optStatus.label}
+                                </span>
+                            </div>
+
+                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-mono">
+                                <div className="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700/60">
+                                    <span className="text-[10px] text-slate-400 block">Daya Sumber (In)</span>
+                                    <span className="text-sm font-bold text-slate-100">{plannerCalculations.parentOutPower} dBm</span>
+                                </div>
+                                <div className="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700/60">
+                                    <span className="text-[10px] text-slate-400 block">Loss Tarikan Kabel</span>
+                                    <span className="text-sm font-bold text-amber-400">-{plannerCalculations.cableLoss} dB</span>
+                                </div>
+                                <div className="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700/60">
+                                    <span className="text-[10px] text-slate-400 block">Loss Splitter ODP</span>
+                                    <span className="text-sm font-bold text-amber-400">-{plannerCalculations.splitterLoss} dB</span>
+                                </div>
+                                <div className="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700/60">
+                                    <span className="text-[10px] text-slate-400 block">Est. Daya Output ODP</span>
+                                    <span className={`text-base font-black ${plannerCalculations.optStatus.color}`}>
+                                        {plannerCalculations.estPowerOut} dBm
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Action buttons */}
+                        <div className="flex items-center justify-end gap-3 pt-2">
+                            <button
+                                type="button"
+                                onClick={() => setIsPlannerOpen(false)}
+                                className="px-4 py-2 text-xs font-semibold rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors"
+                            >
+                                Batal
+                            </button>
+                            <button
+                                type="button"
+                                onClick={handleAddSimulatedNode}
+                                className="px-4 py-2 text-xs font-bold rounded-xl bg-amber-600 hover:bg-amber-500 text-white shadow-md transition-colors"
+                            >
+                                Simulasikan di Diagram
+                            </button>
+                            <button
+                                type="button"
+                                disabled={isSavingOdp}
+                                onClick={handleCommitToDatabase}
+                                className="px-5 py-2 text-xs font-bold rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white shadow-lg shadow-cyan-500/25 transition-all disabled:opacity-50"
+                            >
+                                {isSavingOdp ? 'Menyimpan...' : 'Terapkan & Simpan ke ODP'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Selected Node Inspector Drawer */}
+            {selectedNode && (
+                <div className="bg-[#0f172a] border border-slate-800 rounded-2xl p-5 shadow-xl text-white">
+                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-3 border-b border-slate-800">
+                        <div>
+                            <div className="flex items-center gap-2">
+                                <h3 className="text-base font-bold text-slate-100">{selectedNode.name}</h3>
+                                <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-slate-800 text-cyan-300 border border-slate-700">
+                                    {selectedNode.type}
+                                </span>
+                                {selectedNode.isSimulated && (
+                                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-500/40">
+                                        SIMULASI
+                                    </span>
+                                )}
+                            </div>
+                            <p className="text-xs text-slate-400 mt-0.5">
+                                Alamat: {selectedNode.address || 'Belum diatur'} | Parent: {selectedNode.parentId || 'None'}
+                            </p>
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                            {selectedNode.isSimulated && (
+                                <button
+                                    onClick={() => handleRemoveSimulatedNode(selectedNode.id)}
+                                    className="px-3 py-1.5 rounded-lg bg-rose-950 text-rose-300 border border-rose-500/40 text-xs font-semibold hover:bg-rose-900"
+                                >
+                                    Hapus Simulasi
+                                </button>
+                            )}
+                            {selectedNode.location && (
+                                <button
+                                    onClick={() =>
+                                        window.open(
+                                            `https://www.google.com/maps?q=${selectedNode.location?.lat},${selectedNode.location?.lng}`,
+                                            '_blank'
+                                        )
+                                    }
+                                    className="px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300 text-xs font-semibold hover:bg-slate-700"
+                                >
+                                    Buka Google Maps
+                                </button>
+                            )}
+                            <button
+                                onClick={() => {
+                                    setPlannerParentId(selectedNode.id);
+                                    setPlannerName(`ODP-CABANG-${odps.length + 1}`);
+                                    setIsPlannerOpen(true);
+                                }}
+                                className="px-3 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold"
+                            >
+                                + Tarik Cabang Baru
+                            </button>
+                            <button
+                                onClick={() => setSelectedNode(null)}
+                                className="text-slate-400 hover:text-white text-sm px-2"
+                            >
+                                &times;
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 text-xs font-mono">
+                        <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+                            <span className="text-[10px] text-slate-400 block">Utilisasi Port</span>
+                            <span className="text-sm font-bold text-slate-100">
+                                {selectedNode.usedPorts} / {selectedNode.totalPorts} Port
+                            </span>
+                        </div>
+                        <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+                            <span className="text-[10px] text-slate-400 block">Daya Hitungan Desain</span>
+                            <span className="text-sm font-bold text-cyan-400">
+                                {selectedNode.calculatedPowerOut} dBm
+                            </span>
+                        </div>
+                        <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+                            <span className="text-[10px] text-slate-400 block">Daya Ukur Riil (OPM)</span>
+                            <span className="text-sm font-bold text-slate-200">
+                                {selectedNode.powerOut != null ? `${selectedNode.powerOut} dBm` : 'Belum diukur'}
+                            </span>
+                        </div>
+                        <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+                            <span className="text-[10px] text-slate-400 block">Status Akurasi Optik</span>
+                            <span className={`text-xs font-bold ${evaluateOpticalStatus(selectedNode.calculatedPowerOut).color}`}>
+                                {evaluateOpticalStatus(selectedNode.calculatedPowerOut).label}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
