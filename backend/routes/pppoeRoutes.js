@@ -47,6 +47,21 @@ const getPppoeSyncJobById = async (jobId) => {
 };
 
 const getActivePppoeSyncJob = async () => {
+    try {
+        await pool.query(
+            `UPDATE pppoe_sync_jobs
+             SET status = ?, error_message = ?, message = ?, updated_at = NOW(), finished_at = NOW()
+             WHERE status IN (?, ?) AND updated_at < (NOW() - INTERVAL 10 MINUTE)`,
+            [
+                PPPoE_SYNC_JOB_STATUSES.FAILED,
+                'PPPoE sync job timed out.',
+                'PPPoE sync job timed out after 10 minutes.',
+                PPPoE_SYNC_JOB_STATUSES.QUEUED,
+                PPPoE_SYNC_JOB_STATUSES.RUNNING,
+            ]
+        );
+    } catch (_) {}
+
     const [rows] = await pool.query(
         `SELECT * FROM pppoe_sync_jobs
          WHERE status IN (?, ?)
@@ -293,7 +308,18 @@ router.post('/users', async (req, res) => {
             comment: req.body.comment || '',
             disabled: 0,
         };
-        await connection.query('INSERT INTO pppoe_users SET ?', newUser);
+        await connection.query(
+            `INSERT INTO pppoe_users (id, name, password, service, profile, comment, disabled)
+             VALUES (?, ?, ?, ?, ?, ?, ?)
+             ON DUPLICATE KEY UPDATE
+                 id = VALUES(id),
+                 password = VALUES(password),
+                 service = VALUES(service),
+                 profile = VALUES(profile),
+                 comment = VALUES(comment),
+                 disabled = VALUES(disabled)`,
+            [newUser.id, newUser.name, newUser.password, newUser.service, newUser.profile, newUser.comment, newUser.disabled]
+        );
         await connection.commit();
         
         const [allUsers] = await pool.query('SELECT * FROM pppoe_users');

@@ -681,8 +681,8 @@ const PppoeUsers: React.FC = () => {
                         </tr>
                         </thead>
                         <tbody>
-                        {paginatedUsers.length > 0 ? paginatedUsers.map(user => (
-                            <tr key={user.id} className={`border-b dark:border-gray-700 ${user.disabled ? 'bg-gray-50 dark:bg-gray-700/60' : 'bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600'}`}>
+                        {paginatedUsers.length > 0 ? paginatedUsers.map((user, index) => (
+                            <tr key={user.id || `${user.name}-${index}`} className={`border-b dark:border-gray-700 ${user.disabled ? 'bg-gray-50 dark:bg-gray-700/60' : 'bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600'}`}>
                                 <td className="p-4" onClick={(e) => e.stopPropagation()}>
                                     <input
                                         type="checkbox"
