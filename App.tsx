@@ -13,7 +13,7 @@ import NotificationBell from './components/admin/NotificationBell';
 
 type Route = 'admin' | 'login' | 'portal' | 'loading' | 'pay'; // Tambahkan rute 'pay'
 type Theme = 'light' | 'dark';
-type AdminPage = 'dashboard' | 'customers' | 'billing' | 'transactions' | 'reports' | 'packages' | 'complaints' | 'map' | 'odp' | 'odc' | 'interface_traffic' | 'queue_traffic' | 'pppoe_users' | 'pppoe_active' | 'pppoe_profiles' | 'hotspot_users' | 'hotspot_profiles' | 'hotspot_vouchers' | 'hotspot_active' | 'users' | 'settings' | 'whatsapp' | 'acs_devices' | 'apiKey' | 'remote' | 'ppob_management';
+type AdminPage = 'dashboard' | 'customers' | 'billing' | 'transactions' | 'reports' | 'packages' | 'complaints' | 'map' | 'odp' | 'odc' | 'fiber_calculator' | 'interface_traffic' | 'queue_traffic' | 'pppoe_users' | 'pppoe_active' | 'pppoe_profiles' | 'hotspot_users' | 'hotspot_profiles' | 'hotspot_vouchers' | 'hotspot_active' | 'users' | 'settings' | 'whatsapp' | 'acs_devices' | 'apiKey' | 'remote' | 'ppob_management' | 'ppob_transactions' | 'olt_management';
 
 const SESSION_KEY = 'rizkitechbill_session';
 const SESSION_DURATION = 7 * 24 * 60 * 60 * 1000; // 7 hari dalam milidetik
@@ -267,7 +267,7 @@ const App: React.FC = () => {
         }
 
         // Set page state for dashboards
-        const validAdminPages: AdminPage[] = ['dashboard', 'customers', 'billing', 'transactions', 'reports', 'packages', 'complaints', 'map', 'odp', 'odc', 'interface_traffic', 'queue_traffic', 'pppoe_users', 'pppoe_active', 'pppoe_profiles', 'hotspot_users', 'hotspot_profiles', 'hotspot_vouchers', 'hotspot_active', 'users', 'settings', 'whatsapp', 'acs_devices', 'apiKey', 'remote'];
+        const validAdminPages: AdminPage[] = ['dashboard', 'customers', 'billing', 'transactions', 'reports', 'packages', 'complaints', 'map', 'odp', 'odc', 'fiber_calculator', 'interface_traffic', 'queue_traffic', 'pppoe_users', 'pppoe_active', 'pppoe_profiles', 'hotspot_users', 'hotspot_profiles', 'hotspot_vouchers', 'hotspot_active', 'users', 'settings', 'whatsapp', 'acs_devices', 'apiKey', 'remote', 'ppob_management', 'ppob_transactions', 'olt_management'];
         const validTechnicianPages: TechnicianPage[] = ['tasks', 'customers', 'odp', 'odc'];
 
         if ((baseRoute === 'admin' && validAdminPages.includes(pageName as AdminPage)) || (baseRoute === 'technician' && validTechnicianPages.includes(pageName as TechnicianPage))) {

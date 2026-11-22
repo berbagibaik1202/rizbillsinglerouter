@@ -54,6 +54,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activePage, setPage, isCollapsed, set
         { id: 'map', label: 'Map', icon: <MapIcon /> },
         { id: 'odc', label: 'ODC', icon: <OdcIcon /> },
         { id: 'odp', label: 'ODP', icon: <OdpIcon /> },
+        { id: 'fiber_calculator', label: 'FO Calculator', icon: <CalculatorIcon /> },
         { id: 'olt_management', label: 'OLT', icon: <NetworkIcon /> },
         { id: 'interface_traffic', label: 'Traffic Monitor', icon: <GraphIcon /> },
         { id: 'queue_traffic', label: 'Queue Monitor', icon: <SpeedIcon /> },
@@ -228,6 +229,7 @@ const WhatsappIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-
 const SpeedIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.414-1.415L11 9.586V6z" clipRule="evenodd" /></svg>;
 const CloseIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>;
 const RemoteIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>;
+const CalculatorIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H6zm1 2h6v2H7V4zm0 4h2v2H7V8zm4 0h2v2h-2V8zm-4 4h2v2H7v-2zm4 0h2v2h-2v-2z" clipRule="evenodd" /></svg>;
 
 
 export default Sidebar;

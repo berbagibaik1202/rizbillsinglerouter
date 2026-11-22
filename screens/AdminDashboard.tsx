@@ -27,9 +27,10 @@ import Remote from '~/screens/admin/Remote';
 import PPOBManagement from '~/screens/admin/PPOBManagement';
 import PPOBTransactions from '~/screens/admin/PPOBTransactions';
 import OltManagement from '~/screens/admin/OltManagement';
+import FiberCalculator from '~/screens/admin/FiberCalculator';
 import { AdminUser, formatRupiah } from '~/types';
 
-export type AdminPage = 'dashboard' | 'customers' | 'billing' | 'transactions' | 'reports' | 'packages' | 'complaints' | 'map' | 'odp' | 'odc' | 'interface_traffic' | 'queue_traffic' | 'pppoe_users' | 'pppoe_active' | 'pppoe_profiles' | 'hotspot_users' | 'hotspot_profiles' | 'hotspot_vouchers' | 'hotspot_active' | 'users' | 'settings' | 'whatsapp' | 'acs_devices' | 'apiKey' | 'remote' | 'ppob_management' | 'ppob_transactions' | 'olt_management';
+export type AdminPage = 'dashboard' | 'customers' | 'billing' | 'transactions' | 'reports' | 'packages' | 'complaints' | 'map' | 'odp' | 'odc' | 'fiber_calculator' | 'interface_traffic' | 'queue_traffic' | 'pppoe_users' | 'pppoe_active' | 'pppoe_profiles' | 'hotspot_users' | 'hotspot_profiles' | 'hotspot_vouchers' | 'hotspot_active' | 'users' | 'settings' | 'whatsapp' | 'acs_devices' | 'apiKey' | 'remote' | 'ppob_management' | 'ppob_transactions' | 'olt_management';
 
 const AdminDashboard: React.FC<{ user: AdminUser }> = ({ user }) => {
     const [page, setPage] = useState<AdminPage>('dashboard');
@@ -177,7 +178,7 @@ const AdminDashboard: React.FC<{ user: AdminUser }> = ({ user }) => {
         const handleHashChange = () => {
             const pageNameOnly = window.location.hash.split('?')[0];
             const potentialPage = pageNameOnly.split('/')[1] as AdminPage;
-            const validPages: AdminPage[] = ['dashboard', 'customers', 'billing', 'transactions', 'reports', 'packages', 'complaints', 'map', 'odp', 'odc', 'interface_traffic', 'queue_traffic', 'pppoe_users', 'pppoe_active', 'pppoe_profiles', 'hotspot_users', 'hotspot_profiles', 'hotspot_vouchers', 'hotspot_active', 'users', 'settings', 'whatsapp', 'acs_devices', 'apiKey', 'remote', 'ppob_management', 'ppob_transactions', 'olt_management'];
+            const validPages: AdminPage[] = ['dashboard', 'customers', 'billing', 'transactions', 'reports', 'packages', 'complaints', 'map', 'odp', 'odc', 'fiber_calculator', 'interface_traffic', 'queue_traffic', 'pppoe_users', 'pppoe_active', 'pppoe_profiles', 'hotspot_users', 'hotspot_profiles', 'hotspot_vouchers', 'hotspot_active', 'users', 'settings', 'whatsapp', 'acs_devices', 'apiKey', 'remote', 'ppob_management', 'ppob_transactions', 'olt_management'];
             setPage(validPages.includes(potentialPage) ? potentialPage : 'dashboard');
         };
         window.addEventListener('hashchange', handleHashChange);
@@ -200,8 +201,12 @@ const AdminDashboard: React.FC<{ user: AdminUser }> = ({ user }) => {
             case 'packages': return <Packages />;
             case 'complaints': return <Complaints user={user} />;
             case 'map': return <Map />;
-            case 'odp': return <Odp />;
+            case 'odp': return <Odp onOpenCalculator={(odpId) => { window.location.hash = `admin/fiber_calculator?odpId=${odpId}`; }} />;
             case 'odc': return <Odc />;
+            case 'fiber_calculator': {
+                const odpIdParam = new URLSearchParams(window.location.hash.split('?')[1] || '').get('odpId');
+                return <FiberCalculator initialOdpId={odpIdParam} onBack={() => handleSetPage('odp')} />;
+            }
             case 'interface_traffic': return <InterfaceTraffic />;
             case 'queue_traffic': return <QueueTraffic />;
             case 'pppoe_users': return <PppoeUsers />;

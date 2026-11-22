@@ -23,6 +23,7 @@ const CustomerStatusTag: React.FC<{ status: CustomerStatus }> = ({ status }) => 
 const MapIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" /></svg>;
 const EditIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" /><path fillRule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clipRule="evenodd" /></svg>;
 const TrashIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" /></svg>;
+const CalculatorIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H6zm1 2h6v2H7V4zm0 4h2v2H7V8zm4 0h2v2h-2V8zm-4 4h2v2H7v-2zm4 0h2v2h-2v-2z" clipRule="evenodd" /></svg>;
 
 
 // --- ODP Form Modal ---
@@ -134,7 +135,11 @@ const OdpFormModal: React.FC<OdpFormModalProps> = ({ isOpen, onClose, onSave, od
 
 
 // --- Main Component ---
-const OdpManagement: React.FC = () => {
+interface OdpManagementProps {
+    onOpenCalculator?: (odpId: string) => void;
+}
+
+const OdpManagement: React.FC<OdpManagementProps> = ({ onOpenCalculator }) => {
     const [odps, setOdps] = useState<Odp[]>([]);
     const [odcs, setOdcs] = useState<Odc[]>([]);
     const [customers, setCustomers] = useState<Customer[]>([]);
@@ -146,6 +151,14 @@ const OdpManagement: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
     const [expandedOdpId, setExpandedOdpId] = useState<string | null>(null);
+
+    const handleOpenCalculator = (odpId: string) => {
+        if (onOpenCalculator) {
+            onOpenCalculator(odpId);
+        } else {
+            window.location.hash = `admin/fiber_calculator?odpId=${odpId}`;
+        }
+    };
 
     // Pagination state
     const [currentPage, setCurrentPage] = useState(1);
@@ -324,6 +337,13 @@ const OdpManagement: React.FC = () => {
                                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                 <div className="flex items-center justify-end space-x-1">
                                                     <button
+                                                        onClick={(e) => { e.stopPropagation(); handleOpenCalculator(odp.id); }}
+                                                        className="p-2 text-indigo-600 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
+                                                        title="Hitung Redaman (FO Calculator)"
+                                                    >
+                                                        <CalculatorIcon />
+                                                    </button>
+                                                    <button
                                                         onClick={(e) => { e.stopPropagation(); if (odp.location) window.open(`https://www.google.com/maps?q=${odp.location.lat},${odp.location.lng}`, '_blank'); }}
                                                         className="p-2 text-green-600 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 disabled:text-gray-400 disabled:cursor-not-allowed"
                                                         disabled={!odp.location}
@@ -342,35 +362,188 @@ const OdpManagement: React.FC = () => {
                                         </tr>
                                         {expandedOdpId === odp.id && (
                                             <tr className="bg-gray-50 dark:bg-gray-800">
-                                                <td colSpan={5} className="p-4">
-                                                    <div className="p-4 bg-white dark:bg-gray-900 rounded-md shadow-inner">
-                                                        <h4 className="font-semibold text-gray-700 dark:text-gray-300 mb-2">Connected Customers ({connectedCustomers.length})</h4>
-                                                        {connectedCustomers.length > 0 ? (
-                                                            <div className="overflow-x-auto border rounded-md dark:border-gray-700">
-                                                                <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                                                                    <thead className="bg-gray-100 dark:bg-gray-700/50">
-                                                                        <tr>
-                                                                            <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Customer ID</th>
-                                                                            <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Name</th>
-                                                                            <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Status</th>
-                                                                            <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">PPPoE User</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-                                                                        {connectedCustomers.map(customer => (
-                                                                            <tr key={customer.id}>
-                                                                                <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{customer.id}</td>
-                                                                                <td className="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">{customer.name}</td>
-                                                                                <td className="px-4 py-3 whitespace-nowrap text-sm"><CustomerStatusTag status={customer.status} /></td>
-                                                                                <td className="px-4 py-3 whitespace-nowrap text-sm font-mono text-gray-500 dark:text-gray-400">{customer.pppoeUsername || '-'}</td>
-                                                                            </tr>
-                                                                        ))}
-                                                                    </tbody>
-                                                                </table>
+                                                <td colSpan={5} className="p-4 sm:p-6">
+                                                    <div className="p-5 bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 space-y-5">
+                                                        {/* Top Info Bar */}
+                                                        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 pb-4 border-b border-gray-200 dark:border-gray-800">
+                                                            <div>
+                                                                <div className="flex items-center gap-2 flex-wrap">
+                                                                    <h4 className="text-lg font-bold text-gray-900 dark:text-gray-100">{odp.name}</h4>
+                                                                    <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-indigo-100 text-indigo-800 dark:bg-indigo-900/50 dark:text-indigo-300">
+                                                                        Kapasitas: {totalPorts || 8} Port
+                                                                    </span>
+                                                                    {odp.powerOutput != null && (
+                                                                        <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${
+                                                                            odp.powerOutput >= -24 && odp.powerOutput <= -15
+                                                                                ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300'
+                                                                                : odp.powerOutput < -27
+                                                                                ? 'bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300'
+                                                                                : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-300'
+                                                                        }`}>
+                                                                            Output: {odp.powerOutput} dBm ({
+                                                                                odp.powerOutput >= -24 && odp.powerOutput <= -15
+                                                                                    ? 'Optimal'
+                                                                                    : odp.powerOutput < -27
+                                                                                    ? 'Redaman Buruk'
+                                                                                    : 'Waspada'
+                                                                            })
+                                                                        </span>
+                                                                    )}
+                                                                </div>
+                                                                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                                                    Lokasi: {odp.address || 'Alamat belum diatur'} | Terpakai: <span className="font-semibold text-gray-800 dark:text-gray-200">{usedPorts}</span> / {totalPorts || 8} Port ({totalPorts ? Math.round((usedPorts / totalPorts) * 100) : 0}%)
+                                                                </p>
                                                             </div>
-                                                        ) : (
-                                                            <p className="text-sm text-center text-gray-500 dark:text-gray-400 py-4">No customers are connected to this ODP.</p>
-                                                        )}
+
+                                                            <div className="flex items-center gap-3 flex-wrap">
+                                                                <div className="flex items-center gap-2 text-xs bg-gray-50 dark:bg-gray-800/80 px-3 py-1.5 rounded-lg border border-gray-200 dark:border-gray-700">
+                                                                    <span className="text-gray-500 dark:text-gray-400">Power In: <strong className="text-gray-800 dark:text-gray-200">{odp.powerInput != null ? `${odp.powerInput} dBm` : '-'}</strong></span>
+                                                                    <span className="text-gray-300 dark:text-gray-600">|</span>
+                                                                    <span className="text-gray-500 dark:text-gray-400">Power Out: <strong className="text-gray-800 dark:text-gray-200">{odp.powerOutput != null ? `${odp.powerOutput} dBm` : '-'}</strong></span>
+                                                                </div>
+                                                                <button
+                                                                    type="button"
+                                                                    onClick={() => handleOpenCalculator(odp.id)}
+                                                                    className="inline-flex items-center gap-2 text-xs font-semibold bg-indigo-600 text-white px-3.5 py-1.5 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm cursor-pointer"
+                                                                    title="Buka ODP ini di FO Power Budget & Loss Calculator"
+                                                                >
+                                                                    <CalculatorIcon />
+                                                                    <span>FO Calculator</span>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+
+                                                        {/* Utilization Bar */}
+                                                        <div>
+                                                            <div className="flex justify-between items-center text-xs text-gray-600 dark:text-gray-400 mb-1">
+                                                                <span>Utilisasi Port ODP</span>
+                                                                <span className="font-medium">{usedPorts} terpakai • {Math.max(0, (totalPorts || 8) - usedPorts)} tersedia</span>
+                                                            </div>
+                                                            <div className="w-full bg-gray-100 dark:bg-gray-800 h-2.5 rounded-full overflow-hidden">
+                                                                <div
+                                                                    className={`h-full transition-all duration-300 ${
+                                                                        usedPorts >= (totalPorts || 8)
+                                                                            ? 'bg-red-500'
+                                                                            : usedPorts / (totalPorts || 8) >= 0.75
+                                                                            ? 'bg-yellow-500'
+                                                                            : 'bg-emerald-500'
+                                                                    }`}
+                                                                    style={{ width: `${Math.min(100, Math.round((usedPorts / (totalPorts || 8)) * 100))}%` }}
+                                                                />
+                                                            </div>
+                                                        </div>
+
+                                                        {/* Visual Port Matrix */}
+                                                        <div>
+                                                            <div className="flex items-center justify-between mb-2.5">
+                                                                <h5 className="text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-gray-400">
+                                                                    Visual Port Matrix ({totalPorts || 8} Port)
+                                                                </h5>
+                                                                <div className="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
+                                                                    <span className="inline-flex items-center gap-1.5">
+                                                                        <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span>
+                                                                        <span>Terisi ({usedPorts})</span>
+                                                                    </span>
+                                                                    <span className="inline-flex items-center gap-1.5">
+                                                                        <span className="w-2.5 h-2.5 rounded-full bg-gray-300 dark:bg-gray-600 inline-block border border-dashed border-gray-400"></span>
+                                                                        <span>Kosong ({Math.max(0, (totalPorts || 8) - usedPorts)})</span>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+
+                                                            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 gap-2.5">
+                                                                {Array.from({ length: Math.max(Number(totalPorts) || 8, connectedCustomers.length) }, (_, idx) => {
+                                                                    const portNumber = idx + 1;
+                                                                    const cust = connectedCustomers[idx];
+                                                                    return (
+                                                                        <div
+                                                                            key={portNumber}
+                                                                            className={`p-2.5 rounded-lg border text-left transition-all relative ${
+                                                                                cust
+                                                                                    ? 'bg-emerald-50/70 dark:bg-emerald-950/20 border-emerald-300 dark:border-emerald-800 shadow-sm'
+                                                                                    : 'bg-gray-50/60 dark:bg-gray-800/40 border-dashed border-gray-300 dark:border-gray-700'
+                                                                            }`}
+                                                                        >
+                                                                            <div className="flex items-center justify-between mb-1.5">
+                                                                                <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
+                                                                                    cust
+                                                                                        ? 'bg-emerald-600 text-white'
+                                                                                        : 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400'
+                                                                                }`}>
+                                                                                    P{portNumber}
+                                                                                </span>
+                                                                                <span className={`w-2 h-2 rounded-full ${
+                                                                                    cust ? 'bg-emerald-500' : 'bg-gray-300 dark:bg-gray-600'
+                                                                                }`}></span>
+                                                                            </div>
+                                                                            {cust ? (
+                                                                                <div className="space-y-0.5">
+                                                                                    <div className="text-xs font-semibold text-gray-900 dark:text-gray-100 truncate" title={cust.name}>
+                                                                                        {cust.name}
+                                                                                    </div>
+                                                                                    <div className="text-[10px] text-gray-500 dark:text-gray-400 font-mono truncate" title={cust.pppoeUsername || cust.id}>
+                                                                                        {cust.pppoeUsername || cust.id}
+                                                                                    </div>
+                                                                                    <div className="pt-0.5">
+                                                                                        <span className={`inline-block text-[9px] px-1 py-0.2 rounded font-medium ${
+                                                                                            cust.status === CustomerStatus.Active
+                                                                                                ? 'text-emerald-700 bg-emerald-100 dark:bg-emerald-900/60 dark:text-emerald-300'
+                                                                                                : 'text-amber-700 bg-amber-100 dark:bg-amber-900/60 dark:text-amber-300'
+                                                                                        }`}>
+                                                                                            {cust.status}
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            ) : (
+                                                                                <div className="space-y-0.5 py-1">
+                                                                                    <div className="text-xs font-medium text-gray-400 dark:text-gray-500">
+                                                                                        Kosong
+                                                                                    </div>
+                                                                                    <div className="text-[10px] text-gray-400 dark:text-gray-500 italic">
+                                                                                        Tersedia
+                                                                                    </div>
+                                                                                </div>
+                                                                            )}
+                                                                        </div>
+                                                                    );
+                                                                })}
+                                                            </div>
+                                                        </div>
+
+                                                        {/* Connected Customers Table */}
+                                                        <div>
+                                                            <h5 className="text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-gray-400 mb-2">
+                                                                Daftar Pelanggan Terhubung ({connectedCustomers.length})
+                                                            </h5>
+                                                            {connectedCustomers.length > 0 ? (
+                                                                <div className="overflow-x-auto border rounded-lg dark:border-gray-700">
+                                                                    <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                                                        <thead className="bg-gray-100 dark:bg-gray-700/50">
+                                                                            <tr>
+                                                                                <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Customer ID</th>
+                                                                                <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Name</th>
+                                                                                <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Status</th>
+                                                                                <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">PPPoE User</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+                                                                            {connectedCustomers.map(customer => (
+                                                                                <tr key={customer.id}>
+                                                                                    <td className="px-4 py-2.5 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{customer.id}</td>
+                                                                                    <td className="px-4 py-2.5 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">{customer.name}</td>
+                                                                                    <td className="px-4 py-2.5 whitespace-nowrap text-sm"><CustomerStatusTag status={customer.status} /></td>
+                                                                                    <td className="px-4 py-2.5 whitespace-nowrap text-sm font-mono text-gray-500 dark:text-gray-400">{customer.pppoeUsername || '-'}</td>
+                                                                                </tr>
+                                                                            ))}
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            ) : (
+                                                                <p className="text-sm text-center text-gray-500 dark:text-gray-400 py-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
+                                                                    Belum ada pelanggan yang terhubung ke ODP ini.
+                                                                </p>
+                                                            )}
+                                                        </div>
                                                     </div>
                                                 </td>
                                             </tr>
