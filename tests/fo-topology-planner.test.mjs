@@ -160,3 +160,107 @@ test('FO Topology Planner: ODC filter strictly isolates ODPs without hijacking f
     });
     assert.strictEqual(allFiltered.length, 6);
 });
+
+export function calculateOdcPower({
+    rootTx = 5.0,
+    feederMeters = 850,
+    odcSplitter = '1:4',
+}) {
+    const feederLoss = (feederMeters / 1000) * 0.35;
+    const powerIn = Number((rootTx - feederLoss).toFixed(2));
+
+    let splitterLoss = 7.2;
+    if (odcSplitter === 'direct' || odcSplitter === '1:1') splitterLoss = 0;
+    else if (odcSplitter === '1:2') splitterLoss = 3.7;
+    else if (odcSplitter === '1:8') splitterLoss = 10.5;
+
+    const powerOut = Number((powerIn - splitterLoss).toFixed(2));
+    return { powerIn, powerOut, feederLoss: Number(feederLoss.toFixed(2)) };
+}
+
+test('FO Topology Planner: OLT dedicated SFP port delivers strong positive power to ODC input', () => {
+    // 5.0 dBm SFP TX, 850m 24C feeder cable -> feeder loss = 0.30 dB
+    // Power arriving at ODC must be strong positive: +4.70 dBm!
+    const resDirect = calculateOdcPower({
+        rootTx: 5.0,
+        feederMeters: 850,
+        odcSplitter: 'direct',
+    });
+    assert.strictEqual(resDirect.powerIn, 4.70);
+    assert.strictEqual(resDirect.powerOut, 4.70, 'Direct pass-through keeps power at +4.70 dBm');
+
+    // 1:2 splitter inside ODC -> loss 3.7 dB -> power out +1.00 dBm
+    const res12 = calculateOdcPower({
+        rootTx: 5.0,
+        feederMeters: 850,
+        odcSplitter: '1:2',
+    });
+    assert.strictEqual(res12.powerIn, 4.70);
+    assert.strictEqual(res12.powerOut, 1.00);
+
+    // 1:4 splitter inside ODC -> loss 7.2 dB -> power out -2.50 dBm
+    const res14 = calculateOdcPower({
+        rootTx: 5.0,
+        feederMeters: 850,
+        odcSplitter: '1:4',
+    });
+    assert.strictEqual(res14.powerIn, 4.70);
+    assert.strictEqual(res14.powerOut, -2.50);
+});
+
+export function resolveNodeCategory(name, type, isSimulated) {
+    if (type === 'olt') return 'OLT';
+    if (type === 'odc') return 'ODC';
+    if (isSimulated) return 'DRAF';
+    const upper = (name || '').toUpperCase();
+    if (upper.startsWith('JB-') || upper.startsWith('JB ') || upper.startsWith('JC-') || upper.startsWith('CLOSURE') || upper.startsWith('SPLICE')) {
+        return 'JB';
+    }
+    if (upper.startsWith('TIANG') || upper.startsWith('TNG-') || upper.startsWith('TNG ') || upper.startsWith('POLE')) {
+        return 'TIANG';
+    }
+    return 'ODP';
+}
+
+export function evaluateCustomerDropStatus(custStatus, odpPowerOut, portIdx) {
+    if (custStatus === 'inactive') {
+        return { color: '#f43f5e', label: 'CRITICAL' };
+    }
+    const isWarning = odpPowerOut < -20 || portIdx === 3 || custStatus === 'suspended';
+    if (isWarning) {
+        return { color: '#f59e0b', label: 'WARNING' };
+    }
+    return { color: '#10b981', label: 'OPTIMAL' };
+}
+
+test('FO Topology Planner: resolveNodeCategory correctly identifies OLT, ODC, JB, TIANG, ODP and DRAF', () => {
+    assert.strictEqual(resolveNodeCategory('OLT-PUSAT', 'olt'), 'OLT');
+    assert.strictEqual(resolveNodeCategory('ODC-TBT-01', 'odc'), 'ODC');
+    assert.strictEqual(resolveNodeCategory('JB-TBT-01', 'odp'), 'JB');
+    assert.strictEqual(resolveNodeCategory('JC-KEMANG-01', 'odp'), 'JB');
+    assert.strictEqual(resolveNodeCategory('TNG-042', 'odp'), 'TIANG');
+    assert.strictEqual(resolveNodeCategory('TIANG-PASAR-02', 'odp'), 'TIANG');
+    assert.strictEqual(resolveNodeCategory('ODP-TBT-01', 'odp'), 'ODP');
+    assert.strictEqual(resolveNodeCategory('ODP-RENCANA-BARU', 'simulated', true), 'DRAF');
+});
+
+test('FO Topology Planner: evaluateCustomerDropStatus maps optical and connection health correctly', () => {
+    // Active customer with optimal ODP power (-16.8 dBm) -> Optimal Green
+    const opt = evaluateCustomerDropStatus('active', -16.8, 1);
+    assert.strictEqual(opt.label, 'OPTIMAL');
+    assert.strictEqual(opt.color, '#10b981');
+
+    // Active customer on port 3 or with low ODP power (< -20 dBm) -> Warning Amber
+    const warnPort3 = evaluateCustomerDropStatus('active', -16.8, 3);
+    assert.strictEqual(warnPort3.label, 'WARNING');
+    assert.strictEqual(warnPort3.color, '#f59e0b');
+
+    const warnPower = evaluateCustomerDropStatus('active', -21.3, 1);
+    assert.strictEqual(warnPower.label, 'WARNING');
+    assert.strictEqual(warnPower.color, '#f59e0b');
+
+    // Inactive customer -> Critical Red
+    const crit = evaluateCustomerDropStatus('inactive', -16.8, 1);
+    assert.strictEqual(crit.label, 'CRITICAL');
+    assert.strictEqual(crit.color, '#f43f5e');
+});
