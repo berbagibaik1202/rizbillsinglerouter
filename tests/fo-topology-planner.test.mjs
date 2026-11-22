@@ -87,3 +87,76 @@ test('FO Topology Planner: evaluateDeviation flags excessive divergence between 
     assert.strictEqual(excessive.status, 'EXCESSIVE_LOSS');
     assert.strictEqual(excessive.deviationDb, 5.5);
 });
+
+export function filterOdpsForOdc({ odps, odcs, selectedOdcId }) {
+    const odcIdSet = new Set(odcs.map((o) => o.id));
+    const odpMapById = new Map(odps.map((o) => [o.id, o]));
+
+    const findRootOdcId = (parentId) => {
+        let curr = parentId;
+        const visited = new Set();
+        while (curr && !visited.has(curr)) {
+            visited.add(curr);
+            if (odcIdSet.has(curr)) return curr;
+            const parentOdp = odpMapById.get(curr);
+            if (!parentOdp) break;
+            curr = parentOdp.parentId;
+        }
+        return null;
+    };
+
+    return odps.filter((odp) => {
+        if (selectedOdcId === 'all') return true;
+        const rootOdcId = findRootOdcId(odp.parentId);
+        return rootOdcId === selectedOdcId;
+    });
+}
+
+test('FO Topology Planner: ODC filter strictly isolates ODPs without hijacking foreign or cascading nodes', () => {
+    const mockOdcs = [
+        { id: 'odc-jkg', name: 'ODC JKG' },
+        { id: 'odc-psm', name: 'ODC PSM' },
+    ];
+
+    const mockOdps = [
+        // Direct children of ODC JKG
+        { id: 'odp-jkg-01', name: 'ODP-JKG-01', parentId: 'odc-jkg' },
+        { id: 'odp-jkg-02', name: 'ODP-JKG-02', parentId: 'odc-jkg' },
+        // Cascading child: parent is ODP-JKG-02 -> root is ODC JKG
+        { id: 'odp-jkg-02-sub', name: 'ODP-JKG-02-SUB', parentId: 'odp-jkg-02' },
+        // Children of ODC PSM
+        { id: 'odp-psm-01', name: 'ODP-PSM-01', parentId: 'odc-psm' },
+        { id: 'odp-psm-02', name: 'ODP-PSM-02', parentId: 'odc-psm' },
+        // Unmapped ODP
+        { id: 'odp-unmapped', name: 'ODP-UNMAPPED', parentId: null },
+    ];
+
+    // Filter by ODC JKG: only jkg-01, jkg-02, and jkg-02-sub should be returned
+    const jkgFiltered = filterOdpsForOdc({
+        odps: mockOdps,
+        odcs: mockOdcs,
+        selectedOdcId: 'odc-jkg',
+    });
+    const jkgIds = jkgFiltered.map((o) => o.id);
+    assert.deepStrictEqual(jkgIds.sort(), ['odp-jkg-01', 'odp-jkg-02', 'odp-jkg-02-sub'].sort());
+    assert.ok(!jkgIds.includes('odp-psm-01'), 'Must not hijack PSM ODP into JKG');
+    assert.ok(!jkgIds.includes('odp-psm-02'), 'Must not hijack PSM ODP into JKG');
+    assert.ok(!jkgIds.includes('odp-unmapped'), 'Must not hijack unmapped ODP into filtered ODC');
+
+    // Filter by ODC PSM: only psm-01 and psm-02
+    const psmFiltered = filterOdpsForOdc({
+        odps: mockOdps,
+        odcs: mockOdcs,
+        selectedOdcId: 'odc-psm',
+    });
+    const psmIds = psmFiltered.map((o) => o.id);
+    assert.deepStrictEqual(psmIds.sort(), ['odp-psm-01', 'odp-psm-02'].sort());
+
+    // Filter 'all': returns all 6
+    const allFiltered = filterOdpsForOdc({
+        odps: mockOdps,
+        odcs: mockOdcs,
+        selectedOdcId: 'all',
+    });
+    assert.strictEqual(allFiltered.length, 6);
+});

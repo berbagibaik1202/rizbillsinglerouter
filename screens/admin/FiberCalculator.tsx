@@ -179,46 +179,76 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
             }
         });
 
-        // 2. Identify ODC nodes
-        const odcNodes: TreeNode[] = odcs
-            .filter((odc) => selectedOdcFilter === 'all' || odc.id === selectedOdcFilter)
-            .map((odc) => {
-                const estMeters = 850;
-                const cableLoss = (estMeters / 1000) * 0.35;
-                const splitterLoss = 7.2; // default PLC 1:4 on ODC
-                const calcPowerIn = rootTx - cableLoss;
-                const calcPowerOut = calcPowerIn - splitterLoss;
+        // Maps for fast parent-child hierarchical resolution
+        const odcIdSet = new Set(odcs.map((o) => o.id));
+        const odcMapById = new Map(odcs.map((o) => [o.id, o]));
+        const odpMapById = new Map(odps.map((o) => [o.id, o]));
 
-                return {
-                    id: odc.id,
-                    name: odc.name,
-                    type: 'odc',
-                    parentId: 'root-olt',
-                    parentType: 'olt',
-                    totalPorts: odc.totalPorts || 24,
-                    usedPorts: 0,
-                    powerIn: odc.powerInput ?? null,
-                    powerOut: odc.powerOutput ?? null,
-                    calculatedPowerIn: Number(calcPowerIn.toFixed(2)),
-                    calculatedPowerOut: Number(calcPowerOut.toFixed(2)),
-                    cableMeters: estMeters,
-                    cableLabel: `FDR-OLT1-${odc.name.replace(/\s+/g, '')} • 24C • ${estMeters}m`,
-                    location: odc.location,
-                    address: odc.address,
-                    customers: [],
-                    children: [],
-                    x: 0,
-                    y: 0,
-                };
-            });
+        // Helper to trace any ODP's root ODC ID (whether direct parent is ODC, or cascading ODP -> ODC)
+        const findRootOdcId = (parentId?: string | null): string | null => {
+            let curr = parentId;
+            const visited = new Set<string>();
+            while (curr && !visited.has(curr)) {
+                visited.add(curr);
+                if (odcIdSet.has(curr)) {
+                    return curr;
+                }
+                const parentOdp = odpMapById.get(curr);
+                if (!parentOdp) break;
+                curr = parentOdp.parentId;
+            }
+            return null;
+        };
 
-        // 3. Attach ODP nodes to ODCs or cascading parent ODPs
+        // 2. Identify active ODC nodes
+        const activeOdcs = odcs.filter((odc) => selectedOdcFilter === 'all' || odc.id === selectedOdcFilter);
+        const odcNodeMap = new Map<string, TreeNode>();
+
+        const odcNodes: TreeNode[] = activeOdcs.map((odc) => {
+            const estMeters = 850;
+            const cableLoss = (estMeters / 1000) * 0.35;
+            const splitterLoss = 7.2; // default PLC 1:4 on ODC
+            const calcPowerIn = rootTx - cableLoss;
+            const calcPowerOut = calcPowerIn - splitterLoss;
+
+            const odcNode: TreeNode = {
+                id: odc.id,
+                name: odc.name,
+                type: 'odc',
+                parentId: 'root-olt',
+                parentType: 'olt',
+                totalPorts: odc.totalPorts || 24,
+                usedPorts: 0,
+                powerIn: odc.powerInput ?? null,
+                powerOut: odc.powerOutput ?? null,
+                calculatedPowerIn: Number(calcPowerIn.toFixed(2)),
+                calculatedPowerOut: Number(calcPowerOut.toFixed(2)),
+                cableMeters: estMeters,
+                cableLabel: `FDR-OLT1-${odc.name.replace(/\s+/g, '')} • 24C • ${estMeters}m`,
+                location: odc.location,
+                address: odc.address,
+                customers: [],
+                children: [],
+                x: 0,
+                y: 0,
+            };
+            odcNodeMap.set(odc.id, odcNode);
+            return odcNode;
+        });
+
+        // 3. Filter and attach ODP nodes strictly belonging to selected ODC (or all if 'all')
         const odpMap = new Map<string, TreeNode>();
 
-        odps.forEach((odp) => {
+        const targetOdps = odps.filter((odp) => {
+            if (selectedOdcFilter === 'all') return true;
+            const rootOdcId = findRootOdcId(odp.parentId);
+            return rootOdcId === selectedOdcFilter;
+        });
+
+        targetOdps.forEach((odp) => {
             const custs = customersByOdp[odp.id] || [];
-            const parentOdc = odcs.find((o) => o.id === odp.parentId);
-            const parentOdp = odps.find((o) => o.id === odp.parentId);
+            const parentOdc = odcMapById.get(odp.parentId || '');
+            const parentOdp = odpMapById.get(odp.parentId || '');
 
             let distanceMeters = 420;
             if (parentOdc?.location && odp.location) {
@@ -247,7 +277,7 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                 id: odp.id,
                 name: odp.name,
                 type: 'odp',
-                parentId: odp.parentId || (odcNodes[0]?.id ?? 'root-olt'),
+                parentId: odp.parentId || undefined,
                 parentType: parentOdc ? 'odc' : parentOdp ? 'odp' : 'odc',
                 totalPorts: odp.totalPorts || 8,
                 usedPorts: custs.length,
@@ -268,8 +298,13 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
             odpMap.set(odp.id, node);
         });
 
-        // 4. Attach Simulated Nodes
+        // 4. Attach Simulated Nodes that belong to this view
         simulatedNodes.forEach((sim) => {
+            const rootOdcId = findRootOdcId(sim.parentId) || (odcIdSet.has(sim.parentId) ? sim.parentId : null);
+            if (selectedOdcFilter !== 'all' && rootOdcId !== selectedOdcFilter && sim.parentId !== selectedOdcFilter) {
+                return;
+            }
+
             const node: TreeNode = {
                 id: sim.id,
                 name: `${sim.name} [RENCANA]`,
@@ -296,23 +331,28 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
             odpMap.set(sim.id, node);
         });
 
-        // 5. Connect children to parents
+        // 5. Connect children to parents strictly without fallback hijacking
+        const unassignedOdps: TreeNode[] = [];
+
         odpMap.forEach((odpNode) => {
-            // Check if parent is an ODC
-            const odcParent = odcNodes.find((o) => o.id === odpNode.parentId);
+            // Check if direct parent is an active ODC
+            const odcParent = odcNodeMap.get(odpNode.parentId || '');
             if (odcParent) {
                 odcParent.children.push(odpNode);
                 odcParent.usedPorts += 1;
-            } else {
-                // Check if parent is an ODP (cascading)
-                const odpParent = odpMap.get(odpNode.parentId || '');
-                if (odpParent) {
-                    odpParent.children.push(odpNode);
-                } else if (odcNodes.length > 0) {
-                    // Default to first ODC if parentId unmapped
-                    odcNodes[0].children.push(odpNode);
-                    odcNodes[0].usedPorts += 1;
-                }
+                return;
+            }
+
+            // Check if direct parent is another ODP (cascading)
+            const odpParent = odpMap.get(odpNode.parentId || '');
+            if (odpParent) {
+                odpParent.children.push(odpNode);
+                return;
+            }
+
+            // If unparented (and we are in 'all' view):
+            if (selectedOdcFilter === 'all') {
+                unassignedOdps.push(odpNode);
             }
         });
 
@@ -330,10 +370,34 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
             cableMeters: 0,
             cableLabel: 'ROOT SFP TX',
             customers: [],
-            children: odcNodes,
+            children: [...odcNodes],
             x: 50,
             y: 0,
         };
+
+        // If in 'all' view and there are unparented ODPs, add a clean distinct branch for them
+        if (unassignedOdps.length > 0 && selectedOdcFilter === 'all') {
+            const unassignedGroupNode: TreeNode = {
+                id: 'unassigned-odp-group',
+                name: 'ODP Belum Dipetakan',
+                type: 'odc',
+                parentId: 'root-olt',
+                parentType: 'olt',
+                totalPorts: unassignedOdps.length,
+                usedPorts: unassignedOdps.length,
+                powerIn: null,
+                powerOut: null,
+                calculatedPowerIn: rootTx,
+                calculatedPowerOut: Number((rootTx - 7.5).toFixed(2)),
+                cableMeters: 300,
+                cableLabel: 'UNMAPPED • Jalur Bebas',
+                customers: [],
+                children: unassignedOdps,
+                x: 0,
+                y: 0,
+            };
+            rootOltNode.children.push(unassignedGroupNode);
+        }
 
         // 6. Compute 2D layout coordinates (Level X, Subtree Y)
         const COLUMN_WIDTH = 340;
