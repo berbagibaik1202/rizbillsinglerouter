@@ -280,8 +280,14 @@ const runCommand = (job, label, command, args, extraEnv = {}, options = {}) => {
             String(chunk).split(/\r?\n/).forEach((line) => addLog(job, 'stdout', line));
         });
 
+        const capturedStderr = [];
+
         child.stderr.on('data', (chunk) => {
-            String(chunk).split(/\r?\n/).forEach((line) => addLog(job, 'stderr', line));
+            String(chunk).split(/\r?\n/).forEach((line) => {
+                const trimmed = line.trim();
+                if (trimmed) capturedStderr.push(trimmed);
+                addLog(job, 'stderr', line);
+            });
         });
 
         child.on('error', (error) => {
@@ -295,7 +301,8 @@ const runCommand = (job, label, command, args, extraEnv = {}, options = {}) => {
                 return;
             }
 
-            const error = new Error(`${label} failed with exit code ${code}`);
+            const stderrSummary = capturedStderr.slice(-3).join(' | ');
+            const error = new Error(stderrSummary ? `${label} failed with exit code ${code}: ${stderrSummary}` : `${label} failed with exit code ${code}`);
             error.exitCode = code;
             reject(error);
         });
@@ -345,21 +352,46 @@ const performUpdate = async (job) => {
         });
 
         setJobProgress(job, 90, 'Rebuilding', 'Rebuilding the application containers.');
-        await runCommand(job, 'docker compose up', 'docker', [
-            'compose',
-            '--env-file',
-            ENV_FILE,
-            '-f',
-            COMPOSE_FILE,
-            'up',
-            '-d',
-            '--build',
-            '--remove-orphans',
-            'app',
-            'app-watchdog',
-        ], {}, {
-            commandLabel: 'rebuilding application containers',
-        });
+        let lastBuildError = null;
+        for (let attempt = 1; attempt <= 3; attempt += 1) {
+            try {
+                if (attempt > 1) {
+                    addLog(job, 'system', `Retrying docker compose up (attempt ${attempt}/3)...`);
+                    await new Promise((r) => setTimeout(r, 4000));
+                }
+                await runCommand(job, 'docker compose up', 'docker', [
+                    'compose',
+                    '--env-file',
+                    ENV_FILE,
+                    '-f',
+                    COMPOSE_FILE,
+                    'up',
+                    '-d',
+                    '--build',
+                    '--remove-orphans',
+                    'app',
+                    'app-watchdog',
+                ], {}, {
+                    commandLabel: `rebuilding application containers${attempt > 1 ? ` (attempt ${attempt}/3)` : ''}`,
+                });
+                lastBuildError = null;
+                break;
+            } catch (err) {
+                lastBuildError = err;
+                const errMsg = String(err.message || '').toLowerCase();
+                const isNetworkTimeout = errMsg.includes('tls handshake timeout')
+                    || errMsg.includes('connection timed out')
+                    || errMsg.includes('temporary failure in name resolution')
+                    || errMsg.includes('failed to resolve source metadata')
+                    || errMsg.includes('net/http');
+                if (attempt < 3 && isNetworkTimeout) {
+                    addLog(job, 'stderr', `Transient network timeout detected during docker compose build. Auto-retrying (${attempt}/3)...`);
+                    continue;
+                }
+                throw err;
+            }
+        }
+        if (lastBuildError) throw lastBuildError;
 
         setJobProgress(job, 100, 'Completed', 'Application update completed successfully.');
         job.status = 'completed';
