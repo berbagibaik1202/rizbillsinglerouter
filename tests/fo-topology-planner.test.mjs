@@ -535,3 +535,134 @@ test('FO Topology Planner: synthesizeTopologyCables automatically provides full 
     assert.ok(trace.traceNodeIds.has('root-olt'));
 });
 
+export function splitCableWithJointBox({
+    originalCable,
+    jbName,
+    jbId,
+    distanceFromStart,
+    autoSplice = true,
+}) {
+    const fromCode = originalCable.fromNodeId.replace(/[^A-Za-z0-9]/g, '');
+    const toCode = originalCable.toNodeId.replace(/[^A-Za-z0-9]/g, '');
+    const jbNodeId = jbId || jbName.toUpperCase().replace(/\s+/g, '-');
+    const jbCode = jbNodeId.replace(/[^A-Za-z0-9]/g, '');
+    const isFeeder = originalCable.cableType === 'Feeder' || originalCable.fromNodeId === 'root-olt';
+
+    const cable1Name = isFeeder ? `FDR-${fromCode}-${jbCode}` : `DST-${fromCode}-${jbCode}`;
+    const cable2Name = isFeeder ? `FDR-${jbCode}-${toCode}` : `DST-${jbCode}-${toCode}`;
+
+    const dist1 = Math.max(10, Math.min(originalCable.lengthMeters - 10, distanceFromStart));
+    const dist2 = Math.max(10, originalCable.lengthMeters - dist1);
+
+    const cable1 = {
+        id: cable1Name,
+        name: cable1Name,
+        fromNodeId: originalCable.fromNodeId,
+        toNodeId: jbNodeId,
+        totalCores: originalCable.totalCores,
+        tubesCount: originalCable.tubesCount,
+        coresPerTube: originalCable.coresPerTube || 12,
+        lengthMeters: dist1,
+        cableType: originalCable.cableType,
+    };
+
+    const cable2 = {
+        id: cable2Name,
+        name: cable2Name,
+        fromNodeId: jbNodeId,
+        toNodeId: originalCable.toNodeId,
+        totalCores: originalCable.totalCores,
+        tubesCount: originalCable.tubesCount,
+        coresPerTube: originalCable.coresPerTube || 12,
+        lengthMeters: dist2,
+        cableType: originalCable.cableType,
+    };
+
+    const generatedSplices = [];
+    if (autoSplice) {
+        const tubes = originalCable.tubesCount || Math.max(1, Math.ceil(originalCable.totalCores / 12));
+        for (let t = 1; t <= tubes; t++) {
+            for (let c = 1; c <= 12; c++) {
+                const coreIndex = (t - 1) * 12 + c;
+                if (coreIndex > originalCable.totalCores) break;
+                generatedSplices.push({
+                    id: `spl-${jbCode}-t${t}c${c}`,
+                    enclosureNodeId: jbNodeId,
+                    fromCableId: cable1.id,
+                    fromTubeNumber: t,
+                    fromCoreNumber: c,
+                    toCableId: cable2.id,
+                    toTubeNumber: t,
+                    toCoreNumber: c,
+                    spliceLossDb: 0.05,
+                    notes: `Straight splice T${t}-C${c}`,
+                });
+            }
+        }
+    }
+
+    return {
+        jbNodeId,
+        cable1,
+        cable2,
+        generatedSplices,
+        deletedCableKeys: {
+            [originalCable.id]: true,
+            [`${originalCable.fromNodeId}->${originalCable.toNodeId}`]: true,
+        },
+    };
+}
+
+test('FO Topology Planner: Inserting a Joint Box on a cut feeder cable creates 2 segments, 24 straight splices, and preserves upstream trace', () => {
+    const originalFeeder = {
+        id: 'FDR-OLT1-ODC02CMS',
+        name: 'FDR-OLT1-ODC02CMS',
+        fromNodeId: 'root-olt',
+        toNodeId: 'ODC-02-CMS',
+        totalCores: 24,
+        tubesCount: 2,
+        coresPerTube: 12,
+        lengthMeters: 850,
+        cableType: 'Feeder',
+    };
+
+    // User cuts cable at 400m to insert JB-01-CMS:
+    const splitResult = splitCableWithJointBox({
+        originalCable: originalFeeder,
+        jbName: 'JB-01-CMS',
+        distanceFromStart: 400,
+        autoSplice: true,
+    });
+
+    assert.strictEqual(splitResult.jbNodeId, 'JB-01-CMS');
+    assert.strictEqual(splitResult.cable1.lengthMeters, 400);
+    assert.strictEqual(splitResult.cable1.fromNodeId, 'root-olt');
+    assert.strictEqual(splitResult.cable1.toNodeId, 'JB-01-CMS');
+
+    assert.strictEqual(splitResult.cable2.lengthMeters, 450);
+    assert.strictEqual(splitResult.cable2.fromNodeId, 'JB-01-CMS');
+    assert.strictEqual(splitResult.cable2.toNodeId, 'ODC-02-CMS');
+
+    // 24 straight splices created
+    assert.strictEqual(splitResult.generatedSplices.length, 24);
+    assert.strictEqual(splitResult.generatedSplices[0].fromTubeNumber, 1);
+    assert.strictEqual(splitResult.generatedSplices[0].fromCoreNumber, 1);
+    assert.strictEqual(splitResult.generatedSplices[0].toTubeNumber, 1);
+    assert.strictEqual(splitResult.generatedSplices[0].toCoreNumber, 1);
+    assert.strictEqual(splitResult.generatedSplices[23].fromTubeNumber, 2);
+    assert.strictEqual(splitResult.generatedSplices[23].fromCoreNumber, 12);
+
+    // Old cable key is registered in deleted keys
+    assert.strictEqual(splitResult.deletedCableKeys['FDR-OLT1-ODC02CMS'], true);
+    assert.strictEqual(splitResult.deletedCableKeys['root-olt->ODC-02-CMS'], true);
+
+    // Trace path from ODC-02-CMS should now flow through ODC-02-CMS -> cable2 -> JB-01-CMS -> cable1 -> root-olt
+    const activeCables = [splitResult.cable1, splitResult.cable2];
+    const trace = getUpstreamTracePath('ODC-02-CMS', activeCables);
+    assert.ok(trace.traceNodeIds.has('ODC-02-CMS'));
+    assert.ok(trace.traceNodeIds.has('JB-01-CMS'));
+    assert.ok(trace.traceNodeIds.has('root-olt'));
+    assert.ok(trace.traceCableIds.has(splitResult.cable1.id));
+    assert.ok(trace.traceCableIds.has(splitResult.cable2.id));
+});
+

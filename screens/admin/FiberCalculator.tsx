@@ -246,6 +246,97 @@ export function synthesizeTopologyCables(
     return list;
 }
 
+// Split a fiber cable by inserting an intermediate Joint Box (JB / Closure)
+export function splitCableWithJointBox({
+    originalCable,
+    jbName,
+    jbId,
+    distanceFromStart,
+    autoSplice = true,
+}: {
+    originalCable: FiberCable;
+    jbName: string;
+    jbId?: string;
+    distanceFromStart: number;
+    autoSplice?: boolean;
+}): {
+    jbNodeId: string;
+    cable1: FiberCable;
+    cable2: FiberCable;
+    generatedSplices: SpliceConnection[];
+    deletedCableKeys: Record<string, boolean>;
+} {
+    const fromCode = originalCable.fromNodeId.replace(/[^A-Za-z0-9]/g, '');
+    const toCode = originalCable.toNodeId.replace(/[^A-Za-z0-9]/g, '');
+    const jbNodeId = jbId || jbName.trim().toUpperCase().replace(/\s+/g, '-');
+    const jbCode = jbNodeId.replace(/[^A-Za-z0-9]/g, '');
+    const isFeeder = originalCable.cableType === 'Feeder' || originalCable.fromNodeId === 'root-olt';
+
+    const cable1Name = isFeeder ? `FDR-${fromCode}-${jbCode}` : `DST-${fromCode}-${jbCode}`;
+    const cable2Name = isFeeder ? `FDR-${jbCode}-${toCode}` : `DST-${jbCode}-${toCode}`;
+
+    const dist1 = Math.max(10, Math.min(originalCable.lengthMeters - 10, distanceFromStart));
+    const dist2 = Math.max(10, originalCable.lengthMeters - dist1);
+
+    const cable1: FiberCable = {
+        id: cable1Name,
+        name: cable1Name,
+        fromNodeId: originalCable.fromNodeId,
+        toNodeId: jbNodeId,
+        totalCores: originalCable.totalCores,
+        tubesCount: originalCable.tubesCount,
+        coresPerTube: originalCable.coresPerTube || 12,
+        lengthMeters: dist1,
+        cableType: originalCable.cableType,
+    };
+
+    const cable2: FiberCable = {
+        id: cable2Name,
+        name: cable2Name,
+        fromNodeId: jbNodeId,
+        toNodeId: originalCable.toNodeId,
+        totalCores: originalCable.totalCores,
+        tubesCount: originalCable.tubesCount,
+        coresPerTube: originalCable.coresPerTube || 12,
+        lengthMeters: dist2,
+        cableType: originalCable.cableType,
+    };
+
+    const generatedSplices: SpliceConnection[] = [];
+    if (autoSplice) {
+        const tubes = originalCable.tubesCount || Math.max(1, Math.ceil(originalCable.totalCores / 12));
+        for (let t = 1; t <= tubes; t++) {
+            for (let c = 1; c <= 12; c++) {
+                const coreIndex = (t - 1) * 12 + c;
+                if (coreIndex > originalCable.totalCores) break;
+                generatedSplices.push({
+                    id: `spl-${jbCode}-t${t}c${c}`,
+                    enclosureNodeId: jbNodeId,
+                    fromCableId: cable1.id,
+                    fromTubeNumber: t,
+                    fromCoreNumber: c,
+                    toCableId: cable2.id,
+                    toTubeNumber: t,
+                    toCoreNumber: c,
+                    lossDb: 0.05,
+                    notes: `Straight splice T${t}-C${c}`,
+                });
+            }
+        }
+    }
+
+    return {
+        jbNodeId,
+        cable1,
+        cable2,
+        generatedSplices,
+        deletedCableKeys: {
+            [originalCable.id]: true,
+            [`${originalCable.fromNodeId}->${originalCable.toNodeId}`]: true,
+        },
+    };
+}
+
 // Reference Demo Topology matching user's schematic design (OLT-PUSAT -> ODCs -> JBs -> ODPs -> Customers)
 export const DEMO_TOPOLOGY_ODCS: Odc[] = [
     {
@@ -946,6 +1037,13 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
     const [newNodeAddress, setNewNodeAddress] = useState<string>('');
     const [newNodeAutoCable, setNewNodeAutoCable] = useState<boolean>(true);
 
+    // Modal: Sisipkan JB pada Kabel (Cable Split / Cut Restoration)
+    const [splitCableTarget, setSplitCableTarget] = useState<FiberCable | null>(null);
+    const [splitJbName, setSplitJbName] = useState<string>('');
+    const [splitDistanceStart, setSplitDistanceStart] = useState<number>(400);
+    const [splitAutoSplice, setSplitAutoSplice] = useState<boolean>(true);
+    const [splitJbCategory, setSplitJbCategory] = useState<'jb' | 'tiang'>('jb');
+
     // Fetch live network data
     const fetchNetworkData = async () => {
         setIsLoading(true);
@@ -1044,64 +1142,12 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
             return null;
         };
 
-        // 2. Identify active ODC nodes
-        const activeOdcs = activeOdcsSource.filter((odc) => selectedOdcFilter === 'all' || odc.id === selectedOdcFilter);
-        const odcNodeMap = new Map<string, TreeNode>();
-
-        const odcNodes: TreeNode[] = activeOdcs.map((odc) => {
-            const matchingCable = cables.find((c) => c.fromNodeId === 'root-olt' && c.toNodeId === odc.id);
-            const estMeters = matchingCable ? matchingCable.lengthMeters : (odc.id === 'ODC-PSM-01' ? 1420 : 850);
-            const cableLoss = (estMeters / 1000) * 0.35;
-
-            // Dedicated SFP PON port to each ODC (no pre-splitting at OLT)
-            const calcPowerIn = Number((rootTx - cableLoss).toFixed(2));
-
-            // Inside ODC: configurable splitter
-            const odcSplitter = odcSplitterMap[odc.id] || '1:4';
-            let splitterLoss = 7.2;
-            if (odcSplitter === 'direct' || odcSplitter === '1:1') splitterLoss = 0;
-            else if (odcSplitter === '1:2') splitterLoss = 3.7;
-            else if (odcSplitter === '1:8') splitterLoss = 10.5;
-
-            const calcPowerOut = useDemoTopology && odc.powerOutput != null
-                ? odc.powerOutput
-                : Number((calcPowerIn - splitterLoss).toFixed(2));
-
-            const fdrCode = odc.name.replace(/[^A-Za-z0-9]/g, '');
-            const cableLabel = matchingCable
-                ? `${matchingCable.name} • ${matchingCable.totalCores}C • ${matchingCable.lengthMeters}m`
-                : `FDR-OLT1-${fdrCode} • 24C • ${estMeters}m`;
-
-            const odcNode: TreeNode = {
-                id: odc.id,
-                name: odc.name,
-                type: 'odc',
-                parentId: 'root-olt',
-                parentType: 'olt',
-                totalPorts: odc.totalPorts || 24,
-                usedPorts: 0,
-                powerIn: odc.powerInput ?? null,
-                powerOut: odc.powerOutput ?? null,
-                calculatedPowerIn: calcPowerIn,
-                calculatedPowerOut: calcPowerOut,
-                cableMeters: estMeters,
-                cableLabel,
-                location: odc.location,
-                address: odc.address,
-                customers: [],
-                children: [],
-                x: 0,
-                y: 0,
-            };
-            odcNodeMap.set(odc.id, odcNode);
-            return odcNode;
-        });
-
-        // 3. Filter and attach ODP nodes strictly belonging to selected ODC (or all if 'all')
+        // 2. Filter and attach ODP / JB nodes strictly belonging to selected ODC (or all if 'all')
         const odpMap = new Map<string, TreeNode>();
 
         const targetOdps = activeOdpsSource.filter((odp) => {
             if (selectedOdcFilter === 'all') return true;
+            if (odp.parentId === 'root-olt') return true; // Feeder JBs visible in all views
             const rootOdcId = findRootOdcId(odp.parentId);
             return rootOdcId === selectedOdcFilter;
         });
@@ -1135,35 +1181,40 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
 
             const cableLoss = (distanceMeters / 1000) * 0.35;
             const splitterLoss = PLC_LOSS_MAP[odp.totalPorts === 16 ? '1:16' : '1:8'] || 10.5;
-            const spliceLoss = 0.2;
+            const spliceLoss = 0.05;
             const connectorLoss = 0.5;
 
-            let parentPowerOut = rootTx - 7.5;
-            if (parentOdc) {
-                const parentOdcNode = odcNodeMap.get(parentOdc.id);
-                parentPowerOut = parentOdcNode ? parentOdcNode.calculatedPowerOut : (rootTx - 7.5);
+            let parentPowerOut = rootTx;
+            if (odp.parentId === 'root-olt') {
+                parentPowerOut = rootTx;
+            } else if (parentOdc) {
+                parentPowerOut = rootTx - 7.5;
             } else if (parentOdp) {
                 const parentOdpNode = odpMap.get(parentOdp.id);
                 parentPowerOut = parentOdpNode ? parentOdpNode.calculatedPowerOut : -16.8;
             }
 
+            const isFeederClosure = odp.parentId === 'root-olt' || odp.name.toUpperCase().startsWith('JB') || odp.name.toUpperCase().startsWith('TIANG');
             const calcPowerIn = Number((parentPowerOut - cableLoss).toFixed(2));
             const calcPowerOut = useDemoTopology && odp.powerOutput != null
                 ? odp.powerOutput
-                : Number((calcPowerIn - splitterLoss - spliceLoss - connectorLoss).toFixed(2));
+                : (isFeederClosure && odp.parentId === 'root-olt')
+                    ? Number((calcPowerIn - spliceLoss).toFixed(2)) // Straight splice loss without PLC splitter
+                    : Number((calcPowerIn - splitterLoss - spliceLoss - connectorLoss).toFixed(2));
 
-            const parentName = (parentOdc?.name || parentOdp?.name || 'NODE').replace(/[^A-Za-z0-9]/g, '');
+            const parentName = (odp.parentId === 'root-olt' ? 'OLT' : parentOdc?.name || parentOdp?.name || 'NODE').replace(/[^A-Za-z0-9]/g, '');
             const childName = odp.name.replace(/[^A-Za-z0-9]/g, '');
+            const isFeeder = odp.parentId === 'root-olt';
             const cableLabel = matchingCable
                 ? `${matchingCable.name} • ${matchingCable.totalCores}C • ${matchingCable.lengthMeters}m`
-                : `DST-${parentName}-${childName} • 12C • ${distanceMeters}m`;
+                : `${isFeeder ? 'FDR' : 'DST'}-${parentName}-${childName} • ${isFeeder ? '24C' : '12C'} • ${distanceMeters}m`;
 
             const node: TreeNode = {
                 id: odp.id,
                 name: odp.name,
                 type: 'odp',
                 parentId: odp.parentId || undefined,
-                parentType: parentOdc ? 'odc' : parentOdp ? 'odp' : 'odc',
+                parentType: odp.parentId === 'root-olt' ? 'olt' : parentOdc ? 'odc' : 'odp',
                 totalPorts: odp.totalPorts || 8,
                 usedPorts: custs.length,
                 powerIn: odp.powerInput ?? null,
@@ -1181,6 +1232,66 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
             };
 
             odpMap.set(odp.id, node);
+        });
+
+        // 3. Identify active ODC nodes (may connect to OLT or an intermediate Feeder JB)
+        const activeOdcs = activeOdcsSource.filter((odc) => selectedOdcFilter === 'all' || odc.id === selectedOdcFilter);
+        const odcNodeMap = new Map<string, TreeNode>();
+
+        const odcNodes: TreeNode[] = activeOdcs.map((odc) => {
+            const incomingCable = cables.find((c) => c.toNodeId === odc.id) || cables.find((c) => c.fromNodeId === 'root-olt' && c.toNodeId === odc.id);
+            const parentId = incomingCable ? incomingCable.fromNodeId : (odc.parentId || 'root-olt');
+            const parentType = parentId === 'root-olt' ? 'olt' : (odpMap.has(parentId) ? 'jb' : 'odc');
+            const estMeters = incomingCable ? incomingCable.lengthMeters : (odc.id === 'ODC-PSM-01' ? 1420 : 850);
+            const cableLoss = (estMeters / 1000) * 0.35;
+
+            // Dedicated SFP PON port to each ODC (or from Feeder JB)
+            let parentTx = rootTx;
+            if (parentId !== 'root-olt') {
+                const jbParent = odpMap.get(parentId);
+                if (jbParent) parentTx = jbParent.calculatedPowerOut;
+            }
+            const calcPowerIn = Number((parentTx - cableLoss).toFixed(2));
+
+            // Inside ODC: configurable splitter
+            const odcSplitter = odcSplitterMap[odc.id] || '1:4';
+            let splitterLoss = 7.2;
+            if (odcSplitter === 'direct' || odcSplitter === '1:1') splitterLoss = 0;
+            else if (odcSplitter === '1:2') splitterLoss = 3.7;
+            else if (odcSplitter === '1:8') splitterLoss = 10.5;
+
+            const calcPowerOut = useDemoTopology && odc.powerOutput != null
+                ? odc.powerOutput
+                : Number((calcPowerIn - splitterLoss).toFixed(2));
+
+            const fdrCode = odc.name.replace(/[^A-Za-z0-9]/g, '');
+            const cableLabel = incomingCable
+                ? `${incomingCable.name} • ${incomingCable.totalCores}C • ${incomingCable.lengthMeters}m`
+                : `FDR-OLT1-${fdrCode} • 24C • ${estMeters}m`;
+
+            const odcNode: TreeNode = {
+                id: odc.id,
+                name: odc.name,
+                type: 'odc',
+                parentId,
+                parentType: parentType as any,
+                totalPorts: odc.totalPorts || 24,
+                usedPorts: 0,
+                powerIn: odc.powerInput ?? null,
+                powerOut: odc.powerOutput ?? null,
+                calculatedPowerIn: calcPowerIn,
+                calculatedPowerOut: calcPowerOut,
+                cableMeters: estMeters,
+                cableLabel,
+                location: odc.location,
+                address: odc.address,
+                customers: [],
+                children: [],
+                x: 0,
+                y: 0,
+            };
+            odcNodeMap.set(odc.id, odcNode);
+            return odcNode;
         });
 
         // 4. Attach Simulated Nodes that belong to this view
@@ -1220,6 +1331,10 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
         const unassignedOdps: TreeNode[] = [];
 
         odpMap.forEach((odpNode) => {
+            if (odpNode.parentId === 'root-olt') {
+                return; // Handled directly as root-level feeder closure
+            }
+
             const odcParent = odcNodeMap.get(odpNode.parentId || '');
             if (odcParent) {
                 odcParent.children.push(odpNode);
@@ -1239,6 +1354,29 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
             }
         });
 
+        // Root Level Nodes: Feeder JBs + ODCs not attached to a JB
+        const rootChildren: TreeNode[] = [];
+
+        // 1. Feeder JBs connected directly to root-olt
+        odpMap.forEach((odpNode) => {
+            if (odpNode.parentId === 'root-olt') {
+                rootChildren.push(odpNode);
+            }
+        });
+
+        // 2. ODCs: attach to parent JB if exists, else attach to root OLT
+        odcNodes.forEach((odcNode) => {
+            if (odcNode.parentId && odcNode.parentId !== 'root-olt') {
+                const jbParent = odpMap.get(odcNode.parentId);
+                if (jbParent) {
+                    jbParent.children.push(odcNode);
+                    jbParent.usedPorts += 1;
+                    return;
+                }
+            }
+            rootChildren.push(odcNode);
+        });
+
         // Root Node OLT
         const rootOltNode: TreeNode = {
             id: 'root-olt',
@@ -1253,7 +1391,7 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
             cableMeters: 0,
             cableLabel: 'ROOT SFP TX',
             customers: [],
-            children: [...odcNodes],
+            children: [...rootChildren],
             x: 50,
             y: 0,
         };
@@ -1685,6 +1823,73 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
         setNewNodeAddress('');
         setCopyNotice(`Node ${newCustom.name} (${newCustom.category.toUpperCase()}) berhasil ditambahkan.`);
         setTimeout(() => setCopyNotice(null), 3500);
+    };
+
+    // Action: Open Split Cable (Sisipkan Joint Box pada Titik Putus)
+    const handleOpenSplitCable = (cable: FiberCable) => {
+        const toNode = flattenedNodes.find((n) => n.id === cable.toNodeId);
+        const toCode = toNode ? toNode.name.replace(/[^A-Za-z0-9]/g, '') : 'NODE';
+        const defaultName = `JB-${toCode}-01`;
+        const halfDist = Math.max(10, Math.round(cable.lengthMeters / 2));
+
+        setSplitCableTarget(cable);
+        setSplitJbName(defaultName);
+        setSplitDistanceStart(halfDist);
+        setSplitAutoSplice(true);
+        setSplitJbCategory('jb');
+    };
+
+    // Action: Confirm Split Cable with JB
+    const handleConfirmSplitCable = () => {
+        if (!splitCableTarget) return;
+        if (!splitJbName.trim()) {
+            alert('Masukkan nama Joint Box.');
+            return;
+        }
+
+        const splitResult = splitCableWithJointBox({
+            originalCable: splitCableTarget,
+            jbName: splitJbName.trim(),
+            distanceFromStart: splitDistanceStart,
+            autoSplice: splitAutoSplice,
+        });
+
+        // 1. Create the new JB node
+        const newJbNode: CustomTopologyNode = {
+            id: splitResult.jbNodeId,
+            name: splitJbName.trim(),
+            category: splitJbCategory,
+            parentId: splitCableTarget.fromNodeId,
+            totalPorts: splitCableTarget.totalCores,
+            powerInput: 4.86,
+            powerOutput: 4.81,
+            address: `Titik Sambung Closure (${splitDistanceStart}m dari ${splitCableTarget.fromNodeId})`,
+        };
+
+        setCustomNodes((prev) => [...prev, newJbNode]);
+
+        // 2. Mark old cable as deleted in deleted keys
+        setDeletedCableKeys((prev) => ({
+            ...prev,
+            ...splitResult.deletedCableKeys,
+        }));
+
+        // 3. Update cables state with the two new segments
+        setCables((prev) => {
+            const filtered = prev.filter(
+                (c) => c.id !== splitCableTarget.id && `${c.fromNodeId}->${c.toNodeId}` !== `${splitCableTarget.fromNodeId}->${splitCableTarget.toNodeId}`
+            );
+            return [...filtered, splitResult.cable1, splitResult.cable2];
+        });
+
+        // 4. Add generated splices into splices state
+        if (splitResult.generatedSplices.length > 0) {
+            setSplices((prev) => [...prev, ...splitResult.generatedSplices]);
+        }
+
+        setSplitCableTarget(null);
+        setCopyNotice(`Joint Box ${splitJbName.trim()} (${splitCableTarget.totalCores} Core) berhasil disisipkan di ${splitDistanceStart}m!`);
+        setTimeout(() => setCopyNotice(null), 4000);
     };
 
     // Action: Create New Cable
@@ -2635,10 +2840,18 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                                                             {isIncoming ? 'IN' : 'OUT'} • {cable.name}
                                                         </span>
                                                     </div>
-                                                    <div className="flex items-center gap-2">
+                                                    <div className="flex items-center gap-1.5">
                                                         <span className="text-[11px] font-mono font-bold text-emerald-400">
                                                             {usedCores}/{cable.totalCores} Core
                                                         </span>
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => handleOpenSplitCable(cable)}
+                                                            className="px-2 py-0.5 rounded text-[10px] font-semibold bg-amber-500/15 text-amber-300 hover:bg-amber-500/25 border border-amber-500/40 transition-colors cursor-pointer flex items-center gap-1"
+                                                            title="Sisipkan Joint Box (JB) jika kabel putus atau butuh sambungan di tengah"
+                                                        >
+                                                            <span>✂️ Sisipkan JB</span>
+                                                        </button>
                                                         <button
                                                             type="button"
                                                             onClick={() => setDeletingCable(cable)}
@@ -3286,7 +3499,134 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                 </div>
             )}
 
-            {/* Slide-over / Modal: Planner Simulator */}
+            {/* Modal: Sisipkan JB pada Kabel (Titik Putus / Joint Closure) */}
+            {splitCableTarget && (
+                <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+                    <div className="bg-[#0f172a] border border-amber-500/40 rounded-2xl w-full max-w-md p-6 shadow-2xl text-white space-y-4 animate-in fade-in zoom-in-95">
+                        <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+                            <div>
+                                <h3 className="text-base font-bold text-amber-300 flex items-center gap-2">
+                                    <span>✂️ Sisipkan Joint Box (JB / Closure)</span>
+                                </h3>
+                                <p className="text-xs text-slate-400 mt-0.5">
+                                    Potong bentangan kabel <strong className="text-slate-200 font-mono">{splitCableTarget.name}</strong> ({splitCableTarget.lengthMeters}m) untuk penempatan closure sambungan.
+                                </p>
+                            </div>
+                            <button
+                                onClick={() => setSplitCableTarget(null)}
+                                className="text-slate-400 hover:text-white text-xl font-bold cursor-pointer"
+                            >
+                                &times;
+                            </button>
+                        </div>
+
+                        <div className="space-y-3.5 text-xs">
+                            {/* Detail Bentangan Lama */}
+                            <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-between font-mono text-[11px]">
+                                <div>
+                                    <span className="text-slate-400 block text-[10px]">Dari:</span>
+                                    <span className="text-cyan-300 font-bold">{splitCableTarget.fromNodeId}</span>
+                                </div>
+                                <div className="text-center text-slate-500">
+                                    <span>── {splitCableTarget.lengthMeters}m ({splitCableTarget.totalCores}C) ──▶</span>
+                                </div>
+                                <div className="text-right">
+                                    <span className="text-slate-400 block text-[10px]">Ke:</span>
+                                    <span className="text-emerald-300 font-bold">{splitCableTarget.toNodeId}</span>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label className="block font-semibold text-slate-300 mb-1">Nama Joint Box / Closure:</label>
+                                <input
+                                    type="text"
+                                    value={splitJbName}
+                                    onChange={(e) => setSplitJbName(e.target.value)}
+                                    placeholder="Contoh: JB-FDR-CMS01"
+                                    className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white font-mono font-bold"
+                                />
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label className="block font-semibold text-slate-300 mb-1">Tipe Enclosure:</label>
+                                    <select
+                                        value={splitJbCategory}
+                                        onChange={(e) => setSplitJbCategory(e.target.value as any)}
+                                        className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white"
+                                    >
+                                        <option value="jb">JB (Joint Box / Closure)</option>
+                                        <option value="tiang">TIANG (Tiang Sambung)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="block font-semibold text-slate-300 mb-1">Titik Putus / Jarak (m):</label>
+                                    <input
+                                        type="number"
+                                        min="10"
+                                        max={splitCableTarget.lengthMeters - 10}
+                                        step="10"
+                                        value={splitDistanceStart}
+                                        onChange={(e) => setSplitDistanceStart(Number(e.target.value) || 10)}
+                                        className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white font-mono font-bold"
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Preview Segmen Baru */}
+                            <div className="p-3 rounded-xl bg-amber-950/20 border border-amber-500/30 text-slate-300 space-y-1.5">
+                                <span className="text-[10px] font-bold uppercase text-amber-400 block">Hasil Pembagian Bentangan:</span>
+                                <div className="text-[11px] font-mono space-y-1">
+                                    <div className="flex justify-between">
+                                        <span>Segmen 1 (IN): {splitCableTarget.fromNodeId} ➔ {splitJbName || 'JB'}</span>
+                                        <span className="text-amber-300 font-bold">{splitDistanceStart} meter</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <span>Segmen 2 (OUT): {splitJbName || 'JB'} ➔ {splitCableTarget.toNodeId}</span>
+                                        <span className="text-amber-300 font-bold">{Math.max(10, splitCableTarget.lengthMeters - splitDistanceStart)} meter</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="p-3 rounded-xl bg-slate-900/60 border border-slate-800">
+                                <label className="flex items-start gap-2.5 cursor-pointer">
+                                    <input
+                                        type="checkbox"
+                                        checked={splitAutoSplice}
+                                        onChange={(e) => setSplitAutoSplice(e.target.checked)}
+                                        className="mt-0.5 rounded bg-slate-800 border-slate-600 text-amber-500 focus:ring-0"
+                                    />
+                                    <div className="text-slate-300">
+                                        <span className="font-semibold block text-slate-200">
+                                            Otomatis Sambung Lurus {splitCableTarget.totalCores} Core (Straight Splice)
+                                        </span>
+                                        <span className="text-[11px] text-slate-400 block mt-0.5">
+                                            Dokumentasikan penyambungan fusion splice core 1–{splitCableTarget.totalCores} (Loss 0.05 dB) secara otomatis di tray closure.
+                                        </span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-800">
+                            <button
+                                type="button"
+                                onClick={() => setSplitCableTarget(null)}
+                                className="px-4 py-2 text-xs font-semibold rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 cursor-pointer"
+                            >
+                                Batal
+                            </button>
+                            <button
+                                type="button"
+                                onClick={handleConfirmSplitCable}
+                                className="px-5 py-2 text-xs font-bold rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-white shadow-lg cursor-pointer flex items-center gap-1.5"
+                            >
+                                <span>✂️ Pasang JB & Sambung Core</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
             {isPlannerOpen && (
                 <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
                     <div className="bg-[#0f172a] border border-slate-700/80 rounded-2xl w-full max-w-2xl p-6 shadow-2xl text-white space-y-5 animate-in fade-in zoom-in-95">
