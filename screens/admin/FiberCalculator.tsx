@@ -2233,6 +2233,21 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
 
                     {/* Right: View Toggles, Auto-Layout & Zoom Controls */}
                     <div className="flex items-center gap-2.5 flex-wrap">
+                        {/* Selected Node Action: Delete Button */}
+                        {selectedNode && selectedNode.type !== 'olt' && (
+                            <button
+                                type="button"
+                                onClick={() => setDeletingNode(selectedNode)}
+                                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-rose-950/80 hover:bg-rose-900 text-rose-300 border border-rose-500/40 text-xs font-semibold transition-colors cursor-pointer animate-in fade-in shadow-md"
+                                title={`Hapus ${selectedNode.name} dari jaringan`}
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                                <span>Hapus {selectedNode.name}</span>
+                            </button>
+                        )}
+
                         {/* Toggle Customer Chips */}
                         <label className="flex items-center gap-2 cursor-pointer bg-slate-900/90 border border-slate-700/80 px-3 py-1.5 rounded-xl">
                             <input
@@ -2504,7 +2519,7 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                                                     <span className={`text-[10px] font-mono font-semibold tracking-wider ${getBadgeColorClass(category)}`}>
                                                         {badgeText}
                                                     </span>
-                                                    <div className="opacity-0 group-hover:opacity-100 flex items-center gap-1 transition-opacity">
+                                                    <div className="flex items-center gap-1">
                                                         {node.type !== 'olt' && (
                                                             <button
                                                                 type="button"
@@ -2512,10 +2527,16 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                                                                     e.stopPropagation();
                                                                     setDeletingNode(node);
                                                                 }}
-                                                                className="text-slate-400 hover:text-rose-400 text-xs p-0.5 cursor-pointer"
-                                                                title="Hapus"
+                                                                className={`p-1 rounded transition-all cursor-pointer ${
+                                                                    isSelected
+                                                                        ? 'opacity-100 bg-rose-500/25 text-rose-300 hover:bg-rose-500/40 hover:text-white'
+                                                                        : 'opacity-0 group-hover:opacity-100 text-slate-400 hover:text-rose-400 hover:bg-rose-500/10'
+                                                                }`}
+                                                                title={`Hapus ${node.name}`}
                                                             >
-                                                                &times;
+                                                                <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                                </svg>
                                                             </button>
                                                         )}
                                                     </div>
@@ -2616,14 +2637,29 @@ const FiberCalculator: React.FC<FiberCalculatorProps> = ({ initialOdpId, onBack 
                                     {selectedNode.address || 'Alamat fisik belum diatur'}
                                 </p>
                             </div>
-                            <button
-                                type="button"
-                                onClick={() => setSelectedNode(null)}
-                                className="text-slate-400 hover:text-white text-xl p-1 leading-none cursor-pointer"
-                                title="Tutup Inspector"
-                            >
-                                &times;
-                            </button>
+                            <div className="flex items-center gap-1.5">
+                                {selectedNode.type !== 'olt' && (
+                                    <button
+                                        type="button"
+                                        onClick={() => setDeletingNode(selectedNode)}
+                                        className="px-2 py-1 text-xs font-semibold rounded-lg bg-rose-500/15 hover:bg-rose-500/25 text-rose-300 border border-rose-500/30 flex items-center gap-1 transition-colors cursor-pointer"
+                                        title={`Hapus ${selectedNode.name} dari jaringan`}
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                        </svg>
+                                        <span>Hapus</span>
+                                    </button>
+                                )}
+                                <button
+                                    type="button"
+                                    onClick={() => setSelectedNode(null)}
+                                    className="text-slate-400 hover:text-white text-xl p-1 leading-none cursor-pointer"
+                                    title="Tutup Inspector"
+                                >
+                                    &times;
+                                </button>
+                            </div>
                         </div>
 
                         {/* 3 Tabs Header: [Mapping] [Kabel (N)] [Splice (M)] */}
