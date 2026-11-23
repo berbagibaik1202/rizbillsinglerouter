@@ -1,0 +1,14 @@
+.git
+node_modules
+dist
+release
+docker.env
+docker.env.example
+Dockerfile
+docker-compose.vps.yml
+release-manifest.json
+scripts/
+*.log
+.env
+.env.local
+backend/.env
